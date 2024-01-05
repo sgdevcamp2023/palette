@@ -1,0 +1,24 @@
+# 담당자를 지정할 때는 github ID 혹은 github email을 넣습니다.
+
+# frontend codeowners (web)
+# web과 mobile에서 작업자는 다르지만, 리뷰 요청을 위해 두 명 모두 설정합니다.
+/src/web @poiu694 @HeewonP825
+
+# frontend codeowners (mobile)
+# web과 mobile에서 작업자는 다르지만, 리뷰 요청을 위해 두 명 모두 설정합니다.
+/src/mobile @poiu694 @HeewonP825
+
+# server 관련된 코드는 백엔드가 관리합니다.
+/src/*-server @doxxx93 @K-Diger @210-reverof
+
+# config는 모두가 관리합니다.
+/config @poiu694 @HeewonP825 @doxxx93 @K-Diger @210-reverof
+
+# docs는 모두가 관리합니다.
+/docs @poiu694 @HeewonP825 @doxxx93 @K-Diger @210-reverof
+
+# script는 모두가 관리합니다.
+/scripts @poiu694 @HeewonP825 @doxxx93 @K-Diger @210-reverof
+
+# resources는 프론트엔드와 밀접하므로, 프론트엔드가 관리합니다.
+/resources @poiu694 @HeewonP825
