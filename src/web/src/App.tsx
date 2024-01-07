@@ -1,33 +1,17 @@
 import { useState } from 'react';
-import reactLogo from './assets/react.svg';
-import './App.css';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { Example } from './components';
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [queryClient] = useState(() => new QueryClient());
 
   return (
-    <>
+    <QueryClientProvider client={queryClient}>
       <div>
-        <a href="https://react.dev" target="_blank" rel="noreferrer">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        <h1 className="text-4xl text-orange-500">PALETTE</h1>
+        <Example />
       </div>
-      <h1 className="text-3xl font-bold underline">Vite + React</h1>
-      <div className="card">
-        <button type="button" onClick={() => setCount((prev) => prev + 1)}>
-          count is
-          {count}
-        </button>
-        <p>
-          Edit
-          <code>src/App.tsx</code>
-          and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    </QueryClientProvider>
   );
 }
 

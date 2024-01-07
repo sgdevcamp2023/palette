@@ -1,7 +1,7 @@
 module.exports = {
   root: true,
   env: { browser: true, es2020: true },
-  extends: ['airbnb', 'airbnb-typescript', 'prettier'],
+  extends: ['airbnb', 'airbnb-typescript', 'plugin:@tanstack/eslint-plugin-query/recommended', 'prettier'],
   ignorePatterns: ['dist', '.eslintrc.cjs'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -10,7 +10,7 @@ module.exports = {
     project: './tsconfig.json',
     tsconfigRootDir: __dirname,
   },
-  plugins: ['react-refresh', 'prettier'],
+  plugins: ['react-refresh'],
   rules: {
     'import/extensions': 'off', // import시 확장자는 가독성과 간결함을 위해 적지 않는다.
     'react/react-in-jsx-scope': 'off', // React 17 이상에서는 JSX 사용 시 React 임포트가 필요 없음. 이를 반영하여 규칙을 비활성화.
@@ -30,6 +30,6 @@ module.exports = {
     'react-refresh/only-export-components': [
       'warn',
       { allowConstantExport: true },
-    ],
+    ]
   },
 };
