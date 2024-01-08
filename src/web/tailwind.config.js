@@ -2,6 +2,48 @@
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}",],
   theme: {
+    fontSize: {
+      'headline-1': ['26px', {
+        lineHeight: '40px',
+        fontWeight: 700
+      }],
+      'headline-2': ['22px', {
+        lineHeight: '32px',
+        fontWeight: 700
+      }],
+      'headline-3': ['20px', {
+        lineHeight: '32px',
+        fontWeight: 700
+      }],
+      'headline-4': ['18px', {
+        lineHeight: '24px',
+        fontWeight: 700
+      }],
+      'headline-5': ['16px', {
+        lineHeight: '24px',
+        fontWeight: 700
+      }],
+      'headline-6': ['14px', {
+        lineHeight: '20px',
+        fontWeight: 700
+      }],
+      'sub-headline-1': ['16px', {
+        lineHeight: '24px',
+        fontWeight: 500
+      }],
+      'body-1': ['16px', {
+        lineHeight: '24px',
+        fontWeight: 400
+      }],
+      'body-2': ['14px', {
+        lineHeight: '24px',
+        fontWeight: 400
+      }],
+      'body-3': ['12px', {
+        lineHeight: '16px',
+        fontWeight: 400
+      }],
+    },
     extend: {
       colors: {
         grey: {
