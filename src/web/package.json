@@ -1,8 +1,13 @@
 {
-  "name": "web",
+  "name": "@palette/web",
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "author": {
+    "name": "Sang Min Lee",
+    "email": "poiu694@naver.com"
+  },
+  "description": "SmileGate Server Dev Camp-5th, Team Palette Project, Twitter Clone",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
