@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { Example } from './components';
+import { Example, FramerExample } from './components';
 
 function App() {
   const [queryClient] = useState(() => new QueryClient());
@@ -10,6 +10,7 @@ function App() {
       <div>
         <h1 className="text-4xl text-orange-500">PALETTE</h1>
         <Example />
+        <FramerExample />
       </div>
     </QueryClientProvider>
   );
