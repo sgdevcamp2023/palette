@@ -4,26 +4,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <font
-        android:font="@font/chirp_heavy_web"
+        android:font="@font/chirp_heavy"
         android:fontStyle="normal"
         android:fontWeight="700"
-        app:font="@font/chirp_heavy_web"
-        app:fontStyle="normal"
+        app:font="@font/chirp_heavy"
+        app:fontStyle="italic"
         app:fontWeight="700" />
 
     <font
-        android:font="@font/chirp_medium_web"
+        android:font="@font/chirp_medium"
         android:fontStyle="normal"
         android:fontWeight="500"
-        app:font="@font/chirp_medium_web"
+        app:font="@font/chirp_medium"
         app:fontStyle="normal"
         app:fontWeight="500" />
 
     <font
-        android:font="@font/chirp_regular_web"
+        android:font="@font/chirp_regular"
         android:fontStyle="normal"
         android:fontWeight="400"
-        app:font="@font/chirp_regular_web"
+        app:font="@font/chirp_regular"
         app:fontStyle="normal"
         app:fontWeight="400" />
 
