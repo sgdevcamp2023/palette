@@ -3,27 +3,31 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}",],
   theme: {
     fontSize: {
-      'headline-1': ['26px', {
+      'headline-1': ['28px', {
         lineHeight: '40px',
         fontWeight: 700
       }],
-      'headline-2': ['22px', {
+      'headline-2': ['26px', {
+        lineHeight: '40px',
+        fontWeight: 700
+      }],
+      'headline-3': ['22px', {
         lineHeight: '32px',
         fontWeight: 700
       }],
-      'headline-3': ['20px', {
+      'headline-4': ['20px', {
         lineHeight: '32px',
         fontWeight: 700
       }],
-      'headline-4': ['18px', {
+      'headline-5': ['18px', {
         lineHeight: '24px',
         fontWeight: 700
       }],
-      'headline-5': ['16px', {
+      'headline-6': ['16px', {
         lineHeight: '24px',
         fontWeight: 700
       }],
-      'headline-6': ['14px', {
+      'headline-7': ['14px', {
         lineHeight: '20px',
         fontWeight: 700
       }],
@@ -42,7 +46,11 @@ export default {
       'body-3': ['12px', {
         lineHeight: '16px',
         fontWeight: 400
-      }],
+      },],
+      'body-4': ['10px', {
+        lineHeight: '16px',
+        fontWeight: 400
+      },],
     },
     extend: {
       colors: {
