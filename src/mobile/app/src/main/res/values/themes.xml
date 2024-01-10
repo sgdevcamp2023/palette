@@ -13,38 +13,45 @@
         <item name="android:fontFamily">@font/chirp_heavy</item>
         <item name="fontWeight">700</item>
         <item name="android:lineHeight">40sp</item>
-        <item name="android:textSize">26sp</item>
+        <item name="android:textSize">28sp</item>
     </style>
 
-    <style name="Headline2" parent="@android:style/Widget.DeviceDefault.TextView">
+    <style name="Headline2" parent="@android:style/Widget.DeviceDefault.TextView" >
         <item name="android:fontFamily">@font/chirp_heavy</item>
         <item name="fontWeight">700</item>
-        <item name="android:lineHeight">32sp</item>
-        <item name="android:textSize">22sp</item>
+        <item name="android:lineHeight">40sp</item>
+        <item name="android:textSize">26sp</item>
     </style>
 
     <style name="Headline3" parent="@android:style/Widget.DeviceDefault.TextView">
         <item name="android:fontFamily">@font/chirp_heavy</item>
         <item name="fontWeight">700</item>
         <item name="android:lineHeight">32sp</item>
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">22sp</item>
     </style>
 
     <style name="Headline4" parent="@android:style/Widget.DeviceDefault.TextView">
         <item name="android:fontFamily">@font/chirp_heavy</item>
         <item name="fontWeight">700</item>
-        <item name="android:lineHeight">24sp</item>
-        <item name="android:textSize">18sp</item>
+        <item name="android:lineHeight">32sp</item>
+        <item name="android:textSize">20sp</item>
     </style>
 
     <style name="Headline5" parent="@android:style/Widget.DeviceDefault.TextView">
         <item name="android:fontFamily">@font/chirp_heavy</item>
         <item name="fontWeight">700</item>
         <item name="android:lineHeight">24sp</item>
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">18sp</item>
     </style>
 
     <style name="Headline6" parent="@android:style/Widget.DeviceDefault.TextView">
+        <item name="android:fontFamily">@font/chirp_heavy</item>
+        <item name="fontWeight">700</item>
+        <item name="android:lineHeight">24sp</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="Headline7" parent="@android:style/Widget.DeviceDefault.TextView">
         <item name="android:fontFamily">@font/chirp_heavy</item>
         <item name="fontWeight">700</item>
         <item name="android:lineHeight">20sp</item>
@@ -79,6 +86,13 @@
         <item name="fontWeight">400</item>
         <item name="android:lineHeight">16sp</item>
         <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="Body4" parent="@android:style/Widget.DeviceDefault.TextView">
+        <item name="android:fontFamily">@font/chirp_regular</item>
+        <item name="fontWeight">400</item>
+        <item name="android:lineHeight">16sp</item>
+        <item name="android:textSize">10sp</item>
     </style>
 
 </resources>
