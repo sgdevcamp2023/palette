@@ -30,7 +30,8 @@
     "src",
     "vite.config.ts",
     "postcss.config.js",
-    "tailwind.config.js"
+    "tailwind.config.js",
+    "jest.config.ts"
   ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
