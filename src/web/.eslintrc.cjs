@@ -30,6 +30,10 @@ module.exports = {
     'react-refresh/only-export-components': [
       'warn',
       { allowConstantExport: true },
-    ]
+    ],
+    "jsx-a11y/aria-role": [2, {
+      "allowedInvalidRoles": ["text"],
+      "ignoreNonDOM": true
+    }], // role="text"만 예외로 허용하여 ARIA spec을 확장해서 사용합니다.
   },
 };
