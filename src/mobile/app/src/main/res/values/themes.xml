@@ -2,7 +2,10 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.Easel" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/black</item>
+        <item name="colorPrimaryVariant">@color/Blue_500</item>
+        <item name="colorOnPrimary">@color/white</item>
     </style>
 
     <style name="Theme.Easel" parent="Base.Theme.Easel" />
