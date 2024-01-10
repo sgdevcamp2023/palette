@@ -8,8 +8,8 @@
 # web과 mobile에서 작업자는 다르지만, 리뷰 요청을 위해 두 명 모두 설정합니다.
 /src/mobile @poiu694 @HeewonP825
 
-# server 관련된 코드는 백엔드가 관리합니다.
-/src/*-server @doxxx93 @K-Diger @210-reverof
+# service 관련된 코드는 백엔드가 관리합니다.
+/src/*-service @doxxx93 @K-Diger @210-reverof
 
 # config는 모두가 관리합니다.
 /config @poiu694 @HeewonP825 @doxxx93 @K-Diger @210-reverof
