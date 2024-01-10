@@ -1,8 +1,8 @@
-import clsx from 'clsx';
 import type { ElementType, HTMLAttributes } from 'react';
 import { cva } from 'class-variance-authority';
 
 import type { ColorType, FontKeyType } from '@/@types';
+import { cn } from '@/utils';
 
 export const TypographyVariants = cva<{
   size: Record<FontKeyType, string>;
@@ -69,7 +69,7 @@ function Typography({
 
   return (
     <Component
-      className={clsx(className, TypographyVariants({ size, color }))}
+      className={cn(TypographyVariants({ size, color }), className)}
       {...props}
     >
       {children}
