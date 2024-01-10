@@ -13,6 +13,7 @@
     "build": "tsc && vite build",
     "lint": "eslint . --ext js,ts,tsx --report-unused-disable-directives --max-warnings 0",
     "lint:fix": "eslint --fix . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "type:check": "tsc --noEmit",
     "format": "prettier **/*.ts* --write",
     "preview": "vite preview"
   },
