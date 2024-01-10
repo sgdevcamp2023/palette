@@ -19,9 +19,9 @@ web:
   - changed-files:
       - any-glob-to-any-file: 'src/web/**'
 
-server:
+service:
   - changed-files:
-      - any-glob-to-any-file: 'src/*-server/**'
+      - any-glob-to-any-file: 'src/*-service/**'
 
 feature:
   - head-branch: ['^feat', 'feat', '^feature', 'feature']
