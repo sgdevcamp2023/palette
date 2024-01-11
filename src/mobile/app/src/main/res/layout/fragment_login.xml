@@ -10,7 +10,7 @@
 
     <TextView
         android:id="@+id/textView"
-        style="@style/Headline1"
+        style="@style/Headline2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -23,26 +23,41 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
+        android:id="@+id/editText"
         style="@style/Body2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="54dp"
         android:layout_marginEnd="24dp"
-        android:text="@string/login_fragment_ask_info"
-        android:textColor="@color/BlueGrey_800"
+        android:background="@null"
+        android:hint="@string/login_fragment_ask_info"
+        android:textColorHint="@color/BlueGrey_800"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="24dp"
+        android:background="@color/BlueGrey_400"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText" />
+
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/login_fragment_lost_pw"
         style="@style/Body1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginBottom="24dp"
+        android:clickable="true"
+        android:layout_marginBottom="28dp"
         android:text="@string/login_fragment_forget_pw"
         android:textColor="@color/Grey_600"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -51,8 +66,8 @@
     <Button
         android:id="@+id/login_fragment_next_btn"
         style="@style/Headline7"
-        android:layout_width="78dp"
-        android:layout_height="32dp"
+        android:layout_width="74dp"
+        android:layout_height="38dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="20dp"
         android:background="@drawable/btn_login_fragment_next"
