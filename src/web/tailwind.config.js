@@ -11,23 +11,27 @@ export default {
         lineHeight: '40px',
         fontWeight: 700
       }],
-      'headline-3': ['22px', {
+      'headline-3': ['24px', {
+        lineHeight: '40px',
+        fontWeight: 700
+      }],
+      'headline-4': ['22px', {
         lineHeight: '32px',
         fontWeight: 700
       }],
-      'headline-4': ['20px', {
+      'headline-5': ['20px', {
         lineHeight: '32px',
         fontWeight: 700
       }],
-      'headline-5': ['18px', {
+      'headline-6': ['18px', {
         lineHeight: '24px',
         fontWeight: 700
       }],
-      'headline-6': ['16px', {
+      'headline-7': ['16px', {
         lineHeight: '24px',
         fontWeight: 700
       }],
-      'headline-7': ['14px', {
+      'headline-8': ['14px', {
         lineHeight: '20px',
         fontWeight: 700
       }],

@@ -16,6 +16,8 @@ export const TypographyVariants = cva<{
       'headline-4': 'text-headline-4',
       'headline-5': 'text-headline-5',
       'headline-6': 'text-headline-6',
+      'headline-7': 'text-headline-7',
+      'headline-8': 'text-headline-8',
       'sub-headline-1': 'text-sub-headline-1',
       'body-1': 'text-body-1',
       'body-2': 'text-body-2',
@@ -55,7 +57,7 @@ export const TypographyVariants = cva<{
 
 interface TypographyProps extends HTMLAttributes<HTMLSpanElement> {
   size: FontKeyType;
-  color: ColorType;
+  color?: ColorType;
   as?: ElementType;
 }
 
@@ -64,7 +66,7 @@ function Typography({
   size,
   className,
   children,
-  color,
+  color = 'black',
   ...props
 }: TypographyProps) {
   const Component = as || 'div';
