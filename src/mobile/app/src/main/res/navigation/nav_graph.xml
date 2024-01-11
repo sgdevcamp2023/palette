@@ -11,6 +11,18 @@
         android:label="fragment_start"
         tools:layout="@layout/fragment_start">
 
+        <action
+            android:id="@+id/action_startFragment_to_loginFragment"
+            app:destination="@id/loginFragment"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.smilegate.Easel.ui.login.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login">
+
     </fragment>
 
 </navigation>
