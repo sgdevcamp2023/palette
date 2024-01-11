@@ -11,12 +11,14 @@ const IconVariants = cva<{
 }>('', {
   variants: {
     stroke: {
+      white: '[&>path]:stroke-white',
       'grey-100': '[&>path]:stroke-grey-100',
       'grey-200': '[&>path]:stroke-grey-200',
       'grey-300': '[&>path]:stroke-grey-300',
       'grey-400': '[&>path]:stroke-grey-400',
       'grey-500': '[&>path]:stroke-grey-500',
       'grey-600': '[&>path]:stroke-grey-600',
+      black: '[&>path]:stroke-black',
       'blueGrey-100': '[&>path]:stroke-blueGrey-100',
       'blueGrey-200': '[&>path]:stroke-blueGrey-200',
       'blueGrey-300': '[&>path]:stroke-blueGrey-300',
@@ -38,12 +40,14 @@ const IconVariants = cva<{
       'blue-500': '[&>path]:stroke-blue-500',
     },
     fill: {
+      white: '[&>path]:fill-white',
       'grey-100': '[&>path]:fill-grey-100',
       'grey-200': '[&>path]:fill-grey-200',
       'grey-300': '[&>path]:fill-grey-300',
       'grey-400': '[&>path]:fill-grey-400',
       'grey-500': '[&>path]:fill-grey-500',
       'grey-600': '[&>path]:fill-grey-600',
+      black: '[&>path]:fill-black',
       'blueGrey-100': '[&>path]:fill-blueGrey-100',
       'blueGrey-200': '[&>path]:fill-blueGrey-200',
       'blueGrey-300': '[&>path]:fill-blueGrey-300',

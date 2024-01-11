@@ -11,12 +11,14 @@ export type FontKeyType =
   | 'body-3';
 
 export type ColorType =
+  | 'white'
   | 'grey-100'
   | 'grey-200'
   | 'grey-300'
   | 'grey-400'
   | 'grey-500'
   | 'grey-600'
+  | 'black'
   | 'blueGrey-100'
   | 'blueGrey-200'
   | 'blueGrey-300'
