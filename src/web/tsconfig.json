@@ -31,7 +31,8 @@
     "vite.config.ts",
     "postcss.config.js",
     "tailwind.config.js",
-    "jest.config.ts"
+    "jest.config.ts",
+    "svg.d.ts"
   ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
