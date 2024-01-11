@@ -1,14 +1,13 @@
 import type { HTMLAttributes, ElementType } from 'react';
 
 interface VisuallyHiddenProps extends HTMLAttributes<HTMLSpanElement> {
-  label: string;
   as?: ElementType;
 }
 
 /**
  * 사용자가 시각적으로는 보이지 않지만, 스크린리더에서만 읽을 수 있는 컴포넌트입니다.
  * 접근성을 높이기 위해, 스크린리더에서만 읽는 텍스트를 높이기 위해 사용합니다.
- * 
+ *
  * @example
  * ```tsx
  * function HomeIcon() {
@@ -23,7 +22,7 @@ interface VisuallyHiddenProps extends HTMLAttributes<HTMLSpanElement> {
  * }
  * ```
  */
-function VisuallyHidden({ as, label, ...props }: VisuallyHiddenProps) {
+function VisuallyHidden({ as, ...props }: VisuallyHiddenProps) {
   const Component = as || 'span';
 
   return (
