@@ -3,35 +3,35 @@ name: Docker Hub Push
 on:
   push:
     branches:
-      - '**/dev'
-      - '!web/dev'
-      - '!android/dev'
+      - 'timeline/dev'
 
 jobs:
-  build-and-push:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-    - name: Build and Push Docker Image
-      env:
-        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-      run: |
-        # Extract branch name from GITHUB_REF
-        BRANCH_NAME=$(echo $GITHUB_REF | awk -F'/' '{print $3}')
+      - name: Set up JDK 17
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+          distribution: 'temurin'
 
-        if [ -n "$BRANCH_NAME" ]; then
-          DOCKERFILE_DIR="src/$BRANCH_NAME-service"
-        else
-          echo "Failed to extract branch name from GITHUB_REF."
-          exit 1
-        fi
+      - name: Grant execute permission for gradlew
+        run: chmod +x src/timeline-service/gradlew
 
-        cd $DOCKERFILE_DIR
-        docker build -t $DOCKER_USERNAME/$BRANCH_NAME-service:latest .
-        docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-        docker push $DOCKER_USERNAME/$BRANCH_NAME-service:latest
+      - name: Build with Gradle
+        run: |
+          cd src/timeline-service
+          ./gradlew clean build
 
+      - name: Build Dockerfile and Push Docker Image
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+        run: |
+          cd src/timeline-service
+          docker build -t $DOCKER_USERNAME/timeline-service:latest .
+          docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+          docker push $DOCKER_USERNAME/timeline-service:latest
