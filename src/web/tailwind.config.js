@@ -5,54 +5,67 @@ export default {
     fontSize: {
       'headline-1': ['28px', {
         lineHeight: '40px',
+        letterSpacing: '-0.04em',
         fontWeight: 700
       }],
       'headline-2': ['26px', {
-        lineHeight: '40px',
+        lineHeight: '32px',
+        letterSpacing: '-0.04em',
         fontWeight: 700
       }],
       'headline-3': ['24px', {
-        lineHeight: '40px',
+        lineHeight: '32px',
+        letterSpacing: '-0.04em',
         fontWeight: 700
       }],
       'headline-4': ['22px', {
-        lineHeight: '32px',
+        lineHeight: '28px',
+        letterSpacing: '-0.04em',
         fontWeight: 700
       }],
       'headline-5': ['20px', {
-        lineHeight: '32px',
+        lineHeight: '24px',
+        letterSpacing: '-0.04em',
         fontWeight: 700
       }],
       'headline-6': ['18px', {
-        lineHeight: '24px',
+        lineHeight: '20px',
+        letterSpacing: '-0.04em',
         fontWeight: 700
       }],
       'headline-7': ['16px', {
-        lineHeight: '24px',
+        lineHeight: '20px',
+        letterSpacing: '-0.04em',
         fontWeight: 700
       }],
       'headline-8': ['14px', {
-        lineHeight: '20px',
+        lineHeight: '16px',
+        letterSpacing: '-0.04em',
         fontWeight: 700
       }],
       'sub-headline-1': ['16px', {
-        lineHeight: '24px',
+        lineHeight: '20px',
+        letterSpacing: '-0.04em',
         fontWeight: 500
       }],
       'body-1': ['16px', {
-        lineHeight: '24px',
+        lineHeight: '20px',
+        letterSpacing: '-0.02em',
         fontWeight: 400
       }],
       'body-2': ['14px', {
-        lineHeight: '24px',
+        lineHeight: '16px',
+        letterSpacing: '-0.02em',
         fontWeight: 400
       }],
       'body-3': ['12px', {
         lineHeight: '16px',
+        letterSpacing: '-0.02em',
         fontWeight: 400
       },],
       'body-4': ['10px', {
-        lineHeight: '16px',
+        lineHeight: '12px',
+        letterSpacing: '-0.02em',
         fontWeight: 400
       },],
     },

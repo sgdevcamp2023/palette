@@ -10,7 +10,8 @@ export type FontKeyType =
   | 'sub-headline-1'
   | 'body-1'
   | 'body-2'
-  | 'body-3';
+  | 'body-3'
+  | 'body-4';
 
 export type ColorType =
   | 'white'

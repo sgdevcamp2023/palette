@@ -22,6 +22,7 @@ export const TypographyVariants = cva<{
       'body-1': 'text-body-1',
       'body-2': 'text-body-2',
       'body-3': 'text-body-3',
+      'body-4': 'text-body-4',
     },
     color: {
       white: 'text-white',
