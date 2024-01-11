@@ -74,17 +74,33 @@ const IconVariants = cva<{
 export type IconKeyType = keyof typeof ICONS;
 export interface IconProps extends React.HTMLAttributes<HTMLElement> {
   type: IconKeyType;
+  width?: number | string;
+  height?: number | string;
   fill?: ColorType;
   stroke?: ColorType;
 }
 
-function Icon({ type, className, fill, stroke, ...props }: IconProps) {
+function Icon({
+  type,
+  width,
+  height,
+  className,
+  fill,
+  stroke,
+  ...props
+}: IconProps) {
   const TargetIcon = ICONS[type];
 
-  return cloneElement(<TargetIcon />, {
-    className: cn(IconVariants({ fill, stroke }), className),
-    ...props,
-  });
+  return cloneElement(
+    <TargetIcon
+      width={typeof width === 'number' ? `${width}px` : width}
+      height={typeof height === 'number' ? `${height}px` : height}
+    />,
+    {
+      className: cn(IconVariants({ fill, stroke }), className),
+      ...props,
+    },
+  );
 }
 
 export default Icon;
