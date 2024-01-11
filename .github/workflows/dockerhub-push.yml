@@ -20,7 +20,6 @@ jobs:
           distribution: 'adopt'
 
       - uses: actions/cache@v3
-      - name: Gradle Caching
         with:
           path: |
             ~/.gradle/caches
@@ -53,4 +52,3 @@ jobs:
           docker build -t $DOCKER_USERNAME/$BRANCH_NAME-service:latest .
           docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
           docker push $DOCKER_USERNAME/$BRANCH_NAME-service:latest
-
