@@ -23,6 +23,18 @@
         android:label="fragment_login"
         tools:layout="@layout/fragment_login">
 
+        <action
+            android:id="@+id/action_loginFragment_to_passwordFragment"
+            app:destination="@id/passwordFragment"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/passwordFragment"
+        android:name="com.smilegate.Easel.ui.login.PasswordFragment"
+        android:label="fragment_password"
+        tools:layout="@layout/fragment_password">
+
     </fragment>
 
 </navigation>

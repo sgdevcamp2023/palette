@@ -6,10 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.NavController
-import androidx.navigation.fragment.findNavController
 import com.smilegate.Easel.R
 import com.smilegate.Easel.databinding.FragmentLoginBinding
-import com.smilegate.Easel.databinding.FragmentStartBinding
+import com.smilegate.Easel.databinding.FragmentPasswordBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -18,11 +17,11 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [LoginFragment.newInstance] factory method to
+ * Use the [PasswordFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class LoginFragment : Fragment() {
-    private lateinit var binding: FragmentLoginBinding
+class PasswordFragment : Fragment() {
+    private lateinit var binding: FragmentPasswordBinding
 
     private lateinit var navController: NavController
 
@@ -30,13 +29,7 @@ class LoginFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentLoginBinding.inflate(inflater, container, false)
-
-        navController = findNavController()
-
-        binding.loginFragmentNextBtn.setOnClickListener {
-            navController.navigate(R.id.action_loginFragment_to_passwordFragment)
-        }
+        binding = FragmentPasswordBinding.inflate(inflater, container, false)
 
         return binding.root
     }

@@ -14,4 +14,10 @@
     <string name="login_fragment_forget_pw">비밀번호를 잊으셨나요?</string>
     <string name="login_fragment_next">다음</string>
 
+    <!-- PasswordFragment -->
+    <string name="password_fragment_get_password">비밀번호를 입력하세요</string>
+    <string name="password_fragment_password">비밀번호</string>
+    <string name="password_fragment_login">로그인하기</string>
+    <string name="password_fragment_forget_pw">비밀번호를 잊으셨나요?</string>
+
 </resources>
