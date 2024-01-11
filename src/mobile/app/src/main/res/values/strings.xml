@@ -8,4 +8,10 @@
     <string name="start_fragment_ask_login">이미 계정이 있으세요?</string>
     <string name="start_fragment_login">로그인하기</string>
 
+    <!-- LoginFragment -->
+    <string name="login_fragment_headline">시작하려면 먼저 휴대폰 번호, 이메\n일 또는 사용자 아이디를 입력하세\n요</string>
+    <string name="login_fragment_ask_info">휴대폰 번호, 이메일 주소 또는 사용자 아이디</string>
+    <string name="login_fragment_forget_pw">비밀번호를 잊으셨나요?</string>
+    <string name="login_fragment_next">다음</string>
+
 </resources>
