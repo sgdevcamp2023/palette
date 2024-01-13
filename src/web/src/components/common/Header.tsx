@@ -1,5 +1,7 @@
+import { cva } from 'class-variance-authority';
 import type { MouseEventHandler } from 'react';
 
+import { cn } from '@/utils';
 import Typography from './Typography';
 import type { IconKeyType } from './Icon';
 import type { ColorType } from '@/@types';
@@ -22,12 +24,6 @@ type HeaderType =
       className?: string;
       onClick?: MouseEventHandler<HTMLButtonElement>;
     };
-
-interface HeaderProps {
-  left?: HeaderType;
-  center?: HeaderType;
-  right?: HeaderType;
-}
 
 function HeaderButton({
   header,
@@ -69,9 +65,34 @@ function HeaderButton({
   );
 }
 
-function Header({ left, center, right }: HeaderProps) {
+const HeaderVariants = cva<{
+  position: Record<'sticky' | 'fixed', string>;
+}>(
+  'flex justify-between items-center px-[14px] w-[420px] max-w-full h-[44px] border-b-[1px]',
+  {
+    variants: {
+      position: {
+        fixed: 'fixed',
+        sticky: 'sticky',
+      },
+    },
+    defaultVariants: {
+      position: 'fixed',
+    },
+  },
+);
+
+interface HeaderProps {
+  left?: HeaderType;
+  center?: HeaderType;
+  right?: HeaderType;
+  className?: string;
+  position?: 'sticky' | 'fixed';
+}
+
+function Header({ left, center, right, position, className }: HeaderProps) {
   return (
-    <header className="flex justify-between items-center px-[14px] w-full h-[44px]">
+    <header className={cn(HeaderVariants({ position }), className)}>
       <HeaderButton header={left} />
       <HeaderButton header={center} isCenter />
       <HeaderButton header={right} />
