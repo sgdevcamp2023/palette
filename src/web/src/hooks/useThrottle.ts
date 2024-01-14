@@ -1,5 +1,4 @@
 import { useEffect, useMemo } from 'react';
-// eslint-disable-next-line @typescript-eslint/consistent-type-imports
 import throttle from 'lodash.throttle';
 
 import { usePreservedCallback } from './usePreservedCallback';
