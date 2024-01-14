@@ -9,13 +9,13 @@ import { useThrottle } from '@/hooks';
 const BottomNavigationVariants = cva<{
   direction: Record<'up' | 'down' | 'stop', string>;
 }>(
-  'w-[420px] max-w-full h-[50px] leading-[50px] px-[28px] fixed bottom-0 flex justify-between border-t-[1px]',
+  'w-[420px] max-w-full h-[50px] leading-[50px] px-[28px] fixed bottom-0 flex justify-between border-t-[1px] bg-white',
   {
     variants: {
       direction: {
-        up: 'bg-grey-200 border-grey-300',
-        down: 'opacity-80 bg-white',
-        stop: 'bg-white',
+        up: 'border-grey-300 opacity-95',
+        down: 'opacity-80',
+        stop: '',
       },
     },
     defaultVariants: {
