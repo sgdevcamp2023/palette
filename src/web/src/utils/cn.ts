@@ -17,6 +17,7 @@ export const extendTwMerge = extendTailwindMerge({
         'text-body-1',
         'text-body-2',
         'text-body-3',
+        'text-body-4',
       ],
       'text-color': [
         'text-grey-100',
