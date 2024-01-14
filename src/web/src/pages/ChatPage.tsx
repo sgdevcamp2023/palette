@@ -8,7 +8,6 @@ function ChatPage() {
         left={{
           type: 'circlePerson',
           label: '취소',
-          onClick: () => console.log('hi'),
         }}
         center={{
           type: 'palette',
@@ -19,7 +18,6 @@ function ChatPage() {
         right={{
           type: 'setting',
           label: '로고',
-          onClick: () => console.log('hi'),
         }}
       />
       <ContentLayout>
