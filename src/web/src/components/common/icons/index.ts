@@ -33,6 +33,8 @@ import RightArrow from './RightArrow.svg?react';
 import Search from './Search.svg?react';
 import Setting from './Setting.svg?react';
 import Share from './Share.svg?react';
+import SolidBell from './SolidBell.svg?react';
+import SolidMail from './SolidMail.svg?react';
 import Sun from './Sun.svg?react';
 import ThreeDot from './ThreeDot.svg?react';
 import User from './User.svg?react';
@@ -75,6 +77,8 @@ export const ICONS = {
   search: Search,
   setting: Setting,
   share: Share,
+  solidBell: SolidBell,
+  solidMail: SolidMail,
   sun: Sun,
   threeDot: ThreeDot,
   user: User,
