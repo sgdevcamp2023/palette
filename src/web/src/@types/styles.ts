@@ -5,10 +5,13 @@ export type FontKeyType =
   | 'headline-4'
   | 'headline-5'
   | 'headline-6'
+  | 'headline-7'
+  | 'headline-8'
   | 'sub-headline-1'
   | 'body-1'
   | 'body-2'
-  | 'body-3';
+  | 'body-3'
+  | 'body-4';
 
 export type ColorType =
   | 'white'
@@ -26,6 +29,7 @@ export type ColorType =
   | 'blueGrey-500'
   | 'blueGrey-600'
   | 'blueGrey-700'
+  | 'blueGrey-800'
   | 'green-100'
   | 'green-200'
   | 'yellow-100'

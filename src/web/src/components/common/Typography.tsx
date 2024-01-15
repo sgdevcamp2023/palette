@@ -16,10 +16,13 @@ export const TypographyVariants = cva<{
       'headline-4': 'text-headline-4',
       'headline-5': 'text-headline-5',
       'headline-6': 'text-headline-6',
+      'headline-7': 'text-headline-7',
+      'headline-8': 'text-headline-8',
       'sub-headline-1': 'text-sub-headline-1',
       'body-1': 'text-body-1',
       'body-2': 'text-body-2',
       'body-3': 'text-body-3',
+      'body-4': 'text-body-4',
     },
     color: {
       white: 'text-white',
@@ -37,6 +40,7 @@ export const TypographyVariants = cva<{
       'blueGrey-500': 'text-blueGrey-500',
       'blueGrey-600': 'text-blueGrey-600',
       'blueGrey-700': 'text-blueGrey-700',
+      'blueGrey-800': 'text-blueGrey-800',
       'green-100': 'text-green-100',
       'green-200': 'text-green-200',
       'purple-100': 'text-purple-100',
@@ -55,7 +59,7 @@ export const TypographyVariants = cva<{
 
 interface TypographyProps extends HTMLAttributes<HTMLSpanElement> {
   size: FontKeyType;
-  color: ColorType;
+  color?: ColorType;
   as?: ElementType;
 }
 
@@ -64,7 +68,7 @@ function Typography({
   size,
   className,
   children,
-  color,
+  color = 'black',
   ...props
 }: TypographyProps) {
   const Component = as || 'div';
