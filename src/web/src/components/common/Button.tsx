@@ -7,7 +7,7 @@ const ButtonVariants = cva<{
   color: Record<'blue' | 'black', string>;
   padding: Record<'sm' | 'md' | 'lg', string>;
 }>(
-  'bg-black flex justify-center items-center w-full py-[15px] text-headline-5 rounded-3xl',
+  'bg-black flex justify-center items-center w-full py-[15px] text-headline-5 rounded-3xl transition-colors',
   {
     variants: {
       variant: {
