@@ -29,6 +29,10 @@ class LoginFragment : Fragment() {
             navController.navigate(R.id.action_loginFragment_to_passwordFragment)
         }
 
+        binding.loginFragmentLostPw.setOnClickListener {
+            navController.navigate(R.id.action_loginFragment_to_findAccountFragment)
+        }
+
         return binding.root
     }
 
