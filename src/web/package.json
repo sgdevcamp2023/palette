@@ -20,9 +20,11 @@
   },
   "dependencies": {
     "@tanstack/react-query": "^5.17.7",
+    "@tanstack/react-router": "^1.4.3",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "framer-motion": "^10.17.9",
+    "lodash.throttle": "^4.1.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "tailwind-merge": "^2.2.0"
@@ -31,6 +33,7 @@
     "@tanstack/eslint-plugin-query": "^5.17.7",
     "@testing-library/react": "^14.1.2",
     "@types/jest": "^29.5.11",
+    "@types/lodash.throttle": "^4.1.9",
     "@types/node": "^20.10.7",
     "@types/react": "^18.2.43",
     "@types/react-dom": "^18.2.17",

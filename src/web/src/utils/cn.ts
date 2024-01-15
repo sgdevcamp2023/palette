@@ -11,10 +11,13 @@ export const extendTwMerge = extendTailwindMerge({
         'text-headline-4',
         'text-headline-5',
         'text-headline-6',
+        'text-headline-7',
+        'text-headline-8',
         'text-sub-headline-1',
         'text-body-1',
         'text-body-2',
         'text-body-3',
+        'text-body-4',
       ],
       'text-color': [
         'text-grey-100',
