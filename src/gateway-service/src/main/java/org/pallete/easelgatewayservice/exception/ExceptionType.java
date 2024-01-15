@@ -57,6 +57,20 @@ public enum ExceptionType {
             HttpStatus.CONFLICT
     ),
 
+    GATEWAY_000007(
+            "GATEWAY_000007",
+            "BROKEN_TOKEN",
+            "요청 토큰이 올바르지 않습니다.",
+            HttpStatus.BAD_REQUEST
+    ),
+
+    GATEWAY_000008(
+            "GATEWAY_000008",
+            "EXPIRED_TOKEN",
+            "요청 토큰이 만료되었습니다.",
+            HttpStatus.FORBIDDEN
+    ),
+
     ;
 
     private final String code;
