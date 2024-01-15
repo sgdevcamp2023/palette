@@ -23,7 +23,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/login_fragment_input_field"
         style="@style/Body2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

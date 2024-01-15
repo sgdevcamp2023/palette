@@ -22,7 +22,7 @@
 
     <!-- FindAccountFragment -->
     <string name="find_account_fragment_find_account">내 Easel 계정 찾기</string>
-    <string name="find_account_fragment_announce_info">비밀번호를 변경하려면 게정에 연결된 이메일, 전화번호 또\n는 사용자 아이디를 입력해 주세요.</string>
+    <string name="find_account_fragment_announce_info">비밀번호를 변경하려면 계정에 연결된 이메일, 전화번호 또\n는 사용자 아이디를 입력해 주세요.</string>
     <string name="find_account_fragment_ask_info">이메일, 전화번호 또는 사용자 아이디</string>
     <string name="find_account_fragment_ok">확인</string>
 
