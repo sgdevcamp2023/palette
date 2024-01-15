@@ -1,34 +1,10 @@
 version: '3'
 
 services:
-  dm:
-    image: palette1203/dm-service
+  discovery:
+    image: palette1203/discovery-service
     ports:
-      - "8081:8081"
-    restart: always
-
-  user:
-    image: palette1203/user-service
-    ports:
-      - "8082:8082"
-    restart: always
-
-  timeline:
-    image: palette1203/timeline-service
-    ports:
-      - "8083:8083"
-    restart: always
-
-  gateway:
-    image: palette1203/gateway-service
-    ports:
-      - "8084:8084"
-    restart: always
-
-  notification:
-    image: palette1203/notification-service
-    ports:
-      - "8085:8085"
+      - "8761:8761"
     restart: always
 
   auth:
@@ -36,15 +12,53 @@ services:
     ports:
       - "8086:8086"
     restart: always
+    depends_on:
+      - discovery
 
-  discovery:
-    image: palette1203/discovery-service
+  user:
+    image: palette1203/user-service
     ports:
-      - "8761:8761"
+      - "8082:8082"
     restart: always
+    depends_on:
+      - auth
+
+  dm:
+    image: palette1203/dm-service
+    ports:
+      - "8081:8081"
+    restart: always
+    depends_on:
+      - user
+
+  timeline:
+    image: palette1203/timeline-service
+    ports:
+      - "8083:8083"
+    restart: always
+    depends_on:
+      - dm
+
+  notification:
+    image: palette1203/notification-service
+    ports:
+      - "8085:8085"
+    restart: always
+    depends_on:
+      - timeline
 
   social:
     image: palette1203/social-service
     ports:
       - "8087:8087"
     restart: always
+    depends_on:
+      - notification
+
+  gateway:
+    image: palette1203/gateway-service
+    ports:
+      - "8084:8084"
+    restart: always
+    depends_on:
+      - social

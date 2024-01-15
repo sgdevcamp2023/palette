@@ -3,7 +3,13 @@
 all: up
 
 up:
-	docker-compose up -d dm user timeline gateway notification auth discovery social
+	docker-compose up -d
 
 down:
 	docker-compose down
+
+up-user:
+	docker-compose -f docker-compose-user.yml up -d
+
+down-user:
+	docker-compose -f docker-compose-user.yml down
