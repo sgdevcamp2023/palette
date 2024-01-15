@@ -29,6 +29,7 @@ export type ColorType =
   | 'blueGrey-500'
   | 'blueGrey-600'
   | 'blueGrey-700'
+  | 'blueGrey-800'
   | 'green-100'
   | 'green-200'
   | 'yellow-100'

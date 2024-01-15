@@ -40,6 +40,7 @@ export const TypographyVariants = cva<{
       'blueGrey-500': 'text-blueGrey-500',
       'blueGrey-600': 'text-blueGrey-600',
       'blueGrey-700': 'text-blueGrey-700',
+      'blueGrey-800': 'text-blueGrey-800',
       'green-100': 'text-green-100',
       'green-200': 'text-green-200',
       'purple-100': 'text-purple-100',
