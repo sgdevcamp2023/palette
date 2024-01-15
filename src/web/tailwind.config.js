@@ -64,12 +64,12 @@ export default {
         fontWeight: 400
       }],
       'body-2': ['14px', {
-        lineHeight: '16px',
+        lineHeight: '20px',
         letterSpacing: '-0.02em',
         fontWeight: 400
       }],
       'body-3': ['12px', {
-        lineHeight: '16px',
+        lineHeight: '20px',
         letterSpacing: '-0.02em',
         fontWeight: 400
       },],
