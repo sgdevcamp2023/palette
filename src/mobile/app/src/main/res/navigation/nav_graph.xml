@@ -15,6 +15,10 @@
             android:id="@+id/action_startFragment_to_loginFragment"
             app:destination="@id/loginFragment"/>
 
+        <action
+            android:id="@+id/action_startFragment_to_CreateAccountFragment"
+            app:destination="@id/CreateAccountFragment"/>
+
     </fragment>
 
     <fragment
@@ -50,6 +54,14 @@
         android:name="com.smilegate.Easel.ui.login.FindAccountFragment"
         android:label="fragment_fine_account"
         tools:layout="@layout/fragment_find_account">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/CreateAccountFragment"
+        android:name="com.smilegate.Easel.ui.join.CreateAccountFragment"
+        android:label="fragment_create_account"
+        tools:layout="@layout/fragment_create_account">
 
     </fragment>
 

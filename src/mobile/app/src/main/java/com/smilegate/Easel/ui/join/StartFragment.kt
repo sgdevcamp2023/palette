@@ -32,6 +32,10 @@ class StartFragment : Fragment() {
             navController.navigate(R.id.action_startFragment_to_loginFragment)
         }
 
+        binding.startFragmentJoinBtn.setOnClickListener {
+            navController.navigate(R.id.action_startFragment_to_CreateAccountFragment)
+        }
+
         return binding.root
     }
 
