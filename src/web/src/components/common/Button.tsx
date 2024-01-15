@@ -11,7 +11,7 @@ const ButtonVariants = cva<{
   {
     variants: {
       variant: {
-        filled: 'text-white ',
+        filled: 'text-white',
         outlined: 'bg-white border border-black',
       },
       color: {
@@ -25,6 +25,7 @@ const ButtonVariants = cva<{
       },
     },
     defaultVariants: {
+      variant: 'filled',
       color: 'black',
       padding: 'md',
     },
@@ -32,7 +33,7 @@ const ButtonVariants = cva<{
 );
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant: 'filled' | 'outlined';
+  variant?: 'filled' | 'outlined';
   color?: 'black' | 'blue';
   padding?: 'sm' | 'md' | 'lg';
 }
