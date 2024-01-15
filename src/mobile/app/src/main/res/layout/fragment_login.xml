@@ -47,7 +47,7 @@
         android:background="@color/BlueGrey_400"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText" />
+        app:layout_constraintTop_toBottomOf="@+id/login_fragment_input_field" />
 
 
     <TextView
