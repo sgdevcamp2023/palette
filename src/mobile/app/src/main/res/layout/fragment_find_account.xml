@@ -59,20 +59,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText" />
 
-
     <Button
-        android:id="@+id/find_account_next_btn"
+        android:id="@+id/password_fragment_login_btn"
         style="@style/SubHeadline3"
-        android:layout_width="74dp"
-        android:layout_height="38dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="104dp"
+        android:layout_marginEnd="22dp"
         android:background="@drawable/btn_login_fragment_next"
-        android:text="@string/find_account_fragment_next"
-        android:textAlignment="center"
+        android:text="@string/find_account_fragment_ok"
         android:textColor="@color/Grey_300"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
