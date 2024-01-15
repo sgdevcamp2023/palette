@@ -1,4 +1,3 @@
-
 server:
   port: 8000
 
@@ -8,6 +7,21 @@ spring:
 
   main:
     web-application-type: reactive
+
+  cloud:
+    gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "http://localhost:5173"
+            allow-credentials: true
+            allowedHeaders: '*'
+            allowedMethods:
+              - PUT
+              - GET
+              - POST
+              - DELETE
+              - OPTIONS
 
 eureka:
   instance:
