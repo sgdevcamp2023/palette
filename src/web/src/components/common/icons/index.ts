@@ -5,6 +5,7 @@ import BlingStar from './BlingStar.svg?react';
 import Bookmark from './Bookmark.svg?react';
 import Camera from './Camera.svg?react';
 import Cart from './Cart.svg?react';
+import Check from './Check.svg?react';
 import CirclePerson from './CirclePerson.svg?react';
 import CircleQuestion from './CircleQuestion.svg?react';
 import CircleX from './CircleX.svg?react';
@@ -49,6 +50,7 @@ export const ICONS = {
   bookmark: Bookmark,
   camera: Camera,
   cart: Cart,
+  check: Check,
   circlePerson: CirclePerson,
   circleQuestion: CircleQuestion,
   circleX: CircleX,
