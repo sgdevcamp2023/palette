@@ -27,6 +27,10 @@
             android:id="@+id/action_loginFragment_to_passwordFragment"
             app:destination="@id/passwordFragment"/>
 
+        <action
+            android:id="@+id/action_loginFragment_to_findAccountFragment"
+            app:destination="@id/findAccountFragment"/>
+
     </fragment>
 
     <fragment
@@ -34,6 +38,18 @@
         android:name="com.smilegate.Easel.ui.login.PasswordFragment"
         android:label="fragment_password"
         tools:layout="@layout/fragment_password">
+
+        <action
+            android:id="@+id/action_passwordFragment_to_FindAccountFragment"
+            app:destination="@id/findAccountFragment"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/findAccountFragment"
+        android:name="com.smilegate.Easel.ui.login.FindAccountFragment"
+        android:label="fragment_fine_account"
+        tools:layout="@layout/fragment_find_account">
 
     </fragment>
 

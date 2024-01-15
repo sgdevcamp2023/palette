@@ -23,27 +23,16 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animation"
         android:layout_width="300dp"
         android:layout_height="250dp"
-        app:layout_constraintBottom_toTopOf="@+id/view"
+        android:layout_marginTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
         app:lottie_rawRes="@raw/animation_1704883743167" />
-
-    <View
-        android:id="@+id/view"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="284dp"
-        android:layout_marginEnd="24dp"
-        android:background="@color/BlueGrey_400"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView" />
 
     <Button
         android:id="@+id/start_fragment_join_btn"
@@ -55,10 +44,10 @@
         android:background="@drawable/btn_start_fragment"
         android:text="@string/start_fragment_join"
         android:textColor="@color/white"
-        style="@style/Headline7"
+        style="@style/SubHeadline2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view" />
+        app:layout_constraintTop_toBottomOf="@+id/animation" />
 
     <TextView
         android:id="@+id/textView3"
