@@ -25,7 +25,15 @@
     <string name="find_account_fragment_announce_info">비밀번호를 변경하려면 계정에 연결된 이메일, 전화번호 또\n는 사용자 아이디를 입력해 주세요.</string>
     <string name="find_account_fragment_ask_info">이메일, 전화번호 또는 사용자 아이디</string>
     <string name="find_account_fragment_ok">확인</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- CreateAccountFragment -->
+    <string name="create_account_fragment_headline">계정을 생성하세요</string>
+    <string name="create_account_fragment_name">이름</string>
+    <string name="create_account_fragment_ask_info">휴대폰 번호 또는 이메일 주소</string>
+    <string name="create_account_fragment_announcement">가입하면 쿠키 사용을 포함해 이용약관 및 개인정보 처리방침에 동의\n하게 됩니다.
+        X는 계정을 안전하게 보호하고 광고를 포함한 맞춤 서비\n스를 제공하는 등 X 개인정보 처리방침에 명시된 목적을 위해 이메일\n주소 및 전화번호 등의
+        내연락처 정보를 사용할 수 있습니다. 자세히\n알아보기. 이메일 또는 전화번호를 제공하시면 다른 사람들이 이정보\n로 내 계정을 찾을 수 있게 됩니다.
+        해당 정보를 제공하지 않으시려면 \n여기에서 변경하세요.</string>
+    <string name="create_account_fragment_accept">가입</string>
 
 </resources>
