@@ -19,6 +19,8 @@ export const TypographyVariants = cva<{
       'headline-7': 'text-headline-7',
       'headline-8': 'text-headline-8',
       'sub-headline-1': 'text-sub-headline-1',
+      'sub-headline-2': 'text-sub-headline-2',
+      'sub-headline-3': 'text-sub-headline-3',
       'body-1': 'text-body-1',
       'body-2': 'text-body-2',
       'body-3': 'text-body-3',
