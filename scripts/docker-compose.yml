@@ -1,0 +1,70 @@
+version: '3'
+
+services:
+  dm:
+    image: palette1203/dm-service
+    ports:
+      - "8081:8081"
+    networks:
+      - my-network
+    restart: always
+
+  user:
+    image: palette1203/user-service
+    ports:
+      - "8082:8082"
+    networks:
+      - my-network
+    restart: always
+
+  timeline:
+    image: palette1203/timeline-service
+    ports:
+      - "8083:8083"
+    networks:
+      - my-network
+    restart: always
+
+  gateway:
+    image: palette1203/gateway-service
+    ports:
+      - "8084:8084"
+    networks:
+      - my-network
+    restart: always
+
+  notification:
+    image: palette1203/notification-service
+    ports:
+      - "8085:8085"
+    networks:
+      - my-network
+    restart: always
+
+  auth:
+    image: palette1203/auth-service
+    ports:
+      - "8086:8086"
+    networks:
+      - my-network
+    restart: always
+
+  discovery:
+    image: palette1203/discovery-service
+    ports:
+      - "8761:8761"
+    networks:
+      - my-network
+    restart: always
+
+  social:
+    image: palette1203/social-service
+    ports:
+      - "8087:8087"
+    networks:
+      - my-network
+    restart: always
+
+networks:
+  my-network:
+    driver: bridge
