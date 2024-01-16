@@ -45,33 +45,35 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   id?: string;
   label?: string;
   status?: 'normal' | 'success' | 'error' | 'dirty';
-  iconType?: IconKeyType;
-  iconColor?: {
+  icon?: {
+    type: IconKeyType;
     fill?: ColorType;
     stroke?: ColorType;
+    onClick?: VoidFunction;
   };
 }
 
 function Input({
   id,
   label,
-  iconColor,
+  icon,
   className,
   status = 'normal',
-  iconType = 'check',
   ...props
 }: InputProps) {
-  const isShowIcon = status === 'success' || iconType !== 'check';
+  const isShowIcon =
+    status === 'success' || (icon?.type && icon.type !== 'check');
 
   return (
     <div className={cn('relative h-11 w-full min-w-[200px]', className)}>
       {isShowIcon && (
         <div className="absolute grid w-5 h-5 place-items-center top-2/4 right-3 -translate-y-2/4 pt-[8px]">
           <Icon
-            type={iconType}
+            type={icon?.type ?? 'check'}
             aria-hidden
-            fill={iconColor?.fill}
-            stroke={iconColor?.stroke}
+            fill={icon?.fill}
+            stroke={icon?.stroke}
+            onClick={icon?.onClick}
           />
         </div>
       )}
