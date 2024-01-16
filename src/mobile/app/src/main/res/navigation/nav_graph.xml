@@ -75,6 +75,18 @@
         android:label="fragment_send_code"
         tools:layout="@layout/fragment_send_code">
 
+        <action
+            android:id="@+id/action_sendCodeFragment_to_needPasswordFragment"
+            app:destination="@id/needPasswordFragment"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/needPasswordFragment"
+        android:name="com.smilegate.Easel.ui.join.NeedPasswordFragment"
+        android:label="fragment_need_password"
+        tools:layout="@layout/fragment_need_password">
+
     </fragment>
 
 </navigation>

@@ -24,6 +24,9 @@ class SendCodeFragment : Fragment() {
 
         navController = findNavController()
 
+        binding.sendCodeNextBtn.setOnClickListener {
+            navController.navigate(R.id.action_sendCodeFragment_to_needPasswordFragment)
+        }
 
         return binding.root
     }

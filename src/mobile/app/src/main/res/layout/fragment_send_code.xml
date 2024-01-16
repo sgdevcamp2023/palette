@@ -80,11 +80,11 @@
         android:layout_marginBottom="18dp"
         android:text="@string/send_code_fragment_email"
         android:textColor="@color/Blue_500"
-        app:layout_constraintBottom_toTopOf="@+id/password_fragment_login_btn"
+        app:layout_constraintBottom_toTopOf="@+id/send_code_next_btn"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/password_fragment_login_btn"
+        android:id="@+id/send_code_next_btn"
         style="@style/SubHeadline3"
         android:layout_width="match_parent"
         android:layout_height="50dp"
