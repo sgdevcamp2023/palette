@@ -1,9 +1,10 @@
 import { cva } from 'class-variance-authority';
 import type { InputHTMLAttributes } from 'react';
 
-import type { IconKeyType } from './Icon';
 import Icon from './Icon';
 import { cn } from '@/utils';
+import type { IconKeyType } from './Icon';
+import type { ColorType } from '@/@types';
 
 const InputVariants = cva<{
   status: Record<'normal' | 'success' | 'error' | 'dirty', string>;
@@ -45,11 +46,16 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   status?: 'normal' | 'success' | 'error' | 'dirty';
   iconType?: IconKeyType;
+  iconColor?: {
+    fill?: ColorType;
+    stroke?: ColorType;
+  };
 }
 
 function Input({
   id,
   label,
+  iconColor,
   className,
   status = 'normal',
   iconType = 'check',
@@ -61,7 +67,12 @@ function Input({
     <div className={cn('relative h-11 w-full min-w-[200px]', className)}>
       {isShowIcon && (
         <div className="absolute grid w-5 h-5 place-items-center top-2/4 right-3 -translate-y-2/4 pt-[8px]">
-          <Icon type={iconType} aria-hidden />
+          <Icon
+            type={iconType}
+            aria-hidden
+            fill={iconColor?.fill}
+            stroke={iconColor?.stroke}
+          />
         </div>
       )}
 
