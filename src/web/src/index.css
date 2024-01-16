@@ -84,4 +84,9 @@
     overflow: hidden;
     background-color: #ffffff;
   }
+
+  :root {
+    --toastify-color-dark: #141619;
+    --toastify-color-progress-dark: #ffe042;
+  }
 }

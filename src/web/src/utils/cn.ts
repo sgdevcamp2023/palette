@@ -14,6 +14,8 @@ export const extendTwMerge = extendTailwindMerge({
         'text-headline-7',
         'text-headline-8',
         'text-sub-headline-1',
+        'text-sub-headline-2',
+        'text-sub-headline-3',
         'text-body-1',
         'text-body-2',
         'text-body-3',

@@ -7,11 +7,11 @@ const ButtonVariants = cva<{
   color: Record<'blue' | 'black', string>;
   padding: Record<'sm' | 'md' | 'lg', string>;
 }>(
-  'bg-black flex justify-center items-center w-full py-[15px] text-headline-5 rounded-3xl',
+  'bg-black flex justify-center items-center w-full py-[15px] text-headline-5 rounded-3xl transition-colors',
   {
     variants: {
       variant: {
-        filled: 'text-white ',
+        filled: 'text-white',
         outlined: 'bg-white border border-black',
       },
       color: {
@@ -25,6 +25,7 @@ const ButtonVariants = cva<{
       },
     },
     defaultVariants: {
+      variant: 'filled',
       color: 'black',
       padding: 'md',
     },
@@ -32,7 +33,7 @@ const ButtonVariants = cva<{
 );
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant: 'filled' | 'outlined';
+  variant?: 'filled' | 'outlined';
   color?: 'black' | 'blue';
   padding?: 'sm' | 'md' | 'lg';
 }
