@@ -106,7 +106,9 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="302dp"
         android:layout_marginEnd="24dp"
+        android:layout_marginBottom="18dp"
         android:text="@string/create_account_fragment_announcement"
+        app:layout_constraintBottom_toTopOf="@+id/create_account_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view2" />
@@ -117,13 +119,13 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginStart="22dp"
-        android:layout_marginTop="18dp"
         android:layout_marginEnd="22dp"
+        android:layout_marginBottom="24dp"
         android:background="@drawable/btn_login_fragment_next"
         android:text="@string/create_account_fragment_next"
         android:textColor="@color/Grey_300"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

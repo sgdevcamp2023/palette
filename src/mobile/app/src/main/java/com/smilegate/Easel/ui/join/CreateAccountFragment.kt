@@ -16,6 +16,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import com.smilegate.Easel.R
 import com.smilegate.Easel.databinding.FragmentCreateAccountBinding
 
@@ -25,11 +27,20 @@ class CreateAccountFragment : Fragment() {
     private var _binding: FragmentCreateAccountBinding? = null
     private val binding get() = _binding!!
 
+    private lateinit var navController: NavController
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentCreateAccountBinding.inflate(inflater, container, false)
+
+        navController = findNavController()
+
+        binding.createAccountBtn.setOnClickListener {
+            navController.navigate(R.id.action_createAccountFragment_to_sendCodeFragment)
+        }
+
         return binding.root
     }
 

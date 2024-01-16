@@ -37,7 +37,7 @@
     <string name="create_account_fragment_next">다음</string>
 
     <!-- SendCodeFragment -->
-    <string name="send_code_fragment_headline">코드를 보내 드렸습니다.</string>
+    <string name="send_code_fragment_headline">코드를 보내 드렸습니다</string>
     <string name="send_code_fragment_announcement">인증을 위해 아래에 입력하세요.</string>
     <string name="send_code_fragment_email">이메일을 받지 못하셨나요?</string>
     <string name="send_code_fragment_next">다음</string>
