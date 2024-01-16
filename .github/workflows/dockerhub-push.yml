@@ -19,6 +19,16 @@ jobs:
       run: |
         BRANCH_NAME=$(echo $GITHUB_REF | awk -F'/' '{print $3}')
         echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
+    
+    - name: Cache Gradle dependencies
+      uses: actions/cache@v2
+      with:
+        path: |
+          ~/.gradle/caches
+          ~/.gradle/wrapper
+        key: gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+        restore-keys: |
+          gradle-
 
     - name: Set up JDK 17
       uses: actions/setup-java@v2
@@ -48,6 +58,7 @@ jobs:
         fi
 
         cd $DOCKERFILE_DIR
-        docker build -t $DOCKER_USERNAME/$BRANCH_NAME-service:latest .
+        docker run --privileged --rm tonistiigi/binfmt --install all
+        docker buildx create --use
         docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-        docker push $DOCKER_USERNAME/$BRANCH_NAME-service:latest
+        docker buildx build --platform=linux/amd64,linux/arm64 -t $DOCKER_USERNAME/$BRANCH_NAME-service:latest . --push
