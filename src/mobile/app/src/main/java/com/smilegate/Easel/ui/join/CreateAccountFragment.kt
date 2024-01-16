@@ -7,14 +7,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.ImageView
-import androidx.core.content.ContextCompat
-import androidx.navigation.NavController
-import androidx.navigation.fragment.findNavController
-import com.smilegate.Easel.R
 import com.smilegate.Easel.databinding.FragmentCreateAccountBinding
-import com.smilegate.Easel.databinding.FragmentStartBinding
+
 
 class CreateAccountFragment : Fragment() {
 

@@ -120,7 +120,7 @@
         android:layout_marginTop="18dp"
         android:layout_marginEnd="22dp"
         android:background="@drawable/btn_login_fragment_next"
-        android:text="@string/create_account_fragment_accept"
+        android:text="@string/create_account_fragment_next"
         android:textColor="@color/Grey_300"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
