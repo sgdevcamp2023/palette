@@ -4,6 +4,7 @@ import {
   ChatPage,
   HomePage,
   LoginPage,
+  MembershipEntryPage,
   NotificationPage,
   SearchPage,
 } from '@/pages';
@@ -37,6 +38,11 @@ const searchRoute = new Route({
   getParentRoute: () => rootRoute,
   path: '/search',
   component: () => <SearchPage />,
+});
+const membershipEntryRoute = new Route({
+  getParentRoute: () => rootRoute,
+  path: '/entry',
+  component: () => <MembershipEntryPage />,
 });
 
 const routeTree = rootRoute.addChildren([
