@@ -51,7 +51,7 @@ function LoginPage() {
             email={loginInfo.email}
             onNextStep={onNextPage}
             onChangeInput={handleChangeInput}
-            onClickForgetPassword={() => navigate({ to: '/home' })}
+            onClickForgetPassword={() => navigate({ to: '/change-password' })}
           />
         );
       case LoginStep.PASSWORD:
@@ -62,7 +62,7 @@ function LoginPage() {
             password={loginInfo.password}
             onLogin={handleLogin}
             onChangeInput={handleChangeInput}
-            onClickForgetPassword={() => navigate({ to: '/home' })}
+            onClickForgetPassword={() => navigate({ to: '/change-password' })}
           />
         );
       default:
@@ -72,7 +72,7 @@ function LoginPage() {
             email={loginInfo.email}
             onNextStep={onNextPage}
             onChangeInput={handleChangeInput}
-            onClickForgetPassword={() => navigate({ to: '/home' })}
+            onClickForgetPassword={() => navigate({ to: '/change-password' })}
           />
         );
     }
