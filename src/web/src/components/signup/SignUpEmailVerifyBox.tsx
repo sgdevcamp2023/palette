@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 import { useState, type ChangeEvent } from 'react';
 
 import { StepTitle } from '..';
@@ -23,6 +24,10 @@ function SignUpEmailVerifyBox({
 }: SignUpEmailVerifyBoxProps) {
   const [isDirty, setIsDirty] = useState<boolean>(false);
 
+  const handleClickResendButton = () => {
+    toast('아직 구현이 안되어 있어요!');
+  };
+
   return (
     <>
       <StepTitle
@@ -42,18 +47,29 @@ function SignUpEmailVerifyBox({
           onChange={(e) => onChangeInput(e, 'emailVerifyCode')}
         />
       </div>
-      <Button
-        color="blue"
-        variant="filled"
-        aria-label="기재해준 이메일을 통해 인증 후, 비밀번호 설정 페이지로 이동합니다."
-        disabled={disabled}
-        aria-disabled={disabled}
-        onClick={onNextStep}
-      >
-        <Typography size="body-2" color="white">
-          다음
+      <div className="flex flex-col gap-[18px]">
+        <Typography
+          as="span"
+          size="body-3"
+          role="button"
+          color="blue-500"
+          onClick={handleClickResendButton}
+        >
+          이메일을 받지 못하셨나요?
         </Typography>
-      </Button>
+        <Button
+          color="blue"
+          variant="filled"
+          aria-label="기재해준 이메일을 통해 인증 후, 비밀번호 설정 페이지로 이동합니다."
+          disabled={disabled}
+          aria-disabled={disabled}
+          onClick={onNextStep}
+        >
+          <Typography size="body-2" color="white">
+            다음
+          </Typography>
+        </Button>
+      </div>
     </>
   );
 }
