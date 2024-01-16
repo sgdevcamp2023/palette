@@ -8,6 +8,8 @@ export type FontKeyType =
   | 'headline-7'
   | 'headline-8'
   | 'sub-headline-1'
+  | 'sub-headline-2'
+  | 'sub-headline-3'
   | 'body-1'
   | 'body-2'
   | 'body-3'

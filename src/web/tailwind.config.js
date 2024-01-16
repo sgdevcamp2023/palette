@@ -16,7 +16,7 @@ export default {
       'headline-3': ['24px', {
         lineHeight: '32px',
         letterSpacing: '-0.04em',
-        fontWeight: 700
+        fontWeight: 600
       }],
       'headline-4': ['22px', {
         lineHeight: '28px',
@@ -43,8 +43,18 @@ export default {
         letterSpacing: '-0.04em',
         fontWeight: 700
       }],
-      'sub-headline-1': ['16px', {
+      'sub-headline-1': ['24px', {
         lineHeight: '20px',
+        letterSpacing: '-0.04em',
+        fontWeight: 600
+      }],
+      'sub-headline-2': ['16px', {
+        lineHeight: '20px',
+        letterSpacing: '-0.04em',
+        fontWeight: 500
+      }],
+      'sub-headline-3': ['14px', {
+        lineHeight: '16px',
         letterSpacing: '-0.04em',
         fontWeight: 500
       }],
@@ -54,12 +64,12 @@ export default {
         fontWeight: 400
       }],
       'body-2': ['14px', {
-        lineHeight: '16px',
+        lineHeight: '20px',
         letterSpacing: '-0.02em',
         fontWeight: 400
       }],
       'body-3': ['12px', {
-        lineHeight: '16px',
+        lineHeight: '20px',
         letterSpacing: '-0.02em',
         fontWeight: 400
       },],

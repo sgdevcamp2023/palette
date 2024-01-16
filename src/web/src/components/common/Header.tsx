@@ -25,12 +25,24 @@ type HeaderType =
       onClick?: MouseEventHandler<HTMLButtonElement>;
     };
 
+const HeaderButtonVariants = cva<{
+  align: Record<'start' | 'mid' | 'end', string>;
+}>('absolute', {
+  variants: {
+    align: {
+      start: 'left-[14px]',
+      mid: 'left-2/4 -translate-x-1/2',
+      end: 'right-[14px]',
+    },
+  },
+});
+
 function HeaderButton({
   header,
-  isCenter,
+  align,
 }: {
   header?: HeaderType;
-  isCenter?: boolean;
+  align: 'start' | 'mid' | 'end';
 }) {
   if (!header) {
     return <span className="w-[24px]" />;
@@ -47,16 +59,16 @@ function HeaderButton({
           stroke={header.stroke}
           onClick={header.onClick}
           label={header.label}
-          className={header.className}
+          className={cn(HeaderButtonVariants({ align }), header.className)}
         />
       )}
       {header.type === 'text' && (
         <button
           type="button"
           onClick={header.onClick}
-          className={header.className}
+          className={cn(HeaderButtonVariants({ align }), header.className)}
         >
-          <Typography size={isCenter ? 'headline-7' : 'body-2'}>
+          <Typography size={align === 'mid' ? 'headline-7' : 'body-2'}>
             {header.label}
           </Typography>
         </button>
@@ -68,7 +80,7 @@ function HeaderButton({
 const HeaderVariants = cva<{
   position: Record<'sticky' | 'fixed', string>;
 }>(
-  'flex justify-between items-center px-[14px] w-[420px] max-w-full h-[44px] border-b-[1px]',
+  'flex justify-between items-center px-[14px] w-[420px] max-w-full h-[44px]',
   {
     variants: {
       position: {
@@ -93,9 +105,9 @@ interface HeaderProps {
 function Header({ left, center, right, position, className }: HeaderProps) {
   return (
     <header className={cn(HeaderVariants({ position }), className)}>
-      <HeaderButton header={left} />
-      <HeaderButton header={center} isCenter />
-      <HeaderButton header={right} />
+      <HeaderButton header={left} align="start" />
+      <HeaderButton header={center} align="mid" />
+      <HeaderButton header={right} align="end" />
     </header>
   );
 }
