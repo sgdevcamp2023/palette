@@ -69,9 +69,9 @@ function BottomNavigation({ contentRef }: BottomNavigationProps) {
         iconType="home"
         width={22}
         label="홈 화면으로 이동"
-        disabled={!!matchRoute({ to: '/' })}
-        onClick={() => navigate({ to: '/' })}
-        fill={matchRoute({ to: '/' }) ? 'black' : undefined}
+        disabled={!!matchRoute({ to: '/home' })}
+        onClick={() => navigate({ to: '/home' })}
+        fill={matchRoute({ to: '/home' }) ? 'black' : undefined}
       />
       <AccessibleIconButton
         role="navigation"

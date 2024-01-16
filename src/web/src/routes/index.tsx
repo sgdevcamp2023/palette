@@ -16,7 +16,7 @@ export const rootRoute = new RootRoute({
 
 const homeRoute = new Route({
   getParentRoute: () => rootRoute,
-  path: '/',
+  path: '/home',
   component: () => <HomePage />,
 });
 
@@ -42,14 +42,13 @@ const searchRoute = new Route({
 });
 const membershipEntryRoute = new Route({
   getParentRoute: () => rootRoute,
-  path: '/entry',
+  path: '/',
   component: () => <MembershipEntryPage />,
 });
 const signUpRoute = new Route({
   getParentRoute: () => rootRoute,
   path: '/signup',
   component: () => <SignUpPage />,
-  
 });
 
 const routeTree = rootRoute.addChildren([
