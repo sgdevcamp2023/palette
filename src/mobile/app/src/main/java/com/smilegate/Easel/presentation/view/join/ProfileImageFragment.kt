@@ -24,6 +24,14 @@ class ProfileImageFragment : Fragment() {
 
         navController = findNavController()
 
+        binding.profileImageFragmentNextBtn.setOnClickListener {
+            navController.navigate(R.id.action_profileImageFragment_to_askNameFragment)
+        }
+
+        binding.profileImageFragmentSkipBtn.setOnClickListener {
+            navController.navigate(R.id.action_profileImageFragment_to_askNameFragment)
+        }
+
 
         return binding.root
     }

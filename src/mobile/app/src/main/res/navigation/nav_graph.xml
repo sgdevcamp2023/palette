@@ -99,6 +99,18 @@
         android:label="fragment_profile_image"
         tools:layout="@layout/fragment_profile_image">
 
+        <action
+            android:id="@+id/action_profileImageFragment_to_askNameFragment"
+            app:destination="@id/askNameFragment"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/askNameFragment"
+        android:name="com.smilegate.Easel.presentation.view.join.AskNameFragment"
+        android:label="fragment_ask_name"
+        tools:layout="@layout/fragment_ask_name">
+
     </fragment>
 
 </navigation>

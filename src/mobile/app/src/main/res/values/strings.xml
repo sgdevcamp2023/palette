@@ -59,6 +59,6 @@
     <string name="ask_name_fragment_announcement">\@사용자 아이디는 고유한 나만의 아이디입니다. 나중에 언\n제든 바꿀 수 있습니다.</string>
     <string name="ask_name_fragment_hint">사용자 아이디</string>
     <string name="ask_name_fragment_accept">가입</string>
-    <string name="ask_name_fragment_skip">건너뛰기</string>
+    <string name="ask_name_fragment_skip"><u>건너뛰기</u></string>
 
 </resources>
