@@ -1,6 +1,6 @@
 import { useRef, type ReactNode } from 'react';
 
-import BottomNavigation from './BottomNavigation';
+import BottomNavigation from '../BottomNavigation';
 import { cn } from '@/utils';
 
 interface ContentLayoutProps {

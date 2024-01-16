@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { toast } from 'react-toastify';
 import type { ChangeEvent } from 'react';
 
-import { StepTitle } from '..';
-import { AccessibleIconButton, Button, Icon, Typography } from '../common';
+import { Button, Icon, Typography } from '../common';
+import { AccessibleIconButton, StepTitle } from '..';
 import type { NavigationEvent } from './signUpReducer';
 
 interface SignUpProfileImageBoxProps extends NavigationEvent {

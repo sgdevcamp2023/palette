@@ -1,5 +1,4 @@
-import { Example } from '@/components';
-import { ContentLayout, Header } from '@/components/common';
+import { ContentLayout, Header } from '@/components';
 
 function ChatPage() {
   return (
@@ -22,7 +21,6 @@ function ChatPage() {
       />
       <ContentLayout>
         <h1 className="text-headline-1">CHAT</h1>
-        <Example />
       </ContentLayout>
     </>
   );

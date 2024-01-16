@@ -1,5 +1,4 @@
-import { Example } from '@/components';
-import { ContentLayout, Header } from '@/components/common';
+import { ContentLayout, Header } from '@/components';
 
 function SearchPage() {
   return (
@@ -22,7 +21,6 @@ function SearchPage() {
       />
       <ContentLayout>
         <h1 className="text-headline-1">SEARCH</h1>
-        <Example />
       </ContentLayout>
     </>
   );

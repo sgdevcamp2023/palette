@@ -1,9 +1,9 @@
 import type { ButtonHTMLAttributes } from 'react';
 
-import type { IconKeyType } from './Icon';
+import type { IconKeyType } from './common/Icon';
 import type { ColorType } from '@/@types';
-import Icon from './Icon';
-import VisuallyHidden from './VisuallyHidden';
+import Icon from './common/Icon';
+import VisuallyHidden from './common/VisuallyHidden';
 
 interface AccessibleIconButtonProps
   extends ButtonHTMLAttributes<HTMLButtonElement> {
