@@ -1,5 +1,6 @@
-import type { ChangeEvent } from 'react';
+import { useState, type ChangeEvent, useMemo } from 'react';
 
+import { isValidEmail } from '@/utils';
 import { NotSupportText, StepTitle } from '..';
 import { Button, Input, Typography } from '../common';
 import type { NavigationEvent, SignUpInfo } from './signUpReducer';
@@ -21,6 +22,27 @@ function SignUpEmailBox({
   onNextStep,
   onChangeInput,
 }: SignUpEmailBoxProps) {
+  const [isFirstDirty, setIsFirstDirty] = useState<boolean>(false);
+  const [isDirty, setIsDirty] = useState<boolean>(false);
+  const [isInValidEmail, setIsInValidEmail] = useState<boolean>(false);
+
+  const emailStatus = useMemo((): Parameters<typeof Input>[0]['status'] => {
+    if (isDirty) return 'dirty';
+    if (isInValidEmail) return 'error';
+    if (!isFirstDirty) return 'normal';
+    return 'success';
+  }, [isDirty, isInValidEmail]);
+
+  const handleFocusOnEmail = () => {
+    setIsDirty(true);
+    setIsFirstDirty(true);
+  };
+
+  const handleBlurOnEmail = () => {
+    setIsDirty(false);
+    setIsInValidEmail(!isValidEmail(email));
+  };
+
   return (
     <>
       <StepTitle title="계정을 생성하세요" className="mt-[28px]" />
@@ -33,7 +55,10 @@ function SignUpEmailBox({
         <Input
           value={email}
           label="이메일"
+          status={emailStatus}
           onChange={(e) => onChangeInput(e, 'email')}
+          onFocus={handleFocusOnEmail}
+          onBlur={handleBlurOnEmail}
         />
       </div>
       <Typography size="body-3" color="blueGrey-800" className="pb-[18px]">
@@ -52,8 +77,8 @@ function SignUpEmailBox({
       <Button
         color="blue"
         variant="filled"
-        disabled={disabled}
-        aria-disabled={disabled}
+        disabled={disabled || isInValidEmail}
+        aria-disabled={disabled || isInValidEmail}
         aria-label="이름, 이메일을 채웠으면 이메일 인증 페이지로 이동합니다."
         onClick={onNextStep}
       >
