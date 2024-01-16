@@ -41,7 +41,11 @@
     <string name="send_code_fragment_announcement">인증을 위해 아래에 입력하세요.</string>
     <string name="send_code_fragment_email">이메일을 받지 못하셨나요?</string>
     <string name="send_code_fragment_next">다음</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- NeedPasswordFragment -->
+    <string name="need_password_fragment_headline">비밀번호가 필요합니다</string>
+    <string name="need_password_fragment_announcement">8자 이상이어야 합니다.</string>
+    <string name="need_password_fragment_hint">비밀번호</string>
+    <string name="need_password_fragment_next">다음</string>
 
 </resources>
