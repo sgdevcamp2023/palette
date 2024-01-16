@@ -10,7 +10,9 @@ interface StepTitleProps {
 function StepTitle({ title, description, className }: StepTitleProps) {
   return (
     <div className={cn('flex flex-col gap-[24px]', className)}>
-      <Typography size="headline-3">{title}</Typography>
+      <Typography size="headline-3" color="grey-600">
+        {title}
+      </Typography>
       {description && (
         <Typography size="body-2" color="blueGrey-800">
           {description}
