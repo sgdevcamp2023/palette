@@ -47,7 +47,7 @@ function SignUpPage() {
   const onNextPage = () => dispatch({ direction: 'next' });
   const onPrevPage = () => {
     if (state === SignUpStep.INFORMATION) {
-      navigate({ to: '/entry' });
+      navigate({ to: '/' });
       return;
     }
     dispatch({ direction: 'prev' });

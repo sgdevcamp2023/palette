@@ -2,8 +2,8 @@ import { cva } from 'class-variance-authority';
 import type { MouseEventHandler } from 'react';
 
 import { cn } from '@/utils';
-import Typography from './Typography';
-import type { IconKeyType } from './Icon';
+import Typography from './common/Typography';
+import type { IconKeyType } from './common/Icon';
 import type { ColorType } from '@/@types';
 import AccessibleIconButton from './AccessibleIconButton';
 

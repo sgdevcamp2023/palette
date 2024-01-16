@@ -1,3 +1,4 @@
+export { default as ChangePasswordPage } from './ChangePasswordPage';
 export { default as ChatPage } from './ChatPage';
 export { default as HomePage } from './HomePage';
 export { default as LoginPage } from './LoginPage';

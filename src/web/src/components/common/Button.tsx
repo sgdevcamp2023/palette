@@ -7,7 +7,7 @@ const ButtonVariants = cva<{
   color: Record<'blue' | 'black', string>;
   padding: Record<'sm' | 'md' | 'lg', string>;
 }>(
-  'bg-black flex justify-center items-center w-full py-[15px] text-headline-5 rounded-3xl transition-colors',
+  'flex justify-center items-center w-full py-[15px] text-headline-5 rounded-3xl transition-colors',
   {
     variants: {
       variant: {
@@ -16,7 +16,7 @@ const ButtonVariants = cva<{
       },
       color: {
         blue: 'bg-blue-500',
-        black: '',
+        black: 'bg-black',
       },
       padding: {
         sm: 'py-[10px]',
@@ -39,12 +39,12 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 function Button({
-  color,
   className,
   children,
   disabled,
   padding,
   variant,
+  color = 'black',
   ...props
 }: ButtonProps) {
   return (
@@ -59,7 +59,11 @@ function Button({
           padding,
         }),
         className,
-        disabled ? 'bg-grey-400' : '',
+        disabled
+          ? 'bg-grey-400'
+          : `cursor-pointer ${
+              color === 'black' ? 'hover:bg-grey-500' : 'hover:bg-blue-400'
+            }`,
       )}
       {...props}
     >

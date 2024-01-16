@@ -1,6 +1,7 @@
 import { Outlet, Router, Route, RootRoute } from '@tanstack/react-router';
 
 import {
+  ChangePasswordPage,
   ChatPage,
   HomePage,
   LoginPage,
@@ -16,7 +17,7 @@ export const rootRoute = new RootRoute({
 
 const homeRoute = new Route({
   getParentRoute: () => rootRoute,
-  path: '/',
+  path: '/home',
   component: () => <HomePage />,
 });
 
@@ -42,14 +43,18 @@ const searchRoute = new Route({
 });
 const membershipEntryRoute = new Route({
   getParentRoute: () => rootRoute,
-  path: '/entry',
+  path: '/',
   component: () => <MembershipEntryPage />,
 });
 const signUpRoute = new Route({
   getParentRoute: () => rootRoute,
   path: '/signup',
   component: () => <SignUpPage />,
-  
+});
+const changePasswordRoute = new Route({
+  getParentRoute: () => rootRoute,
+  path: '/change-password',
+  component: () => <ChangePasswordPage />,
 });
 
 const routeTree = rootRoute.addChildren([
@@ -60,6 +65,7 @@ const routeTree = rootRoute.addChildren([
   searchRoute,
   membershipEntryRoute,
   signUpRoute,
+  changePasswordRoute,
 ]);
 
 export const router = new Router({ routeTree });

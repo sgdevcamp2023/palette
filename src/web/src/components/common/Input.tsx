@@ -74,6 +74,7 @@ function Input({
             fill={icon?.fill}
             stroke={icon?.stroke}
             onClick={icon?.onClick}
+            className={icon?.onClick ? 'cursor-pointer' : ''}
           />
         </div>
       )}

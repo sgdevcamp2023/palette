@@ -36,29 +36,18 @@ function SignUpNameBox({
         />
       </div>
 
-      <div className="flex flex-col gap-[26px]">
-        <Button
-          color="black"
-          variant="filled"
-          aria-label="회원가입을 진행합니다."
-          disabled={disabled}
-          aria-disabled={disabled}
-          onClick={onSignUp}
-        >
-          <Typography size="body-2" color="white">
-            가입
-          </Typography>
-        </Button>
-        <Typography
-          role="navigation"
-          size="headline-8"
-          color="grey-600"
-          className="underline cursor-pointer text-center"
-          onClick={onSignUp}
-        >
-          지금은 넘어가기
+      <Button
+        color="black"
+        variant="filled"
+        aria-label="회원가입을 진행합니다."
+        disabled={disabled}
+        aria-disabled={disabled}
+        onClick={onSignUp}
+      >
+        <Typography size="body-2" color="white">
+          가입
         </Typography>
-      </div>
+      </Button>
     </>
   );
 }
