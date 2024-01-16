@@ -11,11 +11,12 @@ import CircleQuestion from './CircleQuestion.svg?react';
 import CircleX from './CircleX.svg?react';
 import Comment from './Comment.svg?react';
 import DownArrow from './DownArrow.svg?react';
+import EyeOff from './EyeOff.svg?react';
+import EyeOn from './EyeOn.svg?react';
 import GIF from './GIF.svg?react';
 import Globe from './Globe.svg?react';
 import Group from './Group.svg?react';
 import Heart from './Heart.svg?react';
-import Hidden from './Hidden.svg?react';
 import Home from './Home.svg?react';
 import Image from './Image.svg?react';
 import LeftStickArrow from './LeftStickArrow.svg?react';
@@ -57,11 +58,12 @@ export const ICONS = {
   circleX: CircleX,
   comment: Comment,
   downArrow: DownArrow,
+  eyeOff: EyeOff,
+  eyeOn: EyeOn,
   gif: GIF,
   globe: Globe,
   group: Group,
   heart: Heart,
-  hidden: Hidden,
   home: Home,
   image: Image,
   leftStickArrow: LeftStickArrow,
