@@ -17,7 +17,7 @@
 
         <action
             android:id="@+id/action_startFragment_to_CreateAccountFragment"
-            app:destination="@id/CreateAccountFragment"/>
+            app:destination="@id/createAccountFragment"/>
 
     </fragment>
 
@@ -58,10 +58,22 @@
     </fragment>
 
     <fragment
-        android:id="@+id/CreateAccountFragment"
+        android:id="@+id/createAccountFragment"
         android:name="com.smilegate.Easel.ui.join.CreateAccountFragment"
         android:label="fragment_create_account"
         tools:layout="@layout/fragment_create_account">
+
+        <action
+            android:id="@+id/action_createAccountFragment_to_sendCodeFragment"
+            app:destination="@id/sendCodeFragment"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/sendCodeFragment"
+        android:name="com.smilegate.Easel.ui.join.SendCodeFragment"
+        android:label="fragment_send_code"
+        tools:layout="@layout/fragment_send_code">
 
     </fragment>
 
