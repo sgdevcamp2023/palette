@@ -68,7 +68,7 @@ function HeaderButton({
 const HeaderVariants = cva<{
   position: Record<'sticky' | 'fixed', string>;
 }>(
-  'flex justify-between items-center px-[14px] w-[420px] max-w-full h-[44px] border-b-[1px]',
+  'flex justify-between items-center px-[14px] w-[420px] max-w-full h-[44px]',
   {
     variants: {
       position: {
