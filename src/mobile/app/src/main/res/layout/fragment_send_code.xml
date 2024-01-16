@@ -73,7 +73,7 @@
 
     <TextView
         android:id="@+id/send_code_recend_email"
-        style="@style/Body2"
+        style="@style/Body3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
