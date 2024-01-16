@@ -52,6 +52,6 @@
     <string name="profile_image_fragment_headline">프로필 사진 선택하기</string>
     <string name="profile_image_fragment_announcement">마음에 드는 셀카 사진이 있나요? 지금 업로드하세요.</string>
     <string name="profile_image_fragment_next">다음</string>
-    <string name="profile_image_fragment_skip">지금은 넘어가기</string>
+    <string name="profile_image_fragment_skip"><u>지금은 넘어가기</u></string>
 
 </resources>

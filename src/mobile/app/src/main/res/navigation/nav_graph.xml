@@ -87,6 +87,18 @@
         android:label="fragment_need_password"
         tools:layout="@layout/fragment_need_password">
 
+        <action
+            android:id="@+id/action_needPasswordFragment_to_profileImageFragment"
+            app:destination="@id/profileImageFragment"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/profileImageFragment"
+        android:name="com.smilegate.Easel.presentation.view.join.ProfileImageFragment"
+        android:label="fragment_profile_image"
+        tools:layout="@layout/fragment_profile_image">
+
     </fragment>
 
 </navigation>

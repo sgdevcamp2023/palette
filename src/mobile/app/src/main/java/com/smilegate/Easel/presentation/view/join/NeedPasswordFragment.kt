@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import com.smilegate.Easel.R
 import com.smilegate.Easel.databinding.FragmentNeedPasswordBinding
 
 class NeedPasswordFragment : Fragment() {
@@ -22,6 +23,9 @@ class NeedPasswordFragment : Fragment() {
 
         navController = findNavController()
 
+        binding.needPasswordFragmentNextBtn.setOnClickListener {
+            navController.navigate(R.id.action_needPasswordFragment_to_profileImageFragment)
+        }
 
         return binding.root
     }

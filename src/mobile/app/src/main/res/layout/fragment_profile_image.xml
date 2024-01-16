@@ -64,13 +64,13 @@
         android:background="@drawable/btn_login_fragment_next"
         android:text="@string/profile_image_fragment_next"
         android:textColor="@color/Grey_300"
-        app:layout_constraintBottom_toTopOf="@+id/password_fragment_lost_pw"
+        app:layout_constraintBottom_toTopOf="@+id/profile_image_fragment_skip_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/password_fragment_lost_pw"
+        android:id="@+id/profile_image_fragment_skip_btn"
         style="@style/SubHeadline2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
