@@ -22,24 +22,24 @@ function SignUpEmailBox({
   onNextStep,
   onChangeInput,
 }: SignUpEmailBoxProps) {
-  const [isFirstDirty, setIsFirstDirty] = useState<boolean>(false);
-  const [isDirty, setIsDirty] = useState<boolean>(false);
+  const [isDirty, setIsDirty] = useState<'initial' | 'dirty' | 'not-dirty'>(
+    'initial',
+  );
   const [isInValidEmail, setIsInValidEmail] = useState<boolean>(false);
 
   const emailStatus = useMemo((): Parameters<typeof Input>[0]['status'] => {
-    if (isDirty) return 'dirty';
+    if (isDirty === 'initial') return 'normal';
+    if (isDirty === 'dirty') return 'dirty';
     if (isInValidEmail) return 'error';
-    if (!isFirstDirty) return 'normal';
     return 'success';
   }, [isDirty, isInValidEmail]);
 
   const handleFocusOnEmail = () => {
-    setIsDirty(true);
-    setIsFirstDirty(true);
+    setIsDirty('dirty');
   };
 
   const handleBlurOnEmail = () => {
-    setIsDirty(false);
+    setIsDirty('not-dirty');
     setIsInValidEmail(!isValidEmail(email));
   };
 
