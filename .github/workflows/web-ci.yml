@@ -7,8 +7,8 @@ on:
       - 'src/web/**'
 
 jobs:
-  web-ci-action:
-    name: ci actions
+  web-check-lint:
+    name: check lint
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -57,8 +57,8 @@ jobs:
       - name: check build
         run: pnpm build
 
-  web-type-check:
-    name: type-check
+  web-check-type:
+    name: check type
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -98,7 +98,7 @@ jobs:
       - name: check type
         run: pnpm type:check
 
-  web-test:
+  web-check-test:
     name: check test
     runs-on: ubuntu-latest
     defaults:
@@ -139,7 +139,7 @@ jobs:
       - name: check testing
         run: pnpm test
 
-  web-build:
+  web-check-build:
     name: check build
     runs-on: ubuntu-latest
     defaults:
