@@ -40,7 +40,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="26dp"
         android:text="abc@gmail.com"
         android:textColor="@color/BlueGrey_800"
         app:layout_constraintStart_toStartOf="parent"

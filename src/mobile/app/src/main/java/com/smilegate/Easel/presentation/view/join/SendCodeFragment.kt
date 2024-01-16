@@ -1,10 +1,12 @@
 package com.smilegate.Easel.presentation.view.join
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
@@ -17,12 +19,14 @@ class SendCodeFragment : Fragment() {
 
     private lateinit var navController: NavController
 
-    private val joinViewModel: JoinViewModel by viewModels()
+    // Activity 범위에서 공유하는 경우
+    private val joinViewModel: JoinViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        Log.d("SendCodeFragment", "onCreateView called")
         binding = FragmentSendCodeBinding.inflate(inflater, container, false)
 
         navController = findNavController()
@@ -37,8 +41,13 @@ class SendCodeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // ViewModel에서 데이터 가져와서 UI 업데이트
-        binding?.sendCodeEmail?.text = joinViewModel.getEmailValue()
+        // LiveData를 사용하여 데이터 변경 감지
+        joinViewModel.email.observe(viewLifecycleOwner) { email ->
+            Log.d("SendCodeFragment", "Email value retrieved: $email")
+
+            // userEmail을 사용하여 UI 업데이트 등을 수행
+            binding?.sendCodeEmail?.text = email
+        }
 
     }
 

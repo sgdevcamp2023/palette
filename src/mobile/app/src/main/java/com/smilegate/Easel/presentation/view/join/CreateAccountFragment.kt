@@ -1,5 +1,6 @@
 package com.smilegate.Easel.presentation.view.join
 
+import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.SpannableString
@@ -7,12 +8,14 @@ import android.text.TextPaint
 import android.text.TextWatcher
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
@@ -28,13 +31,14 @@ class CreateAccountFragment : Fragment() {
 
     private lateinit var navController: NavController
 
-    private val joinViewModel: JoinViewModel by viewModels()
-
+    // Activity 범위에서 공유
+    private val joinViewModel: JoinViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        Log.d("CreateAccountFragment", "onCreateView called")
         _binding = FragmentCreateAccountBinding.inflate(inflater, container, false)
 
         navController = findNavController()
@@ -44,6 +48,7 @@ class CreateAccountFragment : Fragment() {
 
             // ViewModel에 데이터 저장
             joinViewModel.setEmailValue(inputText)
+            Log.d("CreateAccountFragment", "Email value set: $inputText")
 
             navController.navigate(R.id.action_createAccountFragment_to_sendCodeFragment)
         }
@@ -106,7 +111,7 @@ class CreateAccountFragment : Fragment() {
                         override fun updateDrawState(ds: TextPaint) {
                             super.updateDrawState(ds)
                             ds.color = color
-                            ds.bgColor = ContextCompat.getColor(requireContext(), android.R.color.transparent)
+                            ds.bgColor = Color.TRANSPARENT
                             ds.isUnderlineText = false // 밑줄 제거
                         }
                     },
@@ -119,6 +124,7 @@ class CreateAccountFragment : Fragment() {
         binding?.textView4?.text = spannableString
         // TextView에 ClickableSpan을 적용할 때 clickable을 true로 설정해야 클릭 이벤트가 동작합니다.
         binding?.textView4?.movementMethod = LinkMovementMethod.getInstance()
+
     }
 
     private fun handleTextClick(clickedText: String) {

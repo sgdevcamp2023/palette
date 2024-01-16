@@ -1,26 +1,24 @@
 package com.smilegate.Easel.presentation.viewmodel
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class JoinViewModel : ViewModel() {
 
-    // 공유할 데이터 변수
-    var email: String? = null
-    var password: String? = null
+    // LiveData를 사용하여 데이터 관리
+    private val _email = MutableLiveData<String>()
+    val email: LiveData<String> get() = _email
+
+    private val _password = MutableLiveData<String>()
+    val password: LiveData<String> get() = _password
 
     // 값을 설정하는 메서드
     fun setEmailValue(data: String) {
-        email = data
-    }
-    fun setPasswordValue(data: String) {
-        password = data
+        _email.value = data
     }
 
-    // 값을 가져오는 메서드
-    fun getEmailValue(): String? {
-        return email
-    }
-    fun getPasswordValue(): String? {
-        return password
+    fun setPasswordValue(data: String) {
+        _password.value = data
     }
 }
