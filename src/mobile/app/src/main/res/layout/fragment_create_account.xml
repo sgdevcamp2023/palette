@@ -27,12 +27,24 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="22dp"
         android:layout_marginTop="42dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginEnd="22dp"
         android:background="@null"
         android:hint="@string/create_account_fragment_name"
-        android:textColorHint="@color/Grey_600"
+        android:textColorHint="@color/BlueGrey_800"
+        android:textColor="@color/Blue_500"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <ImageView
+        android:id="@+id/create_account_finish_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="42dp"
+        android:layout_marginEnd="22dp"
+        android:src="@drawable/ic_check"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <View
@@ -58,8 +70,20 @@
         android:background="@null"
         android:hint="@string/create_account_fragment_ask_info"
         android:textColorHint="@color/BlueGrey_800"
+        android:textColor="@color/Blue_500"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view" />
+
+    <ImageView
+        android:id="@+id/create_account_finish_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="38dp"
+        android:layout_marginEnd="22dp"
+        android:src="@drawable/ic_check"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view" />
 
     <View
