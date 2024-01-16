@@ -28,6 +28,7 @@
         android:layout_marginStart="24dp"
         android:layout_marginTop="54dp"
         android:layout_marginEnd="24dp"
+        android:inputType="textEmailAddress"
         android:background="@null"
         android:hint="@string/find_account_fragment_ask_info"
         android:textColorHint="@color/BlueGrey_800"
