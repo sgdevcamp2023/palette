@@ -1,25 +1,24 @@
-package com.smilegate.Easel.ui.join
+package com.smilegate.Easel.presentation.view.join
 
-import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
-import android.text.Spannable
 import android.text.SpannableString
 import android.text.TextPaint
 import android.text.TextWatcher
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
-import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.smilegate.Easel.R
 import com.smilegate.Easel.databinding.FragmentCreateAccountBinding
+import com.smilegate.Easel.presentation.viewmodel.JoinViewModel
 
 
 class CreateAccountFragment : Fragment() {
@@ -29,6 +28,9 @@ class CreateAccountFragment : Fragment() {
 
     private lateinit var navController: NavController
 
+    private val joinViewModel: JoinViewModel by viewModels()
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -37,7 +39,12 @@ class CreateAccountFragment : Fragment() {
 
         navController = findNavController()
 
-        binding.createAccountBtn.setOnClickListener {
+        binding?.createAccountBtn?.setOnClickListener {
+            val inputText = binding?.createAccountInfoField?.text.toString()
+
+            // ViewModel에 데이터 저장
+            joinViewModel.setEmailValue(inputText)
+
             navController.navigate(R.id.action_createAccountFragment_to_sendCodeFragment)
         }
 

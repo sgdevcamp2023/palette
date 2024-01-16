@@ -1,4 +1,4 @@
-package com.smilegate.Easel.ui.join
+package com.smilegate.Easel.presentation.view.join
 
 import android.os.Bundle
 import android.view.LayoutInflater

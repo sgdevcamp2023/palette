@@ -1,18 +1,16 @@
-package com.smilegate.Easel.ui.join
+package com.smilegate.Easel.presentation.view.login
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import com.smilegate.Easel.R
-import com.smilegate.Easel.databinding.FragmentSendCodeBinding
-import com.smilegate.Easel.databinding.FragmentStartBinding
+import com.smilegate.Easel.databinding.FragmentFindAccountBinding
 
-class SendCodeFragment : Fragment() {
-    private lateinit var binding: FragmentSendCodeBinding
+class FindAccountFragment : Fragment() {
+    private lateinit var binding: FragmentFindAccountBinding
 
     private lateinit var navController: NavController
 
@@ -20,13 +18,13 @@ class SendCodeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentSendCodeBinding.inflate(inflater, container, false)
+        binding = FragmentFindAccountBinding.inflate(inflater, container, false)
 
         navController = findNavController()
 
-        binding.sendCodeNextBtn.setOnClickListener {
-            navController.navigate(R.id.action_sendCodeFragment_to_needPasswordFragment)
-        }
+//        binding.loginFragmentNextBtn.setOnClickListener {
+//            navController.navigate(R.id.action_loginFragment_to_passwordFragment)
+//        }
 
         return binding.root
     }
@@ -35,5 +33,4 @@ class SendCodeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
     }
-
 }
