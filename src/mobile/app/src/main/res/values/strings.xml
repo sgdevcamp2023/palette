@@ -47,5 +47,7 @@
     <string name="need_password_fragment_announcement">8자 이상이어야 합니다.</string>
     <string name="need_password_fragment_hint">비밀번호</string>
     <string name="need_password_fragment_next">다음</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
