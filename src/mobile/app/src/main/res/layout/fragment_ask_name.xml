@@ -31,7 +31,6 @@
         android:background="@null"
         android:hint="@string/ask_name_fragment_hint"
         android:textColorHint="@color/BlueGrey_800"
-        android:inputType="textPassword"
         android:textColor="@color/Blue_500"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -72,21 +71,9 @@
         android:background="@drawable/btn_login_fragment_next"
         android:text="@string/ask_name_fragment_accept"
         android:textColor="@color/Grey_300"
-        app:layout_constraintBottom_toTopOf="@+id/ask_name_fragment_skip_btn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/ask_name_fragment_skip_btn"
-        style="@style/SubHeadline2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:text="@string/ask_name_fragment_skip"
-        android:textColor="@color/Grey_600"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
