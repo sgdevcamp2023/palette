@@ -2,63 +2,64 @@ version: '3'
 
 services:
   discovery:
-    image: palette1203/discovery-service
+    image: palette1203/discovery-service:latest
     ports:
       - "8761:8761"
     restart: always
 
-  auth:
-    image: palette1203/auth-service
-    ports:
-      - "8086:8086"
-    restart: always
-    depends_on:
-      - discovery
-
-  user:
-    image: palette1203/user-service
-    ports:
-      - "8082:8082"
-    restart: always
-    depends_on:
-      - auth
-
-  dm:
-    image: palette1203/dm-service
-    ports:
-      - "8081:8081"
-    restart: always
-    depends_on:
-      - user
-
-  timeline:
-    image: palette1203/timeline-service
-    ports:
-      - "8083:8083"
-    restart: always
-    depends_on:
-      - dm
-
-  notification:
-    image: palette1203/notification-service
-    ports:
-      - "8085:8085"
-    restart: always
-    depends_on:
-      - timeline
-
-  social:
-    image: palette1203/social-service
-    ports:
-      - "8087:8087"
-    restart: always
-    depends_on:
-      - notification
-
   gateway:
-    image: palette1203/gateway-service
+    image: palette1203/gateway-service:latest
     ports:
       - "8084:8084"
     restart: always
     depends_on:
-      - social
+      - discovery
+
+  auth:
+    image: palette1203/auth-service:latest
+    ports:
+      - "8086:8086"
+    restart: always
+    depends_on:
+      - gateway
+
+  user:
+    image: palette1203/user-service:latest
+    ports:
+      - "8082:8082"
+    restart: always
+    depends_on:
+      - gateway
+
+  dm:
+    image: palette1203/dm-service:latest
+    ports:
+      - "8081:8081"
+    restart: always
+    depends_on:
+      - gateway
+
+  timeline:
+    image: palette1203/timeline-service:latest
+    ports:
+      - "8083:8083"
+    restart: always
+    depends_on:
+      - gateway
+
+  notification:
+    image: palette1203/notification-service:latest
+    ports:
+      - "8085:8085"
+    restart: always
+    depends_on:
+      - gateway
+
+  social:
+    image: palette1203/social-service:latest
+    ports:
+      - "8087:8087"
+    restart: always
+    depends_on:
+      - gateway
+
