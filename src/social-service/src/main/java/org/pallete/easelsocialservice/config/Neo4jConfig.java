@@ -12,3 +12,4 @@ public class Neo4jConfig {
         return Configuration.newConfig().withDialect(Dialect.NEO4J_5).build();
     }
 }
+
