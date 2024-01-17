@@ -40,6 +40,10 @@ jobs:
       run: chmod +x src/${{ env.BRANCH_NAME }}-service/gradlew
 
     - name: Build with Gradle
+      env:
+        SOCIAL_DB_USERNAME: ${{ secrets.SOCIAL_DB_USERNAME }}
+        SOCIAL_DB_PASSWORD: ${{ secrets.SOCIAL_DB_PASSWORD }}
+        SOCIAL_DB_URI: ${{ secrets.SOCIAL_DB_URI }}
       run: |
         cd src/${{ env.BRANCH_NAME }}-service
         ./gradlew clean build
