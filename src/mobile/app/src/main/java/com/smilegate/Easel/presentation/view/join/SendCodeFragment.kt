@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -38,6 +39,10 @@ class SendCodeFragment : Fragment() {
 
         binding.sendCodeNextBtn.setOnClickListener {
             navController.navigate(R.id.action_sendCodeFragment_to_needPasswordFragment)
+        }
+
+        binding.sendCodeRecendEmail.setOnClickListener {
+            Toast.makeText(requireContext(), "지원하지 않는 기능입니다.", Toast.LENGTH_SHORT).show()
         }
 
         return binding.root

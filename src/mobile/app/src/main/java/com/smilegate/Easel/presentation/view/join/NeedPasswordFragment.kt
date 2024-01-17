@@ -3,12 +3,15 @@ package com.smilegate.Easel.presentation.view.join
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
@@ -31,7 +34,11 @@ class NeedPasswordFragment : Fragment() {
         navController = findNavController()
 
         binding.needPasswordFragmentNextBtn.setOnClickListener {
-            navController.navigate(R.id.action_needPasswordFragment_to_profileImageFragment)
+            if (isPasswordValid()) {
+                navController.navigate(R.id.action_needPasswordFragment_to_profileImageFragment)
+            } else {
+                Toast.makeText(requireContext(), "비밀번호를 확인하세요.", Toast.LENGTH_SHORT).show()
+            }
         }
 
         return binding.root
@@ -43,6 +50,27 @@ class NeedPasswordFragment : Fragment() {
         binding.needPasswordFragmentPwShowBtn.setOnClickListener {
             passwordVisibility()
         }
+
+        // 키보드의 "Done" 또는 "Enter" 키를 감지
+        binding.needPasswordFragmentPwField.setOnEditorActionListener { _, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_DONE ||
+                (event != null && event.action == KeyEvent.ACTION_DOWN &&
+                        event.keyCode == KeyEvent.KEYCODE_ENTER)
+            ) {
+                validatePassword()
+                return@setOnEditorActionListener true
+            }
+            return@setOnEditorActionListener false
+        }
+
+//        binding.needPasswordFragmentPwField.setOnKeyListener(View.OnKeyListener { _, keyCode, event ->
+//            if (keyCode == KeyEvent.KEYCODE_BACK && event.action == KeyEvent.ACTION_DOWN) {
+//                // 뒤로가기 버튼이 눌렸을 때
+//                validatePassword()
+//                return@OnKeyListener true
+//            }
+//            return@OnKeyListener false
+//        })
 
         binding.needPasswordFragmentPwField.addTextChangedListener(object : TextWatcher {
             // 텍스트 변경 전에 호출되는 메소드
@@ -82,25 +110,37 @@ class NeedPasswordFragment : Fragment() {
     }
 
     private fun checkEditTextAndEnableButton() {
-        val editText = binding?.root?.findViewById<EditText>(R.id.need_password_fragment_pw_field)
-        val nextButton = binding?.root?.findViewById<Button>(R.id.need_password_fragment_next_btn)
+        val editText = binding.needPasswordFragmentPwField
+        val nextButton = binding.needPasswordFragmentNextBtn
 
-        // EditText의 텍스트가 비어있지 않으면 버튼 활성화
-        if (!editText?.text.isNullOrEmpty()) {
-            nextButton?.isEnabled = true
-            binding.needPasswordFragmentNextBtn.resources.getResourceName(R.drawable.btn_login_fragment_next)
-            // 버튼 텍스트 컬러 설정
-            val textColorResourceId = R.color.white
-            val textColor = ContextCompat.getColor(requireContext(), textColorResourceId)
-            nextButton?.setTextColor(textColor)
+        if (isPasswordValid()) {
+            nextButton.isEnabled = true
+            nextButton.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
         } else {
-            nextButton?.isEnabled = false
-            binding.needPasswordFragmentNextBtn.resources.getResourceName(R.drawable.btn_start_fragment)
-            // 버튼 텍스트 컬러 설정
-            val textColorResourceId = R.color.Grey_300
-            val textColor = ContextCompat.getColor(requireContext(), textColorResourceId)
-            nextButton?.setTextColor(textColor)
+            nextButton.isEnabled = false
+            nextButton.setTextColor(ContextCompat.getColor(requireContext(), R.color.Grey_300))
         }
+    }
+
+    private fun validatePassword() {
+        val password = binding.needPasswordFragmentPwField.text.toString()
+
+        if (password.length < 8) {
+            // 비밀번호가 8자 미만인 경우
+            val pwColorResourceId = ContextCompat.getColor(requireContext(), R.color.Red_200)
+            binding.needPasswordFragmentPwField.setTextColor(pwColorResourceId)
+            // 토스트 메시지 표시
+            Toast.makeText(requireContext(), "비밀번호는 8자 이상이어야 합니다.", Toast.LENGTH_SHORT).show()
+        } else {
+            // 비밀번호가 유효한 경우
+            val pwColorResourceId = ContextCompat.getColor(requireContext(), R.color.Blue_500)
+            binding.needPasswordFragmentPwField.setTextColor(pwColorResourceId)
+        }
+    }
+
+    private fun isPasswordValid(): Boolean {
+        val password = binding.needPasswordFragmentPwField.text.toString()
+        return password.length >= 8
     }
 
 }
