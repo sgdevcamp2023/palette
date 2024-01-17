@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/find_account_fragment_input_field"
+        android:id="@+id/send_code_input_field"
         style="@style/Body2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -68,7 +68,7 @@
         android:background="@color/BlueGrey_400"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/find_account_fragment_input_field" />
+        app:layout_constraintTop_toBottomOf="@+id/send_code_input_field" />
 
     <TextView
         android:id="@+id/send_code_recend_email"

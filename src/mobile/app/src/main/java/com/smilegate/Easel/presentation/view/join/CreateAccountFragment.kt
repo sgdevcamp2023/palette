@@ -68,6 +68,10 @@ class CreateAccountFragment : Fragment() {
             override fun afterTextChanged(s: Editable?) {
                 // 입력이 완료되면 체크 표시 아이콘을 표시
                 binding.createAccountFinishName.visibility = if (s?.isNotEmpty() == true) View.VISIBLE else View.INVISIBLE
+                if (s?.contains(" ") == true || s?.contains("\n") == true) {
+                    // 스페이스바 또는 엔터키 입력을 막음
+                    s.delete(s.length - 1, s.length)
+                }
             }
         })
 
@@ -78,6 +82,11 @@ class CreateAccountFragment : Fragment() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
 
             override fun afterTextChanged(s: Editable?) {
+                if (s?.contains(" ") == true || s?.contains("\n") == true) {
+                    // 스페이스바 또는 엔터키 입력을 막음
+                    s.delete(s.length - 1, s.length)
+                }
+
                 // 입력이 완료되면 체크 표시 아이콘을 표시
                 binding.createAccountFinishInfo.visibility = if (s?.isNotEmpty() == true) View.VISIBLE else View.INVISIBLE
             }
