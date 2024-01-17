@@ -1,1 +1,9 @@
+spring:
+  application:
+    name: social-service
 
+  neo4j:
+    authentication:
+      username: ${SOCIAL_DB_USERNAME}
+      password: ${SOCIAL_DB_PASSWORD}
+    uri: ${SOCIAL_DB_URI}
