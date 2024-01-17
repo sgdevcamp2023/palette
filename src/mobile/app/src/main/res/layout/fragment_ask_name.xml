@@ -30,6 +30,7 @@
         android:layout_marginEnd="24dp"
         android:background="@null"
         android:hint="@string/ask_name_fragment_hint"
+        android:inputType="textVisiblePassword"
         android:textColorHint="@color/BlueGrey_800"
         android:textColor="@color/Blue_500"
         app:layout_constraintEnd_toEndOf="parent"
