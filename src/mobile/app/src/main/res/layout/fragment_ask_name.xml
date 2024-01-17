@@ -20,22 +20,30 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/ask_name_fragment_id_field"
-        style="@style/Body2"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/name_input_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="54dp"
-        android:layout_marginEnd="24dp"
-        android:background="@null"
-        android:hint="@string/ask_name_fragment_hint"
-        android:inputType="textVisiblePassword"
-        android:textColorHint="@color/BlueGrey_800"
-        android:textColor="@color/Blue_500"
+        android:layout_marginTop="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toBottomOf="@+id/textView2">
+
+        <EditText
+            android:id="@+id/ask_name_fragment_id_field"
+            style="@style/Body2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="54dp"
+            android:layout_marginEnd="24dp"
+            android:background="@android:color/transparent"
+            android:hint="@string/ask_name_fragment_hint"
+            android:inputType="textVisiblePassword"
+            android:textColor="@color/Blue_500"
+            android:textColorHint="@color/BlueGrey_800" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
         android:id="@+id/textView2"
@@ -54,12 +62,11 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="14dp"
         android:layout_marginEnd="24dp"
         android:background="@color/BlueGrey_400"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ask_name_fragment_id_field" />
+        app:layout_constraintTop_toBottomOf="@+id/name_input_layout" />
 
     <Button
         android:id="@+id/ask_name_fragment_join_btn"

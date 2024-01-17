@@ -20,85 +20,102 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/create_account_name_field"
-        style="@style/Body2"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/name_input_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="22dp"
-        android:layout_marginTop="42dp"
-        android:layout_marginEnd="22dp"
-        android:background="@null"
-        android:hint="@string/create_account_fragment_name"
-        android:inputType="textVisiblePassword"
-        android:textColorHint="@color/BlueGrey_800"
-        android:textColor="@color/Grey_600"
+        android:background="@android:color/transparent"
+        android:layout_marginTop="34dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        tools:ignore="MissingConstraints">
+
+        <EditText
+            android:id="@+id/create_account_name_field"
+            style="@style/Body2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="42dp"
+            android:layout_marginEnd="22dp"
+            android:background="@android:color/transparent"
+            android:hint="@string/create_account_fragment_name"
+            android:inputType="textVisiblePassword"
+            android:textColor="@color/Grey_600"
+            android:textColorHint="@color/BlueGrey_800" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <ImageView
         android:id="@+id/create_account_finish_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="42dp"
-        android:layout_marginEnd="22dp"
-        android:src="@drawable/ic_check"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="14dp"
         android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        android:src="@drawable/ic_check"
+        app:layout_constraintBottom_toBottomOf="@+id/name_input_layout"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <View
         android:id="@+id/view2"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginStart="22dp"
-        android:layout_marginTop="12dp"
         android:layout_marginEnd="24dp"
         android:background="@color/BlueGrey_400"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/create_account_info_field" />
+        app:layout_constraintTop_toBottomOf="@+id/name_input_layout" />
 
-    <EditText
-        android:id="@+id/create_account_info_field"
-        style="@style/Body2"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/email_input_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="22dp"
-        android:layout_marginTop="38dp"
-        android:layout_marginEnd="24dp"
-        android:background="@null"
-        android:hint="@string/create_account_fragment_ask_info"
-        android:inputType="textVisiblePassword"
-        android:textColorHint="@color/BlueGrey_800"
-        android:textColor="@color/Grey_600"
+        android:layout_marginTop="18dp"
+        android:background="@android:color/transparent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view" />
+        app:layout_constraintTop_toBottomOf="@+id/view2">
+
+        <EditText
+            android:id="@+id/create_account_info_field"
+            style="@style/Body2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="38dp"
+            android:layout_marginEnd="24dp"
+            android:background="@android:color/transparent"
+            android:hint="@string/create_account_fragment_ask_info"
+            android:inputType="textVisiblePassword"
+            android:textColor="@color/Grey_600"
+            android:textColorHint="@color/BlueGrey_800" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <ImageView
         android:id="@+id/create_account_finish_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="38dp"
-        android:layout_marginEnd="22dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="14dp"
         android:src="@drawable/ic_check"
         android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view" />
+        app:layout_constraintBottom_toBottomOf="@+id/email_input_layout"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <View
         android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginStart="22dp"
-        android:layout_marginTop="12dp"
         android:layout_marginEnd="24dp"
         android:background="@color/BlueGrey_400"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/create_account_name_field" />
+        app:layout_constraintTop_toBottomOf="@+id/email_input_layout" />
 
     <TextView
         android:id="@+id/textView4"
