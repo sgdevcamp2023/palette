@@ -35,18 +35,18 @@ class LoginFragment : Fragment() {
         Log.d("LoginFragment", "onCreateView")
         binding = FragmentLoginBinding.inflate(inflater, container, false)
 
+        navController = findNavController()
+
         binding?.loginFragmentNextBtn?.setOnClickListener {
             val inputText = binding?.loginFragmentInputField?.text.toString()
             Log.d("LoginFragment", "Input text: $inputText")
 
-            // ViewModel에 데이`                                                                                                                       터 저장
+            // ViewModel에 데이터 저장
             loginViewModel.setIdValue(inputText)
             Log.d("LoginFragment", "Id value set: $inputText")
 
             navController.navigate(R.id.action_createAccountFragment_to_sendCodeFragment)
         }
-
-        navController = findNavController()
 
         binding.loginFragmentNextBtn.setOnClickListener {
             navController.navigate(R.id.action_loginFragment_to_passwordFragment)

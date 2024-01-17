@@ -46,7 +46,7 @@ class PasswordFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d("LoginFragment", "onViewCreated")
+        Log.d("PasswordFragment", "onViewCreated")
 
         // LiveData를 사용하여 데이터 변경 감지
         loginViewModel.id.observe(viewLifecycleOwner) { id ->
