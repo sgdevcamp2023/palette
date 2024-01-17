@@ -24,7 +24,10 @@ repositories {
 extra["springCloudVersion"] = "2023.0.0"
 
 dependencies {
-	implementation("org.springframework.boot:spring-boot-starter-data-neo4j")
+	// neo4j
+	implementation ("org.neo4j.driver:neo4j-java-driver:5.15.0")
+	implementation ("org.springframework.boot:spring-boot-starter-data-neo4j")
+
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
 	implementation("org.springframework.kafka:spring-kafka")
