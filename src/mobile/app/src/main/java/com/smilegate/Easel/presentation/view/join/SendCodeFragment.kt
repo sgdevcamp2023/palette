@@ -8,6 +8,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
@@ -64,9 +67,32 @@ class SendCodeFragment : Fragment() {
                     // 스페이스바 또는 엔터키 입력을 막음
                     s.delete(s.length - 1, s.length)
                 }
+                checkEditTextAndEnableButton()
             }
         })
 
+    }
+
+    private fun checkEditTextAndEnableButton() {
+        val editText = binding?.root?.findViewById<EditText>(R.id.send_code_input_field)
+        val nextButton = binding?.root?.findViewById<Button>(R.id.send_code_next_btn)
+
+        // EditText의 텍스트가 비어있지 않으면 버튼 활성화
+        if (!editText?.text.isNullOrEmpty()) {
+            nextButton?.isEnabled = true
+            binding.sendCodeNextBtn.resources.getResourceName(R.drawable.btn_login_fragment_next)
+            // 버튼 텍스트 컬러 설정
+            val textColorResourceId = R.color.white
+            val textColor = ContextCompat.getColor(requireContext(), textColorResourceId)
+            nextButton?.setTextColor(textColor)
+        } else {
+            nextButton?.isEnabled = false
+            binding.sendCodeNextBtn.resources.getResourceName(R.drawable.btn_start_fragment)
+            // 버튼 텍스트 컬러 설정
+            val textColorResourceId = R.color.Grey_300
+            val textColor = ContextCompat.getColor(requireContext(), textColorResourceId)
+            nextButton?.setTextColor(textColor)
+        }
     }
 
 }

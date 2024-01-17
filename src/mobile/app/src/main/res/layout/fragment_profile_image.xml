@@ -65,6 +65,7 @@
         android:background="@drawable/btn_login_fragment_next"
         android:text="@string/profile_image_fragment_next"
         android:textColor="@color/Grey_300"
+        android:enabled="false"
         app:layout_constraintBottom_toTopOf="@+id/profile_image_fragment_skip_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

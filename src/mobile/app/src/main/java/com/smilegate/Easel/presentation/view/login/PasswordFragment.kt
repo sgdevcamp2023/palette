@@ -7,6 +7,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
@@ -54,7 +57,7 @@ class PasswordFragment : Fragment() {
         }
 
         binding.passwordFragmentPwShowBtn.setOnClickListener {
-            togglePasswordVisibility()
+            passwordVisibility()
         }
 
         binding.passwordFragmentPwField.addTextChangedListener(object : TextWatcher {
@@ -70,11 +73,12 @@ class PasswordFragment : Fragment() {
                     // 스페이스바 또는 엔터키 입력을 막음
                     s.delete(s.length - 1, s.length)
                 }
+                checkEditTextAndEnableButton()
             }
         })
     }
 
-    private fun togglePasswordVisibility() {
+    private fun passwordVisibility() {
         passwordVisible = !passwordVisible
 
         if (passwordVisible) {
@@ -90,5 +94,27 @@ class PasswordFragment : Fragment() {
 
         // 커서를 맨 끝으로 이동하여 가려진 텍스트를 볼 수 있도록 함
         binding.passwordFragmentPwField.setSelection(binding.passwordFragmentPwField.text.length)
+    }
+
+    private fun checkEditTextAndEnableButton() {
+        val editText = binding?.root?.findViewById<EditText>(R.id.password_fragment_pw_field)
+        val nextButton = binding?.root?.findViewById<Button>(R.id.password_fragment_login_btn)
+
+        // EditText의 텍스트가 비어있지 않으면 버튼 활성화
+        if (!editText?.text.isNullOrEmpty()) {
+            nextButton?.isEnabled = true
+            binding.passwordFragmentLoginBtn.resources.getResourceName(R.drawable.btn_login_fragment_next)
+            // 버튼 텍스트 컬러 설정
+            val textColorResourceId = R.color.white
+            val textColor = ContextCompat.getColor(requireContext(), textColorResourceId)
+            nextButton?.setTextColor(textColor)
+        } else {
+            nextButton?.isEnabled = false
+            binding.passwordFragmentLoginBtn.resources.getResourceName(R.drawable.btn_start_fragment)
+            // 버튼 텍스트 컬러 설정
+            val textColorResourceId = R.color.Grey_300
+            val textColor = ContextCompat.getColor(requireContext(), textColorResourceId)
+            nextButton?.setTextColor(textColor)
+        }
     }
 }

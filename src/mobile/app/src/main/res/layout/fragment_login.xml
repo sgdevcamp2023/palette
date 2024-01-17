@@ -74,6 +74,7 @@
         android:background="@drawable/btn_login_fragment_next"
         android:text="@string/login_fragment_next"
         android:textAlignment="center"
+        android:enabled="false"
         android:textColor="@color/Grey_300"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

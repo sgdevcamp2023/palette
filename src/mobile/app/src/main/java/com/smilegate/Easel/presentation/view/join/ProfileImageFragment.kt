@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
@@ -63,17 +65,28 @@ class ProfileImageFragment : Fragment() {
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK) {
             // 이미지가 성공적으로 선택되었을 때
             val selectedImageUri: Uri? = data?.data
+            val nextButton = binding?.root?.findViewById<Button>(R.id.profile_image_fragment_next_btn)
 
             // 선택한 이미지를 ImageView에 설정
             selectedImageUri?.let {
-                binding.profileImage.setImageURI(it)
-                binding.profileImage.scaleType = ImageView.ScaleType.CENTER_CROP
+                binding?.profileImage?.setImageURI(it)
+                binding?.profileImage?.scaleType = ImageView.ScaleType.CENTER_CROP
+            }
+
+            // ImageView에 Image가 선택되어있지 않으면 버튼 비활성화
+            if (selectedImageUri == null) {
+                nextButton?.isEnabled = false
+                nextButton?.setTextColor(ContextCompat.getColor(requireContext(), R.color.Grey_300))
+            } else {
+                nextButton?.isEnabled = true
+                nextButton?.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
             }
 
             //Camera Button 숨기기
-            binding.profileImageFragmentCameraBtn.visibility = View.GONE
+            binding?.profileImageFragmentCameraBtn?.visibility = View.GONE
         }
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
