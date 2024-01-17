@@ -3,14 +3,18 @@ package com.smilegate.Easel.presentation.view.login
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.smilegate.Easel.R
 import com.smilegate.Easel.databinding.FragmentLoginBinding
+import com.smilegate.Easel.presentation.viewmodel.JoinViewModel
+import com.smilegate.Easel.presentation.viewmodel.LoginViewModel
 
 
 class LoginFragment : Fragment() {
@@ -18,11 +22,26 @@ class LoginFragment : Fragment() {
 
     private lateinit var navController: NavController
 
+    // Activity 범위에서 공유
+    private val loginViewModel: LoginViewModel by activityViewModels()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        Log.d("LoginFragment", "onCreateView")
         binding = FragmentLoginBinding.inflate(inflater, container, false)
+
+        binding?.loginFragmentNextBtn?.setOnClickListener {
+            val inputText = binding?.loginFragmentInputField?.text.toString()
+            Log.d("LoginFragment", "Input text: $inputText")
+
+            // ViewModel에 데이`                                                                                                                       터 저장
+            loginViewModel.setIdValue(inputText)
+            Log.d("LoginFragment", "Id value set: $inputText")
+
+            navController.navigate(R.id.action_createAccountFragment_to_sendCodeFragment)
+        }
 
         navController = findNavController()
 

@@ -3,26 +3,28 @@ package com.smilegate.Easel.presentation.view.login
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.smilegate.Easel.R
 import com.smilegate.Easel.databinding.FragmentPasswordBinding
+import com.smilegate.Easel.presentation.viewmodel.LoginViewModel
 
-/**
- * A simple [Fragment] subclass.
- * Use the [PasswordFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class PasswordFragment : Fragment() {
     private lateinit var binding: FragmentPasswordBinding
 
     private lateinit var navController: NavController
 
     private var passwordVisible = false
+
+    // Activity 범위에서 공유
+    private val loginViewModel: LoginViewModel by activityViewModels()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,6 +43,15 @@ class PasswordFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.d("LoginFragment", "onViewCreated")
+
+        // LiveData를 사용하여 데이터 변경 감지
+        loginViewModel.id.observe(viewLifecycleOwner) { id ->
+            Log.d("PasswordFragment", "Id value retrieved: $id")
+
+            // id를 사용하여 UI 업데이트 등을 수행
+            binding?.passwordFragmentIdField?.text = id
+        }
 
         binding.passwordFragmentPwShowBtn.setOnClickListener {
             togglePasswordVisibility()
