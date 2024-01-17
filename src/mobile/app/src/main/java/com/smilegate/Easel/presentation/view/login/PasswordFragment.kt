@@ -22,6 +22,8 @@ class PasswordFragment : Fragment() {
 
     private lateinit var navController: NavController
 
+    private var passwordVisible = false
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -40,6 +42,10 @@ class PasswordFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.passwordFragmentPwShowBtn.setOnClickListener {
+            togglePasswordVisibility()
+        }
+
         binding.passwordFragmentPwField.addTextChangedListener(object : TextWatcher {
             // 텍스트 변경 전에 호출되는 메소드
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -55,6 +61,23 @@ class PasswordFragment : Fragment() {
                 }
             }
         })
+    }
 
+    private fun togglePasswordVisibility() {
+        passwordVisible = !passwordVisible
+
+        if (passwordVisible) {
+            // 비밀번호 보이기
+            binding.passwordFragmentPwField.inputType = android.text.InputType.TYPE_CLASS_TEXT
+            binding.passwordFragmentPwShowBtn.setImageResource(R.drawable.ic_eye_on)
+        } else {
+            // 비밀번호 감추기
+            binding.passwordFragmentPwField.inputType =
+                android.text.InputType.TYPE_CLASS_TEXT or android.text.InputType.TYPE_TEXT_VARIATION_PASSWORD
+            binding.passwordFragmentPwShowBtn.setImageResource(R.drawable.ic_eye_off)
+        }
+
+        // 커서를 맨 끝으로 이동하여 가려진 텍스트를 볼 수 있도록 함
+        binding.passwordFragmentPwField.setSelection(binding.passwordFragmentPwField.text.length)
     }
 }
