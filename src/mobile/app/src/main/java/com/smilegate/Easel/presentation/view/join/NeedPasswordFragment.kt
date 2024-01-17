@@ -59,4 +59,5 @@ class NeedPasswordFragment : Fragment() {
         // 커서를 맨 끝으로 이동하여 가려진 텍스트를 볼 수 있도록 함
         binding.needPasswordFragmentPwField.setSelection(binding.needPasswordFragmentPwField.text.length)
     }
+
 }
