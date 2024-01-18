@@ -10,9 +10,10 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.smilegate.Easel.R
 import com.smilegate.Easel.databinding.FragmentStartBinding
+import com.smilegate.Easel.databinding.FragmentTimelineBinding
 
 class TimelineFragment : Fragment() {
-    private lateinit var binding: FragmentStartBinding
+    private lateinit var binding: FragmentTimelineBinding
 
     private lateinit var navController: NavController
 
@@ -20,11 +21,15 @@ class TimelineFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentStartBinding.inflate(inflater, container, false)
+        binding = FragmentTimelineBinding.inflate(inflater, container, false)
 
         val toolbar = requireActivity().findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar_container)
         val backButton = toolbar.findViewById<ImageView>(R.id.back_btn)
         backButton.visibility = View.GONE
+
+        val settingButton = toolbar.findViewById<ImageView>(R.id.else_btn)
+        settingButton.setImageResource(R.drawable.ic_setting)
+        settingButton.visibility = View.VISIBLE
 
         navController = findNavController()
 

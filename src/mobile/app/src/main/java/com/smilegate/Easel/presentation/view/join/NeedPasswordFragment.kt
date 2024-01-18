@@ -134,7 +134,7 @@ class NeedPasswordFragment : Fragment() {
     private fun validatePassword() {
         val password = binding.needPasswordFragmentPwField.text.toString()
 
-        if (password.length < 8) {
+        if (password.length < maxPasswordLength) {
             // 비밀번호가 8자 미만인 경우
             val pwColorResourceId = ContextCompat.getColor(requireContext(), R.color.Red_200)
             binding.needPasswordFragmentPwField.setTextColor(pwColorResourceId)

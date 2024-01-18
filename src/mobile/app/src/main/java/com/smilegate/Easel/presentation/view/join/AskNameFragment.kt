@@ -51,6 +51,10 @@ class AskNameFragment : Fragment() {
             findNavController().navigateUp()
         }
 
+        val settingButton = toolbar.findViewById<ImageView>(R.id.else_btn)
+        settingButton.setImageResource(R.drawable.ic_setting)
+        settingButton.visibility = View.GONE
+
         binding.askNameFragmentIdField.addTextChangedListener(object : TextWatcher {
             // 텍스트 변경 전에 호출되는 메소드
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}

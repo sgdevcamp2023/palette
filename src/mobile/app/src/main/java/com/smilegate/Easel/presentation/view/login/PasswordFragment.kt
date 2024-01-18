@@ -63,6 +63,10 @@ class PasswordFragment : Fragment() {
             findNavController().navigateUp()
         }
 
+        val settingButton = toolbar.findViewById<ImageView>(R.id.else_btn)
+        settingButton.setImageResource(R.drawable.ic_setting)
+        settingButton.visibility = View.GONE
+
          //LiveData를 사용하여 데이터 변경 감지
         loginViewModel.email.observe(viewLifecycleOwner) { email ->
             Log.d("PasswordFragment", "email value retrieved: $email")
