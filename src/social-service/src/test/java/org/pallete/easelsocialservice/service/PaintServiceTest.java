@@ -2,6 +2,7 @@ package org.pallete.easelsocialservice.service;
 
 import org.junit.jupiter.api.Test;
 import org.pallete.easelsocialservice.persistence.*;
+import org.pallete.easelsocialservice.persistence.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 

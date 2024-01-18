@@ -1,4 +1,4 @@
-package org.pallete.easelsocialservice.persistence;
+package org.pallete.easelsocialservice.persistence.domain;
 
 import org.springframework.data.neo4j.core.Neo4jClient;
 import org.springframework.data.neo4j.core.schema.IdGenerator;

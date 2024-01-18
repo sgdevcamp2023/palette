@@ -1,23 +1,18 @@
-package org.pallete.easelsocialservice.persistence;
+package org.pallete.easelsocialservice.persistence.domain;
 
-import lombok.Getter;
 import org.springframework.data.neo4j.core.schema.RelationshipId;
 import org.springframework.data.neo4j.core.schema.RelationshipProperties;
 import org.springframework.data.neo4j.core.schema.TargetNode;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-
-@Getter
 @RelationshipProperties
-public class Creates {
+public class Uses {
     @RelationshipId
     private Long id;
 
     @TargetNode
-    private User user;
+    private Media media;
 
-    public Creates(User user) {
-        this.user = user;
+    public Uses(Media media) {
+        this.media = media;
     }
 }
