@@ -7,17 +7,17 @@
         android:title="@null"/>
 
     <item
-        android:id="@+id/navigation_allMeeting"
+        android:id="@+id/navigation_search"
         android:icon="@drawable/ic_search"
         android:title="@null"/>
 
     <item
-        android:id="@+id/navigation_allFeed"
+        android:id="@+id/navigation_notice"
         android:icon="@drawable/ic_bell"
         android:title="@null" />
 
     <item
-        android:id="@+id/navigation_myPage"
+        android:id="@+id/navigation_message"
         android:icon="@drawable/ic_mail"
         android:title="@null" />
 

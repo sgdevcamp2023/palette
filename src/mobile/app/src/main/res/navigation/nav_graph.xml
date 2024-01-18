@@ -133,4 +133,28 @@
 
     </fragment>
 
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.smilegate.Easel.presentation.view.search.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/noticeFragment"
+        android:name="com.smilegate.Easel.presentation.view.notice.NoticeFragment"
+        android:label="fragment_notice"
+        tools:layout="@layout/fragment_notice">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/messageFragment"
+        android:name="com.smilegate.Easel.presentation.view.message.MessageFragment"
+        android:label="fragment_message"
+        tools:layout="@layout/fragment_message">
+
+    </fragment>
+
 </navigation>
