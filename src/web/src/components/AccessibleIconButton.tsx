@@ -1,4 +1,5 @@
-import type { ButtonHTMLAttributes } from 'react';
+import { forwardRef } from 'react';
+import type { ButtonHTMLAttributes, Ref } from 'react';
 
 import type { IconKeyType } from './common/Icon';
 import type { ColorType } from '@/@types';
@@ -18,17 +19,20 @@ interface AccessibleIconButtonProps
   stroke?: ColorType;
 }
 
-function AccessibleIconButton({
-  iconType,
-  label,
-  width,
-  height,
-  fill,
-  stroke,
-  ...props
-}: AccessibleIconButtonProps) {
-  return (
-    <button type="button" {...props}>
+const AccessibleIconButton = forwardRef(
+  (
+    {
+      iconType,
+      label,
+      width,
+      height,
+      fill,
+      stroke,
+      ...props
+    }: AccessibleIconButtonProps,
+    ref: Ref<HTMLButtonElement>,
+  ) => (
+    <button type="button" ref={ref} {...props}>
       <VisuallyHidden>
         <div role="text">{label}</div>
       </VisuallyHidden>
@@ -40,7 +44,7 @@ function AccessibleIconButton({
         height={height}
       />
     </button>
-  );
-}
+  ),
+);
 
 export default AccessibleIconButton;
