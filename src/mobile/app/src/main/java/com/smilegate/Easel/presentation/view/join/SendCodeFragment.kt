@@ -53,7 +53,6 @@ class SendCodeFragment : Fragment() {
 
         // LiveData를 사용하여 데이터 변경 감지
         joinViewModel.email.observe(viewLifecycleOwner) { email ->
-            Log.d("SendCodeFragment", "Email value retrieved: $email")
 
             // userEmail을 사용하여 UI 업데이트 등을 수행
             binding?.sendCodeEmail?.text = email

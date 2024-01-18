@@ -39,7 +39,6 @@ class CreateAccountFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        Log.d("CreateAccountFragment", "onCreateView called")
         _binding = FragmentCreateAccountBinding.inflate(inflater, container, false)
 
         navController = findNavController()
@@ -49,7 +48,6 @@ class CreateAccountFragment : Fragment() {
 
             // ViewModel에 데이터 저장
             joinViewModel.setEmailValue(inputText)
-            Log.d("CreateAccountFragment", "Email value set: $inputText")
 
             navController.navigate(R.id.action_createAccountFragment_to_sendCodeFragment)
         }
