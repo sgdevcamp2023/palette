@@ -32,6 +32,9 @@ class AskNameFragment : Fragment() {
 
         navController = findNavController()
 
+        binding.askNameFragmentJoinBtn.setOnClickListener {
+            navController.navigate(R.id.action_askNameFragment_to_timelineFragment)
+        }
 
         return binding.root
     }

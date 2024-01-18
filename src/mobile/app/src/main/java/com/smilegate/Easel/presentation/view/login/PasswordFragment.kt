@@ -43,6 +43,10 @@ class PasswordFragment : Fragment() {
             navController.navigate(R.id.action_passwordFragment_to_FindAccountFragment)
         }
 
+        binding.passwordFragmentLoginBtn.setOnClickListener {
+            navController.navigate(R.id.action_passwordFragment_to_timelineFragment)
+        }
+
         return binding.root
     }
 

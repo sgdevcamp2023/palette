@@ -47,6 +47,10 @@
             android:id="@+id/action_passwordFragment_to_FindAccountFragment"
             app:destination="@id/findAccountFragment"/>
 
+        <action
+            android:id="@+id/action_passwordFragment_to_timelineFragment"
+            app:destination="@id/timelineFragment"/>
+
     </fragment>
 
     <fragment
@@ -54,6 +58,10 @@
         android:name="com.smilegate.Easel.presentation.view.login.FindAccountFragment"
         android:label="fragment_fine_account"
         tools:layout="@layout/fragment_find_account">
+
+        <action
+            android:id="@+id/action_findAccountFragment_to_startFragment"
+            app:destination="@id/startFragment"/>
 
     </fragment>
 
@@ -110,6 +118,18 @@
         android:name="com.smilegate.Easel.presentation.view.join.AskNameFragment"
         android:label="fragment_ask_name"
         tools:layout="@layout/fragment_ask_name">
+
+        <action
+            android:id="@+id/action_askNameFragment_to_timelineFragment"
+            app:destination="@id/timelineFragment"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/timelineFragment"
+        android:name="com.smilegate.Easel.presentation.view.Timeline.TimelineFragment"
+        android:label="fragment_timeline"
+        tools:layout="@layout/fragment_timeline">
 
     </fragment>
 
