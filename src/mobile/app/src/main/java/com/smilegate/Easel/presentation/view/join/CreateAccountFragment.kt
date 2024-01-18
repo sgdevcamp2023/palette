@@ -12,6 +12,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -59,15 +60,37 @@ class CreateAccountFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // EditText1에 대한 TextWatcher 설정
+        binding.createAccountInfoField.setOnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus) {
+                validateEmail()
+            }
+        }
+
+        binding.createAccountInfoField.setOnEditorActionListener { _, _, _ ->
+            validateEmail()
+            true
+        }
+
+        val blue = ContextCompat.getColor(requireContext(), R.color.Blue_500)
+
+        // 포커스가 변경될 때 아이콘을 표시
+        binding.createAccountNameField.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                binding.createAccountFinishName.visibility = View.INVISIBLE
+            } else {
+                binding.createAccountNameField.setTextColor(blue)
+                binding.createAccountFinishName.visibility = View.VISIBLE
+            }
+        }
+
+
+        // createAccountNameField 대한 TextWatcher 설정
         binding.createAccountNameField.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
 
             override fun afterTextChanged(s: Editable?) {
-                // 입력이 완료되면 체크 표시 아이콘을 표시
-                binding.createAccountFinishName.visibility = if (s?.isNotEmpty() == true) View.VISIBLE else View.INVISIBLE
                 if (s?.contains(" ") == true || s?.contains("\n") == true) {
                     // 스페이스바 또는 엔터키 입력을 막음
                     s.delete(s.length - 1, s.length)
@@ -75,7 +98,7 @@ class CreateAccountFragment : Fragment() {
             }
         })
 
-        // EditText2에 대한 TextWatcher 설정
+        // createAccountInfoField 대한 TextWatcher 설정
         binding.createAccountInfoField.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
@@ -86,9 +109,6 @@ class CreateAccountFragment : Fragment() {
                     // 스페이스바 또는 엔터키 입력을 막음
                     s.delete(s.length - 1, s.length)
                 }
-
-                // 입력이 완료되면 체크 표시 아이콘을 표시
-                binding.createAccountFinishInfo.visibility = if (s?.isNotEmpty() == true) View.VISIBLE else View.INVISIBLE
             }
         })
 
@@ -105,8 +125,6 @@ class CreateAccountFragment : Fragment() {
             val startIndex = fullText.indexOf(targetText)
             if (startIndex != -1) {
                 val endIndex = startIndex + targetText.length
-
-                // R.color.Blue_500에서 색상을 가져와서 사용
                 val color = ContextCompat.getColor(requireContext(), R.color.Blue_500)
 
                 // 클릭 이벤트 리스너 설정
@@ -142,13 +160,46 @@ class CreateAccountFragment : Fragment() {
             || clickedText == "자세히" || clickedText == "알아보기" || clickedText == "여기") {
             // "지원하지 않는 기능입니다" 토스트 띄우기 (2초 동안)
             Toast.makeText(requireContext(), "지원하지 않는 기능입니다.", Toast.LENGTH_SHORT).apply {
-                duration = Toast.LENGTH_SHORT // 2초 동안 토스트 메시지 띄우기
+                duration = Toast.LENGTH_SHORT
             }.show()
         }
+    }
+
+    private fun validateEmail() {
+        val email = binding.createAccountInfoField.text.toString().trim()
+        val blue = ContextCompat.getColor(requireContext(), R.color.Blue_500)
+        val red = ContextCompat.getColor(requireContext(), R.color.Red_200)
+
+        if (!isEmailValid(email)) {
+            // 이메일 형식이 유효하지 않은 경우
+            binding.createAccountInfoField.setTextColor(red)
+            binding.createAccountFinishInfo.visibility = View.INVISIBLE
+
+            // 토스트 메시지 표시
+            Toast.makeText(requireContext(), "유효한 이메일을 입력하세요.", Toast.LENGTH_SHORT).show()
+        } else {
+            // 이메일 형식이 유효한 경우
+            binding.createAccountInfoField.setTextColor(blue)
+            binding.createAccountFinishInfo.visibility = View.VISIBLE
+        }
+        checkButtonActivation()
+    }
+
+    private fun isEmailValid(email: String): Boolean {
+        val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"
+        return email.matches(emailPattern.toRegex())
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun checkButtonActivation() {
+        val isNameFinished = binding.createAccountFinishName.visibility == View.VISIBLE
+        val isInfoFinished = binding.createAccountFinishInfo.visibility == View.VISIBLE
+
+        // 둘 다 완료되었을 때 버튼 활성화
+        binding.createAccountBtn.isEnabled = isNameFinished && isInfoFinished
     }
 }
