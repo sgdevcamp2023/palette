@@ -9,8 +9,8 @@
     <string name="start_fragment_login">로그인하기</string>
 
     <!-- LoginFragment -->
-    <string name="login_fragment_headline">시작하려면 먼저 휴대폰 번호, 이\n메일 또는 사용자 아이디를 입력\n하세요.</string>
-    <string name="login_fragment_ask_info">휴대폰 번호, 이메일 주소 또는 사용자 아이디</string>
+    <string name="login_fragment_headline">시작하려면 먼저 이메일 또는 사용\n자 아이디를 입력하세요.</string>
+    <string name="login_fragment_ask_info">이메일 주소 또는 사용자 아이디</string>
     <string name="login_fragment_forget_pw">비밀번호를 잊으셨나요?</string>
     <string name="login_fragment_next">다음</string>
 
@@ -22,8 +22,42 @@
 
     <!-- FindAccountFragment -->
     <string name="find_account_fragment_find_account">내 Easel 계정 찾기</string>
-    <string name="find_account_fragment_announce_info">비밀번호를 변경하려면 계정에 연결된 이메일, 전화번호 또\n는 사용자 아이디를 입력해 주세요.</string>
-    <string name="find_account_fragment_ask_info">이메일, 전화번호 또는 사용자 아이디</string>
+    <string name="find_account_fragment_announce_info">비밀번호를 변경하려면 계정에 연결된 이메일 또는 사용자\n아이디를 입력해 주세요.</string>
+    <string name="find_account_fragment_ask_info">이메일 또는 사용자 아이디</string>
     <string name="find_account_fragment_ok">확인</string>
+
+    <!-- CreateAccountFragment -->
+    <string name="create_account_fragment_headline">계정을 생성하세요</string>
+    <string name="create_account_fragment_name">이름</string>
+    <string name="create_account_fragment_ask_info">이메일 주소</string>
+    <string name="create_account_fragment_announcement">가입하면 쿠키 사용을 포함해 이용약관 및 개인정보 처리방침에 동의\n하게 됩니다.
+        X는 계정을 안전하게 보호하고 광고를 포함한 맞춤 서비\n스를 제공하는 등 X 개인정보 처리방침에 명시된 목적을 위해 이메일\n주소 및 전화번호 등의
+        내연락처 정보를 사용할 수 있습니다. 자세히\n알아보기. 이메일 또는 전화번호를 제공하시면 다른 사람들이 이정보\n로 내 계정을 찾을 수 있게 됩니다.
+        해당 정보를 제공하지 않으시려면 \n여기에서 변경하세요.</string>
+    <string name="create_account_fragment_next">다음</string>
+
+    <!-- SendCodeFragment -->
+    <string name="send_code_fragment_headline">코드를 보내 드렸습니다</string>
+    <string name="send_code_fragment_announcement">인증을 위해 아래에 입력하세요.</string>
+    <string name="send_code_fragment_email">이메일을 받지 못하셨나요?</string>
+    <string name="send_code_fragment_next">다음</string>
+
+    <!-- NeedPasswordFragment -->
+    <string name="need_password_fragment_headline">비밀번호가 필요합니다</string>
+    <string name="need_password_fragment_announcement">8자 이상이어야 합니다.</string>
+    <string name="need_password_fragment_hint">비밀번호</string>
+    <string name="need_password_fragment_next">다음</string>
+
+    <!-- ProfileImageFragment -->
+    <string name="profile_image_fragment_headline">프로필 사진 선택하기</string>
+    <string name="profile_image_fragment_announcement">마음에 드는 셀카 사진이 있나요? 지금 업로드하세요.</string>
+    <string name="profile_image_fragment_next">다음</string>
+    <string name="profile_image_fragment_skip"><u>지금은 넘어가기</u></string>
+
+    <!-- AskNameFragment -->
+    <string name="ask_name_fragment_headline">이름을 가르쳐 주시겠어요?</string>
+    <string name="ask_name_fragment_announcement">\@사용자 아이디는 고유한 나만의 아이디입니다. 나중에 언\n제든 바꿀 수 있습니다.</string>
+    <string name="ask_name_fragment_hint">사용자 아이디</string>
+    <string name="ask_name_fragment_accept">가입</string>
 
 </resources>

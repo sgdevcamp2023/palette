@@ -1,19 +1,17 @@
-package com.smilegate.Easel.ui.login
+package com.smilegate.Easel.presentation.view.join
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.smilegate.Easel.R
-import com.smilegate.Easel.databinding.FragmentLoginBinding
 import com.smilegate.Easel.databinding.FragmentStartBinding
 
-
-class LoginFragment : Fragment() {
-    private lateinit var binding: FragmentLoginBinding
+class StartFragment : Fragment() {
+    private lateinit var binding: FragmentStartBinding
 
     private lateinit var navController: NavController
 
@@ -21,16 +19,16 @@ class LoginFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentLoginBinding.inflate(inflater, container, false)
+        binding = FragmentStartBinding.inflate(inflater, container, false)
 
         navController = findNavController()
 
-        binding.loginFragmentNextBtn.setOnClickListener {
-            navController.navigate(R.id.action_loginFragment_to_passwordFragment)
+        binding.startFragmentLoginBtn.setOnClickListener {
+            navController.navigate(R.id.action_startFragment_to_loginFragment)
         }
 
-        binding.loginFragmentLostPw.setOnClickListener {
-            navController.navigate(R.id.action_loginFragment_to_findAccountFragment)
+        binding.startFragmentJoinBtn.setOnClickListener {
+            navController.navigate(R.id.action_startFragment_to_CreateAccountFragment)
         }
 
         return binding.root

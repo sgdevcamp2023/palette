@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/startFragment"
-        android:name="com.smilegate.Easel.ui.join.StartFragment"
+        android:name="com.smilegate.Easel.presentation.view.join.StartFragment"
         android:label="fragment_start"
         tools:layout="@layout/fragment_start">
 
@@ -15,11 +15,15 @@
             android:id="@+id/action_startFragment_to_loginFragment"
             app:destination="@id/loginFragment"/>
 
+        <action
+            android:id="@+id/action_startFragment_to_CreateAccountFragment"
+            app:destination="@id/createAccountFragment"/>
+
     </fragment>
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.smilegate.Easel.ui.login.LoginFragment"
+        android:name="com.smilegate.Easel.presentation.view.login.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login">
 
@@ -35,7 +39,7 @@
 
     <fragment
         android:id="@+id/passwordFragment"
-        android:name="com.smilegate.Easel.ui.login.PasswordFragment"
+        android:name="com.smilegate.Easel.presentation.view.login.PasswordFragment"
         android:label="fragment_password"
         tools:layout="@layout/fragment_password">
 
@@ -47,9 +51,65 @@
 
     <fragment
         android:id="@+id/findAccountFragment"
-        android:name="com.smilegate.Easel.ui.login.FindAccountFragment"
+        android:name="com.smilegate.Easel.presentation.view.login.FindAccountFragment"
         android:label="fragment_fine_account"
         tools:layout="@layout/fragment_find_account">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/createAccountFragment"
+        android:name="com.smilegate.Easel.presentation.view.join.CreateAccountFragment"
+        android:label="fragment_create_account"
+        tools:layout="@layout/fragment_create_account">
+
+        <action
+            android:id="@+id/action_createAccountFragment_to_sendCodeFragment"
+            app:destination="@id/sendCodeFragment"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/sendCodeFragment"
+        android:name="com.smilegate.Easel.presentation.view.join.SendCodeFragment"
+        android:label="fragment_send_code"
+        tools:layout="@layout/fragment_send_code">
+
+        <action
+            android:id="@+id/action_sendCodeFragment_to_needPasswordFragment"
+            app:destination="@id/needPasswordFragment"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/needPasswordFragment"
+        android:name="com.smilegate.Easel.presentation.view.join.NeedPasswordFragment"
+        android:label="fragment_need_password"
+        tools:layout="@layout/fragment_need_password">
+
+        <action
+            android:id="@+id/action_needPasswordFragment_to_profileImageFragment"
+            app:destination="@id/profileImageFragment"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/profileImageFragment"
+        android:name="com.smilegate.Easel.presentation.view.join.ProfileImageFragment"
+        android:label="fragment_profile_image"
+        tools:layout="@layout/fragment_profile_image">
+
+        <action
+            android:id="@+id/action_profileImageFragment_to_askNameFragment"
+            app:destination="@id/askNameFragment"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/askNameFragment"
+        android:name="com.smilegate.Easel.presentation.view.join.AskNameFragment"
+        android:label="fragment_ask_name"
+        tools:layout="@layout/fragment_ask_name">
 
     </fragment>
 

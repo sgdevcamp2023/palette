@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:backgroundTint="@color/white"
-    tools:context=".presentation.view.login.FindAccountFragment">
+    tools:context=".presentation.view.join.SendCodeFragment">
 
     <TextView
         android:id="@+id/textView"
@@ -15,46 +15,48 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="28dp"
-        android:text="@string/find_account_fragment_find_account"
+        android:text="@string/send_code_fragment_headline"
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/id_input_layout"
+    <EditText
+        android:id="@+id/send_code_input_field"
+        style="@style/Body2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="34dp"
-        android:background="@android:color/transparent"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="54dp"
+        android:layout_marginEnd="24dp"
+        android:background="@null"
+        android:inputType="textVisiblePassword"
+        android:textColor="@color/BlueGrey_800"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2">
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
-        <EditText
-            android:id="@+id/find_account_fragment_input_field"
-            style="@style/Body2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="54dp"
-            android:layout_marginEnd="24dp"
-            android:background="@android:color/transparent"
-            android:hint="@string/find_account_fragment_ask_info"
-            android:inputType="textVisiblePassword"
-            android:textColorHint="@color/BlueGrey_800" />
-
-    </com.google.android.material.textfield.TextInputLayout>
+    <TextView
+        android:id="@+id/send_code_email"
+        style="@style/Body2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="26dp"
+        android:text="abc@gmail.com"
+        android:textColor="@color/BlueGrey_800"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <TextView
         android:id="@+id/textView2"
         style="@style/Body2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="4dp"
         android:layout_marginTop="26dp"
-        android:text="@string/find_account_fragment_announce_info"
+        android:text="@string/send_code_fragment_announcement"
         android:textColor="@color/BlueGrey_800"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/send_code_email"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <View
@@ -62,26 +64,40 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginStart="24dp"
+        android:layout_marginTop="14dp"
         android:layout_marginEnd="24dp"
         android:background="@color/BlueGrey_400"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/id_input_layout" />
+        app:layout_constraintTop_toBottomOf="@+id/send_code_input_field" />
+
+    <TextView
+        android:id="@+id/send_code_recend_email"
+        style="@style/Body3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginBottom="18dp"
+        android:text="@string/send_code_fragment_email"
+        android:textColor="@color/Blue_500"
+        app:layout_constraintBottom_toTopOf="@+id/send_code_next_btn"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/find_account_fragment_ok_btn"
+        android:id="@+id/send_code_next_btn"
         style="@style/SubHeadline3"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginStart="22dp"
-        android:layout_marginTop="104dp"
         android:layout_marginEnd="22dp"
+        android:layout_marginBottom="24dp"
         android:background="@drawable/btn_login_fragment_next"
-        android:text="@string/find_account_fragment_ok"
+        android:text="@string/send_code_fragment_next"
         android:enabled="false"
         android:textColor="@color/Grey_300"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
