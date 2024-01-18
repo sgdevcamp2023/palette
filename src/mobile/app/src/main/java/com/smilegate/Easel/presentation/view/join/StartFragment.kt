@@ -21,6 +21,8 @@ class StartFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
+        binding = FragmentStartBinding.inflate(inflater, container, false)
+
         val toolbar = requireActivity().findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar_container)
         val backButton = toolbar.findViewById<ImageView>(R.id.back_btn)
         backButton.visibility = View.GONE
@@ -28,8 +30,6 @@ class StartFragment : Fragment() {
         backButton.setOnClickListener {
             findNavController().navigateUp()
         }
-
-        binding = FragmentStartBinding.inflate(inflater, container, false)
 
         navController = findNavController()
 
