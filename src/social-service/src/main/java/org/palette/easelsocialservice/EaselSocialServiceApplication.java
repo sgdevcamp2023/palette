@@ -1,4 +1,4 @@
-package org.pallete.easelsocialservice;
+package org.palette.easelsocialservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

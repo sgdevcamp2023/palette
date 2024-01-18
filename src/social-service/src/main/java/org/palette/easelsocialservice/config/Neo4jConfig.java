@@ -1,4 +1,4 @@
-package org.pallete.easelsocialservice.config;
+package org.palette.easelsocialservice.config;
 
 import org.springframework.context.annotation.Bean;
 import org.neo4j.cypherdsl.core.renderer.Configuration;

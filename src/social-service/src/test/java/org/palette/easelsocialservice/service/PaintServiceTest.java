@@ -1,8 +1,11 @@
-package org.pallete.easelsocialservice.service;
+package org.palette.easelsocialservice.service;
 
 import org.junit.jupiter.api.Test;
-import org.pallete.easelsocialservice.persistence.*;
-import org.pallete.easelsocialservice.persistence.domain.*;
+import org.palette.easelsocialservice.persistence.HashtagRepository;
+import org.palette.easelsocialservice.persistence.MediaRepository;
+import org.palette.easelsocialservice.persistence.PaintRepository;
+import org.palette.easelsocialservice.persistence.UserRepository;
+import org.palette.easelsocialservice.persistence.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 

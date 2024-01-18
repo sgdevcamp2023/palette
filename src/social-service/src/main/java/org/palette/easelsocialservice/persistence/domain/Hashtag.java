@@ -1,4 +1,4 @@
-package org.pallete.easelsocialservice.persistence.domain;
+package org.palette.easelsocialservice.persistence.domain;
 
 import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.Node;

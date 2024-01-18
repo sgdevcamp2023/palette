@@ -1,4 +1,4 @@
-package org.pallete.easelsocialservice;
+package org.palette.easelsocialservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

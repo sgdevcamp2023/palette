@@ -1,20 +1,18 @@
-package org.pallete.easelsocialservice.persistence.domain;
+package org.palette.easelsocialservice.persistence.domain;
 
-import lombok.Getter;
 import org.springframework.data.neo4j.core.schema.RelationshipId;
 import org.springframework.data.neo4j.core.schema.RelationshipProperties;
 import org.springframework.data.neo4j.core.schema.TargetNode;
 
-@Getter
 @RelationshipProperties
-public class Contains {
+public class Uses {
     @RelationshipId
     private Long id;
 
     @TargetNode
-    private Link link;
+    private Media media;
 
-    public Contains(Link link) {
-        this.link = link;
+    public Uses(Media media) {
+        this.media = media;
     }
 }
