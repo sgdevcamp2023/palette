@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "org.palette.grpc";
+
+service GSocialService {
+  rpc createUser (GCreateUserRequest) returns (GCreateUserResponse) {}
+}
+
+message GCreateUserRequest {
+  int64 id = 1;
+  string username = 2;
+  string nickname = 3;
+  string imagePath = 4;
+  bool isActive = 5;
+}
+
+message GCreateUserResponse {
+  bool message = 1;
+}
