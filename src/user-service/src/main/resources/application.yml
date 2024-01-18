@@ -1,7 +1,9 @@
 server:
-  port: 8081
+  port: 10002
 
 spring:
+  application:
+    name: user-service
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/user-service?useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false
@@ -25,3 +27,7 @@ eureka:
     register-with-eureka: true
     service-url:
       defaultZone: http://localhost:8761/eureka
+
+grpc:
+  server:
+    port: 11002
