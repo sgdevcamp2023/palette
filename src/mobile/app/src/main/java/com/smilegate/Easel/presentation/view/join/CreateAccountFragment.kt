@@ -1,6 +1,7 @@
 package com.smilegate.Easel.presentation.view.join
 
 import android.graphics.Color
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.text.Editable
 import android.text.SpannableString
@@ -11,9 +12,13 @@ import android.text.style.ClickableSpan
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import android.widget.ImageView
 import android.widget.Toast
+import android.widget.Toolbar
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -61,6 +66,15 @@ class CreateAccountFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val toolbar = requireActivity().findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar_container)
+        val backButton = toolbar.findViewById<ImageView>(R.id.back_btn)
+        backButton.visibility = View.VISIBLE
+
+        backButton.setOnClickListener {
+            findNavController().navigateUp()
+            backButton.visibility = GONE
+        }
 
         binding.createAccountInfoField.setOnFocusChangeListener { _, hasFocus ->
             if (!hasFocus) {

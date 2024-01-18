@@ -2,6 +2,7 @@ package com.smilegate.Easel
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.navigation.NavController
@@ -32,5 +33,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         window.decorView.setBackgroundColor(ContextCompat.getColor(this, android.R.color.white))
+
+        val toolbar = findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar_container)
+        setSupportActionBar(toolbar)
     }
 }
