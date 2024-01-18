@@ -19,7 +19,8 @@ import com.smilegate.Easel.databinding.FragmentPasswordBinding
 import com.smilegate.Easel.presentation.viewmodel.LoginViewModel
 
 class PasswordFragment : Fragment() {
-    private lateinit var binding: FragmentPasswordBinding
+    private var _binding: FragmentPasswordBinding? = null
+    private val binding get() = _binding!!
 
     private lateinit var navController: NavController
 
@@ -33,7 +34,7 @@ class PasswordFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentPasswordBinding.inflate(inflater, container, false)
+        _binding = FragmentPasswordBinding.inflate(inflater, container, false)
 
         navController = findNavController()
 
@@ -48,13 +49,20 @@ class PasswordFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         Log.d("PasswordFragment", "onViewCreated")
 
-        // LiveData를 사용하여 데이터 변경 감지
-        loginViewModel.id.observe(viewLifecycleOwner) { id ->
-            Log.d("PasswordFragment", "Id value retrieved: $id")
+         //LiveData를 사용하여 데이터 변경 감지
+        loginViewModel.email.observe(viewLifecycleOwner) { email ->
+            Log.d("PasswordFragment", "email value retrieved: $email")
 
             // id를 사용하여 UI 업데이트 등을 수행
-            binding?.passwordFragmentIdField?.text = id
+            binding?.passwordFragmentIdField?.text = email
         }
+//        // 번들에서 데이터를 가져옴
+//        val email = arguments?.getString("email")
+//        Log.d("PasswordFragment", "email value retrieved: $email")
+//
+//        // 가져온 데이터를 사용하여 UI 업데이트 등을 수행
+//        binding?.passwordFragmentIdField?.text = email
+//        Log.d("PasswordFragment", "Text set to: $email")
 
         binding.passwordFragmentPwShowBtn.setOnClickListener {
             passwordVisibility()
@@ -116,5 +124,11 @@ class PasswordFragment : Fragment() {
             val textColor = ContextCompat.getColor(requireContext(), textColorResourceId)
             nextButton?.setTextColor(textColor)
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        // 뷰 바인딩 해제
+        _binding = null
     }
 }

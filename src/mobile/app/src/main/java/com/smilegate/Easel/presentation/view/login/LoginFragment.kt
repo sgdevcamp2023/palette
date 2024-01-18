@@ -16,12 +16,14 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.smilegate.Easel.R
 import com.smilegate.Easel.databinding.FragmentLoginBinding
+import com.smilegate.Easel.databinding.FragmentPasswordBinding
 import com.smilegate.Easel.presentation.viewmodel.JoinViewModel
 import com.smilegate.Easel.presentation.viewmodel.LoginViewModel
 
 
 class LoginFragment : Fragment() {
-    private lateinit var binding: FragmentLoginBinding
+    private var _binding: FragmentLoginBinding? = null
+    private val binding get() = _binding!!
 
     private lateinit var navController: NavController
 
@@ -33,7 +35,7 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         Log.d("LoginFragment", "onCreateView")
-        binding = FragmentLoginBinding.inflate(inflater, container, false)
+        _binding = FragmentLoginBinding.inflate(inflater, container, false)
 
         navController = findNavController()
 
@@ -42,8 +44,13 @@ class LoginFragment : Fragment() {
             Log.d("LoginFragment", "Input text: $inputText")
 
             // ViewModel에 데이터 저장
-            loginViewModel.setIdValue(inputText)
-            Log.d("LoginFragment", "Id value set: $inputText")
+            loginViewModel.setEmailValue(inputText)
+            Log.d("LoginFragment", "email value set: $inputText")
+
+            // 번들을 생성하고 데이터를 담음
+//            val bundle = Bundle()
+//            bundle.putString("email", inputText)
+//            Log.d("LoginFragment", "email value set: $inputText")
 
             navController.navigate(R.id.action_createAccountFragment_to_sendCodeFragment)
         }
@@ -102,9 +109,9 @@ class LoginFragment : Fragment() {
         }
     }
 
-//    override fun onDestroyView() {
-//        super.onDestroyView()
-//        // 뷰 바인딩 해제
-//        binding = null
-//    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        // 뷰 바인딩 해제
+        _binding = null
+    }
 }
