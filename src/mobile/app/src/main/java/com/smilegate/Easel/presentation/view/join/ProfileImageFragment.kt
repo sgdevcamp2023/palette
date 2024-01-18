@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
@@ -26,6 +27,7 @@ class ProfileImageFragment : Fragment() {
 
     // 이미지 선택 요청 코드
     private val PICK_IMAGE_REQUEST = 1
+    private var selectedImageUri: Uri? = null
 
     private lateinit var navController: NavController
 
@@ -50,6 +52,11 @@ class ProfileImageFragment : Fragment() {
             navController.navigate(R.id.action_profileImageFragment_to_askNameFragment)
         }
 
+        binding.profileImageFragmentDeleteBtn.setOnClickListener {
+            selectedImageUri = null
+            binding?.profileImageFragmentCameraBtn?.visibility = View.VISIBLE
+        }
+
         return binding.root
     }
 
@@ -64,13 +71,22 @@ class ProfileImageFragment : Fragment() {
 
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK) {
             // 이미지가 성공적으로 선택되었을 때
-            val selectedImageUri: Uri? = data?.data
+            var selectedImageUri: Uri? = data?.data
             val nextButton = binding?.root?.findViewById<Button>(R.id.profile_image_fragment_next_btn)
 
             // 선택한 이미지를 ImageView에 설정
             selectedImageUri?.let {
                 binding?.profileImage?.setImageURI(it)
                 binding?.profileImage?.scaleType = ImageView.ScaleType.CENTER_CROP
+                binding?.deleteCardView?.visibility = View.VISIBLE
+                binding.profileImageFragmentDeleteBtn.setOnClickListener {
+                    // 이미지 삭제 처리
+                    selectedImageUri = null
+                    binding?.profileImageFragmentCameraBtn?.visibility = View.VISIBLE
+                    binding?.deleteCardView?.visibility = View.GONE
+                    val drawable = ContextCompat.getDrawable(requireContext(), R.drawable.bg_profile_image_picker)
+                    binding.profileImage.setImageDrawable(drawable)
+                }
             }
 
             // ImageView에 Image가 선택되어있지 않으면 버튼 비활성화
@@ -86,7 +102,6 @@ class ProfileImageFragment : Fragment() {
             binding?.profileImageFragmentCameraBtn?.visibility = View.GONE
         }
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

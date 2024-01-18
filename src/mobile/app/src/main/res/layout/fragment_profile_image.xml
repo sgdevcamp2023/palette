@@ -69,6 +69,44 @@
 
     </androidx.cardview.widget.CardView>
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/delete_card_view"
+        android:layout_width="52dp"
+        android:layout_height="52dp"
+        android:clickable="true"
+        app:cardCornerRadius="26dp"
+        app:cardElevation="0dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/cardView"
+        app:layout_constraintEnd_toEndOf="@+id/cardView">
+
+        <ImageView
+            android:id="@+id/delete_img_btn"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/bg_profile_image_picker"
+            app:layout_constraintBottom_toTopOf="@+id/profile_image_fragment_next_btn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView2"
+            app:tint="@color/black" />
+
+        <ImageView
+            android:id="@+id/profile_image_fragment_delete_btn"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_x"
+            app:layout_constraintBottom_toBottomOf="@+id/cardView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/cardView"
+            app:tint="@color/white" />
+
+    </androidx.cardview.widget.CardView>
+
     <Button
         android:id="@+id/profile_image_fragment_next_btn"
         style="@style/SubHeadline3"
