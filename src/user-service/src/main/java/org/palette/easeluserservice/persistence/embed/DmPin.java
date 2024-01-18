@@ -6,6 +6,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 @Embeddable
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 public class DmPin {
 
     @Column(name = "dm_pin", columnDefinition = "TEXT")

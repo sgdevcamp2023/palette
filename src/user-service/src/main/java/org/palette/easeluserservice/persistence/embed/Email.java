@@ -8,6 +8,7 @@ import org.palette.easeluserservice.exception.BaseException;
 import org.palette.easeluserservice.exception.ExceptionType;
 
 @Embeddable
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Email {
     @Column(name = "email", nullable = false, unique = true, length = 70)
     private String value;

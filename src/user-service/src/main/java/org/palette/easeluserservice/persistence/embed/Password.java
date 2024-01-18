@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Embeddable
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 public class Password {
     @Column(name = "password", nullable = false, length = 100)
     private String value;

@@ -3,14 +3,20 @@ package org.palette.easeluserservice.persistence.embed;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.validation.constraints.Size;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import org.palette.easeluserservice.exception.BaseException;
+import org.palette.easeluserservice.exception.ExceptionType;
 
 @Embeddable
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Username {
     @Column(name = "username", nullable = false, unique = true, length = 50)
-    @Size(max = 70, message = "email must be less than 70 characters.")
     private String value;
+
+    public Username(String value) {
+        if (value.length() > 50) throw new BaseException(ExceptionType.USER_000001);
+        this.value = value;
+    }
 }

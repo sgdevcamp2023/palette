@@ -2,8 +2,11 @@ package org.palette.easeluserservice.persistence.embed;
 
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.Embedded;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 @Embeddable
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Profile {
 
     @Embedded
