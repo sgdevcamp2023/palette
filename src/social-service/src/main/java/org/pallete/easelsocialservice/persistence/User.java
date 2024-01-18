@@ -10,4 +10,11 @@ public class User {
     private String username;
     private String nickname;
     private String imagePath;
+
+    public User(String id, String username, String nickname, String imagePath) {
+        this.id = id;
+        this.username = username;
+        this.nickname = nickname;
+        this.imagePath = imagePath;
+    }
 }
