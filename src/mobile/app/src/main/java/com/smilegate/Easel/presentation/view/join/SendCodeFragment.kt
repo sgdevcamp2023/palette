@@ -18,6 +18,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.smilegate.Easel.R
 import com.smilegate.Easel.databinding.FragmentSendCodeBinding
+import com.smilegate.Easel.domain.containsSpaceOrNewline
 import com.smilegate.Easel.presentation.viewmodel.JoinViewModel
 
 class SendCodeFragment : Fragment() {
@@ -67,9 +68,9 @@ class SendCodeFragment : Fragment() {
 
             // 텍스트 변경 후에 호출되는 메소드
             override fun afterTextChanged(s: Editable?) {
-                if (s?.contains(" ") == true || s?.contains("\n") == true) {
+                if (containsSpaceOrNewline(s)) {
                     // 스페이스바 또는 엔터키 입력을 막음
-                    s.delete(s.length - 1, s.length)
+                    s?.delete(s.length - 1, s.length)
                 }
                 checkEditTextAndEnableButton()
             }

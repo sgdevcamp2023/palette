@@ -22,6 +22,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.smilegate.Easel.R
 import com.smilegate.Easel.databinding.FragmentCreateAccountBinding
+import com.smilegate.Easel.domain.containsSpaceOrNewline
 import com.smilegate.Easel.presentation.viewmodel.JoinViewModel
 
 
@@ -31,6 +32,9 @@ class CreateAccountFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var navController: NavController
+
+    // 찾을 대상 텍스트 리스트
+    private val targetTexts = listOf("쿠키 사용", "이용 약관", "개인정보 처리방침", "자세히", "알아보기", "여기")
 
     // Activity 범위에서 공유
     private val joinViewModel: JoinViewModel by activityViewModels()
@@ -89,9 +93,9 @@ class CreateAccountFragment : Fragment() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
 
             override fun afterTextChanged(s: Editable?) {
-                if (s?.contains(" ") == true || s?.contains("\n") == true) {
+                if (containsSpaceOrNewline(s)) {
                     // 스페이스바 또는 엔터키 입력을 막음
-                    s.delete(s.length - 1, s.length)
+                    s?.delete(s.length - 1, s.length)
                 }
             }
         })
@@ -103,18 +107,15 @@ class CreateAccountFragment : Fragment() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
 
             override fun afterTextChanged(s: Editable?) {
-                if (s?.contains(" ") == true || s?.contains("\n") == true) {
+                if (containsSpaceOrNewline(s)) {
                     // 스페이스바 또는 엔터키 입력을 막음
-                    s.delete(s.length - 1, s.length)
+                    s?.delete(s.length - 1, s.length)
                 }
             }
         })
 
         // TextView에서 텍스트 가져오기
         val fullText = binding?.textView4?.text.toString()
-
-        // 찾을 대상 텍스트 리스트
-        val targetTexts = listOf("쿠키 사용", "이용 약관", "개인정보 처리방침", "자세히", "알아보기", "여기")
 
         // SpannableString을 사용하여 색상 변경 및 클릭 이벤트 처리
         val spannableString = SpannableString(fullText)
@@ -154,8 +155,7 @@ class CreateAccountFragment : Fragment() {
 
     private fun handleTextClick(clickedText: String) {
         // 클릭된 텍스트에 따라 동작 수행
-        if (clickedText == "쿠키 사용" || clickedText == "이용 약관" || clickedText == "개인정보 처리방침"
-            || clickedText == "자세히" || clickedText == "알아보기" || clickedText == "여기") {
+        if (clickedText in targetTexts) {
             // "지원하지 않는 기능입니다" 토스트 띄우기 (2초 동안)
             Toast.makeText(requireContext(), "지원하지 않는 기능입니다.", Toast.LENGTH_SHORT).apply {
                 duration = Toast.LENGTH_SHORT

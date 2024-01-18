@@ -17,6 +17,8 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.smilegate.Easel.R
 import com.smilegate.Easel.databinding.FragmentNeedPasswordBinding
+import com.smilegate.Easel.domain.containsSpaceOrNewline
+import com.smilegate.Easel.domain.isDoneAction
 
 class NeedPasswordFragment : Fragment() {
     private lateinit var binding: FragmentNeedPasswordBinding
@@ -24,6 +26,7 @@ class NeedPasswordFragment : Fragment() {
     private lateinit var navController: NavController
 
     private var passwordVisible = false
+    private val maxPasswordLength = 8
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,10 +56,7 @@ class NeedPasswordFragment : Fragment() {
 
         // 키보드의 "Done" 또는 "Enter" 키를 감지
         binding.needPasswordFragmentPwField.setOnEditorActionListener { _, actionId, event ->
-            if (actionId == EditorInfo.IME_ACTION_DONE ||
-                (event != null && event.action == KeyEvent.ACTION_DOWN &&
-                        event.keyCode == KeyEvent.KEYCODE_ENTER)
-            ) {
+            if (isDoneAction(actionId, event)) {
                 validatePassword()
                 return@setOnEditorActionListener true
             }
@@ -81,9 +81,9 @@ class NeedPasswordFragment : Fragment() {
 
             // 텍스트 변경 후에 호출되는 메소드
             override fun afterTextChanged(s: Editable?) {
-                if (s?.contains(" ") == true || s?.contains("\n") == true) {
+                if (containsSpaceOrNewline(s)) {
                     // 스페이스바 또는 엔터키 입력을 막음
-                    s.delete(s.length - 1, s.length)
+                    s?.delete(s.length - 1, s.length)
                 }
                 checkEditTextAndEnableButton()
             }
@@ -140,7 +140,6 @@ class NeedPasswordFragment : Fragment() {
 
     private fun isPasswordValid(): Boolean {
         val password = binding.needPasswordFragmentPwField.text.toString()
-        return password.length >= 8
+        return password.length >= maxPasswordLength
     }
-
 }
