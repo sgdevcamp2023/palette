@@ -30,5 +30,7 @@ class MainActivity : AppCompatActivity() {
             isAppearanceLightStatusBars = true
             isAppearanceLightNavigationBars = true
         }
+
+        window.decorView.setBackgroundColor(ContextCompat.getColor(this, android.R.color.white))
     }
 }
