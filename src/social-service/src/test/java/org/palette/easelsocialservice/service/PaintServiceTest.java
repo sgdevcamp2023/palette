@@ -57,7 +57,7 @@ class PaintServiceTest {
     }
 
     public void createSampleData() {
-        User user1 = new User(1L, "user1", "nickname1", "path1");
+        User user1 = new User(1L, "user1", "nickname1", "path1", true);
         Paint paint1 = new Paint("content1");
         Paint paint2 = new Paint("content2");
         paint1.setAuthor(user1);
@@ -67,7 +67,7 @@ class PaintServiceTest {
         paintRepository.save(paint1);
         paintRepository.save(paint2);
 
-        User user2 = new User(2L, "user2", "nickname2", "path2");
+        User user2 = new User(2L, "user2", "nickname2", "path2", false);
         Paint paint3 = new Paint("content3");
         Paint paint4 = new Paint("content4");
         paint3.setAuthor(user2);
