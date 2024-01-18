@@ -1,6 +1,8 @@
-import { useNavigate } from '@tanstack/react-router';
+import Lottie from 'react-lottie';
 import { toast } from 'react-toastify';
+import { useNavigate } from '@tanstack/react-router';
 
+import earthLottie from '../../public/earth.json';
 import { Button, Typography, ContentLayout } from '@/components';
 
 function MembershipEntryPage() {
@@ -13,7 +15,18 @@ function MembershipEntryPage() {
           지금 세계에서 무슨 일이 일어나고 있는지 알아보세요.
         </Typography>
         <div className="min-h-[260px] self-center">
-          <img src="/world.png" alt="palette world" width={260} />
+          <Lottie
+            width={260}
+            height={260}
+            options={{
+              loop: true,
+              autoplay: true,
+              animationData: earthLottie,
+              rendererSettings: {
+                preserveAspectRatio: 'xMidYMid slice',
+              },
+            }}
+          />
         </div>
         <Button
           role="navigation"
