@@ -24,6 +24,9 @@ repositories {
 extra["springCloudVersion"] = "2023.0.0"
 
 dependencies {
+	implementation ("net.devh:grpc-spring-boot-starter:2.15.0.RELEASE")
+
+
 	// easel common module
 	implementation(project(":common-module"))
 
