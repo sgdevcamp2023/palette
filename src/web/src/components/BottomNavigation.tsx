@@ -1,10 +1,11 @@
 import type { RefObject } from 'react';
+import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { cva } from 'class-variance-authority';
 import { useNavigate, useMatchRoute } from '@tanstack/react-router';
 
-import AccessibleIconButton from './AccessibleIconButton';
 import { useThrottle } from '@/hooks';
+import AccessibleIconButton from './AccessibleIconButton';
 
 const BottomNavigationVariants = cva<{
   direction: Record<'up' | 'down' | 'stop', string>;
@@ -27,6 +28,8 @@ const BottomNavigationVariants = cva<{
 interface BottomNavigationProps {
   contentRef: RefObject<HTMLElement> | null;
 }
+
+const FramerAccessibleIconButton = motion(AccessibleIconButton);
 
 function BottomNavigation({ contentRef }: BottomNavigationProps) {
   if (!contentRef) return null;
@@ -64,7 +67,7 @@ function BottomNavigation({ contentRef }: BottomNavigationProps) {
 
   return (
     <nav className={BottomNavigationVariants({ direction: scrollDirection })}>
-      <AccessibleIconButton
+      <FramerAccessibleIconButton
         role="navigation"
         iconType="home"
         width={22}
@@ -72,8 +75,12 @@ function BottomNavigation({ contentRef }: BottomNavigationProps) {
         disabled={!!matchRoute({ to: '/home' })}
         onClick={() => navigate({ to: '/home' })}
         fill={matchRoute({ to: '/home' }) ? 'black' : undefined}
+        whileHover={{
+          scale: 1.1,
+        }}
+        whileTap={{ scale: 0.8 }}
       />
-      <AccessibleIconButton
+      <FramerAccessibleIconButton
         role="navigation"
         iconType="search"
         width={20}
@@ -81,8 +88,12 @@ function BottomNavigation({ contentRef }: BottomNavigationProps) {
         disabled={!!matchRoute({ to: '/search' })}
         onClick={() => navigate({ to: '/search' })}
         stroke={matchRoute({ to: '/search' }) ? 'black' : undefined}
+        whileHover={{
+          scale: 1.1,
+        }}
+        whileTap={{ scale: 0.8 }}
       />
-      <AccessibleIconButton
+      <FramerAccessibleIconButton
         role="navigation"
         iconType={matchRoute({ to: '/notification' }) ? 'solidBell' : 'bell'}
         width={20}
@@ -90,14 +101,22 @@ function BottomNavigation({ contentRef }: BottomNavigationProps) {
         disabled={!!matchRoute({ to: '/notification' })}
         onClick={() => navigate({ to: '/notification' })}
         fill={matchRoute({ to: '/notification' }) ? 'black' : undefined}
+        whileHover={{
+          scale: 1.1,
+        }}
+        whileTap={{ scale: 0.8 }}
       />
-      <AccessibleIconButton
+      <FramerAccessibleIconButton
         role="navigation"
         iconType={matchRoute({ to: '/chat' }) ? 'solidMail' : 'mail'}
         width={20}
         label="채팅 화면으로 이동"
         disabled={!!matchRoute({ to: '/chat' })}
         onClick={() => navigate({ to: '/chat' })}
+        whileHover={{
+          scale: 1.1,
+        }}
+        whileTap={{ scale: 0.8 }}
       />
     </nav>
   );
