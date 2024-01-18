@@ -24,6 +24,9 @@ repositories {
 extra["springCloudVersion"] = "2023.0.0"
 
 dependencies {
+	// easel common module
+	implementation(project(":common-module"))
+
 	// neo4j
 	implementation ("org.neo4j.driver:neo4j-java-driver:5.15.0")
 	implementation ("org.springframework.boot:spring-boot-starter-data-neo4j")
