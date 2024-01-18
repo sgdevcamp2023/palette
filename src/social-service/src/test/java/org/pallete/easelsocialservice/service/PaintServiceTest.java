@@ -13,12 +13,15 @@ class PaintServiceTest {
     private PaintRepository paintRepository;
     @Autowired
     private HashtagRepository hashtagRepository;
+    @Autowired
+    private MediaRepository mediaRepository;
 
     @Test
     public void testAddPaints() {
         createSampleData();
         createLink();
         createHashtag();
+        createMedia();
     }
 
     public  void createHashtag() {
@@ -30,6 +33,15 @@ class PaintServiceTest {
 
         paintRepository.save(paint);
         paintRepository.save(paint2);
+    }
+
+    public void createMedia() {
+        Media media = new Media("/path/image", "image");
+        mediaRepository.save(media);
+
+        Paint paint = paintRepository.findByPid(1L).get();
+        paint.addMedia(media);
+        paintRepository.save(paint);
     }
 
     public void createLink() {

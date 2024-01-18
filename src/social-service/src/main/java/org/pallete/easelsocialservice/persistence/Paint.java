@@ -23,6 +23,9 @@ public class Paint {
 
     @Relationship(type = "TAGS")
     private List<Tags> hashtags;
+
+    @Relationship(type = "USES")
+    private List<Uses> medias;
     
     private String content;
     
@@ -48,5 +51,9 @@ public class Paint {
 
     public void addTag(Hashtag hashtag, int startIdx, int endIdx) {
         this.hashtags.add(new Tags(hashtag, startIdx, endIdx));
+    }
+
+    public void addMedia(Media media) {
+        this.medias.add(new Uses(media));
     }
 }
