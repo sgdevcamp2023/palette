@@ -31,3 +31,9 @@ eureka:
 grpc:
   server:
     port: 11002
+  client:
+    social-service:
+      address: 'discovery:///SOCIAL-SERVICE'
+      enableKeepAlive: true
+      keepAliveWithoutCalls: true
+      negotiationType: plaintext
