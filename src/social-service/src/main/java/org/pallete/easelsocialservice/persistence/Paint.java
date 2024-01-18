@@ -13,13 +13,16 @@ import java.util.List;
 @Node("paint")
 public class Paint {
     @Id @GeneratedValue(PaintIdGenerator.class)
-    private String pid;
+    private Long pid;
 
     @Relationship(type = "CREATES", direction = Relationship.Direction.INCOMING)
     private Creates author;
 
     @Relationship(type = "CONTAINS")
     private List<Contains> links;
+
+    @Relationship(type = "TAGS")
+    private List<Tags> hashtags;
     
     private String content;
     
@@ -41,5 +44,9 @@ public class Paint {
 
     public void addLink(Link link) {
         this.links.add(new Contains(link));
+    }
+
+    public void addTag(Hashtag hashtag, int startIdx, int endIdx) {
+        this.hashtags.add(new Tags(hashtag, startIdx, endIdx));
     }
 }

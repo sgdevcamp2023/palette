@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import java.util.Optional;
 
 @Component
-class PaintIdGenerator implements IdGenerator<String> {
+class PaintIdGenerator implements IdGenerator<Long> {
 
     private final Neo4jClient neo4jClient;
 
@@ -16,9 +16,9 @@ class PaintIdGenerator implements IdGenerator<String> {
     }
 
     @Override
-    public synchronized String generateId(String primaryLabel, Object entity) {
-        Optional<Long> maxIdOptional = neo4jClient.query("MATCH (n:" + primaryLabel + ") RETURN n.pid as pid ORDER BY n.pid DESC LIMIT 1")
-                .fetchAs(Long.class).mappedBy((typeSystem, record) -> Long.parseLong(record.get("pid").asString())).one();
-        return maxIdOptional.map(aLong -> String.valueOf(aLong + 1)).orElse("0");
+    public synchronized Long generateId(String primaryLabel, Object entity) {
+        Optional<Long> maxIdOptional = neo4jClient.query("MATCH (n:" + primaryLabel + ") RETURN toInteger(n.pid) as pid ORDER BY n.pid DESC LIMIT 1")
+                .fetchAs(Long.class).mappedBy((typeSystem, record) -> record.get("pid").asLong()).one();
+        return maxIdOptional.map(aLong -> aLong + 1).orElse(0L);
     }
 }

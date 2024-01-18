@@ -6,12 +6,12 @@ import org.springframework.data.neo4j.core.schema.Node;
 @Node("user")
 public class User {
     @Id
-    private String id;
+    private Long id;
     private String username;
     private String nickname;
     private String imagePath;
 
-    public User(String id, String username, String nickname, String imagePath) {
+    public User(Long id, String username, String nickname, String imagePath) {
         this.id = id;
         this.username = username;
         this.nickname = nickname;
