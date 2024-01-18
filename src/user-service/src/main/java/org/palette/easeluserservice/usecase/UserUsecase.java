@@ -25,6 +25,7 @@ public class UserUsecase {
         return new EmailDuplicationVerifyResponse(false);
     }
 
+    @Transactional
     public void executeJoin(
             String email,
             String password,

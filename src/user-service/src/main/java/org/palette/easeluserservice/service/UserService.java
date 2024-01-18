@@ -21,6 +21,7 @@ public class UserService {
     private final UserJpaRepository userJpaRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    @Transactional
     public User createUser(
             String email,
             String password,
