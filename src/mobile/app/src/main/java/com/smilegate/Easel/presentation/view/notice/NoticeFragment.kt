@@ -35,6 +35,9 @@ class NoticeFragment : Fragment() {
         val profileButton = toolbar.findViewById<ImageView>(R.id.back_btn)
         profileButton.setImageResource(R.drawable.ic_circle_person)
         profileButton.visibility = View.VISIBLE
+        profileButton.setOnClickListener {
+            findNavController().navigate(R.id.profileFragment)
+        }
 
         val settingButton = toolbar.findViewById<ImageView>(R.id.else_btn)
         settingButton.setImageResource(R.drawable.ic_setting)
