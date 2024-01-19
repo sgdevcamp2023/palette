@@ -6,9 +6,22 @@ import { cn } from '@/utils';
 interface TimelineItemBoxProps {
   item: TimelineItem;
   className?: string;
+  onClickReply: VoidFunction;
+  onClickRetweet: VoidFunction;
+  onClickHeart: VoidFunction;
+  onClickViews: VoidFunction;
+  onClickShare: VoidFunction;
 }
 
-function TimelineItemBox({ item, className }: TimelineItemBoxProps) {
+function TimelineItemBox({
+  item,
+  className,
+  onClickReply,
+  onClickRetweet,
+  onClickHeart,
+  onClickViews,
+  onClickShare,
+}: TimelineItemBoxProps) {
   const hasMedia = item.includes.medias.length > 0;
 
   return (
@@ -65,6 +78,7 @@ function TimelineItemBox({ item, className }: TimelineItemBoxProps) {
             iconType="comment"
             label="답글 달기"
             className="transition-colors hover:bg-grey-200 rounded-full p-1"
+            onClick={onClickReply}
           />
           <div className="flex gap-[4px] items-center">
             <AccessibleIconButton
@@ -75,6 +89,7 @@ function TimelineItemBox({ item, className }: TimelineItemBoxProps) {
               fill={item.repainted ? 'green-200' : undefined}
               label="인용 혹은 재게시 하기"
               className="transition-colors hover:bg-grey-200 rounded-full p-1"
+              onClick={onClickRetweet}
             />
             <Typography
               size="body-3"
@@ -90,6 +105,7 @@ function TimelineItemBox({ item, className }: TimelineItemBoxProps) {
               iconType={item.like ? 'solidHeart' : 'heart'}
               label="마음에 들어요 누르기"
               className="transition-colors hover:bg-grey-200 rounded-full p-1"
+              onClick={onClickHeart}
             />
             <Typography
               size="body-3"
@@ -105,6 +121,7 @@ function TimelineItemBox({ item, className }: TimelineItemBoxProps) {
               iconType="barChart"
               label="조회수 보기"
               className="transition-colors hover:bg-grey-200 rounded-full p-1"
+              onClick={onClickViews}
             />
             <Typography size="body-3" color="blueGrey-800">
               {item.views}
@@ -116,6 +133,7 @@ function TimelineItemBox({ item, className }: TimelineItemBoxProps) {
             iconType="share"
             label="공유하기"
             className="transition-colors hover:bg-grey-200 rounded-full p-1"
+            onClick={onClickShare}
           />
         </div>
       </div>
