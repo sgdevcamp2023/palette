@@ -12,6 +12,8 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
+import com.google.android.material.bottomnavigation.LabelVisibilityMode
+import com.google.android.material.navigation.NavigationBarView
 import com.smilegate.Easel.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -54,6 +56,8 @@ class MainActivity : AppCompatActivity() {
             lastSelectedIconId = R.id.navigation_home
             updateIcon(R.id.navigation_home, R.drawable.ic_solid_home)
         }
+
+        binding.navView.labelVisibilityMode = NavigationBarView.LABEL_VISIBILITY_UNLABELED
 
         binding.navView.setOnNavigationItemSelectedListener { item ->
             onNavigationItemSelected(item)
