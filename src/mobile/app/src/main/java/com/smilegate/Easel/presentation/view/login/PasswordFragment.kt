@@ -1,5 +1,6 @@
 package com.smilegate.Easel.presentation.view.login
 
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -7,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
@@ -15,6 +17,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.smilegate.Easel.R
 import com.smilegate.Easel.databinding.FragmentPasswordBinding
 import com.smilegate.Easel.domain.containsSpaceOrNewline
@@ -46,6 +49,7 @@ class PasswordFragment : Fragment() {
 
         binding.passwordFragmentLoginBtn.setOnClickListener {
             navController.navigate(R.id.action_passwordFragment_to_timelineFragment)
+            hideKeyboard()
         }
 
         return binding.root
@@ -144,9 +148,14 @@ class PasswordFragment : Fragment() {
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        // 뷰 바인딩 해제
-        _binding = null
+    private fun hideKeyboard() {
+        val inputMethodManager =
+            requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+
+        // 현재 포커스된 뷰에서 키패드를 감춥니다.
+        val focusedView = requireActivity().currentFocus
+        focusedView?.let {
+            inputMethodManager.hideSoftInputFromWindow(it.windowToken, 0)
+        }
     }
 }

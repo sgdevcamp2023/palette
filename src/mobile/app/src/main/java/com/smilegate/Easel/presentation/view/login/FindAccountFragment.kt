@@ -1,11 +1,13 @@
 package com.smilegate.Easel.presentation.view.login
 
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
@@ -30,9 +32,10 @@ class FindAccountFragment : Fragment() {
 
         navController = findNavController()
 
-//        binding.loginFragmentNextBtn.setOnClickListener {
-//            navController.navigate(R.id.action_loginFragment_to_passwordFragment)
-//        }
+        binding.findAccountFragmentOkBtn.setOnClickListener {
+            navController.navigate(R.id.action_findAccountFragment_to_startFragment)
+            hideKeyboard()
+        }
 
         return binding.root
     }
@@ -85,6 +88,17 @@ class FindAccountFragment : Fragment() {
             val textColorResourceId = R.color.Grey_300
             val textColor = ContextCompat.getColor(requireContext(), textColorResourceId)
             nextButton?.setTextColor(textColor)
+        }
+    }
+
+    private fun hideKeyboard() {
+        val inputMethodManager =
+            requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+
+        // 현재 포커스된 뷰에서 키패드를 감춥니다.
+        val focusedView = requireActivity().currentFocus
+        focusedView?.let {
+            inputMethodManager.hideSoftInputFromWindow(it.windowToken, 0)
         }
     }
 }

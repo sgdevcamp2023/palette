@@ -1,5 +1,6 @@
 package com.smilegate.Easel.presentation.view.join
 
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -9,6 +10,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
@@ -35,6 +37,7 @@ class AskNameFragment : Fragment() {
 
         binding.askNameFragmentJoinBtn.setOnClickListener {
             navController.navigate(R.id.action_askNameFragment_to_timelineFragment)
+            hideKeyboard()
         }
 
         return binding.root
@@ -92,6 +95,17 @@ class AskNameFragment : Fragment() {
             val textColorResourceId = R.color.Grey_300
             val textColor = ContextCompat.getColor(requireContext(), textColorResourceId)
             nextButton?.setTextColor(textColor)
+        }
+    }
+
+    private fun hideKeyboard() {
+        val inputMethodManager =
+            requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+
+        // 현재 포커스된 뷰에서 키패드를 감춥니다.
+        val focusedView = requireActivity().currentFocus
+        focusedView?.let {
+            inputMethodManager.hideSoftInputFromWindow(it.windowToken, 0)
         }
     }
 }
