@@ -25,6 +25,6 @@ public class UserService extends GSocialServiceGrpc.GSocialServiceImplBase {
     }
 
     private User convertToUser(GCreateUserRequest request) {
-        return new User(request.getId(), request.getUsername(), request.getNickname(), request.getNickname(), request.getIsActive());
+        return new User(request.getId(), request.getUsername(), request.getNickname(), request.getImagePath(), request.getIsActive());
     }
 }
