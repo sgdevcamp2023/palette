@@ -2,19 +2,35 @@ import { useState } from 'react';
 
 import type { TimelineItem } from '@/@types';
 import { createDummyTimelineItem } from '@/utils';
-import {
-  Icon,
-  Tabs,
-  Header,
-  Typography,
-  BottomSheet,
-  ContentLayout,
-  TimelineItemBox,
-} from '@/components';
+import { Tabs, Header, ContentLayout, TimelineItemBox } from '@/components';
+import { ReplyBottomSheet } from '@/components/bottomSheet';
+
+interface BottomSheetState {
+  reply: boolean;
+  views: boolean;
+  share: boolean;
+}
+
+const INITIAL_BOTTOM_SHEET_OPEN: BottomSheetState = {
+  reply: false,
+  views: false,
+  share: false,
+};
 
 function HomePage() {
+  const [isBottomSheetOpen, setIsBottomSheetOpen] = useState<BottomSheetState>(
+    INITIAL_BOTTOM_SHEET_OPEN,
+  );
   const [paints] = useState<TimelineItem[]>(() => createDummyTimelineItem(10));
-  const [isBottomSheetOpen, setIsBottomSheetOpen] = useState<boolean>(false);
+  const [selectedPostId, setSelectedPostId] = useState<TimelineItem['id']>('');
+
+  const handleClickTimelineActionIcon = (
+    id: string,
+    type: keyof BottomSheetState,
+  ) => {
+    setSelectedPostId(id);
+    setIsBottomSheetOpen((prev) => ({ ...prev, [type]: !prev[type] }));
+  };
 
   return (
     <>
@@ -44,11 +60,21 @@ function HomePage() {
                     key={paint.id}
                     item={paint}
                     className="pt-[10px]"
-                    onClickReply={() => setIsBottomSheetOpen((prev) => !prev)}
-                    onClickRetweet={() => setIsBottomSheetOpen((prev) => !prev)}
-                    onClickHeart={() => setIsBottomSheetOpen((prev) => !prev)}
-                    onClickViews={() => setIsBottomSheetOpen((prev) => !prev)}
-                    onClickShare={() => setIsBottomSheetOpen((prev) => !prev)}
+                    onClickReply={() =>
+                      handleClickTimelineActionIcon(paint.id, 'reply')
+                    }
+                    onClickRetweet={() =>
+                      handleClickTimelineActionIcon(paint.id, 'reply')
+                    }
+                    onClickHeart={() =>
+                      handleClickTimelineActionIcon(paint.id, 'reply')
+                    }
+                    onClickViews={() =>
+                      handleClickTimelineActionIcon(paint.id, 'reply')
+                    }
+                    onClickShare={() =>
+                      handleClickTimelineActionIcon(paint.id, 'reply')
+                    }
                   />
                 ))}
               </ContentLayout>
@@ -65,13 +91,21 @@ function HomePage() {
                       key={paint.id}
                       item={paint}
                       className="pt-[10px]"
-                      onClickReply={() => setIsBottomSheetOpen((prev) => !prev)}
-                      onClickRetweet={() =>
-                        setIsBottomSheetOpen((prev) => !prev)
+                      onClickReply={() =>
+                        handleClickTimelineActionIcon(paint.id, 'reply')
                       }
-                      onClickHeart={() => setIsBottomSheetOpen((prev) => !prev)}
-                      onClickViews={() => setIsBottomSheetOpen((prev) => !prev)}
-                      onClickShare={() => setIsBottomSheetOpen((prev) => !prev)}
+                      onClickRetweet={() =>
+                        handleClickTimelineActionIcon(paint.id, 'reply')
+                      }
+                      onClickHeart={() =>
+                        handleClickTimelineActionIcon(paint.id, 'reply')
+                      }
+                      onClickViews={() =>
+                        handleClickTimelineActionIcon(paint.id, 'reply')
+                      }
+                      onClickShare={() =>
+                        handleClickTimelineActionIcon(paint.id, 'reply')
+                      }
                     />
                   ))}
               </ContentLayout>
@@ -80,26 +114,13 @@ function HomePage() {
         ]}
         className="mt-[44px]"
       />
-      <BottomSheet
-        buttonText="취소"
-        isOpen={isBottomSheetOpen}
-        onClose={() => setIsBottomSheetOpen(false)}
-      >
-        <div className="flex flex-col gap-[32px]">
-          <div className="flex gap-[18px] items-center">
-            <Icon type="retweet" width={24} height={24} />
-            <Typography size="body-1" color="grey-600">
-              재게시
-            </Typography>
-          </div>
-          <div className="flex gap-[18px] items-center">
-            <Icon type="pen" width={24} height={24} />
-            <Typography size="body-1" color="grey-600">
-              인용
-            </Typography>
-          </div>
-        </div>
-      </BottomSheet>
+      <ReplyBottomSheet
+        id={selectedPostId}
+        isOpen={isBottomSheetOpen.reply}
+        onClose={() =>
+          setIsBottomSheetOpen((prev) => ({ ...prev, reply: false }))
+        }
+      />
     </>
   );
 }
