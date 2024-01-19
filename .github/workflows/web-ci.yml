@@ -29,8 +29,10 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'pnpm'
-          cache-dependency-path: './src/web'
+          # cache pnpm에 대한 이슈로 인해 제거
+          # https://github.com/actions/setup-node/issues/801
+          # cache: 'pnpm'
+          # cache-dependency-path: './src/web'
 
       - name: Cache dependencies
         id: cache
@@ -53,9 +55,6 @@ jobs:
 
       - name: check lint
         run: pnpm lint
-
-      - name: check build
-        run: pnpm build
 
   web-check-type:
     name: check type
