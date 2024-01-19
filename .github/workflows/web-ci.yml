@@ -76,7 +76,7 @@ jobs:
           version: 8.6.1
 
       - name: setup node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@main
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
