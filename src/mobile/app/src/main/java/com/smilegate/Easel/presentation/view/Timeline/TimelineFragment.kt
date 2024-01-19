@@ -13,10 +13,13 @@ import android.widget.Toast
 import androidx.activity.addCallback
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import androidx.viewpager.widget.ViewPager
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.tabs.TabLayout
 import com.smilegate.Easel.R
 import com.smilegate.Easel.databinding.FragmentStartBinding
 import com.smilegate.Easel.databinding.FragmentTimelineBinding
+import com.smilegate.Easel.presentation.adapter.TimelineAdapter
 
 class TimelineFragment : Fragment() {
     private lateinit var binding: FragmentTimelineBinding
@@ -49,6 +52,12 @@ class TimelineFragment : Fragment() {
         // 바텀 네비게이션바 보이기
         val bottomNavigation = activity?.findViewById<BottomNavigationView>(R.id.nav_view)
         bottomNavigation?.visibility = View.VISIBLE
+
+        val viewPager: ViewPager = requireView().findViewById(R.id.viewPager)
+        setupViewPager(viewPager)
+
+        val tabLayout: TabLayout = requireView().findViewById(R.id.tabLayout)
+        tabLayout.setupWithViewPager(viewPager)
 
         return binding.root
     }
@@ -87,5 +96,13 @@ class TimelineFragment : Fragment() {
 
     private fun isCurrentFragment(): Boolean {
         return true
+    }
+
+    private fun setupViewPager(viewPager: ViewPager) {
+        // 여러 개의 프래그먼트를 추가하여 ViewPager에 연결
+        val adapter = TimelineAdapter(childFragmentManager)
+        adapter.addFragment(ForYouFragment(), "For You")
+        adapter.addFragment(FollowingFragment(), "Following")
+        viewPager.adapter = adapter
     }
 }
