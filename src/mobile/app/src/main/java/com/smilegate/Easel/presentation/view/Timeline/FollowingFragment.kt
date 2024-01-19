@@ -9,21 +9,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.Toast
-import androidx.activity.addCallback
-import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import androidx.viewpager.widget.ViewPager
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.tabs.TabLayout
 import com.smilegate.Easel.R
-import com.smilegate.Easel.databinding.FragmentStartBinding
-import com.smilegate.Easel.databinding.FragmentTimelineBinding
-import com.smilegate.Easel.presentation.adapter.TimelineAdapter
+import com.smilegate.Easel.databinding.FragmentFollowingBinding
+import com.smilegate.Easel.databinding.FragmentSearchBinding
 
-class TimelineFragment : Fragment() {
-    private lateinit var binding: FragmentTimelineBinding
+class FollowingFragment : Fragment() {
+    private lateinit var binding: FragmentFollowingBinding
 
     private lateinit var navController: NavController
 
@@ -33,7 +27,7 @@ class TimelineFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentTimelineBinding.inflate(inflater, container, false)
+        binding = FragmentFollowingBinding.inflate(inflater, container, false)
 
         val toolbar = requireActivity().findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar_container)
 
@@ -49,18 +43,6 @@ class TimelineFragment : Fragment() {
         settingButton.visibility = View.VISIBLE
 
         navController = findNavController()
-
-        // 바텀 네비게이션바 보이기
-        val bottomNavigation = activity?.findViewById<BottomNavigationView>(R.id.nav_view)
-        bottomNavigation?.visibility = View.VISIBLE
-
-        val viewPager: ViewPager = binding.root.findViewById(R.id.viewPager)
-        setupViewPager(viewPager)
-
-        val tabLayout: TabLayout = binding.root.findViewById(R.id.tabLayout)
-        tabLayout.setupWithViewPager(viewPager)
-        tabLayout.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.white))
-        tabLayout.setSelectedTabIndicatorColor(ContextCompat.getColor(requireContext(), R.color.Blue_500))
 
         return binding.root
     }
@@ -99,13 +81,5 @@ class TimelineFragment : Fragment() {
 
     private fun isCurrentFragment(): Boolean {
         return true
-    }
-
-    private fun setupViewPager(viewPager: ViewPager) {
-        // 여러 개의 프래그먼트를 추가하여 ViewPager에 연결
-        val adapter = TimelineAdapter(childFragmentManager)
-        adapter.addFragment(ForYouFragment(), "추천")
-        adapter.addFragment(FollowingFragment(), "팔로우 중")
-        viewPager.adapter = adapter
     }
 }
