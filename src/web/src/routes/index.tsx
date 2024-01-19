@@ -9,6 +9,7 @@ import {
   NotificationPage,
   SearchPage,
   JoinPage,
+  PostEditPage,
 } from '@/pages';
 
 export const rootRoute = new RootRoute({
@@ -57,6 +58,20 @@ const changePasswordRoute = new Route({
   component: () => <ChangePasswordPage />,
 });
 
+const postRoute = new Route({
+  getParentRoute: () => rootRoute,
+  path: '/post',
+});
+
+export const editPostRoute = new Route({
+  getParentRoute: () => postRoute,
+  path: '/edit',
+  component: () => <PostEditPage />,
+  validateSearch: (search: Record<string, string>): { postId: string } => ({
+    postId: search.postId || '0',
+  }),
+});
+
 const routeTree = rootRoute.addChildren([
   homeRoute,
   loginRoute,
@@ -66,6 +81,7 @@ const routeTree = rootRoute.addChildren([
   membershipEntryRoute,
   joinRoute,
   changePasswordRoute,
+  postRoute.addChildren([editPostRoute]),
 ]);
 
 export const router = new Router({ routeTree });
