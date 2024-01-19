@@ -3,25 +3,25 @@ import { useState, type ChangeEvent } from 'react';
 
 import { StepTitle } from '..';
 import { Button, Input, Typography } from '../common';
-import type { NavigationEvent, SignUpInfo } from './signUpReducer';
+import type { NavigationEvent, JoinInfo } from './joinReducer';
 
-interface SignUpEmailVerifyBoxProps extends NavigationEvent {
+interface JoinEmailVerifyBoxProps extends NavigationEvent {
   email: string;
   emailVerifyCode: string;
   disabled: boolean;
   onChangeInput: (
     e: ChangeEvent<HTMLInputElement>,
-    type: keyof SignUpInfo,
+    type: keyof JoinInfo,
   ) => void;
 }
 
-function SignUpEmailVerifyBox({
+function JoinEmailVerifyBox({
   email,
   emailVerifyCode,
   disabled,
   onNextStep,
   onChangeInput,
-}: SignUpEmailVerifyBoxProps) {
+}: JoinEmailVerifyBoxProps) {
   const [isDirty, setIsDirty] = useState<boolean>(false);
 
   const handleClickResendButton = () => {
@@ -74,4 +74,4 @@ function SignUpEmailVerifyBox({
   );
 }
 
-export default SignUpEmailVerifyBox;
+export default JoinEmailVerifyBox;

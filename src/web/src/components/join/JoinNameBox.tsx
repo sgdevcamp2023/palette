@@ -1,25 +1,25 @@
 import type { ChangeEvent } from 'react';
 
 import { StepTitle } from '..';
-import type { SignUpInfo } from './signUpReducer';
+import type { JoinInfo } from './joinReducer';
 import { Button, Input, Typography } from '../common';
 
-interface SignUpNameBoxProps {
+interface JoinNameBoxProps {
   username: string;
   disabled?: boolean;
   onChangeInput: (
     e: ChangeEvent<HTMLInputElement>,
-    type: keyof SignUpInfo,
+    type: keyof JoinInfo,
   ) => void;
-  onSignUp: VoidFunction;
+  onJoin: VoidFunction;
 }
 
-function SignUpNameBox({
+function JoinNameBox({
   username,
   disabled,
-  onSignUp,
+  onJoin,
   onChangeInput,
-}: SignUpNameBoxProps) {
+}: JoinNameBoxProps) {
   return (
     <>
       <StepTitle
@@ -42,7 +42,7 @@ function SignUpNameBox({
         aria-label="회원가입을 진행합니다."
         disabled={disabled}
         aria-disabled={disabled}
-        onClick={onSignUp}
+        onClick={onJoin}
       >
         <Typography size="body-2" color="white">
           가입
@@ -52,4 +52,4 @@ function SignUpNameBox({
   );
 }
 
-export default SignUpNameBox;
+export default JoinNameBox;

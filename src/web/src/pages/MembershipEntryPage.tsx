@@ -31,7 +31,7 @@ function MembershipEntryPage() {
         <Button
           role="navigation"
           variant="filled"
-          onClick={() => navigate({ to: '/signup' })}
+          onClick={() => navigate({ to: '/join' })}
         >
           <Typography size="sub-headline-2" color="white">
             계정 만들기

@@ -8,7 +8,7 @@ import {
   MembershipEntryPage,
   NotificationPage,
   SearchPage,
-  SignUpPage,
+  JoinPage,
 } from '@/pages';
 
 export const rootRoute = new RootRoute({
@@ -46,10 +46,10 @@ const membershipEntryRoute = new Route({
   path: '/',
   component: () => <MembershipEntryPage />,
 });
-const signUpRoute = new Route({
+const joinRoute = new Route({
   getParentRoute: () => rootRoute,
-  path: '/signup',
-  component: () => <SignUpPage />,
+  path: '/join',
+  component: () => <JoinPage />,
 });
 const changePasswordRoute = new Route({
   getParentRoute: () => rootRoute,
@@ -64,7 +64,7 @@ const routeTree = rootRoute.addChildren([
   chatRoute,
   searchRoute,
   membershipEntryRoute,
-  signUpRoute,
+  joinRoute,
   changePasswordRoute,
 ]);
 
