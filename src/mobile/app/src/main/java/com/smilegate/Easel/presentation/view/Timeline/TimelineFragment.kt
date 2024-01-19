@@ -79,8 +79,8 @@ class TimelineFragment : Fragment() {
             false
         }
     }
+
     private fun isCurrentFragment(): Boolean {
         return true
     }
-
 }
