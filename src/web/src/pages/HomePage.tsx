@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { toast } from 'react-toastify';
+import { useNavigate } from '@tanstack/react-router';
 
 import type { TimelineItem } from '@/@types';
 import { createDummyTimelineItem } from '@/utils';
@@ -22,6 +24,7 @@ const INITIAL_BOTTOM_SHEET_OPEN: BottomSheetState = {
 };
 
 function HomePage() {
+  const navigate = useNavigate();
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState<BottomSheetState>(
     INITIAL_BOTTOM_SHEET_OPEN,
   );
@@ -65,14 +68,15 @@ function HomePage() {
                     item={paint}
                     className="pt-[10px]"
                     onClickReply={() =>
-                      handleClickTimelineActionIcon(paint.id, 'reply')
+                      navigate({
+                        to: '/post/edit',
+                        search: { postId: paint.id },
+                      })
                     }
                     onClickRetweet={() =>
                       handleClickTimelineActionIcon(paint.id, 'reply')
                     }
-                    onClickHeart={() =>
-                      handleClickTimelineActionIcon(paint.id, 'reply')
-                    }
+                    onClickHeart={() => toast('아직 지원되지 않는 기능입니다.')}
                     onClickViews={() =>
                       handleClickTimelineActionIcon(paint.id, 'views')
                     }
@@ -96,13 +100,16 @@ function HomePage() {
                       item={paint}
                       className="pt-[10px]"
                       onClickReply={() =>
-                        handleClickTimelineActionIcon(paint.id, 'reply')
+                        navigate({
+                          to: '/post/edit',
+                          search: { postId: paint.id },
+                        })
                       }
                       onClickRetweet={() =>
                         handleClickTimelineActionIcon(paint.id, 'reply')
                       }
                       onClickHeart={() =>
-                        handleClickTimelineActionIcon(paint.id, 'reply')
+                        toast('아직 지원되지 않는 기능입니다.')
                       }
                       onClickViews={() =>
                         handleClickTimelineActionIcon(paint.id, 'views')
