@@ -20,7 +20,7 @@ function ContentLayout({
     <>
       <main
         className={cn(
-          'px-[24px] mt-[44px] mb-[50px] overflow-y-scroll max-h-[calc(100vh-44px)]',
+          'px-[24px] mt-[44px] mb-[50px] overflow-y-scroll max-h-[calc(100vh-44px)] overscroll-contain',
           className,
         )}
         ref={mainRef}

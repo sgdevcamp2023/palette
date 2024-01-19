@@ -36,6 +36,7 @@ import Search from './Search.svg?react';
 import Setting from './Setting.svg?react';
 import Share from './Share.svg?react';
 import SolidCamera from './SolidCamera.svg?react';
+import SolidHeart from './SolidHeart.svg?react';
 import SolidBell from './SolidBell.svg?react';
 import SolidMail from './SolidMail.svg?react';
 import Sun from './Sun.svg?react';
@@ -83,6 +84,7 @@ export const ICONS = {
   setting: Setting,
   share: Share,
   solidCamera: SolidCamera,
+  solidHeart: SolidHeart,
   solidBell: SolidBell,
   solidMail: SolidMail,
   sun: Sun,

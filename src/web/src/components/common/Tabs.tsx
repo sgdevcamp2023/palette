@@ -1,8 +1,8 @@
 import type { ReactNode } from 'react';
 import { useEffect, useRef, useState } from 'react';
 
-import { ContentLayout, Typography } from '@/components';
 import { cn } from '@/utils';
+import { Typography } from '@/components';
 
 interface TabProps {
   tabs: {
@@ -69,9 +69,7 @@ function Tabs({ tabs, className }: TabProps) {
           style={{ left: tabUnderlineLeft, width: tabUnderlineWidth }}
         />
       </div>
-      <ContentLayout className="mt-0">
-        {tabs[activeTabIndex].content}
-      </ContentLayout>
+      {tabs[activeTabIndex].content}
     </>
   );
 }

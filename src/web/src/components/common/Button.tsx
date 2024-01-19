@@ -64,6 +64,7 @@ function Button({
           : `cursor-pointer ${
               color === 'black' ? 'hover:bg-grey-500' : 'hover:bg-blue-400'
             }`,
+        variant === 'outlined' ? 'bg-white border-grey-300' : '',
       )}
       {...props}
     >
