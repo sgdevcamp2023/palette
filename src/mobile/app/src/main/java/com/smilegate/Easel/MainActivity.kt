@@ -38,5 +38,9 @@ class MainActivity : AppCompatActivity() {
 
         val toolbar = findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar_container)
         setSupportActionBar(toolbar)
+
+        // 타이틀을 비워서 보이지 않도록 설정
+        supportActionBar?.title = ""
+        toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.white))
     }
 }
