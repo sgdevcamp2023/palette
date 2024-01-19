@@ -9,6 +9,7 @@ import Check from './Check.svg?react';
 import CirclePerson from './CirclePerson.svg?react';
 import CircleQuestion from './CircleQuestion.svg?react';
 import CircleX from './CircleX.svg?react';
+import Clip from './Clip.svg?react';
 import Comment from './Comment.svg?react';
 import DownArrow from './DownArrow.svg?react';
 import EyeOff from './EyeOff.svg?react';
@@ -57,6 +58,7 @@ export const ICONS = {
   circlePerson: CirclePerson,
   circleQuestion: CircleQuestion,
   circleX: CircleX,
+  clip: Clip,
   comment: Comment,
   downArrow: DownArrow,
   eyeOff: EyeOff,
