@@ -38,6 +38,6 @@ public class UserService extends GSocialServiceGrpc.GSocialServiceImplBase {
     public void createMentions(Long paintId, Optional<List<PaintCreateRequest.Mention>> mentions) {
     }
 
-    public void createTaggedUsers(Long paintId, Optional<List<String>> strings) {
+    public void createTaggedUsers(Long paintId, Optional<List<Long>> taggedUserIds) {
     }
 }

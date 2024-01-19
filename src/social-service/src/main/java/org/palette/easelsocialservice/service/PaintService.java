@@ -11,11 +11,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class PaintService {
     private final PaintRepository paintRepository;
-    private final HashtagRepository hashtagRepository;
-    private final LinkRepository linkRepository;
-    private final MediaRepository mediaRepository;
 
-    public Long createPaint(Long userId, String text, Optional<String> s, Optional<String> string) {
+    public Long createPaint(Long userId, String text, Optional<Long> inReplyToPostId, Optional<Long> quotePaintId) {
 
 
         return null;

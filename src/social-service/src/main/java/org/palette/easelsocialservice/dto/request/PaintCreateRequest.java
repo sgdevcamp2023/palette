@@ -6,15 +6,15 @@ import java.util.Optional;
 public record PaintCreateRequest(
         String text,
         Optional<List<Media>> medias,
-        Optional<List<String>> taggedUserIds,
-        Optional<String> quotePaintId,
-        Optional<String> inReplyToPostId,
+        Optional<List<Long>> taggedUserIds,
+        Optional<Long> quotePaintId,
+        Optional<Long> inReplyToPostId,
         Optional<List<Hashtag>> hashtags,
         Optional<List<Mention>> mentions,
         Optional<List<Link>> links) {
 
     public record Media (
-            String id,
+            String path,
             String type) {}
 
     public record Hashtag (
@@ -25,7 +25,7 @@ public record PaintCreateRequest(
     public record Mention (
             int start,
             int end,
-            String userId,
+            Long userId,
             String mention) {}
 
     public record Link (
