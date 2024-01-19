@@ -22,8 +22,9 @@ public class PaintApi {
     public ResponseEntity<PaintCreateResponse> create(
             @RequestBody PaintCreateRequest paintCreateRequest
     ) {
+        // TODO: 사용자 ID 추가하기
         return ResponseEntity.ok(
-                paintUsecase.createPaint(
+                paintUsecase.createPaint(0L,
                         paintCreateRequest)
         );
     }
