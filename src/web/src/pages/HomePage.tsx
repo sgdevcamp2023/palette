@@ -3,7 +3,11 @@ import { useState } from 'react';
 import type { TimelineItem } from '@/@types';
 import { createDummyTimelineItem } from '@/utils';
 import { Tabs, Header, ContentLayout, TimelineItemBox } from '@/components';
-import { ReplyBottomSheet, ViewsBottomSheet } from '@/components/bottomSheet';
+import {
+  ReplyBottomSheet,
+  ShareBottomSheet,
+  ViewsBottomSheet,
+} from '@/components/bottomSheet';
 
 interface BottomSheetState {
   reply: boolean;
@@ -73,7 +77,7 @@ function HomePage() {
                       handleClickTimelineActionIcon(paint.id, 'views')
                     }
                     onClickShare={() =>
-                      handleClickTimelineActionIcon(paint.id, 'reply')
+                      handleClickTimelineActionIcon(paint.id, 'share')
                     }
                   />
                 ))}
@@ -104,7 +108,7 @@ function HomePage() {
                         handleClickTimelineActionIcon(paint.id, 'views')
                       }
                       onClickShare={() =>
-                        handleClickTimelineActionIcon(paint.id, 'reply')
+                        handleClickTimelineActionIcon(paint.id, 'share')
                       }
                     />
                   ))}
@@ -125,6 +129,13 @@ function HomePage() {
         isOpen={isBottomSheetOpen.views}
         onClose={() =>
           setIsBottomSheetOpen((prev) => ({ ...prev, views: false }))
+        }
+      />
+      <ShareBottomSheet
+        id={selectedPostId}
+        isOpen={isBottomSheetOpen.share}
+        onClose={() =>
+          setIsBottomSheetOpen((prev) => ({ ...prev, share: false }))
         }
       />
     </>
