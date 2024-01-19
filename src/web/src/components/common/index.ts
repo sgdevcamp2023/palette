@@ -1,3 +1,4 @@
+export * from './Modal';
 export { default as Button } from './Button';
 export { default as ContentLayout } from './ContentLayout';
 export { default as Icon } from './Icon';
