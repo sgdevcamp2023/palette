@@ -106,6 +106,13 @@ class ProfileImageFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val toolbar = requireActivity().findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar_container)
+        val backButton = toolbar.findViewById<ImageView>(R.id.back_btn)
+        backButton.visibility = View.VISIBLE
+
+        backButton.setOnClickListener {
+            findNavController().navigateUp()
+        }
     }
 
 //    override fun onDestroyView() {

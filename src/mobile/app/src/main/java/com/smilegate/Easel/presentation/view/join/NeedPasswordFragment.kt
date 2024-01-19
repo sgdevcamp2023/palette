@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
@@ -49,6 +50,14 @@ class NeedPasswordFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val toolbar = requireActivity().findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar_container)
+        val backButton = toolbar.findViewById<ImageView>(R.id.back_btn)
+        backButton.visibility = View.VISIBLE
+
+        backButton.setOnClickListener {
+            findNavController().navigateUp()
+        }
 
         binding.needPasswordFragmentPwShowBtn.setOnClickListener {
             passwordVisibility()
@@ -125,7 +134,7 @@ class NeedPasswordFragment : Fragment() {
     private fun validatePassword() {
         val password = binding.needPasswordFragmentPwField.text.toString()
 
-        if (password.length < 8) {
+        if (password.length < maxPasswordLength) {
             // 비밀번호가 8자 미만인 경우
             val pwColorResourceId = ContextCompat.getColor(requireContext(), R.color.Red_200)
             binding.needPasswordFragmentPwField.setTextColor(pwColorResourceId)

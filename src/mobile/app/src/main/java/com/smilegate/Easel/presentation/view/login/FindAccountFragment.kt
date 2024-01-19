@@ -1,13 +1,16 @@
 package com.smilegate.Easel.presentation.view.login
 
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
@@ -29,15 +32,24 @@ class FindAccountFragment : Fragment() {
 
         navController = findNavController()
 
-//        binding.loginFragmentNextBtn.setOnClickListener {
-//            navController.navigate(R.id.action_loginFragment_to_passwordFragment)
-//        }
+        binding.findAccountFragmentOkBtn.setOnClickListener {
+            navController.navigate(R.id.action_findAccountFragment_to_startFragment)
+            hideKeyboard()
+        }
 
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val toolbar = requireActivity().findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar_container)
+        val backButton = toolbar.findViewById<ImageView>(R.id.back_btn)
+        backButton.visibility = View.VISIBLE
+
+        backButton.setOnClickListener {
+            findNavController().navigateUp()
+        }
 
         binding.findAccountFragmentInputField.addTextChangedListener(object : TextWatcher {
             // 텍스트 변경 전에 호출되는 메소드
@@ -76,6 +88,17 @@ class FindAccountFragment : Fragment() {
             val textColorResourceId = R.color.Grey_300
             val textColor = ContextCompat.getColor(requireContext(), textColorResourceId)
             nextButton?.setTextColor(textColor)
+        }
+    }
+
+    private fun hideKeyboard() {
+        val inputMethodManager =
+            requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+
+        // 현재 포커스된 뷰에서 키패드를 감춥니다.
+        val focusedView = requireActivity().currentFocus
+        focusedView?.let {
+            inputMethodManager.hideSoftInputFromWindow(it.windowToken, 0)
         }
     }
 }

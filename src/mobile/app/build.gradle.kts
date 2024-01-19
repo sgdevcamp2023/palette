@@ -74,8 +74,9 @@ dependencies {
     //CircleImageView
     implementation ("de.hdodenhof:circleimageview:3.1.0")
 
-
     //lottie Animation
     implementation("com.airbnb.android:lottie:6.0.0")
 
+    //bottom navigation bar
+    implementation ("me.majiajie:pager-bottom-tab-strip:2.4.0")
 }

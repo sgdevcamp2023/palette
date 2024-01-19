@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
@@ -51,6 +52,14 @@ class SendCodeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val toolbar = requireActivity().findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar_container)
+        val backButton = toolbar.findViewById<ImageView>(R.id.back_btn)
+        backButton.visibility = View.VISIBLE
+
+        backButton.setOnClickListener {
+            findNavController().navigateUp()
+        }
 
         // LiveData를 사용하여 데이터 변경 감지
         joinViewModel.email.observe(viewLifecycleOwner) { email ->
