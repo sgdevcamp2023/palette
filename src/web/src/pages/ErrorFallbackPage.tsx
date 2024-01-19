@@ -16,7 +16,7 @@ function ErrorFallbackPage({ error }: FallbackProps) {
             잘못된 접근입니다.
           </Typography>
           <Typography size="body-1" color="grey-600">
-            메시지:
+            메시지:{' '}
             {error instanceof Error ? error.message : '잘못된 페이지입니다.'}
           </Typography>
         </div>
