@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         ActivityMainBinding.inflate(layoutInflater)
     }
 
-    private var lastSelectedIconId: Int = 0
+    private var lastSelectedIconId: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -79,9 +79,9 @@ class MainActivity : AppCompatActivity() {
         item.setIcon(selectedIcon)
 
         // 이전에 선택된 아이콘 원래 아이콘으로 변경
-        if (lastSelectedIconId != 0 && lastSelectedIconId != currentIconId) {
-            val lastSelectedItem = binding.navView.menu.findItem(lastSelectedIconId)
-            lastSelectedItem?.setIcon(getOriginalIcon(lastSelectedIconId))
+        if (lastSelectedIconId != null && lastSelectedIconId != currentIconId) {
+            val lastSelectedItem = binding.navView.menu.findItem(lastSelectedIconId!!)
+            lastSelectedItem?.setIcon(getOriginalIcon(lastSelectedIconId!!))
         }
 
         // 이전에 선택된 아이콘 ID 업데이트
