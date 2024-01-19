@@ -33,7 +33,7 @@ function BottomSheetModal({
     <Modal isOpen={isOpen} onClose={onClose} closeOnOverlayClick>
       <div className="flex flex-col items-center z-[9999] fixed bottom-0 left-0 right-0 py-0 px-[22px] border-[1px] border-grey-300 rounded-t-[32px] bg-white animate-slide-up">
         <BottomSheetModalHeader />
-        <div className="w-full flex flex-col gap-[36px] overflow-y-auto pb-[30px]">
+        <div className="w-full flex flex-col gap-[30px] overflow-y-auto pb-[30px]">
           {children}
           <Button variant="outlined" onClick={onClose}>
             <Typography size="headline-7" color="grey-600">
