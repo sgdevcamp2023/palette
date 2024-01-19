@@ -78,7 +78,6 @@
             app:itemBackground="@color/white"
             android:background="#FFFFFF"
             app:elevation="0dp"
-            android:visibility="gone"
             app:labelVisibilityMode="unlabeled"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
             app:layout_constraintBottom_toBottomOf="parent"
