@@ -73,13 +73,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun onNavigationItemSelected(item: MenuItem): Boolean {
-        val currentIconId = item.itemId // 현재 선택된 아이콘 ID
+        val currentIconId = item.itemId
 
-        // 현재 아이콘을 선택한 아이콘으로 변경
-        item.setIcon(getSelectedIcon(currentIconId))
+        val selectedIcon = getSelectedIcon(currentIconId)
+        item.setIcon(selectedIcon)
 
         // 이전에 선택된 아이콘 원래 아이콘으로 변경
-        if (lastSelectedIconId != 0) {
+        if (lastSelectedIconId != 0 && lastSelectedIconId != currentIconId) {
             val lastSelectedItem = binding.navView.menu.findItem(lastSelectedIconId)
             lastSelectedItem?.setIcon(getOriginalIcon(lastSelectedIconId))
         }
@@ -87,7 +87,6 @@ class MainActivity : AppCompatActivity() {
         // 이전에 선택된 아이콘 ID 업데이트
         lastSelectedIconId = currentIconId
 
-        // Navigation 처리
         when (currentIconId) {
             R.id.navigation_home -> {
                 findNavController(R.id.nav_host_fragment).navigate(R.id.timelineFragment)
