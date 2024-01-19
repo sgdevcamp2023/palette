@@ -75,11 +75,11 @@ jobs:
           version: 8.6.1
 
       - name: setup node
-        uses: actions/setup-node@main
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'pnpm'
-          cache-dependency-path: './src/web'
+          # cache: 'pnpm'
+          # cache-dependency-path: './src/web'
 
       - name: Cache dependencies
         id: cache
@@ -119,8 +119,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'pnpm'
-          cache-dependency-path: './src/web'
+          # cache: 'pnpm'
+          # cache-dependency-path: './src/web'
 
       - name: Cache dependencies
         id: cache
@@ -160,8 +160,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'pnpm'
-          cache-dependency-path: './src/web'
+          # cache: 'pnpm'
+          # cache-dependency-path: './src/web'
 
       - name: Cache dependencies
         id: cache
