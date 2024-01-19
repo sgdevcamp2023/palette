@@ -32,8 +32,10 @@ class TimelineFragment : Fragment() {
         binding = FragmentTimelineBinding.inflate(inflater, container, false)
 
         val toolbar = requireActivity().findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar_container)
-        val backButton = toolbar.findViewById<ImageView>(R.id.back_btn)
-        backButton.visibility = View.GONE
+
+        val profileButton = toolbar.findViewById<ImageView>(R.id.back_btn)
+        profileButton.setImageResource(R.drawable.ic_circle_person)
+        profileButton.visibility = View.VISIBLE
 
         val settingButton = toolbar.findViewById<ImageView>(R.id.else_btn)
         settingButton.setImageResource(R.drawable.ic_setting)
