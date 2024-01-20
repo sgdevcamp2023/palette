@@ -13,7 +13,7 @@ class TimelineRecyclerViewAdapter(private val timelineList: List<TimelineItem>) 
     inner class TimelineViewHolder(private val binding: ItemTimelineBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: TimelineItem) {
-            binding.ivTimelineProfileImg.setImageResource(item.profileImg.toInt())
+            item.profileImg?.let { binding.ivTimelineProfileImg.setImageResource(it) }
             binding.tvTimelineNickname.text = item.nickName
             binding.tvTimelineUsername.text = item.userName
             binding.tvTimelineTime.text = item.timeAgo

@@ -1,7 +1,7 @@
 package com.smilegate.Easel.domain.model
 
 data class TimelineItem(
-    val profileImg: Int,
+    val profileImg: Int?,
     val nickName: String,
     val userName: String,
     val timeAgo: String,
