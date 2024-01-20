@@ -1,12 +1,26 @@
 package org.palette.easelsocialservice.service;
 
 
-import io.grpc.stub.StreamObserver;
-import net.devh.boot.grpc.server.service.GrpcService;
-import org.palette.grpc.GCreateUserRequest;
-import org.palette.grpc.GCreateUserResponse;
-import org.palette.grpc.GSocialServiceGrpc;
+import lombok.RequiredArgsConstructor;
+import org.palette.easelsocialservice.persistence.*;
+import org.palette.easelsocialservice.persistence.domain.Paint;
+import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
+@Service
+@RequiredArgsConstructor
 public class PaintService {
+    private final PaintRepository paintRepository;
+
+    public Long createPaint(Long userId, String text, Optional<Long> inReplyToPaintId, Optional<Long> quotePaintId) {
+        Paint paint = paintRepository.save(new Paint(text));
+
+
+        return null;
+    }
+
+
+
 
 }

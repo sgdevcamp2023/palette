@@ -1,20 +1,21 @@
-package org.palette.easelsocialservice.persistence.domain;
+package org.palette.easelsocialservice.persistence.relationship;
 
 import lombok.Getter;
+import org.palette.easelsocialservice.persistence.domain.User;
 import org.springframework.data.neo4j.core.schema.RelationshipId;
 import org.springframework.data.neo4j.core.schema.RelationshipProperties;
 import org.springframework.data.neo4j.core.schema.TargetNode;
 
 @Getter
 @RelationshipProperties
-public class Contains {
+public class Creates {
     @RelationshipId
     private Long id;
 
     @TargetNode
-    private Link link;
+    private User user;
 
-    public Contains(Link link) {
-        this.link = link;
+    public Creates(User user) {
+        this.user = user;
     }
 }
