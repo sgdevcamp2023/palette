@@ -38,10 +38,12 @@ class TimelineRecyclerViewAdapter(private val timelineList: List<TimelineItem>) 
             binding.tvTimelineViews.setVisibleOrInvisible(item.views != null)
 
             // Glide를 사용하여 프로필 이미지 로드
-            Glide.with(binding.root.context)
-                .load(item.profileImg)
-                .apply(RequestOptions.circleCropTransform())
-                .into(binding.ivTimelineProfileImg)
+            item.profileImg?.let {
+                Glide.with(binding.root.context)
+                    .load(it)
+                    .apply(RequestOptions.circleCropTransform())
+                    .into(binding.ivTimelineProfileImg)
+            }
 
             // contentImgUrl이 null이 아닌 경우에만 Glide를 사용하여 이미지 로드
             item.contentImg?.let {
