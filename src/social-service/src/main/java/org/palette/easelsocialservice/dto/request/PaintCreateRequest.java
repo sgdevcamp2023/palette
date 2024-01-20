@@ -8,7 +8,7 @@ public record PaintCreateRequest(
         Optional<List<Media>> medias,
         Optional<List<Long>> taggedUserIds,
         Optional<Long> quotePaintId,
-        Optional<Long> inReplyToPostId,
+        Optional<Long> inReplyToPaintId,
         Optional<List<Hashtag>> hashtags,
         Optional<List<Mention>> mentions,
         Optional<List<Link>> links) {

@@ -19,7 +19,7 @@ public class PaintUsecase {
     private final MediaService mediaService;
 
     public PaintCreateResponse createPaint(Long userId, PaintCreateRequest paintCreateRequest) {
-        Long paintId = paintService.createPaint(userId, paintCreateRequest.text(), paintCreateRequest.inReplyToPostId(), paintCreateRequest.quotePaintId());
+        Long paintId = paintService.createPaint(userId, paintCreateRequest.text(), paintCreateRequest.inReplyToPaintId(), paintCreateRequest.quotePaintId());
         userService.bindUserWithPost(userId, paintId);
         userService.createMentions(paintId, paintCreateRequest.mentions());
         userService.createTaggedUsers(paintId, paintCreateRequest.taggedUserIds());
