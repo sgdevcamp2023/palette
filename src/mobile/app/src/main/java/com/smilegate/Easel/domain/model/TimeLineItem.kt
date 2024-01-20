@@ -5,7 +5,7 @@ data class TimelineItem(
     val nickName: String,
     val userName: String,
     val timeAgo: String,
-    val content: String,
+    val content: String?,
     val contentImg: Int?,
     val hashtag: String?,
     val replys: Int?,

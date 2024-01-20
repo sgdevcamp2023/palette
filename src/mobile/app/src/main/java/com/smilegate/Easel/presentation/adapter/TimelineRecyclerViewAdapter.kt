@@ -4,6 +4,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.bumptech.glide.request.RequestOptions
 import com.smilegate.Easel.databinding.ItemTimelineBinding
 import com.smilegate.Easel.domain.model.TimelineItem
 
@@ -20,17 +23,33 @@ class TimelineRecyclerViewAdapter(private val timelineList: List<TimelineItem>) 
             binding.tvTimelineContent.text = item.content
             item.contentImg?.let { binding.ivTimelineContentImg.setImageResource(it) }
             binding.tvTimelineHashtag.text = item.hashtag
-            binding.tvTimelineMention.text = item.replys.toString()
-            binding.tvTimelineRetweet.text = item.reposts.toString()
-            binding.tvTimelineLike.text = item.like.toString()
-            binding.tvTimelineViews.text = item.views.toString()
+            binding.tvTimelineMention.text = item.replys?.toString() ?: "0"
+            binding.tvTimelineRetweet.text = item.reposts?.toString() ?: "0"
+            binding.tvTimelineLike.text = item.like?.toString() ?: "0"
+            binding.tvTimelineViews.text = item.views?.toString() ?: "0"
 
+            binding.tvTimelineContent.setVisibleOrGone(!item.content.isNullOrEmpty())
             binding.ivTimelineContentImg.setVisibleOrGone(item.contentImg != null)
-            binding.tvTimelineHashtag.setVisibleOrGone(item.hashtag != null)
-            binding.tvTimelineMention.setVisibleOrGone(item.replys != null)
-            binding.tvTimelineRetweet.setVisibleOrGone(item.reposts != null)
-            binding.tvTimelineLike.setVisibleOrGone(item.like != null)
-            binding.tvTimelineViews.setVisibleOrGone(item.views != null)
+
+            binding.tvTimelineHashtag.setVisibleOrGone(!item.hashtag.isNullOrEmpty())
+            binding.tvTimelineMention.setVisibleOrInvisible(item.replys != null)
+            binding.tvTimelineRetweet.setVisibleOrInvisible(item.reposts != null)
+            binding.tvTimelineLike.setVisibleOrInvisible(item.like != null)
+            binding.tvTimelineViews.setVisibleOrInvisible(item.views != null)
+
+            // Glide를 사용하여 프로필 이미지 로드
+            Glide.with(binding.root.context)
+                .load(item.profileImg)
+                .apply(RequestOptions.circleCropTransform())
+                .into(binding.ivTimelineProfileImg)
+
+            // contentImgUrl이 null이 아닌 경우에만 Glide를 사용하여 이미지 로드
+            item.contentImg?.let {
+                Glide.with(binding.root.context)
+                    .load(it)
+                    .transition(DrawableTransitionOptions.withCrossFade())
+                    .into(binding.ivTimelineContentImg)
+            }
         }
     }
 
