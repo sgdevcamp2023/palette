@@ -1,8 +1,15 @@
-import { Outlet, Router, Route, RootRoute } from '@tanstack/react-router';
+import {
+  Outlet,
+  Router,
+  Route,
+  RootRoute,
+  NotFoundRoute,
+} from '@tanstack/react-router';
 
 import {
   ChangePasswordPage,
   ChatPage,
+  ErrorPage,
   HomePage,
   LoginPage,
   MembershipEntryPage,
@@ -11,9 +18,14 @@ import {
   JoinPage,
   PostEditPage,
 } from '@/pages';
+import { AsyncBoundary } from '@/components';
 
 export const rootRoute = new RootRoute({
-  component: () => <Outlet />,
+  component: () => (
+    <AsyncBoundary pendingFallback={<div>Loading...</div>}>
+      <Outlet />
+    </AsyncBoundary>
+  ),
 });
 
 const homeRoute = new Route({
@@ -72,6 +84,15 @@ export const editPostRoute = new Route({
   }),
 });
 
+const notFoundRoute = new NotFoundRoute({
+  getParentRoute: () => rootRoute,
+  component: () => (
+    <AsyncBoundary>
+      <ErrorPage />
+    </AsyncBoundary>
+  ),
+});
+
 const routeTree = rootRoute.addChildren([
   homeRoute,
   loginRoute,
@@ -84,4 +105,4 @@ const routeTree = rootRoute.addChildren([
   postRoute.addChildren([editPostRoute]),
 ]);
 
-export const router = new Router({ routeTree });
+export const router = new Router({ routeTree, notFoundRoute });

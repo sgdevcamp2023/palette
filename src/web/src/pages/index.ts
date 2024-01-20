@@ -1,5 +1,7 @@
 export { default as ChangePasswordPage } from './ChangePasswordPage';
 export { default as ChatPage } from './ChatPage';
+export { default as ErrorPage } from './ErrorPage';
+export { default as ErrorFallbackPage } from './ErrorFallbackPage';
 export { default as HomePage } from './HomePage';
 export { default as LoginPage } from './LoginPage';
 export { default as MembershipEntryPage } from './MembershipEntryPage';
