@@ -11,10 +11,14 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.smilegate.Easel.R
 import com.smilegate.Easel.databinding.FragmentFollowingBinding
+import com.smilegate.Easel.databinding.FragmentForYouBinding
 import com.smilegate.Easel.databinding.FragmentSearchBinding
+import com.smilegate.Easel.domain.model.TimelineItem
+import com.smilegate.Easel.presentation.adapter.TimelineRecyclerViewAdapter
 
 class FollowingFragment : Fragment() {
     private lateinit var binding: FragmentFollowingBinding
@@ -43,9 +47,6 @@ class FollowingFragment : Fragment() {
         settingButton.visibility = View.VISIBLE
 
         navController = findNavController()
-
-        val bottomNavigation = activity?.findViewById<BottomNavigationView>(R.id.nav_view)
-        bottomNavigation?.visibility = View.VISIBLE
 
         return binding.root
     }
@@ -80,9 +81,46 @@ class FollowingFragment : Fragment() {
             }
             false
         }
+
+        val timelineList = generateDummyTimelineData()
+
+        val adapter = TimelineRecyclerViewAdapter(timelineList)
+        binding.rvTimeline.adapter = adapter
+        binding.rvTimeline.layoutManager = LinearLayoutManager(requireContext())
     }
 
     private fun isCurrentFragment(): Boolean {
         return true
+    }
+
+    private fun generateDummyTimelineData(): List<TimelineItem> {
+        val profileImgId = R.drawable.bg_timeline_profile_img
+        val contentImgId = R.drawable.bg_timeline_content_img
+
+        return listOf(
+            TimelineItem(profileImgId, "SBS 뉴스", "@SBS8news", "18분 전",
+                "god “전성기때도 제작 된 적 없는 공연 실황 영화, 신기해”", contentImgId, "#SBS뉴스",
+                4, 4, 2, 1032),
+
+            TimelineItem(profileImgId, "SBS 뉴스", "@SBS8news", "18분 전",
+                "god “전성기때도 제작 된 적 없는 공연 실황 영화, 신기해”", null, "#SBS뉴스",
+                4, 4, 2, 1032),
+
+            TimelineItem(profileImgId, "SBS 뉴스", "@SBS8news", "18분 전",
+                "god “전성기때도 제작 된 적 없는 공연 실황 영화, 신기해”", null, "#SBS뉴스",
+                4, 4, 2, 1032),
+
+            TimelineItem(profileImgId, "SBS 뉴스", "@SBS8news", "18분 전",
+                "god “전성기때도 제작 된 적 없는 공연 실황 영화, 신기해”", contentImgId, "#SBS뉴스",
+                4, 4, 2, 1032),
+
+            TimelineItem(profileImgId, "SBS 뉴스", "@SBS8news", "18분 전",
+                "god “전성기때도 제작 된 적 없는 공연 실황 영화, 신기해”", null, "#SBS뉴스",
+                4, 4, 2, 1032),
+
+            TimelineItem(profileImgId, "SBS 뉴스", "@SBS8news", "18분 전",
+                "god “전성기때도 제작 된 적 없는 공연 실황 영화, 신기해”", contentImgId, "#SBS뉴스",
+                4, 4, 2, 1032),
+        )
     }
 }
