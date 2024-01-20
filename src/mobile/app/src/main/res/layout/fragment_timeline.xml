@@ -11,6 +11,11 @@
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:elevation="1dp"
+        app:tabSelectedTextColor="@color/Grey_600"
+        app:tabTextColor="@color/BlueGrey_800"
+        app:tabIndicatorHeight="3dp"
+        app:tabTextAppearance="@style/Headline8"
         app:tabMode="fixed"
         app:tabGravity="fill"/>
 
