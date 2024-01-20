@@ -77,7 +77,6 @@
             app:itemBackground="@color/white"
             android:background="#FFFFFF"
             app:elevation="0dp"
-            android:visibility="gone"
             app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"

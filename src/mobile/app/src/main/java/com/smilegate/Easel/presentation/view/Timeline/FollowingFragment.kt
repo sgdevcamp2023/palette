@@ -27,6 +27,8 @@ class FollowingFragment : Fragment() {
 
     private var doubleBackPressed = false
 
+    private var savedScrollPosition: Int = 0
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -87,6 +89,16 @@ class FollowingFragment : Fragment() {
         val adapter = TimelineRecyclerViewAdapter(timelineList)
         binding.rvTimeline.adapter = adapter
         binding.rvTimeline.layoutManager = LinearLayoutManager(requireContext())
+
+        // 스크롤 리스너를 이용하여 스크롤 위치 저장
+        binding.FollowScrollView.setOnScrollChangeListener { _, _, scrollY, _, _ ->
+            savedScrollPosition = scrollY
+        }
+
+        // 저장된 스크롤 위치 복원
+        binding.FollowScrollView.post {
+            binding.FollowScrollView.scrollTo(0, savedScrollPosition)
+        }
     }
 
     private fun isCurrentFragment(): Boolean {
@@ -122,5 +134,10 @@ class FollowingFragment : Fragment() {
                 "god “전성기때도 제작 된 적 없는 공연 실황 영화, 신기해”", contentImgId, "#SBS뉴스",
                 4, 4, 2, 1032),
         )
+    }
+
+    override fun onPause() {
+        super.onPause()
+        savedScrollPosition = binding.FollowScrollView.scrollY
     }
 }
