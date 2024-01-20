@@ -4,20 +4,20 @@ import type { ChangeEvent } from 'react';
 
 import { Button, Icon, Typography } from '../common';
 import { AccessibleIconButton, StepTitle } from '..';
-import type { NavigationEvent } from './signUpReducer';
+import type { NavigationEvent } from './joinReducer';
 
-interface SignUpProfileImageBoxProps extends NavigationEvent {
+interface JoinProfileImageBoxProps extends NavigationEvent {
   disabled: boolean;
   onChangeImage: (path: string) => void;
-  onSignUp: VoidFunction;
+  onJoin: VoidFunction;
 }
 
-function SignUpProfileImageBox({
+function JoinProfileImageBox({
   disabled,
   onNextStep,
   onChangeImage,
-  onSignUp,
-}: SignUpProfileImageBoxProps) {
+  onJoin,
+}: JoinProfileImageBoxProps) {
   const [imageSrc, setImageSrc] = useState<string>('');
 
   const encodeFileToBase64 = (file: File) => {
@@ -51,7 +51,7 @@ function SignUpProfileImageBox({
 
   const handleClickSkipButton = async () => {
     try {
-      onSignUp();
+      onJoin();
     } catch (err) {
       toast.error('잠시 문제가 생겼습니다.');
     }
@@ -130,4 +130,4 @@ function SignUpProfileImageBox({
   );
 }
 
-export default SignUpProfileImageBox;
+export default JoinProfileImageBox;

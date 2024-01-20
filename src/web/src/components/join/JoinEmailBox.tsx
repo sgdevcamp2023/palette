@@ -3,25 +3,25 @@ import { useState, type ChangeEvent, useMemo } from 'react';
 import { isValidEmail } from '@/utils';
 import { NotSupportText, StepTitle } from '..';
 import { Button, Input, Typography } from '../common';
-import type { NavigationEvent, SignUpInfo } from './signUpReducer';
+import type { NavigationEvent, JoinInfo } from './joinReducer';
 
-interface SignUpEmailBoxProps extends NavigationEvent {
+interface JoinEmailBoxProps extends NavigationEvent {
   nickname: string;
   email: string;
   disabled?: boolean;
   onChangeInput: (
     e: ChangeEvent<HTMLInputElement>,
-    type: keyof SignUpInfo,
+    type: keyof JoinInfo,
   ) => void;
 }
 
-function SignUpEmailBox({
+function JoinEmailBox({
   nickname,
   email,
   disabled,
   onNextStep,
   onChangeInput,
-}: SignUpEmailBoxProps) {
+}: JoinEmailBoxProps) {
   const [isDirty, setIsDirty] = useState<'initial' | 'dirty' | 'not-dirty'>(
     'initial',
   );
@@ -90,4 +90,4 @@ function SignUpEmailBox({
   );
 }
 
-export default SignUpEmailBox;
+export default JoinEmailBox;

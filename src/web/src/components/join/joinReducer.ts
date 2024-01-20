@@ -1,6 +1,6 @@
-import type { Dispatch } from 'react';
+import type { Dispatch, Reducer } from 'react';
 
-export enum SignUpStep {
+export enum JoinStep {
   INFORMATION = 1,
   EMAIL_VERIFY,
   PASSWORD,
@@ -8,21 +8,21 @@ export enum SignUpStep {
   NAME,
 }
 
-export const SignUpStepReducer: React.Reducer<
-  SignUpStep,
+export const joinStepReducer: Reducer<
+  JoinStep,
   { direction: 'prev' | 'next' }
 > = (state, action) => {
   switch (action.direction) {
     case 'prev':
-      return Math.max(state - 1, SignUpStep.INFORMATION);
+      return Math.max(state - 1, JoinStep.INFORMATION);
     case 'next':
-      return Math.min(state + 1, SignUpStep.NAME);
+      return Math.min(state + 1, JoinStep.NAME);
     default:
       return state;
   }
 };
 
-export type SignUpStepDispatcher = Dispatch<{
+export type JoinDispatcher = Dispatch<{
   direction: 'next' | 'prev';
 }>;
 
@@ -30,7 +30,7 @@ export interface NavigationEvent {
   onNextStep: VoidFunction;
 }
 
-export interface SignUpInfo {
+export interface JoinInfo {
   username: string;
   nickname: string;
   email: string;

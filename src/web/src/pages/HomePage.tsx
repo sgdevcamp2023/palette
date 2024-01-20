@@ -1,20 +1,43 @@
 import { useState } from 'react';
+import { toast } from 'react-toastify';
+import { useNavigate } from '@tanstack/react-router';
 
 import type { TimelineItem } from '@/@types';
 import { createDummyTimelineItem } from '@/utils';
+import { Tabs, Header, ContentLayout, TimelineItemBox } from '@/components';
 import {
-  Icon,
-  Tabs,
-  Header,
-  Typography,
-  BottomSheet,
-  ContentLayout,
-  TimelineItemBox,
-} from '@/components';
+  ReplyBottomSheet,
+  ShareBottomSheet,
+  ViewsBottomSheet,
+} from '@/components/bottomSheet';
+
+interface BottomSheetState {
+  reply: boolean;
+  views: boolean;
+  share: boolean;
+}
+
+const INITIAL_BOTTOM_SHEET_OPEN: BottomSheetState = {
+  reply: false,
+  views: false,
+  share: false,
+};
 
 function HomePage() {
+  const navigate = useNavigate();
+  const [isBottomSheetOpen, setIsBottomSheetOpen] = useState<BottomSheetState>(
+    INITIAL_BOTTOM_SHEET_OPEN,
+  );
   const [paints] = useState<TimelineItem[]>(() => createDummyTimelineItem(10));
-  const [isBottomSheetOpen, setIsBottomSheetOpen] = useState<boolean>(false);
+  const [selectedPostId, setSelectedPostId] = useState<TimelineItem['id']>('');
+
+  const handleClickTimelineActionIcon = (
+    id: string,
+    type: keyof BottomSheetState,
+  ) => {
+    setSelectedPostId(id);
+    setIsBottomSheetOpen((prev) => ({ ...prev, [type]: !prev[type] }));
+  };
 
   return (
     <>
@@ -44,11 +67,22 @@ function HomePage() {
                     key={paint.id}
                     item={paint}
                     className="pt-[10px]"
-                    onClickReply={() => setIsBottomSheetOpen((prev) => !prev)}
-                    onClickRetweet={() => setIsBottomSheetOpen((prev) => !prev)}
-                    onClickHeart={() => setIsBottomSheetOpen((prev) => !prev)}
-                    onClickViews={() => setIsBottomSheetOpen((prev) => !prev)}
-                    onClickShare={() => setIsBottomSheetOpen((prev) => !prev)}
+                    onClickReply={() =>
+                      navigate({
+                        to: '/post/edit',
+                        search: { postId: paint.id },
+                      })
+                    }
+                    onClickRetweet={() =>
+                      handleClickTimelineActionIcon(paint.id, 'reply')
+                    }
+                    onClickHeart={() => toast('아직 지원되지 않는 기능입니다.')}
+                    onClickViews={() =>
+                      handleClickTimelineActionIcon(paint.id, 'views')
+                    }
+                    onClickShare={() =>
+                      handleClickTimelineActionIcon(paint.id, 'share')
+                    }
                   />
                 ))}
               </ContentLayout>
@@ -65,13 +99,24 @@ function HomePage() {
                       key={paint.id}
                       item={paint}
                       className="pt-[10px]"
-                      onClickReply={() => setIsBottomSheetOpen((prev) => !prev)}
-                      onClickRetweet={() =>
-                        setIsBottomSheetOpen((prev) => !prev)
+                      onClickReply={() =>
+                        navigate({
+                          to: '/post/edit',
+                          search: { postId: paint.id },
+                        })
                       }
-                      onClickHeart={() => setIsBottomSheetOpen((prev) => !prev)}
-                      onClickViews={() => setIsBottomSheetOpen((prev) => !prev)}
-                      onClickShare={() => setIsBottomSheetOpen((prev) => !prev)}
+                      onClickRetweet={() =>
+                        handleClickTimelineActionIcon(paint.id, 'reply')
+                      }
+                      onClickHeart={() =>
+                        toast('아직 지원되지 않는 기능입니다.')
+                      }
+                      onClickViews={() =>
+                        handleClickTimelineActionIcon(paint.id, 'views')
+                      }
+                      onClickShare={() =>
+                        handleClickTimelineActionIcon(paint.id, 'share')
+                      }
                     />
                   ))}
               </ContentLayout>
@@ -80,26 +125,26 @@ function HomePage() {
         ]}
         className="mt-[44px]"
       />
-      <BottomSheet
-        buttonText="취소"
-        isOpen={isBottomSheetOpen}
-        onClose={() => setIsBottomSheetOpen(false)}
-      >
-        <div className="flex flex-col gap-[32px]">
-          <div className="flex gap-[18px] items-center">
-            <Icon type="retweet" width={24} height={24} />
-            <Typography size="body-1" color="grey-600">
-              재게시
-            </Typography>
-          </div>
-          <div className="flex gap-[18px] items-center">
-            <Icon type="pen" width={24} height={24} />
-            <Typography size="body-1" color="grey-600">
-              인용
-            </Typography>
-          </div>
-        </div>
-      </BottomSheet>
+      <ReplyBottomSheet
+        id={selectedPostId}
+        isOpen={isBottomSheetOpen.reply}
+        onClose={() =>
+          setIsBottomSheetOpen((prev) => ({ ...prev, reply: false }))
+        }
+      />
+      <ViewsBottomSheet
+        isOpen={isBottomSheetOpen.views}
+        onClose={() =>
+          setIsBottomSheetOpen((prev) => ({ ...prev, views: false }))
+        }
+      />
+      <ShareBottomSheet
+        id={selectedPostId}
+        isOpen={isBottomSheetOpen.share}
+        onClose={() =>
+          setIsBottomSheetOpen((prev) => ({ ...prev, share: false }))
+        }
+      />
     </>
   );
 }

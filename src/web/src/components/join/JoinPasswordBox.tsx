@@ -2,23 +2,23 @@ import { useState, type ChangeEvent } from 'react';
 
 import { StepTitle } from '..';
 import { Button, Input, Typography } from '../common';
-import type { NavigationEvent, SignUpInfo } from './signUpReducer';
+import type { NavigationEvent, JoinInfo } from './joinReducer';
 
-interface SignUpPasswordBoxProps extends NavigationEvent {
+interface JoinPasswordBoxProps extends NavigationEvent {
   password: string;
   disabled: boolean;
   onChangeInput: (
     e: ChangeEvent<HTMLInputElement>,
-    type: keyof SignUpInfo,
+    type: keyof JoinInfo,
   ) => void;
 }
 
-function SignUpPasswordBox({
+function JoinPasswordBox({
   password,
   disabled,
   onNextStep,
   onChangeInput,
-}: SignUpPasswordBoxProps) {
+}: JoinPasswordBoxProps) {
   const [isHidden, setIsHidden] = useState<boolean>(true);
   const [isDirty, setIsDirty] = useState<boolean>(false);
 
@@ -61,4 +61,4 @@ function SignUpPasswordBox({
   );
 }
 
-export default SignUpPasswordBox;
+export default JoinPasswordBox;

@@ -39,7 +39,7 @@ export default {
         fontWeight: 700
       }],
       'headline-8': ['14px', {
-        lineHeight: '16px',
+        lineHeight: '20px',
         letterSpacing: '-0.04em',
         fontWeight: 700
       }],

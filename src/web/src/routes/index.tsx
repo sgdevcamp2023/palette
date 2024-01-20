@@ -8,7 +8,8 @@ import {
   MembershipEntryPage,
   NotificationPage,
   SearchPage,
-  SignUpPage,
+  JoinPage,
+  PostEditPage,
 } from '@/pages';
 
 export const rootRoute = new RootRoute({
@@ -46,15 +47,29 @@ const membershipEntryRoute = new Route({
   path: '/',
   component: () => <MembershipEntryPage />,
 });
-const signUpRoute = new Route({
+const joinRoute = new Route({
   getParentRoute: () => rootRoute,
-  path: '/signup',
-  component: () => <SignUpPage />,
+  path: '/join',
+  component: () => <JoinPage />,
 });
 const changePasswordRoute = new Route({
   getParentRoute: () => rootRoute,
   path: '/change-password',
   component: () => <ChangePasswordPage />,
+});
+
+const postRoute = new Route({
+  getParentRoute: () => rootRoute,
+  path: '/post',
+});
+
+export const editPostRoute = new Route({
+  getParentRoute: () => postRoute,
+  path: '/edit',
+  component: () => <PostEditPage />,
+  validateSearch: (search: Record<string, string>): { postId?: string } => ({
+    postId: search.postId || '0',
+  }),
 });
 
 const routeTree = rootRoute.addChildren([
@@ -64,8 +79,9 @@ const routeTree = rootRoute.addChildren([
   chatRoute,
   searchRoute,
   membershipEntryRoute,
-  signUpRoute,
+  joinRoute,
   changePasswordRoute,
+  postRoute.addChildren([editPostRoute]),
 ]);
 
 export const router = new Router({ routeTree });
