@@ -44,6 +44,9 @@ class FollowingFragment : Fragment() {
 
         navController = findNavController()
 
+        val bottomNavigation = activity?.findViewById<BottomNavigationView>(R.id.nav_view)
+        bottomNavigation?.visibility = View.VISIBLE
+
         return binding.root
     }
 
