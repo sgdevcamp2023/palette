@@ -1,5 +1,6 @@
 package org.palette.easelsocialservice.persistence.domain;
 
+import lombok.Getter;
 import org.palette.easelsocialservice.persistence.relationship.*;
 import org.springframework.data.neo4j.core.schema.GeneratedValue;
 import org.springframework.data.neo4j.core.schema.Id;
@@ -9,6 +10,7 @@ import org.springframework.data.neo4j.core.schema.Relationship;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Getter
 @Node("paint")
 public class Paint {
     @Id @GeneratedValue(PaintIdGenerator.class)

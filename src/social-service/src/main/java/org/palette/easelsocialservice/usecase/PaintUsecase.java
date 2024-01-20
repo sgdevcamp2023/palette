@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
-@Transactional(readOnly = true)
 public class PaintUsecase {
     private final PaintService paintService;
     private final UserService userService;
