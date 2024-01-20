@@ -101,7 +101,11 @@ class ForYouFragment : Fragment() {
                 4, 4, 2, 1032),
 
             TimelineItem(profileImgId, "SBS 뉴스", "@SBS8news", "18분 전",
-                "god “전성기때도 제작 된 적 없는 공연 실황 영화, 신기해”", contentImgId, "#SBS뉴스",
+                "god “전성기때도 제작 된 적 없는 공연 실황 영화, 신기해”", null, "#SBS뉴스",
+                4, 4, 2, 1032),
+
+            TimelineItem(profileImgId, "SBS 뉴스", "@SBS8news", "18분 전",
+                "god “전성기때도 제작 된 적 없는 공연 실황 영화, 신기해”", null, "#SBS뉴스",
                 4, 4, 2, 1032),
 
             TimelineItem(profileImgId, "SBS 뉴스", "@SBS8news", "18분 전",
@@ -109,7 +113,7 @@ class ForYouFragment : Fragment() {
                 4, 4, 2, 1032),
 
             TimelineItem(profileImgId, "SBS 뉴스", "@SBS8news", "18분 전",
-                "god “전성기때도 제작 된 적 없는 공연 실황 영화, 신기해”", contentImgId, "#SBS뉴스",
+                "god “전성기때도 제작 된 적 없는 공연 실황 영화, 신기해”", null, "#SBS뉴스",
                 4, 4, 2, 1032),
 
             TimelineItem(profileImgId, "SBS 뉴스", "@SBS8news", "18분 전",

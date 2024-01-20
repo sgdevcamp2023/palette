@@ -6,10 +6,10 @@ data class TimelineItem(
     val userName: String,
     val timeAgo: String,
     val content: String,
-    val contentImg: Int,
-    val hashtag: String,
-    val replys: Int,
-    val reposts: Int,
-    val like: Int,
-    val views: Int
+    val contentImg: Int?,
+    val hashtag: String?,
+    val replys: Int?,
+    val reposts: Int?,
+    val like: Int?,
+    val views: Int?,
 )
