@@ -1,5 +1,14 @@
 import type { TimelineItem } from '@/@types';
 
+function getRandomAdjustedDate(): Date {
+  const currentDate = new Date();
+  const timeOffset = Math.floor(Math.random() * 1000 * 60 * 60 * 24); // 1일은 86,400,000 밀리초
+
+  const adjustedDate = new Date(currentDate.getTime() - timeOffset);
+
+  return adjustedDate;
+}
+
 const DUMMY_ITEM: TimelineItem = {
   id: '12',
   isReply: false,
@@ -65,6 +74,7 @@ export const createDummyTimelineItem = (length: number): TimelineItem[] =>
     like: index % 2 !== 0,
     marked: index % 2 === 0,
     repainted: index % 3 === 0,
+    createdAt: getRandomAdjustedDate(),
     text: [
       `캠프가 진행되면서 디스코드 통해서 서로 유의미한 정보도 공유하고, 대화하는 모습이 아주 보기 좋습니다 (엄마미소) 🥰\n본 채널에 정보가 섞이는 것 같아서 채널을 분리해 보았어요.\n앞으로 공지 드리는 내용 놓치지 않도록! 정보 공유가 더 원활할 수 있도록!\n아래와 같이 채널을 활용해 주세요.`,
       `안녕하세요, @2023 개발캠프 여러분!\n지난 주에 이어서 오늘은 리사이클 팀의 현우 님(React-Query), 규민 님(상태관리)의 세미나가 진행됩니다.\n점심 식사하시고 1시 30분에 미팅룸 6번에서 만나요`,

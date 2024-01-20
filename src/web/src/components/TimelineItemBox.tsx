@@ -1,7 +1,7 @@
 import type { TimelineItem } from '@/@types';
 import Typography from './common/Typography';
 import AccessibleIconButton from './AccessibleIconButton';
-import { cn } from '@/utils';
+import { cn, getDiffDateText } from '@/utils';
 
 interface TimelineItemBoxProps {
   item: TimelineItem;
@@ -39,7 +39,8 @@ function TimelineItemBox({
               {item.authorNickname}
             </Typography>
             <Typography size="body-1" color="blueGrey-800">
-              {item.authorUsername} · 18분
+              {item.authorUsername} ·{' '}
+              {getDiffDateText(item.createdAt, new Date())}
             </Typography>
           </div>
           <AccessibleIconButton
