@@ -1,4 +1,4 @@
-package org.palette.easeluserservice.api.dto.response;
+package org.palette.easeluserservice.dto.response;
 
 public record EmailDuplicationVerifyResponse(
         Boolean isDuplicated

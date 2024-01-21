@@ -1,12 +1,18 @@
-package org.palette.easeluserservice.api.dto.request;
+package org.palette.easeluserservice.dto.request;
+
+import jakarta.validation.constraints.NotBlank;
 
 import java.util.Optional;
 
 public record JoinRequest(
+        @NotBlank
         String email,
+        @NotBlank
         String password,
-        String username, // @DoHyeon
-        String nickname, // DoHyeon
+        @NotBlank
+        String username,
+        @NotBlank
+        String nickname,
         Optional<String> introduce,
         Optional<String> profilePath,
         Optional<String> backgroundPath,

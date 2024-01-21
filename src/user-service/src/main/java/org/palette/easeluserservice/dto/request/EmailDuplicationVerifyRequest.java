@@ -1,4 +1,4 @@
-package org.palette.easeluserservice.api.dto.request;
+package org.palette.easeluserservice.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 
