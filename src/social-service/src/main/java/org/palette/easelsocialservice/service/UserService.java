@@ -33,6 +33,8 @@ public class UserService extends GSocialServiceGrpc.GSocialServiceImplBase {
     }
 
     public User getUser(Long userId) {
+        // TODO: 예외처리
+        userRepository.save(new User(userId, "lily0202", "lily", "profile/lily", true));
         return userRepository.findByUid(userId).orElseThrow();
     }
 

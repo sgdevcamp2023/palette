@@ -35,6 +35,8 @@ public class PaintService {
     }
 
     public void bindUserWithPaint(User user, Paint paint) {
+        paint.setAuthor(user);
+        paintRepository.save(paint);
     }
 
     public void createMentions(Paint paint, List<MentionRequest> mentions) {
