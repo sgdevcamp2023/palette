@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
-@Node("paint")
+@Node
 public class Paint {
     @Id @GeneratedValue(PaintIdGenerator.class)
     private Long pid;
