@@ -36,7 +36,7 @@ class TimelineBottomSheetDialog : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(
-            R.layout.fragment_timeline_action_bottom_sheet_dialog,
+            R.layout.fragment_timeline_bottom_sheet_dialog,
             container,
             false
         )

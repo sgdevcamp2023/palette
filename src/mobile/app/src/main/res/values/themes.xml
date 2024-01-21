@@ -7,11 +7,14 @@
         <item name="colorPrimaryVariant">@color/white</item>
         <item name="colorOnPrimary">@color/Blue_500</item>
 
-
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/Blue_500</item>
         <item name="colorSecondaryVariant">@color/Grey_400</item>
         <item name="colorOnSecondary">@color/white</item>
+    </style>
+
+    <style name="BottomSheetDialogTheme" parent="Theme.Design.BottomSheetDialog">
+        <item name="android:background">@drawable/bg_bottom_sheet</item>
     </style>
 
     <style name="Theme.Easel" parent="Base.Theme.Easel" />

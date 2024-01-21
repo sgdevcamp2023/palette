@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+
+    <ImageView
+        android:id="@+id/bottom_sheet_bar"
+        android:layout_width="33dp"
+        android:layout_height="5dp"
+        android:layout_marginTop="4dp"
+        android:src="@drawable/bg_timeline_bottom_sheet"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ic_bottom_sheet_retweet"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/ic_bottom_sheet_retweet"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="14dp"
+        android:backgroundTint="@color/BlueGrey_800"
+        android:src="@drawable/ic_retweet"
+        app:layout_constraintStart_toStartOf="parent"
+        android:clickable="true"
+        app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_bar" />
+
+    <TextView
+        android:id="@+id/tv_bottom_sheet_retweet"
+        style="@style/Body1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="14dp"
+        android:clickable="true"
+        android:text="@string/retweet_fragment_bottom_sheet"
+        android:textColor="@color/Grey_600"
+        app:layout_constraintStart_toEndOf="@+id/ic_bottom_sheet_retweet"
+        app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_bar" />
+
+    <ImageView
+        android:id="@+id/ic_bottom_sheet_repost"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="40dp"
+        android:backgroundTint="@color/BlueGrey_800"
+        android:clickable="true"
+        android:src="@drawable/ic_pen"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ic_bottom_sheet_retweet" />
+
+    <TextView
+        android:id="@+id/tv_bottom_sheet_repost"
+        style="@style/Body1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="40dp"
+        android:clickable="true"
+        android:text="@string/repost_fragment_bottom_sheet"
+        android:textColor="@color/Grey_600"
+        app:layout_constraintStart_toEndOf="@+id/ic_bottom_sheet_retweet"
+        app:layout_constraintTop_toBottomOf="@+id/tv_bottom_sheet_retweet" />
+
+    <Button
+        style="@style/Headline7"
+        android:layout_width="330dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="22dp"
+        android:layout_marginBottom="28dp"
+        android:textColor="@color/Grey_600"
+        android:background="@drawable/btn_timeline_bottom_sheet"
+        android:text="@string/cancel_fragment_bottom_sheet"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_bottom_sheet_repost" />
+        
+
+</androidx.constraintlayout.widget.ConstraintLayout>
