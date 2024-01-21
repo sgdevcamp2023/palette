@@ -2,6 +2,7 @@ package org.palette.easelsocialservice.usecase;
 
 
 import lombok.RequiredArgsConstructor;
+import org.palette.easelsocialservice.dto.request.MentionRequest;
 import org.palette.easelsocialservice.dto.request.PaintCreateRequest;
 import org.palette.easelsocialservice.dto.response.PaintCreateResponse;
 import org.palette.easelsocialservice.persistence.domain.*;
@@ -9,6 +10,7 @@ import org.palette.easelsocialservice.service.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -25,18 +27,38 @@ public class PaintUsecase {
         User user = userService.getUser(userId);
         paintService.bindUserWithPaint(user, paint);
 
-        paintService.createMentions(paint, paintCreateRequest.mentions());
+        paintCreateRequest.mentions().ifPresent(
+                mentions -> {
+                    List<Long> uids = mentions.stream()
+                            .map(MentionRequest::userId)
+                            .toList();
 
-        paintService.createTaggedUsers(paint, paintCreateRequest.taggedUserIds());
+                    userService.checkUserExists(uids);
+                    paintService.createMentions(paint, mentions);
+                }
+        );
 
-        List<Hashtag> hashtags = hashtagService.createHashtags(paintCreateRequest.hashtags());
-        paintService.bindHashtagsWithPaint(paint, hashtags);
+        paintCreateRequest.taggedUserIds().ifPresent(
+                taggedUserIds -> {
+                    userService.checkUserExists(taggedUserIds);
+                    paintService.createTaggedUsers(paint, taggedUserIds);
+                }
+        );
 
-        List<Link> links = linkService.createLinks(paintCreateRequest.links());
-        paintService.bindLinksWithPaint(paint, links);
+        paintCreateRequest.hashtags().ifPresent(hashtags -> {
+            List<Hashtag> createdHashtags = hashtagService.createHashtags(hashtags);
+            paintService.bindHashtagsWithPaint(paint, createdHashtags);
+        });
 
-        List<Media> medias = mediaService.createMedias(paintCreateRequest.medias());
-        paintService.bindMediaWithPaint(paint, medias);
+        paintCreateRequest.links().ifPresent(links -> {
+            List<Link> createdLinks = linkService.createLinks(links);
+            paintService.bindLinksWithPaint(paint, createdLinks);
+        });
+
+        paintCreateRequest.medias().ifPresent(medias -> {
+            List<Media> createdMedias = mediaService.createMedias(medias);
+            paintService.bindMediaWithPaint(paint, createdMedias);
+        });
 
         return new PaintCreateResponse(paint.getPid());
     }

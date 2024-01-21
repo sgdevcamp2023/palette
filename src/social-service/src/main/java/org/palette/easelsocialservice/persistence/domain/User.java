@@ -6,7 +6,7 @@ import org.springframework.data.neo4j.core.schema.Node;
 @Node("user")
 public class User {
     @Id
-    private Long id;
+    private Long uid;
 
     private String username;
 
@@ -16,8 +16,8 @@ public class User {
 
     private Boolean isActive;
 
-    public User(Long id, String username, String nickname, String imagePath, Boolean isActive) {
-        this.id = id;
+    public User(Long uid, String username, String nickname, String imagePath, Boolean isActive) {
+        this.uid = uid;
         this.username = username;
         this.nickname = nickname;
         this.imagePath = imagePath;
