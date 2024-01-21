@@ -1,5 +1,6 @@
 package com.smilegate.Easel.domain
 
+import android.content.Context
 import android.os.Handler
 import android.os.Looper
 import android.view.KeyEvent
@@ -31,4 +32,10 @@ fun handleBackPressed(activity: AppCompatActivity, doubleBackPressed: Boolean): 
         }, 2000)
     }
     return true
+}
+
+// dp를 픽셀로 변환하는 함수
+fun dpToPx(dp: Float, context: Context): Int {
+    val density = context.resources.displayMetrics.density
+    return (dp * density).toInt()
 }

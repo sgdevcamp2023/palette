@@ -57,8 +57,6 @@ class MainActivity : AppCompatActivity() {
             updateIcon(R.id.navigation_home, R.drawable.ic_solid_home)
         }
 
-        binding.navView.labelVisibilityMode = NavigationBarView.LABEL_VISIBILITY_UNLABELED
-
         binding.navView.setOnNavigationItemSelectedListener { item ->
             onNavigationItemSelected(item)
         }

@@ -9,33 +9,29 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.Toast
-import androidx.activity.addCallback
-import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.viewpager.widget.ViewPager
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.tabs.TabLayout
 import com.smilegate.Easel.R
-import com.smilegate.Easel.databinding.FragmentStartBinding
-import com.smilegate.Easel.databinding.FragmentTimelineBinding
+import com.smilegate.Easel.databinding.FragmentForYouBinding
 import com.smilegate.Easel.domain.model.TimelineItem
-import com.smilegate.Easel.presentation.adapter.TimelineAdapter
+import com.smilegate.Easel.presentation.adapter.TimelineRecyclerViewAdapter
 
-class TimelineFragment : Fragment() {
-    private lateinit var binding: FragmentTimelineBinding
+class ForYouFragment : Fragment() {
+    private lateinit var binding: FragmentForYouBinding
 
     private lateinit var navController: NavController
 
     private var doubleBackPressed = false
 
+    private var savedScrollPosition: Int = 0
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentTimelineBinding.inflate(inflater, container, false)
+        binding = FragmentForYouBinding.inflate(inflater, container, false)
 
         val toolbar = requireActivity().findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar_container)
 
@@ -51,18 +47,6 @@ class TimelineFragment : Fragment() {
         settingButton.visibility = View.VISIBLE
 
         navController = findNavController()
-
-        // 바텀 네비게이션바 보이기
-        val bottomNavigation = activity?.findViewById<BottomNavigationView>(R.id.nav_view)
-        bottomNavigation?.visibility = View.VISIBLE
-
-        val viewPager: ViewPager = binding.root.findViewById(R.id.viewPager)
-        setupViewPager(viewPager)
-
-        val tabLayout: TabLayout = binding.root.findViewById(R.id.tabLayout)
-        tabLayout.setupWithViewPager(viewPager)
-        tabLayout.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.white))
-        tabLayout.setSelectedTabIndicatorColor(ContextCompat.getColor(requireContext(), R.color.Blue_500))
 
         return binding.root
     }
@@ -97,17 +81,61 @@ class TimelineFragment : Fragment() {
             }
             false
         }
+
+        val timelineList = generateDummyTimelineData()
+
+        val adapter = TimelineRecyclerViewAdapter(timelineList)
+        binding.rvTimeline.adapter = adapter
+        binding.rvTimeline.layoutManager = LinearLayoutManager(requireContext())
+
+        // 스크롤 리스너를 이용하여 스크롤 위치 저장
+        binding.ForYouScrollView.setOnScrollChangeListener { _, _, scrollY, _, _ ->
+            savedScrollPosition = scrollY
+        }
+
+        // 저장된 스크롤 위치 복원
+        binding.ForYouScrollView.post {
+            binding.ForYouScrollView.scrollTo(0, savedScrollPosition)
+        }
     }
 
     private fun isCurrentFragment(): Boolean {
         return true
     }
 
-    private fun setupViewPager(viewPager: ViewPager) {
-        // 여러 개의 프래그먼트를 추가하여 ViewPager에 연결
-        val adapter = TimelineAdapter(childFragmentManager)
-        adapter.addFragment(ForYouFragment(), "추천")
-        adapter.addFragment(FollowingFragment(), "팔로우 중")
-        viewPager.adapter = adapter
+    private fun generateDummyTimelineData(): List<TimelineItem> {
+        val profileImgId = R.drawable.bg_timeline_profile_img
+        val contentImgId = R.drawable.bg_timeline_content_img
+
+        return listOf(
+            TimelineItem(profileImgId, "SBS 뉴스", "@SBS8news", "18분",
+                "god “전성기때도 제작 된 적 없는 공연 실황 영화, 신기해”", contentImgId, "#SBS뉴스",
+                4, 4, 2, 1032),
+
+            TimelineItem(profileImgId, "SBS 뉴스", "@SBS8news", "18분",
+                "god “전성기때도 제작 된 적 없는 공연 실황 영화, 신기해”", null, "#SBS뉴스",
+                4, 4, 2, 1032),
+
+            TimelineItem(profileImgId, "SBS 뉴스", "@SBS8news", "18분",
+                "god “전성기때도 제작 된 적 없는 공연 실황 영화, 신기해”", null, "#SBS뉴스",
+                4, 4, 2, 1032),
+
+            TimelineItem(profileImgId, "SBS 뉴스", "@SBS8news", "18분",
+                "god “전성기때도 제작 된 적 없는 공연 실황 영화, 신기해”", contentImgId, "#SBS뉴스",
+                4, 4, 2, 1032),
+
+            TimelineItem(profileImgId, "SBS 뉴스", "@SBS8news", "18분",
+                "god “전성기때도 제작 된 적 없는 공연 실황 영화, 신기해”", null, "#SBS뉴스",
+                4, 4, 2, 1032),
+
+            TimelineItem(profileImgId, "SBS 뉴스", "@SBS8news", "18분",
+                "god “전성기때도 제작 된 적 없는 공연 실황 영화, 신기해”", contentImgId, "#SBS뉴스",
+                4, 4, 2, 1032),
+        )
+    }
+
+    override fun onPause() {
+        super.onPause()
+        savedScrollPosition = binding.ForYouScrollView.scrollY
     }
 }
