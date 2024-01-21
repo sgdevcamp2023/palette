@@ -4,9 +4,11 @@ package org.palette.easelsocialservice.usecase;
 import lombok.RequiredArgsConstructor;
 import org.palette.easelsocialservice.dto.request.PaintCreateRequest;
 import org.palette.easelsocialservice.dto.response.PaintCreateResponse;
+import org.palette.easelsocialservice.persistence.domain.*;
 import org.palette.easelsocialservice.service.*;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -18,14 +20,24 @@ public class PaintUsecase {
     private final MediaService mediaService;
 
     public PaintCreateResponse createPaint(Long userId, PaintCreateRequest paintCreateRequest) {
-        Long paintId = paintService.createPaint(userId, paintCreateRequest.text(), paintCreateRequest.inReplyToPaintId(), paintCreateRequest.quotePaintId());
-        userService.bindUserWithPost(userId, paintId);
-        userService.createMentions(paintId, paintCreateRequest.mentions());
-        userService.createTaggedUsers(paintId, paintCreateRequest.taggedUserIds());
-        hashtagService.createHashtags(paintId, paintCreateRequest.hashtags());
-        linkService.createLinks(paintId, paintCreateRequest.links());
-        mediaService.createMedias(paintId, paintCreateRequest.medias());
+        Paint paint = paintService.createPaint(paintCreateRequest.text(), paintCreateRequest.inReplyToPaintId(), paintCreateRequest.quotePaintId());
 
-        return new PaintCreateResponse(paintId);
+        User user = userService.getUser(userId);
+        paintService.bindUserWithPaint(user, paint);
+
+        paintService.createMentions(paint, paintCreateRequest.mentions());
+
+        paintService.createTaggedUsers(paint, paintCreateRequest.taggedUserIds());
+
+        List<Hashtag> hashtags = hashtagService.createHashtags(paintCreateRequest.hashtags());
+        paintService.bindHashtagsWithPaint(paint, hashtags);
+
+        List<Link> links = linkService.createLinks(paintCreateRequest.links());
+        paintService.bindLinksWithPaint(paint, links);
+
+        List<Media> medias = mediaService.createMedias(paintCreateRequest.medias());
+        paintService.bindMediaWithPaint(paint, medias);
+
+        return new PaintCreateResponse(paint.getPid());
     }
 }
