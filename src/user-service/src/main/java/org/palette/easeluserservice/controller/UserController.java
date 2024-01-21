@@ -1,18 +1,19 @@
-package org.palette.easeluserservice.api;
+package org.palette.easeluserservice.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.palette.easeluserservice.api.dto.request.EmailDuplicationVerifyRequest;
-import org.palette.easeluserservice.api.dto.request.JoinRequest;
-import org.palette.easeluserservice.api.dto.response.EmailDuplicationVerifyResponse;
+import org.palette.easeluserservice.dto.request.EmailDuplicationVerifyRequest;
+import org.palette.easeluserservice.dto.request.JoinRequest;
+import org.palette.easeluserservice.dto.request.TemporaryJoinRequest;
+import org.palette.easeluserservice.dto.response.EmailDuplicationVerifyResponse;
 import org.palette.easeluserservice.usecase.UserUsecase;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/users")
+@RequestMapping("/users")
 @RequiredArgsConstructor
-public class UserApi {
+public class UserController {
 
     private final UserUsecase userUsecase;
 
@@ -28,18 +29,18 @@ public class UserApi {
     }
 
     @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping("temporary-join")
+    public void temporaryJoin(
+            @RequestBody TemporaryJoinRequest temporaryJoinRequest
+    ) {
+        userUsecase.executeTemporaryJoin(temporaryJoinRequest);
+    }
+
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("join")
     public void join(
             @RequestBody JoinRequest joinRequest
     ) {
-        userUsecase.executeJoin(
-                joinRequest.email(),
-                joinRequest.username(),
-                joinRequest.password(),
-                joinRequest.nickname(),
-                joinRequest.introduce(),
-                joinRequest.profilePath(),
-                joinRequest.backgroundPath(),
-                joinRequest.websitePath());
+        userUsecase.executeJoin(joinRequest);
     }
 }
