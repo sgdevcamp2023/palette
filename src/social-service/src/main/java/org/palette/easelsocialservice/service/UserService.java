@@ -45,12 +45,16 @@ public class UserService extends GSocialServiceGrpc.GSocialServiceImplBase {
         }
     }
 
-    public Map<Long, User> getUsersByUids(List<Long> uids) {
+    public Map<Long, User> getUserMapByUids(List<Long> uids) {
         List<User> users = userRepository.findAllByUids(uids);
         Map<Long, User> userMap = new HashMap<>();
         for (User user : users) {
             userMap.put(user.getUid(), user);
         }
         return userMap;
+    }
+
+    public List<User> getUsersByUids(List<Long> uids) {
+        return userRepository.findAllByUids(uids);
     }
 }

@@ -47,7 +47,11 @@ public class PaintService {
         paintRepository.save(paint);
     }
 
-    public void createTaggedUsers(Paint paint, List<Long> longs) {
+    public void createTaggedUsers(Paint paint, List<User> users) {
+        for (User user: users) {
+            paint.addTaggedUser(user);
+        }
+        paintRepository.save(paint);
     }
 
     public void bindHashtagsWithPaint(Paint paint, List<Hashtag> hashtags) {

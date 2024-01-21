@@ -33,14 +33,14 @@ public class PaintUsecase {
             List<Long> uids = mentions.stream().map(MentionRequest::userId).distinct().toList();
 
             userService.checkUserExists(uids);
-            Map<Long, User> users = userService.getUsersByUids(uids);
+            Map<Long, User> users = userService.getUserMapByUids(uids);
             paintService.createMentions(paint, mentions, users);
         });
 
         paintCreateRequest.taggedUserIds().ifPresent(taggedUserIds -> {
             userService.checkUserExists(taggedUserIds);
-            Map<Long, User> users = userService.getUsersByUids(taggedUserIds);
-            paintService.createTaggedUsers(paint, taggedUserIds);
+            List<User> users = userService.getUsersByUids(taggedUserIds);
+            paintService.createTaggedUsers(paint, users);
         });
 
         paintCreateRequest.hashtags().ifPresent(hashtags -> {

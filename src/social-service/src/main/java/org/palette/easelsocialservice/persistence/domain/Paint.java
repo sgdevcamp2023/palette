@@ -82,6 +82,9 @@ public class Paint {
     }
 
     public void addTaggedUser(User user) {
+        if (taggedUsers == null) {
+            this.taggedUsers = new LinkedList<>();
+        }
         this.taggedUsers.add(new TagsUser(user));
     }
 
