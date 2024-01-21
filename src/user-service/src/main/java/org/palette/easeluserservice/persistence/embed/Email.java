@@ -8,13 +8,11 @@ import org.palette.easeluserservice.exception.BaseException;
 import org.palette.easeluserservice.exception.ExceptionType;
 
 @Embeddable
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Email {
-    @Column(name = "email", nullable = false, unique = true, length = 70)
-    private String value;
-
-    public Email(String value) {
+public record Email(
+        @Column(name = "email", nullable = false, unique = true, length = 70)
+        String value
+) {
+    public Email {
         if (value.length() > 70) throw new BaseException(ExceptionType.USER_000001);
-        this.value = value;
     }
 }

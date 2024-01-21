@@ -2,13 +2,11 @@ package org.palette.easeluserservice.persistence.embed;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
 
 @Embeddable
-@NoArgsConstructor(access = AccessLevel.PUBLIC)
-public class DmPin {
+public record DmPin(
 
-    @Column(name = "dm_pin", columnDefinition = "TEXT")
-    private String value;
+        @Column(name = "dm_pin", nullable = false, length = Integer.MAX_VALUE)
+        String value
+) {
 }

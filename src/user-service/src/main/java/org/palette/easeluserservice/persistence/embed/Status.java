@@ -6,9 +6,8 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 @Embeddable
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Status {
-
-    @Column(name = "status", nullable = false)
-    private Boolean value = false;
+public record Status(
+        @Column(name = "status", nullable = false)
+        Boolean value
+) {
 }

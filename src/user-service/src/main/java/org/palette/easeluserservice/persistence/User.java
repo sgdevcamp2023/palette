@@ -2,6 +2,7 @@ package org.palette.easeluserservice.persistence;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.DynamicUpdate;
 import org.palette.easeluserservice.persistence.embed.*;
 import org.palette.easeluserservice.persistence.enums.Role;
 import org.springframework.data.annotation.CreatedDate;
@@ -11,9 +12,10 @@ import java.time.LocalDateTime;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-@Builder
+@Builder(access = AccessLevel.PRIVATE)
 @Getter
 @Entity
+@DynamicUpdate
 public class User {
 
     @Id
@@ -41,6 +43,9 @@ public class User {
     @Enumerated(value = EnumType.STRING)
     private Role role;
 
+    @Column(name = "authed")
+    private Boolean authed = true;
+
     @Column(name = "accessed_at")
     private LocalDateTime accessedAt;
 
@@ -53,8 +58,50 @@ public class User {
     @LastModifiedDate
     private LocalDateTime deletedAt;
 
-    public User stampAccessedAt() {
+    public Boolean isUserNotAuthed() {
+        return !this.getAuthed();
+    }
+
+    public void stampAccessedAt() {
         this.accessedAt = LocalDateTime.now();
-        return this;
+    }
+
+    public static User preJoin(
+            String email,
+            String nickname,
+            String defaultStringValue
+    ) {
+
+        return User.builder()
+                .email(new Email(email))
+                .username(new Username(defaultStringValue))
+                .password(new Password(defaultStringValue))
+                .profile(
+                        new Profile(
+                                new Nickname(nickname),
+                                new Introduce(defaultStringValue),
+                                new StaticContentPath(
+                                        defaultStringValue,
+                                        defaultStringValue,
+                                        defaultStringValue
+                                )
+                        )
+                )
+                .paintPin(new PaintPin(defaultStringValue))
+                .dmPin(new DmPin(defaultStringValue))
+                .accessedAt(null)
+                .authed(false)
+                .build();
+    }
+
+    public void join(
+            String password,
+            String username,
+            Profile profile
+    ) {
+        this.password = new Password(password);
+        this.username = new Username(username);
+        this.profile = profile;
+        this.role = Role.NORMAL;
     }
 }

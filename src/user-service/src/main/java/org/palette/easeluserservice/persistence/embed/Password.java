@@ -2,20 +2,17 @@ package org.palette.easeluserservice.persistence.embed;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.palette.easeluserservice.common.BcryptPasswordEncoder;
+import org.palette.easeluserservice.common.PasswordEncoder;
 
 @Embeddable
-@NoArgsConstructor(access = AccessLevel.PUBLIC)
-public class Password {
-    @Column(name = "password", nullable = false, length = 100)
-    private String value;
-
-    public Password(
-            String password,
-            BCryptPasswordEncoder bCryptPasswordEncoder
-    ) {
-        this.value = bCryptPasswordEncoder.encode(password);
+public record Password(
+        @Column(name = "password", nullable = false, length = 100)
+        String value
+) {
+    public Password(String value) {
+        this.value = passwordEncoder.encode(value);
     }
+
+    private static final PasswordEncoder passwordEncoder = new BcryptPasswordEncoder();
 }
