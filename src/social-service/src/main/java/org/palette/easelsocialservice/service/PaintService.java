@@ -8,6 +8,7 @@ import org.palette.easelsocialservice.persistence.domain.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -39,7 +40,11 @@ public class PaintService {
         paintRepository.save(paint);
     }
 
-    public void createMentions(Paint paint, List<MentionRequest> mentions) {
+    public void createMentions(Paint paint, List<MentionRequest> mentions, Map<Long, User> users) {
+        for (MentionRequest mention: mentions) {
+            paint.addMention(users.get(mention.userId()), mention.start(), mention.end());
+        }
+        paintRepository.save(paint);
     }
 
     public void createTaggedUsers(Paint paint, List<Long> longs) {

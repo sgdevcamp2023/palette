@@ -4,18 +4,16 @@ package org.palette.easelsocialservice.service;
 import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
 import net.devh.boot.grpc.server.service.GrpcService;
-import org.palette.easelsocialservice.dto.request.PaintCreateRequest;
 import org.palette.easelsocialservice.persistence.PaintRepository;
 import org.palette.easelsocialservice.persistence.UserRepository;
-import org.palette.easelsocialservice.persistence.domain.Paint;
 import org.palette.easelsocialservice.persistence.domain.User;
 import org.palette.grpc.GCreateUserRequest;
 import org.palette.grpc.GCreateUserResponse;
 import org.palette.grpc.GSocialServiceGrpc;
 
+import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
-import java.util.function.Consumer;
+import java.util.Map;
 
 @GrpcService
 @RequiredArgsConstructor
@@ -33,8 +31,6 @@ public class UserService extends GSocialServiceGrpc.GSocialServiceImplBase {
     }
 
     public User getUser(Long userId) {
-        // TODO: 예외처리
-        userRepository.save(new User(userId, "lily0202", "lily", "profile/lily", true));
         return userRepository.findByUid(userId).orElseThrow();
     }
 
@@ -42,9 +38,19 @@ public class UserService extends GSocialServiceGrpc.GSocialServiceImplBase {
         return new User(request.getId(), request.getUsername(), request.getNickname(), request.getImagePath(), request.getIsActive());
     }
 
-    public void checkUserExists(Long userId) {
+    public void checkUserExists(List<Long> mentionIds) {
+        if (!userRepository.existsByAllUidsIn(mentionIds)) {
+            // TODO: 예외처리
+            throw new RuntimeException("없는 사용자");
+        }
     }
 
-    public void checkUserExists(List<Long> mentions) {
+    public Map<Long, User> getUsersByUids(List<Long> uids) {
+        List<User> users = userRepository.findAllByUids(uids);
+        Map<Long, User> userMap = new HashMap<>();
+        for (User user : users) {
+            userMap.put(user.getUid(), user);
+        }
+        return userMap;
     }
 }

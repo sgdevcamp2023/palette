@@ -1,6 +1,7 @@
 package org.palette.easelsocialservice.usecase;
 
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.palette.easelsocialservice.dto.request.MentionRequest;
 import org.palette.easelsocialservice.dto.request.PaintCreateRequest;
@@ -10,7 +11,7 @@ import org.palette.easelsocialservice.service.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @Service
@@ -21,29 +22,26 @@ public class PaintUsecase {
     private final LinkService linkService;
     private final MediaService mediaService;
 
+    @Transactional
     public PaintCreateResponse createPaint(Long userId, PaintCreateRequest paintCreateRequest) {
         Paint paint = paintService.createPaint(paintCreateRequest.text(), paintCreateRequest.inReplyToPaintId(), paintCreateRequest.quotePaintId());
 
         User user = userService.getUser(userId);
         paintService.bindUserWithPaint(user, paint);
 
-        paintCreateRequest.mentions().ifPresent(
-                mentions -> {
-                    List<Long> uids = mentions.stream()
-                            .map(MentionRequest::userId)
-                            .toList();
+        paintCreateRequest.mentions().ifPresent(mentions -> {
+            List<Long> uids = mentions.stream().map(MentionRequest::userId).distinct().toList();
 
-                    userService.checkUserExists(uids);
-                    paintService.createMentions(paint, mentions);
-                }
-        );
+            userService.checkUserExists(uids);
+            Map<Long, User> users = userService.getUsersByUids(uids);
+            paintService.createMentions(paint, mentions, users);
+        });
 
-        paintCreateRequest.taggedUserIds().ifPresent(
-                taggedUserIds -> {
-                    userService.checkUserExists(taggedUserIds);
-                    paintService.createTaggedUsers(paint, taggedUserIds);
-                }
-        );
+        paintCreateRequest.taggedUserIds().ifPresent(taggedUserIds -> {
+            userService.checkUserExists(taggedUserIds);
+            Map<Long, User> users = userService.getUsersByUids(taggedUserIds);
+            paintService.createTaggedUsers(paint, taggedUserIds);
+        });
 
         paintCreateRequest.hashtags().ifPresent(hashtags -> {
             List<Hashtag> createdHashtags = hashtagService.createHashtags(hashtags);

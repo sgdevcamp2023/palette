@@ -8,12 +8,15 @@ import org.springframework.data.neo4j.core.schema.Node;
 import org.springframework.data.neo4j.core.schema.Relationship;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 @Getter
 @Node
 public class Paint {
-    @Id @GeneratedValue(PaintIdGenerator.class)
+    @Id
+    @GeneratedValue(PaintIdGenerator.class)
     private Long pid;
 
     @Relationship(type = "CREATES", direction = Relationship.Direction.INCOMING)
@@ -39,9 +42,9 @@ public class Paint {
 
     @Relationship(type = "USES")
     private List<Uses> medias;
-    
+
     private String content;
-    
+
     private Integer views;
 
     private LocalDateTime createdAt;
@@ -82,7 +85,10 @@ public class Paint {
         this.taggedUsers.add(new TagsUser(user));
     }
 
-    public void addMention(User user) {
-        this.mentions.add(new Mentions(user));
+    public void addMention(User user, int start, int end) {
+        if (mentions == null) {
+            this.mentions = new LinkedList<>();
+        }
+        this.mentions.add(new Mentions(user, start, end));
     }
 }
