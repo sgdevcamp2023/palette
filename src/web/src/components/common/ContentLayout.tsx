@@ -1,9 +1,10 @@
-import { useRef, type ReactNode } from 'react';
+import { useRef } from 'react';
+import type { HTMLAttributes, ReactNode } from 'react';
 
 import BottomNavigation from '../BottomNavigation';
 import { cn } from '@/utils';
 
-interface ContentLayoutProps {
+interface ContentLayoutProps extends HTMLAttributes<HTMLElement> {
   children: ReactNode;
   className?: string;
   isShowBottomNavigation?: boolean;
@@ -13,6 +14,7 @@ function ContentLayout({
   children,
   className,
   isShowBottomNavigation = true,
+  ...props
 }: ContentLayoutProps) {
   const mainRef = useRef<HTMLElement | null>(null);
 
@@ -24,6 +26,7 @@ function ContentLayout({
           className,
         )}
         ref={mainRef}
+        {...props}
       >
         {children}
       </main>
