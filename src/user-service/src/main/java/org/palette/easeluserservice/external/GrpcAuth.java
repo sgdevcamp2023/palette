@@ -20,7 +20,7 @@ public class GrpcAuth {
 
     public GSendEmailAuthResponse sendEmailAuth(GSendEmailAuthRequest request) {
         final Pair<String, Integer> instanceInfo = eurekaUtilizer.getInstanceInfo(
-                AUTH_SERVICE_NAME.name()
+                AUTH_SERVICE_NAME.getValue()
         );
         final ManagedChannel channel = ManagedChannelBuilder.forAddress(
                         instanceInfo.first(),

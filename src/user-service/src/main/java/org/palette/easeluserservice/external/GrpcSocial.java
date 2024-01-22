@@ -15,11 +15,12 @@ import static org.palette.easeluserservice.common.EurekaServiceName.SOCIAL_SERVI
 @Component
 @RequiredArgsConstructor
 public class GrpcSocial {
+
     private final EurekaUtilizer eurekaUtilizer;
 
     public GCreateUserResponse createSocialUser(GCreateUserRequest request) {
         final Pair<String, Integer> instanceInfo = eurekaUtilizer.getInstanceInfo(
-                SOCIAL_SERVICE_NAME.name()
+                SOCIAL_SERVICE_NAME.getValue()
         );
         final ManagedChannel channel = ManagedChannelBuilder.forAddress(
                         instanceInfo.first(),
