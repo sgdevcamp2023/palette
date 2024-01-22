@@ -137,9 +137,9 @@ class TimelineFragment : Fragment() {
                 binding.fabMain.setImageResource(R.drawable.ic_x)
                 binding.fabMain.setColorFilter(ContextCompat.getColor(requireContext(), R.color.Blue_500), PorterDuff.Mode.SRC_IN)
 
-                binding.fabGif.setElevationCompat(2f)
-                binding.fabImage.setElevationCompat(2f)
-                binding.fabWrite.setElevationCompat(2f)
+                binding.fabGif.setElevationCompat(15f)
+                binding.fabImage.setElevationCompat(15f)
+                binding.fabWrite.setElevationCompat(15f)
             }
 
             override fun onSingleTapUp(e: MotionEvent): Boolean {
