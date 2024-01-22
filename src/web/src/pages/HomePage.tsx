@@ -4,7 +4,13 @@ import { useNavigate } from '@tanstack/react-router';
 
 import type { TimelineItem } from '@/@types';
 import { createDummyTimelineItem } from '@/utils';
-import { Tabs, Header, ContentLayout, TimelineItemBox } from '@/components';
+import {
+  Tabs,
+  Header,
+  ContentLayout,
+  TimelineItemBox,
+  FloatingButton,
+} from '@/components';
 import {
   ReplyBottomSheet,
   ShareBottomSheet,
@@ -181,6 +187,7 @@ function HomePage() {
           setIsBottomSheetOpen((prev) => ({ ...prev, share: false }))
         }
       />
+      <FloatingButton />
     </>
   );
 }
