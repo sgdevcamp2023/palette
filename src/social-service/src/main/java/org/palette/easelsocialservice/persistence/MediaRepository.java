@@ -9,6 +9,4 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface MediaRepository extends Neo4jRepository<Media, String> {
-    @Query("UNWIND $medias AS media CREATE (m:Media {path: media.path, type: media.type}) RETURN m")
-    List<Media> saveAllRequests(@Param("medias") List<MediaRequest> medias);
 }

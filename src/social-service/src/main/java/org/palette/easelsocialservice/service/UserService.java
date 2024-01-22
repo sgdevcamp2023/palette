@@ -19,7 +19,6 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class UserService extends GSocialServiceGrpc.GSocialServiceImplBase {
     private final UserRepository userRepository;
-    private final PaintRepository paintRepository;
 
     @Override
     public void createUser(GCreateUserRequest request, StreamObserver<GCreateUserResponse> responseStreamObserver) {
