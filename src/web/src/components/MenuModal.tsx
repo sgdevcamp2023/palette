@@ -6,17 +6,21 @@ import { useNavigate } from '@tanstack/react-router';
 import type { User } from '@/@types';
 import { Icon, Typography } from './common';
 import AccessibleIconButton from './AccessibleIconButton';
+import { cn } from '@/utils';
 
 interface MenuModalProps {
   user: User;
   onClose: VoidFunction;
 }
 
+const IPHONE_SE_HEIGHT = 667;
+
 function MenuModal({ user, onClose }: MenuModalProps) {
   const navigate = useNavigate();
   const [isShowToggle, setIsShowToggle] = useState<boolean>(false);
 
   const handleClickNotSupport = () => toast('아직 지원되지 않는 기능입니다.');
+  const isScreenHeightShort = Number(window.screen.height) <= IPHONE_SE_HEIGHT;
 
   return (
     <motion.div
@@ -212,6 +216,18 @@ function MenuModal({ user, onClose }: MenuModalProps) {
           </motion.div>
         )}
       </AnimatePresence>
+
+      <AccessibleIconButton
+        iconType="sun"
+        label="다크모드 / 라이트모드 전환"
+        width={24}
+        height={24}
+        className={cn(
+          'absolute bottom-[24px]',
+          isScreenHeightShort ? 'right-[24px]' : 'left-[24px]',
+        )}
+        onClick={handleClickNotSupport}
+      />
     </motion.div>
   );
 }
