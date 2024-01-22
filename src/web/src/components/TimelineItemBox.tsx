@@ -1,26 +1,31 @@
+import { cn } from '@/utils';
 import type { TimelineItem } from '@/@types';
 import Typography from './common/Typography';
+import TimelineItemMenu from './TimelineItemMenu';
 import AccessibleIconButton from './AccessibleIconButton';
-import { cn } from '@/utils';
 
 interface TimelineItemBoxProps {
   item: TimelineItem;
+  isShowMenu: boolean;
   className?: string;
   onClickReply: VoidFunction;
   onClickRetweet: VoidFunction;
   onClickHeart: VoidFunction;
   onClickViews: VoidFunction;
   onClickShare: VoidFunction;
+  onClickMore: VoidFunction;
 }
 
 function TimelineItemBox({
   item,
+  isShowMenu,
   className,
   onClickReply,
   onClickRetweet,
   onClickHeart,
   onClickViews,
   onClickShare,
+  onClickMore,
 }: TimelineItemBoxProps) {
   const hasMedia = item.includes.medias.length > 0;
 
@@ -33,7 +38,7 @@ function TimelineItemBox({
       />
       <div className="w-full">
         {/* 헤더 */}
-        <div className="w-full flex justify-between">
+        <div className="w-full flex justify-between relative">
           <div className="flex gap-[4px] items-center items-center">
             <Typography size="headline-8" color="grey-600">
               {item.authorNickname}
@@ -48,8 +53,15 @@ function TimelineItemBox({
             width={20}
             height={20}
             stroke="blueGrey-500"
-            className="transition-colors hover:bg-grey-200 rounded-full p-1"
+            className="relative transition-colors hover:bg-grey-200 rounded-full p-1"
+            onClick={onClickMore}
           />
+          {isShowMenu && (
+            <TimelineItemMenu
+              userId={item.authorId}
+              username={item.authorUsername}
+            />
+          )}
         </div>
 
         {item.text && (

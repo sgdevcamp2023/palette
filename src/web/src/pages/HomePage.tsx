@@ -10,6 +10,7 @@ import {
   ShareBottomSheet,
   ViewsBottomSheet,
 } from '@/components/bottomSheet';
+import { useThrottle } from '@/hooks';
 
 interface BottomSheetState {
   reply: boolean;
@@ -23,13 +24,23 @@ const INITIAL_BOTTOM_SHEET_OPEN: BottomSheetState = {
   share: false,
 };
 
+const INITIAL_SHOW_MORE_MENU = {
+  id: '',
+  show: false,
+} as const;
+
 function HomePage() {
   const navigate = useNavigate();
+
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState<BottomSheetState>(
     INITIAL_BOTTOM_SHEET_OPEN,
   );
   const [paints] = useState<TimelineItem[]>(() => createDummyTimelineItem(10));
   const [selectedPostId, setSelectedPostId] = useState<TimelineItem['id']>('');
+  const [isShowMoreMenu, setIsShowMoreMenu] = useState<{
+    id: string;
+    show: boolean;
+  }>(INITIAL_SHOW_MORE_MENU);
 
   const handleClickTimelineActionIcon = (
     id: string,
@@ -38,6 +49,10 @@ function HomePage() {
     setSelectedPostId(id);
     setIsBottomSheetOpen((prev) => ({ ...prev, [type]: !prev[type] }));
   };
+
+  const handleScrollLayout = useThrottle(() => {
+    setIsShowMoreMenu({ id: '', show: false });
+  }, 500);
 
   return (
     <>
@@ -61,12 +76,18 @@ function HomePage() {
           {
             label: '추천',
             content: (
-              <ContentLayout className="flex flex-col gap-[12px] pl-[12px] pr-[4px] mt-0 pb-[50px] max-h-[calc(100%-94px)] divide-y divide-blueGrey-400">
+              <ContentLayout
+                className="flex flex-col gap-[12px] pl-[12px] pr-[4px] mt-0 pb-[50px] max-h-[calc(100%-94px)] divide-y divide-blueGrey-400"
+                onScroll={handleScrollLayout}
+              >
                 {paints.map((paint) => (
                   <TimelineItemBox
                     key={paint.id}
                     item={paint}
                     className="pt-[10px]"
+                    isShowMenu={
+                      isShowMoreMenu.id === paint.id && isShowMoreMenu.show
+                    }
                     onClickReply={() =>
                       navigate({
                         to: '/post/edit',
@@ -82,6 +103,12 @@ function HomePage() {
                     }
                     onClickShare={() =>
                       handleClickTimelineActionIcon(paint.id, 'share')
+                    }
+                    onClickMore={() =>
+                      setIsShowMoreMenu((prev) => ({
+                        id: prev.id ? '' : paint.id,
+                        show: prev.id !== paint.id,
+                      }))
                     }
                   />
                 ))}
@@ -99,6 +126,9 @@ function HomePage() {
                       key={paint.id}
                       item={paint}
                       className="pt-[10px]"
+                      isShowMenu={
+                        isShowMoreMenu.id === paint.id && isShowMoreMenu.show
+                      }
                       onClickReply={() =>
                         navigate({
                           to: '/post/edit',
@@ -116,6 +146,12 @@ function HomePage() {
                       }
                       onClickShare={() =>
                         handleClickTimelineActionIcon(paint.id, 'share')
+                      }
+                      onClickMore={() =>
+                        setIsShowMoreMenu((prev) => ({
+                          id: prev.id ? '' : paint.id,
+                          show: prev.id !== paint.id,
+                        }))
                       }
                     />
                   ))}
