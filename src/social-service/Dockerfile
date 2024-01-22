@@ -1,4 +1,7 @@
 FROM openjdk:17-oracle
+ENV SOCIAL_DB_URI=${SOCIAL_DB_URI}
+ENV SOCIAL_DB_USERNAME=${SOCIAL_DB_USERNAME}
+ENV SOCIAL_DB_PASSWORD=${SOCIAL_DB_PASSWORD}
 ARG JAR_FILE=build/libs/easel-social-service-0.0.1-SNAPSHOT.jar
 ADD ${JAR_FILE} easel-social-service.jar
 ENTRYPOINT ["java", "-jar", "/easel-social-service.jar"]
