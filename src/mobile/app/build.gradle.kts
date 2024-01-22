@@ -83,5 +83,8 @@ dependencies {
     //SwipeRefreshLayout
     implementation ("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
 
+    //FloatingActionButton
+    implementation ("com.github.clans:fab:1.6.4")
+
 
 }

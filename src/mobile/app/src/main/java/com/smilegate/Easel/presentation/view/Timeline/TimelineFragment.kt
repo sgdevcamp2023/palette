@@ -1,5 +1,6 @@
 package com.smilegate.Easel.presentation.view.Timeline
 
+import android.animation.ObjectAnimator
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -30,6 +31,8 @@ class TimelineFragment : Fragment() {
     private lateinit var navController: NavController
 
     private var doubleBackPressed = false
+
+    private var isFabOpen = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -97,6 +100,9 @@ class TimelineFragment : Fragment() {
             }
             false
         }
+
+        setFABClickEvent()
+
     }
 
     private fun isCurrentFragment(): Boolean {
@@ -109,5 +115,57 @@ class TimelineFragment : Fragment() {
         adapter.addFragment(ForYouFragment(), "추천")
         adapter.addFragment(FollowingFragment(), "팔로우 중")
         viewPager.adapter = adapter
+    }
+
+    private fun setFABClickEvent() {
+        // 플로팅 버튼 클릭시 애니메이션 동작 기능
+        binding.fabMain.setOnClickListener {
+            toggleFab()
+        }
+
+        // 플로팅 버튼 클릭 이벤트 - 캡처
+        binding.fabImage.setOnClickListener {
+
+        }
+
+        // 플로팅 버튼 클릭 이벤트 - 공유
+        binding.fabGif.setOnClickListener {
+
+        }
+
+        // 플로팅 버튼 클릭 이벤트 - 공유
+        binding.fabWrite.setOnClickListener {
+
+        }
+    }
+
+    private fun toggleFab() {
+        // 플로팅 액션 버튼 닫기 - 열려있는 플로팅 버튼 집어넣는 애니메이션
+        if (isFabOpen) {
+            ObjectAnimator.ofFloat(binding.fabWrite, "translationX", 0f).apply { start() }
+            ObjectAnimator.ofFloat(binding.fabWrite, "translationY", 0f).apply { start() }
+
+            ObjectAnimator.ofFloat(binding.fabGif, "translationX", 0f).apply { start() }
+            ObjectAnimator.ofFloat(binding.fabGif, "translationY", 0f).apply { start() }
+
+            ObjectAnimator.ofFloat(binding.fabImage, "translationX", 0f).apply { start() }
+            ObjectAnimator.ofFloat(binding.fabImage, "translationY", 0f).apply { start() }
+
+            ObjectAnimator.ofFloat(binding.fabMain, View.ROTATION, 180f, 0f).apply { start() }
+        } else { // 플로팅 액션 버튼 열기 - 닫혀있는 플로팅 버튼 꺼내는 애니메이션
+            ObjectAnimator.ofFloat(binding.fabWrite, "translationX", 16 * 1.25f).apply { start() }
+            ObjectAnimator.ofFloat(binding.fabWrite, "translationY", -298 * 1.25f).apply { start() }
+
+            ObjectAnimator.ofFloat(binding.fabGif, "translationX", -170 * 1.25f).apply { start() }
+            ObjectAnimator.ofFloat(binding.fabGif, "translationY", -170 * 1.25f).apply { start() }
+
+            ObjectAnimator.ofFloat(binding.fabImage, "translationX", -260 * 1.25f).apply { start() }
+            ObjectAnimator.ofFloat(binding.fabImage, "translationY", 30 * 1.25f).apply { start() }
+
+            ObjectAnimator.ofFloat(binding.fabMain, View.ROTATION, 180f, 0f).apply { start() }
+        }
+
+        isFabOpen = !isFabOpen
+
     }
 }

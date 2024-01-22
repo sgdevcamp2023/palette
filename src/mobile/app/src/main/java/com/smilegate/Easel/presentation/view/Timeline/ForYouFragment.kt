@@ -13,6 +13,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.smilegate.Easel.R
 import com.smilegate.Easel.databinding.FragmentForYouBinding
 import com.smilegate.Easel.domain.model.TimelineItem
