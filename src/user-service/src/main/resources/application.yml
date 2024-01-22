@@ -6,9 +6,9 @@ spring:
     name: user-service
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/user-service?useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false
-    username: root
-    password: 112233
+    url: ${USER_DB_URI}
+    username: ${USER_DB_USERNAME}
+    password: ${USER_DB_PASSWORD}
   jpa:
     hibernate:
       ddl-auto: validate
