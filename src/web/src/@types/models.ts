@@ -9,6 +9,8 @@ export interface User {
   introduce: string;
   websitePath: string;
   createdAt: Date;
+  followers: number;
+  followings: number;
 }
 
 export interface TimelineItem {
