@@ -40,6 +40,10 @@ jobs:
       run: chmod +x src/${{ env.BRANCH_NAME }}-service/gradlew
 
     - name: Build with Gradle
+      env:
+        USER_DB_URI: ${{ secrets.USER_DB_URI }}
+        USER_DB_USERNAME: ${{ secrets.USER_DB_USERNAME }}
+        USER_DB_PASSWORD: ${{ secrets.USER_DB_PASSWORD }}
       run: |
         cd src/${{ env.BRANCH_NAME }}-service
         ./gradlew clean build
@@ -49,6 +53,10 @@ jobs:
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         BRANCH_NAME: ${{ env.BRANCH_NAME }}
+
+        USER_DB_URI: ${{ secrets.USER_DB_URI }}
+        USER_DB_USERNAME: ${{ secrets.USER_DB_USERNAME }}
+        USER_DB_PASSWORD: ${{ secrets.USER_DB_PASSWORD }}
       run: |
         if [ -n "$BRANCH_NAME" ]; then
           DOCKERFILE_DIR="src/$BRANCH_NAME-service"
