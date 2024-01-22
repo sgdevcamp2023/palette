@@ -5,22 +5,21 @@ import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import lombok.RequiredArgsConstructor;
 import org.palette.easeluserservice.common.EurekaUtilizer;
-import org.palette.grpc.GAuthServiceGrpc;
-import org.palette.grpc.GSendEmailAuthRequest;
-import org.palette.grpc.GSendEmailAuthResponse;
+import org.palette.grpc.GCreateUserRequest;
+import org.palette.grpc.GCreateUserResponse;
+import org.palette.grpc.GSocialServiceGrpc;
 import org.springframework.stereotype.Component;
 
-import static org.palette.easeluserservice.common.EurekaServiceName.AUTH_SERVICE_NAME;
+import static org.palette.easeluserservice.common.EurekaServiceName.SOCIAL_SERVICE_NAME;
 
 @Component
 @RequiredArgsConstructor
-public class gRPCAuth {
-
+public class GrpcSocial {
     private final EurekaUtilizer eurekaUtilizer;
 
-    public GSendEmailAuthResponse sendEmailAuth(GSendEmailAuthRequest request) {
+    public GCreateUserResponse createSocialUser(GCreateUserRequest request) {
         final Pair<String, Integer> instanceInfo = eurekaUtilizer.getInstanceInfo(
-                AUTH_SERVICE_NAME.name()
+                SOCIAL_SERVICE_NAME.name()
         );
         final ManagedChannel channel = ManagedChannelBuilder.forAddress(
                         instanceInfo.first(),
@@ -28,10 +27,9 @@ public class gRPCAuth {
                 )
                 .usePlaintext()
                 .build();
-
-        final GSendEmailAuthResponse response = GAuthServiceGrpc
+        final GCreateUserResponse response = GSocialServiceGrpc
                 .newBlockingStub(channel)
-                .sendEmailAuth(request);
+                .createSocialUser(request);
         channel.shutdown();
 
         return response;

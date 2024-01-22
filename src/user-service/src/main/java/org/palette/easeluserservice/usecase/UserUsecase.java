@@ -6,8 +6,8 @@ import org.palette.easeluserservice.dto.request.TemporaryJoinRequest;
 import org.palette.easeluserservice.dto.response.EmailDuplicationVerifyResponse;
 import org.palette.easeluserservice.exception.BaseException;
 import org.palette.easeluserservice.exception.ExceptionType;
-import org.palette.easeluserservice.external.gRPCAuth;
-import org.palette.easeluserservice.external.gRPCSocial;
+import org.palette.easeluserservice.external.GrpcAuth;
+import org.palette.easeluserservice.external.GrpcSocial;
 import org.palette.easeluserservice.persistence.User;
 import org.palette.easeluserservice.persistence.embed.Email;
 import org.palette.easeluserservice.service.UserService;
@@ -24,8 +24,8 @@ import java.util.Optional;
 public class UserUsecase {
 
     private final UserService userService;
-    private final gRPCSocial gRPCSocial;
-    private final gRPCAuth gRPCAuth;
+    private final GrpcSocial gRPCSocial;
+    private final GrpcAuth gRPCAuth;
 
     public EmailDuplicationVerifyResponse executeNicknameDuplicationVerify(
             String email
