@@ -70,3 +70,4 @@ jobs:
         docker buildx create --use
         docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
         docker buildx build --platform=linux/amd64,linux/arm64 -t $DOCKER_USERNAME/$BRANCH_NAME-service:latest . --push
+        docker push $DOCKER_USERNAME/$BRANCH_NAME-service:latest

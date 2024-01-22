@@ -4,7 +4,7 @@
     <color name="Grey_100">#FFFCFCFC</color>
     <color name="Grey_200">#FFE9E9EA</color>
     <color name="Grey_300">#FFC5C5C5</color>
-    <color name="Grey_400">#FF91989B</color>
+    <color name="Grey_400">#FF87898C</color>
     <color name="Grey_500">#FF474747</color>
     <color name="Grey_600">#FF141619</color>
     <color name="black">#FF000000</color>
@@ -14,8 +14,9 @@
     <color name="BlueGrey_300">#FFD9E1E5</color>
     <color name="BlueGrey_400">#FFCED5DC</color>
     <color name="BlueGrey_500">#FFBDC5CD</color>
-    <color name="BlueGrey_600">#FF687784</color>
-    <color name="BlueGrey_700">#FF536471</color>
+    <color name="BlueGrey_600">#FF91989B</color>
+    <color name="BlueGrey_700">#FF687784</color>
+    <color name="BlueGrey_800">#FF536471</color>
 
     <color name="Blue_100">#FFE9F5FD</color>
     <color name="Blue_200">#FFC6E6FB </color>
