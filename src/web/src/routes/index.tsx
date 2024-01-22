@@ -17,6 +17,7 @@ import {
   SearchPage,
   JoinPage,
   PostEditPage,
+  ProfilePage,
 } from '@/pages';
 import { AsyncBoundary } from '@/components';
 
@@ -75,6 +76,12 @@ const postRoute = new Route({
   path: '/post',
 });
 
+export const profileRoute = new Route({
+  getParentRoute: () => rootRoute,
+  path: '/profile/$userId',
+  component: () => <ProfilePage />,
+});
+
 export const editPostRoute = new Route({
   getParentRoute: () => postRoute,
   path: '/edit',
@@ -102,6 +109,7 @@ const routeTree = rootRoute.addChildren([
   membershipEntryRoute,
   joinRoute,
   changePasswordRoute,
+  profileRoute,
   postRoute.addChildren([editPostRoute]),
 ]);
 
