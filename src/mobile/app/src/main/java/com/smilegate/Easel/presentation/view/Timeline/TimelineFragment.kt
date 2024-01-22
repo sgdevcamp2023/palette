@@ -1,12 +1,16 @@
 package com.smilegate.Easel.presentation.view.Timeline
 
 import android.animation.ObjectAnimator
+import android.annotation.SuppressLint
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.view.GestureDetector
 import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -33,6 +37,8 @@ class TimelineFragment : Fragment() {
     private var doubleBackPressed = false
 
     private var isFabOpen = false
+    private var touchStartTime: Long = 0
+    private lateinit var gestureDetector: GestureDetector
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -118,9 +124,44 @@ class TimelineFragment : Fragment() {
     }
 
     private fun setFABClickEvent() {
-        // 플로팅 버튼 클릭시 애니메이션 동작 기능
-        binding.fabMain.setOnClickListener {
-            toggleFab()
+
+        gestureDetector = GestureDetector(requireContext(), object : GestureDetector.SimpleOnGestureListener() {
+            @SuppressLint("ResourceAsColor")
+            override fun onLongPress(e: MotionEvent) {
+                toggleFab()
+
+                binding.fabMain.scaleX = 0.8f
+                binding.fabMain.scaleY = 0.8f
+
+                binding.fabMain.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.white))
+                binding.fabMain.setImageResource(R.drawable.ic_x)
+                binding.fabMain.setColorFilter(ContextCompat.getColor(requireContext(), R.color.Blue_500), PorterDuff.Mode.SRC_IN)
+
+                binding.fabGif.setElevationCompat(2f)
+                binding.fabImage.setElevationCompat(2f)
+                binding.fabWrite.setElevationCompat(2f)
+            }
+
+            override fun onSingleTapUp(e: MotionEvent): Boolean {
+                if(isFabOpen) {
+                    toggleFab()
+
+                    binding.fabMain.scaleX = 1.0f
+                    binding.fabMain.scaleY = 1.0f
+
+                    binding.fabMain.setColorPressedResId(R.color.black)
+                    binding.fabMain.setImageResource(R.drawable.ic_add_text)
+
+                    binding.fabGif.setElevationCompat(0f)
+                    binding.fabImage.setElevationCompat(0f)
+                    binding.fabWrite.setElevationCompat(0f)
+                }
+                return true
+            }
+        })
+
+        binding.fabMain.setOnTouchListener { _, event ->
+            gestureDetector.onTouchEvent(event)
         }
 
         // 플로팅 버튼 클릭 이벤트 - 캡처
@@ -167,5 +208,17 @@ class TimelineFragment : Fragment() {
 
         isFabOpen = !isFabOpen
 
+    }
+    private fun updateMainFabAppearance() {
+        // 메인 버튼의 크기, 색깔, 아이콘을 변경하는 코드를 여기에 추가
+        // 예를 들어, 크기 변경
+        binding.fabMain.scaleX = if (isFabOpen) 56f else 44f
+        binding.fabMain.scaleY = if (isFabOpen) 56f else 44f
+
+        binding.fabMain.backgroundTintList = ContextCompat.getColorStateList(
+            requireContext(),
+            if (isFabOpen) R.color.white else R.color.black
+        )
+        binding.fabMain.setImageResource(if (isFabOpen) R.drawable.ic_x else R.drawable.ic_add_text)
     }
 }
