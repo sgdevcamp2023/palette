@@ -55,4 +55,39 @@
       'Segoe UI Symbol',
       'Noto Color Emoji';
   }
+
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    background-color: #c9c9c9;
+    overflow-y: hidden;
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: #87898c;
+    border-radius: 8px;
+    background-clip: padding-box;
+    border: 2px solid transparent;
+  }
+  ::-webkit-scrollbar-track {
+    border-radius: 10px;
+  }
+
+  #root {
+    margin-inline: auto;
+    width: 100%;
+    max-width: 420px;
+    height: 100vh;
+    overflow: hidden;
+    background-color: #ffffff;
+  }
+
+  :root {
+    --toastify-color-dark: #141619;
+    --toastify-color-progress-dark: #ffe042;
+  }
 }

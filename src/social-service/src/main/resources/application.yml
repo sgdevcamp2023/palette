@@ -1,0 +1,25 @@
+server:
+  port: 10003
+
+spring:
+  application:
+    name: social-service
+
+  neo4j:
+    authentication:
+      username: ${SOCIAL_DB_USERNAME}
+      password: ${SOCIAL_DB_PASSWORD}
+    uri: ${SOCIAL_DB_URI}
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://host.docker.internal:8761/eureka
+
+grpc:
+  server:
+    port: 11003
