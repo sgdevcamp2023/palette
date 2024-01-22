@@ -1,0 +1,7 @@
+FROM openjdk:17-oracle
+ENV USER_DB_URI=${USER_DB_URI}
+ENV USER_DB_USERNAME=${USER_DB_USERNAME}
+ENV USER_DB_PASSWORD=${USER_DB_PASSWORD}
+ARG JAR_FILE=build/libs/easel-user-service-0.0.1-SNAPSHOT.jar
+ADD ${JAR_FILE} easel-user-service.jar
+ENTRYPOINT ["java", "-jar", "/easel-user-service.jar"]
