@@ -44,7 +44,7 @@ function HomePage() {
       <Header
         left={{
           type: 'circlePerson',
-          label: '취소',
+          label: '메뉴 열기',
         }}
         center={{
           type: 'palette',

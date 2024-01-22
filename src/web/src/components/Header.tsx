@@ -1,7 +1,9 @@
+import { useEffect, useState } from 'react';
 import { cva } from 'class-variance-authority';
-import type { MouseEventHandler } from 'react';
+import type { MouseEvent, MouseEventHandler } from 'react';
 
-import { cn } from '@/utils';
+import { DUMMY_USER, cn } from '@/utils';
+import MenuModal from './MenuModal';
 import Typography from './common/Typography';
 import type { IconKeyType } from './common/Icon';
 import type { ColorType } from '@/@types';
@@ -103,12 +105,49 @@ interface HeaderProps {
 }
 
 function Header({ left, center, right, position, className }: HeaderProps) {
+  const isProfile = left?.type === 'circlePerson';
+  const [isProfileModalOpen, setIsProfileModalOpen] = useState<boolean>(false);
+
+  const handleLeftHeaderButton = (
+    e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>,
+  ) => {
+    if (isProfile) {
+      setIsProfileModalOpen((prev) => !prev);
+    }
+    left?.onClick?.(e);
+  };
+
+  useEffect(() => {
+    if (isProfileModalOpen) {
+      window.document.body.style.width = '100%';
+      window.document.body.style.position = 'fixed';
+      window.document.body.style.overflow = 'hidden';
+    } else {
+      window.document.body.style.width = 'auto';
+      window.document.body.style.position = 'static';
+      window.document.body.style.overflow = 'auto';
+    }
+  }, [isProfileModalOpen]);
+
   return (
-    <header className={cn(HeaderVariants({ position }), className)}>
-      <HeaderButton header={left} align="start" />
-      <HeaderButton header={center} align="mid" />
-      <HeaderButton header={right} align="end" />
-    </header>
+    <>
+      <header className={cn(HeaderVariants({ position }), className)}>
+        <HeaderButton
+          header={
+            left ? { ...left, onClick: handleLeftHeaderButton } : undefined
+          }
+          align="start"
+        />
+        <HeaderButton header={center} align="mid" />
+        <HeaderButton header={right} align="end" />
+      </header>
+      {isProfile && isProfileModalOpen && (
+        <MenuModal
+          user={DUMMY_USER}
+          onClose={() => setIsProfileModalOpen(false)}
+        />
+      )}
+    </>
   );
 }
 
