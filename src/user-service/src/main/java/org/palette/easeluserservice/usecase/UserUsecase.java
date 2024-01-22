@@ -69,7 +69,7 @@ public class UserUsecase {
                 joinRequest.websitePath()
         );
 
-        // gRPCCreateSocialUser(user);
+        gRPCCreateSocialUser(user);
     }
 
     private void gRPCSendEmailAuth(User user) {
