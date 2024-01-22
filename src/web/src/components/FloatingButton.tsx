@@ -32,7 +32,7 @@ function FloatingButton() {
           onClick={() => setIsShowMenu(false)}
         />
       ) : (
-        <AccessibleIconButton
+        <FramerIconButton
           iconType="addText"
           width={24}
           height={24}
@@ -40,6 +40,7 @@ function FloatingButton() {
           label="게시글 작성 플로팅 버튼"
           {...attrs}
           onClick={() => navigate({ to: '/post/edit' })}
+          whileTap={{ scale: 0.8 }}
         />
       )}
       {isShowMenu && (
