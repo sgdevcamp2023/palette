@@ -2,7 +2,7 @@ module.exports = {
   root: true,
   env: { browser: true, es2020: true },
   extends: ['airbnb', 'airbnb-typescript', 'plugin:@tanstack/eslint-plugin-query/recommended', 'prettier'],
-  ignorePatterns: ['dist', '.eslintrc.cjs'],
+  ignorePatterns: ['dist', '.eslintrc.cjs', 'coverage'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 'latest',
@@ -30,6 +30,10 @@ module.exports = {
     'react-refresh/only-export-components': [
       'warn',
       { allowConstantExport: true },
-    ]
+    ],
+    "jsx-a11y/aria-role": [2, {
+      "allowedInvalidRoles": ["text"],
+      "ignoreNonDOM": true
+    }], // role="text"만 예외로 허용하여 ARIA spec을 확장해서 사용합니다.
   },
 };

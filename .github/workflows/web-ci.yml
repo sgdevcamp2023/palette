@@ -1,0 +1,180 @@
+name: web-CI
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - 'src/web/**'
+
+jobs:
+  web-check-lint:
+    name: check lint
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./src/web
+
+    strategy:
+      matrix:
+        node-version: [18]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8.6.1
+
+      - name: setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          # cache pnpm에 대한 이슈로 인해 제거
+          # https://github.com/actions/setup-node/issues/801
+          # cache: 'pnpm'
+          # cache-dependency-path: './src/web'
+
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v3
+        with:
+          # cache의 대상을 정합니다.
+          path: '**/node_modules'
+          # cache를 무효화하를 결정하는 기준은 의존성이 변경되면 함께 변경되는 파일인 pnpm-lock.yaml을 기준으로 합니다.
+          key: ${{ runner.os }}-node-${{ hashFiles('**/pnpm-lock.yaml') }}
+          # key가 유효하지 않은 경우 runner의 운영체제 값과 node라는 suffix를 key로 복구합니다.
+          # 결과적으로 pnpm-lock.yaml 파일이 변경되지 않았다면 캐싱된 node_modules를 사용합니다.
+          # 만약 복구될 캐시가 없다면 아래에서 사용할 cache-hit는 false가 됩니다.
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: pnpm install
+        # 캐시가 없다면 의존성을 설치합니다.
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: pnpm install --frozen-lockfile
+
+      - name: check lint
+        run: pnpm lint
+
+  web-check-type:
+    name: check type
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./src/web
+
+    strategy:
+      matrix:
+        node-version: [18]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8.6.1
+
+      - name: setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          # cache: 'pnpm'
+          # cache-dependency-path: './src/web'
+
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v3
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-node-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: pnpm install
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: pnpm install --frozen-lockfile
+
+      - name: check type
+        run: pnpm type:check
+
+  web-check-test:
+    name: check test
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./src/web
+
+    strategy:
+      matrix:
+        node-version: [18]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8.6.1
+
+      - name: setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          # cache: 'pnpm'
+          # cache-dependency-path: './src/web'
+
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v3
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-node-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: pnpm install
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: pnpm install --frozen-lockfile
+
+      - name: check testing
+        run: pnpm test
+
+  web-check-build:
+    name: check build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./src/web
+
+    strategy:
+      matrix:
+        node-version: [18]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8.6.1
+
+      - name: setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          # cache: 'pnpm'
+          # cache-dependency-path: './src/web'
+
+      - name: Cache dependencies
+        id: cache
+        uses: actions/cache@v3
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-node-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: pnpm install
+        if: steps.cache.outputs.cache-hit != 'true'
+        run: pnpm install --frozen-lockfile
+
+      - name: check build
+        run: pnpm build

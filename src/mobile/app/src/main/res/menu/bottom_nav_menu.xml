@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <item
+        android:enabled="true"
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/ic_home"
+        tools:ignore="MenuTitle"/>
+
+    <item
+        android:enabled="true"
+        android:id="@+id/navigation_search"
+        android:icon="@drawable/ic_search"
+        tools:ignore="MenuTitle"/>
+
+    <item
+        android:enabled="true"
+        android:id="@+id/navigation_notice"
+        android:icon="@drawable/ic_bell"
+        tools:ignore="MenuTitle"/>
+
+    <item
+        android:enabled="true"
+        android:id="@+id/navigation_message"
+        android:icon="@drawable/ic_mail"
+        tools:ignore="MenuTitle"/>
+
+</menu>

@@ -44,6 +44,11 @@ jobs:
         USER_DB_URI: ${{ secrets.USER_DB_URI }}
         USER_DB_USERNAME: ${{ secrets.USER_DB_USERNAME }}
         USER_DB_PASSWORD: ${{ secrets.USER_DB_PASSWORD }}
+
+        SOCIAL_DB_USERNAME: ${{ secrets.SOCIAL_DB_USERNAME }}
+        SOCIAL_DB_PASSWORD: ${{ secrets.SOCIAL_DB_PASSWORD }}
+        SOCIAL_DB_URI: ${{ secrets.SOCIAL_DB_URI }}
+        
       run: |
         cd src/${{ env.BRANCH_NAME }}-service
         ./gradlew clean build -x test
@@ -57,6 +62,11 @@ jobs:
         USER_DB_URI: ${{ secrets.USER_DB_URI }}
         USER_DB_USERNAME: ${{ secrets.USER_DB_USERNAME }}
         USER_DB_PASSWORD: ${{ secrets.USER_DB_PASSWORD }}
+        
+        SOCIAL_DB_USERNAME: ${{ secrets.SOCIAL_DB_USERNAME }}
+        SOCIAL_DB_PASSWORD: ${{ secrets.SOCIAL_DB_PASSWORD }}
+        SOCIAL_DB_URI: ${{ secrets.SOCIAL_DB_URI }}
+        
       run: |
         if [ -n "$BRANCH_NAME" ]; then
           DOCKERFILE_DIR="src/$BRANCH_NAME-service"
@@ -70,3 +80,4 @@ jobs:
         docker buildx create --use
         docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
         docker buildx build --platform=linux/amd64,linux/arm64 -t $DOCKER_USERNAME/$BRANCH_NAME-service:latest . --push
+        
