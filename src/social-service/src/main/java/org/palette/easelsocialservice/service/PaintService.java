@@ -2,6 +2,7 @@ package org.palette.easelsocialservice.service;
 
 
 import lombok.RequiredArgsConstructor;
+import org.palette.easelsocialservice.dto.request.HashtagRequest;
 import org.palette.easelsocialservice.dto.request.MentionRequest;
 import org.palette.easelsocialservice.persistence.*;
 import org.palette.easelsocialservice.persistence.domain.*;
@@ -54,7 +55,11 @@ public class PaintService {
         paintRepository.save(paint);
     }
 
-    public void bindHashtagsWithPaint(Paint paint, List<Hashtag> hashtags) {
+    public void bindHashtagsWithPaint(Paint paint, List<HashtagRequest> hashtags) {
+        for (HashtagRequest hashtag: hashtags) {
+            paint.addHashtag(new Hashtag(hashtag.tag()), hashtag.start(), hashtag.end());
+        }
+        paintRepository.save(paint);
     }
 
     public void bindLinksWithPaint(Paint paint, List<Link> links) {

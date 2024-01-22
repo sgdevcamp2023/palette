@@ -44,8 +44,7 @@ public class PaintUsecase {
         });
 
         paintCreateRequest.hashtags().ifPresent(hashtags -> {
-            List<Hashtag> createdHashtags = hashtagService.createHashtags(hashtags);
-            paintService.bindHashtagsWithPaint(paint, createdHashtags);
+            paintService.bindHashtagsWithPaint(paint, hashtags);
         });
 
         paintCreateRequest.links().ifPresent(links -> {

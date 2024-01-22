@@ -65,7 +65,10 @@ public class Paint {
         this.links.add(new Contains(link));
     }
 
-    public void addTag(Hashtag hashtag, int startIdx, int endIdx) {
+    public void addHashtag(Hashtag hashtag, int startIdx, int endIdx) {
+        if (this.hashtags == null) {
+            this.hashtags = new LinkedList<>();
+        }
         this.hashtags.add(new Tags(hashtag, startIdx, endIdx));
     }
 
@@ -82,14 +85,14 @@ public class Paint {
     }
 
     public void addTaggedUser(User user) {
-        if (taggedUsers == null) {
+        if (this.taggedUsers == null) {
             this.taggedUsers = new LinkedList<>();
         }
         this.taggedUsers.add(new TagsUser(user));
     }
 
     public void addMention(User user, int start, int end) {
-        if (mentions == null) {
+        if (this.mentions == null) {
             this.mentions = new LinkedList<>();
         }
         this.mentions.add(new Mentions(user, start, end));
