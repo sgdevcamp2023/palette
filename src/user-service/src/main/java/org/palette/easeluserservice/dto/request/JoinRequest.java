@@ -11,8 +11,6 @@ public record JoinRequest(
         String password,
         @NotBlank
         String username,
-        @NotBlank
-        String nickname,
         Optional<String> introduce,
         Optional<String> profilePath,
         Optional<String> backgroundPath,
