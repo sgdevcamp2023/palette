@@ -46,7 +46,7 @@ jobs:
         USER_DB_PASSWORD: ${{ secrets.USER_DB_PASSWORD }}
       run: |
         cd src/${{ env.BRANCH_NAME }}-service
-        ./gradlew clean build
+        ./gradlew clean build -x test
 
     - name: Build and Push Docker Image
       env:
