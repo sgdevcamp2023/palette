@@ -46,7 +46,7 @@ public class UserUsecase {
                 temporaryJoinRequest.nickname()
         );
 
-        gRPCSendEmailAuth(user);
+//        gRPCSendEmailAuth(user);
     }
 
     @Transactional
@@ -83,15 +83,7 @@ public class UserUsecase {
     }
 
     private void gRPCCreateSocialUser(User user) {
-        final GCreateUserRequest gCreateUserRequest = GCreateUserRequest.newBuilder()
-                .setId(user.getId())
-                .setUsername(user.getUsername().value())
-                .setImagePath(user.getProfile().staticContentPath().profileImagePath())
-                .setNickname(user.getProfile().nickname().value())
-                .setIsActive(user.getAuthed())
-                .getDefaultInstanceForType();
-
-        gRPCSocial.createSocialUser(gCreateUserRequest);
+        gRPCSocial.createSocialUser(user);
     }
 
     private User validateJoinRequest(JoinRequest joinRequest, Optional<User> optionalUser) {
