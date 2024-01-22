@@ -40,6 +40,7 @@ import SolidCamera from './SolidCamera.svg?react';
 import SolidHeart from './SolidHeart.svg?react';
 import SolidBell from './SolidBell.svg?react';
 import SolidMail from './SolidMail.svg?react';
+import SolidUser from './SolidUser.svg?react';
 import Sun from './Sun.svg?react';
 import ThreeDot from './ThreeDot.svg?react';
 import User from './User.svg?react';
@@ -89,6 +90,7 @@ export const ICONS = {
   solidHeart: SolidHeart,
   solidBell: SolidBell,
   solidMail: SolidMail,
+  solidUser: SolidUser,
   sun: Sun,
   threeDot: ThreeDot,
   user: User,
