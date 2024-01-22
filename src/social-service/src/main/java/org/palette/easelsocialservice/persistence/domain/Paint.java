@@ -73,6 +73,9 @@ public class Paint {
     }
 
     public void addMedia(Media media) {
+        if (this.medias == null) {
+            this.medias = new LinkedList<>();
+        }
         this.medias.add(new Uses(media));
     }
 

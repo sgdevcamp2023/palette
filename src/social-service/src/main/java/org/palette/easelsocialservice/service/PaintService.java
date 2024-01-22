@@ -19,6 +19,7 @@ public class PaintService {
     private final PaintRepository paintRepository;
 
     public Paint createPaint(String text, Optional<Long> inReplyToPaintId, Optional<Long> quotePaintId) {
+        // TODO: 예외처리
         Paint paint = new Paint(text);
 
         inReplyToPaintId.map(paintRepository::findByPid)
@@ -66,5 +67,9 @@ public class PaintService {
     }
 
     public void bindMediaWithPaint(Paint paint, List<Media> medias) {
+        for (Media media : medias) {
+            paint.addMedia(media);
+        }
+        paintRepository.save(paint);
     }
 }

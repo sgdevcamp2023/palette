@@ -18,7 +18,6 @@ import java.util.Map;
 public class PaintUsecase {
     private final PaintService paintService;
     private final UserService userService;
-    private final HashtagService hashtagService;
     private final LinkService linkService;
     private final MediaService mediaService;
 
