@@ -9,6 +9,7 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
@@ -74,7 +75,7 @@ public class User {
 
         return User.builder()
                 .email(new Email(email))
-                .username(new Username(defaultStringValue))
+                .username(new Username(UUID.randomUUID().toString()))
                 .password(new Password(defaultStringValue))
                 .profile(
                         new Profile(
