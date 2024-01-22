@@ -31,6 +31,12 @@ interface BottomNavigationProps {
 
 const FramerAccessibleIconButton = motion(AccessibleIconButton);
 
+const iconOpacity = (direction: 'up' | 'down' | 'stop') => {
+  if (direction === 'up') return 'opacity-95';
+  if (direction === 'down') return 'opacity-80';
+  return '';
+};
+
 function BottomNavigation({ contentRef }: BottomNavigationProps) {
   if (!contentRef) return null;
   const navigate = useNavigate();
@@ -56,7 +62,7 @@ function BottomNavigation({ contentRef }: BottomNavigationProps) {
       setScrollDirection('down');
     }
     setY(scrollTop);
-  }, 500);
+  }, 200);
 
   useEffect(() => {
     contentRef.current?.addEventListener('scroll', onScroll);
@@ -74,6 +80,7 @@ function BottomNavigation({ contentRef }: BottomNavigationProps) {
         label="홈 화면으로 이동"
         disabled={!!matchRoute({ to: '/home' })}
         onClick={() => navigate({ to: '/home' })}
+        className={iconOpacity(scrollDirection)}
         fill={matchRoute({ to: '/home' }) ? 'black' : undefined}
         whileHover={{
           scale: 1.1,
@@ -88,6 +95,7 @@ function BottomNavigation({ contentRef }: BottomNavigationProps) {
         disabled={!!matchRoute({ to: '/search' })}
         onClick={() => navigate({ to: '/search' })}
         stroke={matchRoute({ to: '/search' }) ? 'black' : undefined}
+        className={iconOpacity(scrollDirection)}
         whileHover={{
           scale: 1.1,
         }}
@@ -101,6 +109,7 @@ function BottomNavigation({ contentRef }: BottomNavigationProps) {
         disabled={!!matchRoute({ to: '/notification' })}
         onClick={() => navigate({ to: '/notification' })}
         fill={matchRoute({ to: '/notification' }) ? 'black' : undefined}
+        className={iconOpacity(scrollDirection)}
         whileHover={{
           scale: 1.1,
         }}
@@ -113,6 +122,7 @@ function BottomNavigation({ contentRef }: BottomNavigationProps) {
         label="채팅 화면으로 이동"
         disabled={!!matchRoute({ to: '/chat' })}
         onClick={() => navigate({ to: '/chat' })}
+        className={iconOpacity(scrollDirection)}
         whileHover={{
           scale: 1.1,
         }}
