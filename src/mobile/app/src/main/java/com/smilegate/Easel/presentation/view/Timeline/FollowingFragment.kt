@@ -35,17 +35,17 @@ class FollowingFragment : Fragment() {
     ): View {
         binding = FragmentFollowingBinding.inflate(inflater, container, false)
 
-        val toolbar = requireActivity().findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar_container)
+        val toolbar = requireActivity().findViewById<androidx.appcompat.widget.Toolbar>(com.smilegate.Easel.R.id.toolbar_container)
 
-        val profileButton = toolbar.findViewById<ImageView>(R.id.back_btn)
-        profileButton.setImageResource(R.drawable.ic_circle_person)
+        val profileButton = toolbar.findViewById<ImageView>(com.smilegate.Easel.R.id.back_btn)
+        profileButton.setImageResource(com.smilegate.Easel.R.drawable.ic_circle_person)
         profileButton.visibility = View.VISIBLE
         profileButton.setOnClickListener {
-            findNavController().navigate(R.id.profileFragment)
+            findNavController().navigate(com.smilegate.Easel.R.id.profileFragment)
         }
 
-        val settingButton = toolbar.findViewById<ImageView>(R.id.else_btn)
-        settingButton.setImageResource(R.drawable.ic_setting)
+        val settingButton = toolbar.findViewById<ImageView>(com.smilegate.Easel.R.id.else_btn)
+        settingButton.setImageResource(com.smilegate.Easel.R.drawable.ic_setting)
         settingButton.visibility = View.VISIBLE
 
         navController = findNavController()
@@ -57,7 +57,7 @@ class FollowingFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // 바텀 네비게이션바 보이기
-        val bottomNavigation = activity?.findViewById<BottomNavigationView>(R.id.nav_view)
+        val bottomNavigation = activity?.findViewById<BottomNavigationView>(com.smilegate.Easel.R.id.nav_view)
         bottomNavigation?.visibility = View.VISIBLE
 
         // 뒤로가기 버튼을 처리하는 부분
@@ -106,8 +106,8 @@ class FollowingFragment : Fragment() {
     }
 
     private fun generateDummyTimelineData(): List<TimelineItem> {
-        val profileImgId = R.drawable.bg_timeline_profile_img
-        val contentImgId = R.drawable.bg_timeline_content_img
+        val profileImgId = com.smilegate.Easel.R.drawable.bg_timeline_profile_img
+        val contentImgId = com.smilegate.Easel.R.drawable.bg_timeline_content_img
 
         return listOf(
             TimelineItem(profileImgId, "SBS 뉴스", "@SBS8news", "18분",

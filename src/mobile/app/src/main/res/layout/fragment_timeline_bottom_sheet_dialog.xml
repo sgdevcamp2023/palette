@@ -14,7 +14,7 @@
         android:layout_marginTop="4dp"
         android:src="@drawable/bg_timeline_bottom_sheet"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/ic_bottom_sheet_retweet"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
@@ -64,10 +64,11 @@
         android:clickable="true"
         android:text="@string/repost_fragment_bottom_sheet"
         android:textColor="@color/Grey_600"
-        app:layout_constraintStart_toEndOf="@+id/ic_bottom_sheet_retweet"
+        app:layout_constraintStart_toEndOf="@+id/ic_bottom_sheet_repost"
         app:layout_constraintTop_toBottomOf="@+id/tv_bottom_sheet_retweet" />
 
     <Button
+        android:id="@+id/btn_bottom_sheet_cancel"
         style="@style/Headline7"
         android:layout_width="330dp"
         android:layout_height="50dp"
@@ -75,13 +76,12 @@
         android:layout_marginTop="30dp"
         android:layout_marginEnd="22dp"
         android:layout_marginBottom="28dp"
-        android:textColor="@color/Grey_600"
         android:background="@drawable/btn_timeline_bottom_sheet"
         android:text="@string/cancel_fragment_bottom_sheet"
+        android:textColor="@color/Grey_600"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_bottom_sheet_repost" />
-        
 
 </androidx.constraintlayout.widget.ConstraintLayout>
