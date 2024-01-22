@@ -88,6 +88,7 @@ public class User {
                                 )
                         )
                 )
+                .role(Role.NORMAL)
                 .paintPin(new PaintPin(defaultStringValue))
                 .dmPin(new DmPin(defaultStringValue))
                 .accessedAt(null)

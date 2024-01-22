@@ -27,6 +27,9 @@ public class Join extends AcceptanceTestBase {
             InvocationTargetException,
             InstantiationException,
             IllegalAccessException {
+
+        if (!userJpaRepository.existsByEmail(new Email("diger@gmail.com"))) return;
+
         Class<User> userClass = User.class;
         Constructor<User> constructor = userClass.getDeclaredConstructor(
                 Long.class,
@@ -62,7 +65,7 @@ public class Join extends AcceptanceTestBase {
                 ),
                 new PaintPin(""),
                 new DmPin(""),
-                null,
+                Role.NORMAL,
                 true,
                 null,
                 null,
@@ -80,7 +83,6 @@ public class Join extends AcceptanceTestBase {
                 "diger@gmail.com",
                 "digerPassword",
                 "digerHashTag",
-                "digerDisplayName",
                 null,
                 null,
                 null,
