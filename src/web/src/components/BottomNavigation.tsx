@@ -62,7 +62,7 @@ function BottomNavigation({ contentRef }: BottomNavigationProps) {
       setScrollDirection('down');
     }
     setY(scrollTop);
-  }, 500);
+  }, 200);
 
   useEffect(() => {
     contentRef.current?.addEventListener('scroll', onScroll);
