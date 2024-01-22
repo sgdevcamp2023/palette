@@ -15,7 +15,13 @@ public class Mentions {
     @TargetNode
     private User user;
 
-    public Mentions(User user) {
+    private Integer start;
+
+    private Integer end;
+
+    public Mentions(User user, int start, int end) {
         this.user = user;
+        this.start = start;
+        this.end = end;
     }
 }
