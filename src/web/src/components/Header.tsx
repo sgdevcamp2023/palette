@@ -125,7 +125,6 @@ function Header({ left, center, right, position, className }: HeaderProps) {
     } else {
       window.document.body.style.width = 'auto';
       window.document.body.style.position = 'static';
-      window.document.body.style.overflow = 'auto';
     }
   }, [isProfileModalOpen]);
 
