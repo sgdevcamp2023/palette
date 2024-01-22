@@ -50,11 +50,11 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(value = {Exception.class})
-    public ResponseEntity<ExceptionResponse> handleException() {
+    public ResponseEntity<ExceptionResponse> handleException(Exception e) {
         ExceptionResponse exceptionResponse = ExceptionResponse.builder()
                 .code("USER_SERVICE_EXCEPTION")
-                .message("INTERNAL_SERVER_ERROR")
-                .description("서버 내부에 오류가 발생했습니다.")
+                .message(e.getCause().getMessage())
+                .description(e.getLocalizedMessage())
                 .build();
 
         logException(exceptionResponse);

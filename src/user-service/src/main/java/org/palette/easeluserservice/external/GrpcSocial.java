@@ -1,38 +1,37 @@
 package org.palette.easeluserservice.external;
 
-import com.netflix.discovery.shared.Pair;
-import io.grpc.ManagedChannel;
-import io.grpc.ManagedChannelBuilder;
-import lombok.RequiredArgsConstructor;
-import org.palette.easeluserservice.common.EurekaUtilizer;
+import io.grpc.StatusRuntimeException;
+import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.palette.grpc.GCreateUserRequest;
 import org.palette.grpc.GCreateUserResponse;
 import org.palette.grpc.GSocialServiceGrpc;
 import org.springframework.stereotype.Component;
 
-import static org.palette.easeluserservice.common.EurekaServiceName.SOCIAL_SERVICE_NAME;
-
 @Component
-@RequiredArgsConstructor
 public class GrpcSocial {
 
-    private final EurekaUtilizer eurekaUtilizer;
+    @GrpcClient("social-service")
+    private GSocialServiceGrpc.GSocialServiceBlockingStub gSocialServiceBlockingStub;
 
     public GCreateUserResponse createSocialUser(GCreateUserRequest request) {
-        final Pair<String, Integer> instanceInfo = eurekaUtilizer.getInstanceInfo(
-                SOCIAL_SERVICE_NAME.getValue()
-        );
-        final ManagedChannel channel = ManagedChannelBuilder.forAddress(
-                        instanceInfo.first(),
-                        instanceInfo.second()
-                )
-                .usePlaintext()
-                .build();
-        final GCreateUserResponse response = GSocialServiceGrpc
-                .newBlockingStub(channel)
-                .createSocialUser(request);
-        channel.shutdown();
+        // TODO: 매개변수 및 반환값 변경, 예외처리
+        try {
+            final GCreateUserResponse response = gSocialServiceBlockingStub.createSocialUser(
+                    GCreateUserRequest.newBuilder()
+                            .setId(request.getId())
+                            .setUsername(request.getUsername())
+                            .setNickname(request.getNickname())
+                            .setImagePath(request.getImagePath())
+                            .setIsActive(true)
+                            .build());
 
-        return response;
+
+
+            return response;
+
+        } catch (final StatusRuntimeException e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 }

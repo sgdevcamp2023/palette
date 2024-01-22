@@ -4,14 +4,14 @@ option java_multiple_files = true;
 option java_package = "org.palette.grpc";
 
 service GSocialService {
-  rpc createSocialUser (GCreateUserRequest) returns (GCreateUserResponse) {}
+  rpc createUser (GCreateUserRequest) returns (GCreateUserResponse) {}
 }
 
 message GCreateUserRequest {
   int64 id = 1;
   string username = 2;
   string nickname = 3;
-  string profileImagePath = 4;
+  string imagePath = 4;
   bool isActive = 5;
 }
 

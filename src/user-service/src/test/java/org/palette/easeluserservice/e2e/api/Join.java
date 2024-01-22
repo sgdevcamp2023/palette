@@ -28,7 +28,7 @@ public class Join extends AcceptanceTestBase {
             InstantiationException,
             IllegalAccessException {
 
-        if (!userJpaRepository.existsByEmail(new Email("diger@gmail.com"))) return;
+        if (userJpaRepository.existsByEmail(new Email("diger@gmail.com"))) return;
 
         Class<User> userClass = User.class;
         Constructor<User> constructor = userClass.getDeclaredConstructor(
@@ -55,7 +55,7 @@ public class Join extends AcceptanceTestBase {
                 new Username(""),
                 new Password(""),
                 new Profile(
-                        new Nickname("digerDisplayName"),
+                        new Nickname("digerDisplayName1"),
                         new Introduce(""),
                         new StaticContentPath(
                                 "",

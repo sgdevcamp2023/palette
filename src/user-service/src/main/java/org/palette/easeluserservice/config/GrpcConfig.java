@@ -25,7 +25,8 @@ public class GrpcConfig {
     @PostConstruct
     public void init() {
         final int port = grpcProperties.getPort();
-        eurekaRegistration.getInstanceConfig().getMetadataMap()
+        eurekaRegistration.getInstanceConfig()
+                .getMetadataMap()
                 .put(GrpcUtils.CLOUD_DISCOVERY_METADATA_PORT, Integer.toString(port));
     }
 }

@@ -85,9 +85,10 @@ public class UserUsecase {
     private void gRPCCreateSocialUser(User user) {
         final GCreateUserRequest gCreateUserRequest = GCreateUserRequest.newBuilder()
                 .setId(user.getId())
-                .setProfileImagePath(user.getProfile().staticContentPath().profileImagePath())
-                .setNickname(user.getProfile().nickname().value())
                 .setUsername(user.getUsername().value())
+                .setImagePath(user.getProfile().staticContentPath().profileImagePath())
+                .setNickname(user.getProfile().nickname().value())
+                .setIsActive(user.getAuthed())
                 .getDefaultInstanceForType();
 
         gRPCSocial.createSocialUser(gCreateUserRequest);
