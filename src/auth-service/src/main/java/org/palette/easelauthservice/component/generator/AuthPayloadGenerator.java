@@ -1,4 +1,4 @@
-package org.palette.easelauthservice.generator;
+package org.palette.easelauthservice.component.generator;
 
 import lombok.RequiredArgsConstructor;
 import org.palette.easelauthservice.config.ApplicationConfig;

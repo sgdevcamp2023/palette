@@ -1,4 +1,4 @@
-package org.palette.easelauthservice.mailsender;
+package org.palette.easelauthservice.component.mailsender;
 
 import org.springframework.beans.factory.annotation.Value;
 

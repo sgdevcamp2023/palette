@@ -7,7 +7,7 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 import java.util.Properties;
 
-import static org.palette.easelauthservice.mailsender.MailConst.*;
+import static org.palette.easelauthservice.component.mailsender.MailConst.*;
 
 @Configuration
 public class MailSenderConfig {

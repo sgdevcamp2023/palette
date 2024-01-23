@@ -1,11 +1,11 @@
-package org.palette.easelauthservice.mailsender;
+package org.palette.easelauthservice.component.mailsender;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
 
-import static org.palette.easelauthservice.mailsender.MailConst.*;
+import static org.palette.easelauthservice.component.mailsender.MailConst.*;
 
 @Component
 @RequiredArgsConstructor
@@ -16,7 +16,6 @@ public class EmailAuthMailSenderByJMS implements EmailAuthMailSender {
     @Override
     public void send(
             String to,
-            String from,
             String authPayload
     ) {
         SimpleMailMessage message = new SimpleMailMessage();
