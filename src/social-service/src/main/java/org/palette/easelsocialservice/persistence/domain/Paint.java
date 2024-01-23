@@ -89,14 +89,11 @@ public class Paint {
         this.taggedUsers.add(new TagsUser(user));
     }
 
-    public void addMention(User user, int start, int end) {
-        if (this.mentions == null) {
-            this.mentions = new LinkedList<>();
-        }
-        this.mentions.add(new Mentions(user, start, end));
+    public void addAllLinks(List<Contains> contains) {
+        this.links = contains;
     }
 
-    public void addAllLink(List<Contains> contains) {
-        this.links = contains;
+    public void addAllMentions(List<Mentions> mentions) {
+        this.mentions = mentions;
     }
 }

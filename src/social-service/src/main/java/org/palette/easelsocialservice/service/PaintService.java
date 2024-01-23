@@ -8,6 +8,7 @@ import org.palette.easelsocialservice.dto.request.MentionRequest;
 import org.palette.easelsocialservice.persistence.PaintRepository;
 import org.palette.easelsocialservice.persistence.domain.*;
 import org.palette.easelsocialservice.persistence.relationship.Contains;
+import org.palette.easelsocialservice.persistence.relationship.Mentions;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -42,9 +43,11 @@ public class PaintService {
     }
 
     public void createMentions(Paint paint, List<MentionRequest> mentions, Map<Long, User> users) {
+        List<Mentions> mentionRelations = new LinkedList<>();
         for (MentionRequest mention: mentions) {
-            paint.addMention(users.get(mention.userId()), mention.start(), mention.end());
+            mentionRelations.add(new Mentions(users.get(mention.userId()), mention.start(), mention.end()));
         }
+        paint.addAllMentions(mentionRelations);
         paintRepository.save(paint);
     }
 
@@ -68,7 +71,7 @@ public class PaintService {
             LinkRequest request = linkRequests.get(i);
             contains.add(new Contains(links.get(i), request.start(), request.end()));
         }
-        paint.addAllLink(contains);
+        paint.addAllLinks(contains);
         paintRepository.save(paint);
     }
 
