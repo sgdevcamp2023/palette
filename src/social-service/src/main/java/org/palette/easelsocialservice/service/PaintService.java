@@ -7,10 +7,7 @@ import org.palette.easelsocialservice.dto.request.LinkRequest;
 import org.palette.easelsocialservice.dto.request.MentionRequest;
 import org.palette.easelsocialservice.persistence.PaintRepository;
 import org.palette.easelsocialservice.persistence.domain.*;
-import org.palette.easelsocialservice.persistence.relationship.Contains;
-import org.palette.easelsocialservice.persistence.relationship.Mentions;
-import org.palette.easelsocialservice.persistence.relationship.Tags;
-import org.palette.easelsocialservice.persistence.relationship.TagsUser;
+import org.palette.easelsocialservice.persistence.relationship.*;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -83,9 +80,11 @@ public class PaintService {
     }
 
     public void bindMediaWithPaint(Paint paint, List<Media> medias) {
+        List<Uses> usings = new LinkedList<>();
         for (Media media : medias) {
-            paint.addMedia(media);
+            usings.add(new Uses(media));
         }
+        paint.addAllMedia(usings);
         paintRepository.save(paint);
     }
 }

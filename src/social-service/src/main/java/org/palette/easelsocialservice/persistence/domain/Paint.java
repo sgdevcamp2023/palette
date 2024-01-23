@@ -8,7 +8,6 @@ import org.springframework.data.neo4j.core.schema.Node;
 import org.springframework.data.neo4j.core.schema.Relationship;
 
 import java.time.LocalDateTime;
-import java.util.LinkedList;
 import java.util.List;
 
 @Getter
@@ -60,20 +59,6 @@ public class Paint {
         this.author = new Creates(user);
     }
 
-    public void addHashtag(Hashtag hashtag, int startIdx, int endIdx) {
-        if (this.hashtags == null) {
-            this.hashtags = new LinkedList<>();
-        }
-        this.hashtags.add(new Tags(hashtag, startIdx, endIdx));
-    }
-
-    public void addMedia(Media media) {
-        if (this.medias == null) {
-            this.medias = new LinkedList<>();
-        }
-        this.medias.add(new Uses(media));
-    }
-
     public void addInReplyToPaint(Paint paint) {
         this.inReplyToPaint = new Replies(paint);
     }
@@ -96,5 +81,9 @@ public class Paint {
 
     public void addAllHashtags(List<Tags> tags) {
         this.hashtags = tags;
+    }
+
+    public void addAllMedia(List<Uses> medias) {
+        this.medias = medias;
     }
 }
