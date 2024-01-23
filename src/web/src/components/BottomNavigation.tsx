@@ -1,10 +1,9 @@
-import type { RefObject } from 'react';
 import { motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
 import { cva } from 'class-variance-authority';
 import { useNavigate, useMatchRoute } from '@tanstack/react-router';
 
-import { useThrottle } from '@/hooks';
+import { iconOpacity } from '@/utils';
+import type { ScrollDirectionProps } from '@/@types';
 import AccessibleIconButton from './AccessibleIconButton';
 
 const BottomNavigationVariants = cva<{
@@ -25,54 +24,14 @@ const BottomNavigationVariants = cva<{
   },
 );
 
-interface BottomNavigationProps {
-  contentRef: RefObject<HTMLElement> | null;
-}
-
 const FramerAccessibleIconButton = motion(AccessibleIconButton);
 
-const iconOpacity = (direction: 'up' | 'down' | 'stop') => {
-  if (direction === 'up') return 'opacity-95';
-  if (direction === 'down') return 'opacity-80';
-  return '';
-};
-
-function BottomNavigation({ contentRef }: BottomNavigationProps) {
-  if (!contentRef) return null;
+function BottomNavigation({ direction }: ScrollDirectionProps) {
   const navigate = useNavigate();
   const matchRoute = useMatchRoute();
-  const [y, setY] = useState<number>(0);
-  const [scrollDirection, setScrollDirection] = useState<
-    'stop' | 'up' | 'down'
-  >('stop');
-
-  /**
-   * 아래로 드래그가 되고 있다면 BottomNavigation의 투명도를 주어 컨텐츠를 방해하지 않습니다.
-   * 위로 드래그가 되고 있다면 투명도를 제거합니다.
-   *
-   * 최적화를 위해 throttle을 사용합니다.
-   */
-  const onScroll = useThrottle((e: Event) => {
-    const padding = 50;
-    const { scrollTop } = e.target as HTMLElement;
-
-    if (y > scrollTop + padding) {
-      setScrollDirection('up');
-    } else if (y < scrollTop - padding) {
-      setScrollDirection('down');
-    }
-    setY(scrollTop);
-  }, 200);
-
-  useEffect(() => {
-    contentRef.current?.addEventListener('scroll', onScroll);
-    return () => {
-      contentRef.current?.removeEventListener('scroll', onScroll);
-    };
-  }, [contentRef.current]);
 
   return (
-    <nav className={BottomNavigationVariants({ direction: scrollDirection })}>
+    <nav className={BottomNavigationVariants({ direction })}>
       <FramerAccessibleIconButton
         role="navigation"
         iconType="home"
@@ -80,7 +39,7 @@ function BottomNavigation({ contentRef }: BottomNavigationProps) {
         label="홈 화면으로 이동"
         disabled={!!matchRoute({ to: '/home' })}
         onClick={() => navigate({ to: '/home' })}
-        className={iconOpacity(scrollDirection)}
+        className={iconOpacity(direction)}
         fill={matchRoute({ to: '/home' }) ? 'black' : undefined}
         whileHover={{
           scale: 1.1,
@@ -95,7 +54,7 @@ function BottomNavigation({ contentRef }: BottomNavigationProps) {
         disabled={!!matchRoute({ to: '/search' })}
         onClick={() => navigate({ to: '/search' })}
         stroke={matchRoute({ to: '/search' }) ? 'black' : undefined}
-        className={iconOpacity(scrollDirection)}
+        className={iconOpacity(direction)}
         whileHover={{
           scale: 1.1,
         }}
@@ -109,7 +68,7 @@ function BottomNavigation({ contentRef }: BottomNavigationProps) {
         disabled={!!matchRoute({ to: '/notification' })}
         onClick={() => navigate({ to: '/notification' })}
         fill={matchRoute({ to: '/notification' }) ? 'black' : undefined}
-        className={iconOpacity(scrollDirection)}
+        className={iconOpacity(direction)}
         whileHover={{
           scale: 1.1,
         }}
@@ -122,7 +81,7 @@ function BottomNavigation({ contentRef }: BottomNavigationProps) {
         label="채팅 화면으로 이동"
         disabled={!!matchRoute({ to: '/chat' })}
         onClick={() => navigate({ to: '/chat' })}
-        className={iconOpacity(scrollDirection)}
+        className={iconOpacity(direction)}
         whileHover={{
           scale: 1.1,
         }}

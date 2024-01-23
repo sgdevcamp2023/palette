@@ -3,12 +3,14 @@ import { toast } from 'react-toastify';
 import { motion } from 'framer-motion';
 import { useNavigate } from '@tanstack/react-router';
 
-import AccessibleIconButton from './AccessibleIconButton';
 import { useLongPress } from '@/hooks';
+import { cn, iconOpacity } from '@/utils';
+import type { ScrollDirectionProps } from '@/@types';
+import AccessibleIconButton from './AccessibleIconButton';
 
 const FramerIconButton = motion(AccessibleIconButton);
 
-function FloatingButton() {
+function FloatingButton({ direction }: ScrollDirectionProps) {
   const navigate = useNavigate();
   const [isShowMenu, setIsShowMenu] = useState<boolean>(false);
 
@@ -36,7 +38,10 @@ function FloatingButton() {
           iconType="addText"
           width={24}
           height={24}
-          className="flex justify-center items-center bg-black rounded-full w-[56px] h-[56px] fixed right-[10px] bottom-[60px]"
+          className={cn(
+            'flex justify-center items-center bg-black rounded-full w-[56px] h-[56px] fixed right-[10px] bottom-[60px] transition-colors',
+            iconOpacity(direction),
+          )}
           label="게시글 작성 플로팅 버튼"
           {...attrs}
           onClick={() => navigate({ to: '/post/edit' })}
