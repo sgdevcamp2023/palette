@@ -3,6 +3,7 @@ package com.smilegate.Easel.presentation.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
@@ -15,6 +16,7 @@ class TimelineRecyclerViewAdapter(private val timelineList: List<TimelineItem>) 
 
     inner class TimelineViewHolder(private val binding: ItemTimelineBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
         fun bind(item: TimelineItem) {
             item.profileImg?.let { binding.ivTimelineProfileImg.setImageResource(it) }
             binding.tvTimelineNickname.text = item.nickName

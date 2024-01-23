@@ -1,5 +1,6 @@
 package com.smilegate.Easel.presentation.view.Timeline
 
+import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -13,6 +14,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.smilegate.Easel.MainActivity
 import com.smilegate.Easel.R
 import com.smilegate.Easel.databinding.FragmentFollowingBinding
 import com.smilegate.Easel.databinding.FragmentForYouBinding
@@ -28,6 +30,8 @@ class FollowingFragment : Fragment() {
     private var doubleBackPressed = false
 
     private var savedScrollPosition: Int = 0
+
+    private lateinit var mainActivity: MainActivity
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,6 +55,15 @@ class FollowingFragment : Fragment() {
         navController = findNavController()
 
         return binding.root
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        // MainActivity의 참조를 가져옴
+        if (context is MainActivity) {
+            mainActivity = context
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

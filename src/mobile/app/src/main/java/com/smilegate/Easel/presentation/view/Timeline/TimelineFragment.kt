@@ -1,7 +1,6 @@
 package com.smilegate.Easel.presentation.view.Timeline
 
 import android.animation.ObjectAnimator
-import android.annotation.SuppressLint
 import android.graphics.PorterDuff
 import android.os.Bundle
 import android.os.Handler
@@ -14,19 +13,15 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.Toast
-import androidx.activity.addCallback
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.tabs.TabLayout
 import com.smilegate.Easel.R
-import com.smilegate.Easel.databinding.FragmentStartBinding
 import com.smilegate.Easel.databinding.FragmentTimelineBinding
-import com.smilegate.Easel.domain.model.TimelineItem
+import com.smilegate.Easel.presentation.LongClickVibrationListener
 import com.smilegate.Easel.presentation.adapter.TimelineAdapter
 
 class TimelineFragment : Fragment() {
@@ -37,8 +32,11 @@ class TimelineFragment : Fragment() {
     private var doubleBackPressed = false
 
     private var isFabOpen = false
-    private var touchStartTime: Long = 0
     private lateinit var gestureDetector: GestureDetector
+
+    private lateinit var longClickVibrationListener: LongClickVibrationListener
+
+    private var isAnimationRunning = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -108,7 +106,6 @@ class TimelineFragment : Fragment() {
         }
 
         setFABClickEvent()
-
     }
 
     private fun isCurrentFragment(): Boolean {
@@ -126,20 +123,30 @@ class TimelineFragment : Fragment() {
     private fun setFABClickEvent() {
 
         gestureDetector = GestureDetector(requireContext(), object : GestureDetector.SimpleOnGestureListener() {
-            @SuppressLint("ResourceAsColor")
+
             override fun onLongPress(e: MotionEvent) {
-                toggleFab()
 
-                binding.fabMain.scaleX = 0.8f
-                binding.fabMain.scaleY = 0.8f
+                if (!isAnimationRunning) {
+                    toggleFab()
 
-                binding.fabMain.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.white))
-                binding.fabMain.setImageResource(R.drawable.ic_x)
-                binding.fabMain.setColorFilter(ContextCompat.getColor(requireContext(), R.color.Blue_500), PorterDuff.Mode.SRC_IN)
+                    binding.fabMain.scaleX = 0.8f
+                    binding.fabMain.scaleY = 0.8f
 
-                binding.fabGif.setElevationCompat(15f)
-                binding.fabImage.setElevationCompat(15f)
-                binding.fabWrite.setElevationCompat(15f)
+                    binding.fabMain.setImageResource(R.drawable.ic_x)
+                    binding.fabMain.setColorFilter(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.Blue_500
+                        ), PorterDuff.Mode.SRC_IN
+                    )
+
+                    binding.fabMain.setElevationCompat(15f)
+                    binding.fabGif.setElevationCompat(15f)
+                    binding.fabImage.setElevationCompat(15f)
+                    binding.fabWrite.setElevationCompat(15f)
+
+                    isAnimationRunning = true
+                }
             }
 
             override fun onSingleTapUp(e: MotionEvent): Boolean {
@@ -149,12 +156,15 @@ class TimelineFragment : Fragment() {
                     binding.fabMain.scaleX = 1.0f
                     binding.fabMain.scaleY = 1.0f
 
-                    binding.fabMain.setColorPressedResId(R.color.black)
                     binding.fabMain.setImageResource(R.drawable.ic_add_text)
+                    binding.fabMain.setColorFilter(ContextCompat.getColor(requireContext(), R.color.white), PorterDuff.Mode.SRC_IN)
 
                     binding.fabGif.setElevationCompat(0f)
                     binding.fabImage.setElevationCompat(0f)
                     binding.fabWrite.setElevationCompat(0f)
+
+                    isAnimationRunning = false
+
                 }
                 return true
             }
@@ -162,6 +172,11 @@ class TimelineFragment : Fragment() {
 
         binding.fabMain.setOnTouchListener { _, event ->
             gestureDetector.onTouchEvent(event)
+        }
+
+        binding.root.setOnTouchListener { _, event ->
+            // 상호작용을 막는 부분
+            return@setOnTouchListener isAnimationRunning
         }
 
         // 플로팅 버튼 클릭 이벤트 - 캡처
@@ -208,13 +223,10 @@ class TimelineFragment : Fragment() {
 
         isFabOpen = !isFabOpen
 
+        isAnimationRunning = false
+
     }
     private fun updateMainFabAppearance() {
-        // 메인 버튼의 크기, 색깔, 아이콘을 변경하는 코드를 여기에 추가
-        // 예를 들어, 크기 변경
-        binding.fabMain.scaleX = if (isFabOpen) 56f else 44f
-        binding.fabMain.scaleY = if (isFabOpen) 56f else 44f
-
         binding.fabMain.backgroundTintList = ContextCompat.getColorStateList(
             requireContext(),
             if (isFabOpen) R.color.white else R.color.black
