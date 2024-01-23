@@ -2,8 +2,8 @@ package org.palette.easeluserservice.persistence.embed;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
-import org.palette.easeluserservice.common.BcryptPasswordEncoder;
-import org.palette.easeluserservice.common.PasswordEncoder;
+
+import static org.palette.easeluserservice.config.ApplicationConfig.bCryptPasswordEncoder;
 
 @Embeddable
 public record Password(
@@ -11,8 +11,6 @@ public record Password(
         String value
 ) {
     public Password(String value) {
-        this.value = passwordEncoder.encode(value);
+        this.value = bCryptPasswordEncoder().encode(value);
     }
-
-    private static final PasswordEncoder passwordEncoder = new BcryptPasswordEncoder();
 }

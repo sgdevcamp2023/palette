@@ -9,10 +9,7 @@ import org.palette.easeluserservice.exception.ExceptionType;
 import org.palette.easeluserservice.external.GrpcAuth;
 import org.palette.easeluserservice.external.GrpcSocial;
 import org.palette.easeluserservice.persistence.User;
-import org.palette.easeluserservice.persistence.embed.Email;
 import org.palette.easeluserservice.service.UserService;
-import org.palette.grpc.GCreateUserRequest;
-import org.palette.grpc.GSendEmailAuthRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,9 +27,8 @@ public class UserUsecase {
     public EmailDuplicationVerifyResponse executeNicknameDuplicationVerify(
             String email
     ) {
-        return new EmailDuplicationVerifyResponse(
-                userService.isEmailAlreadyExists(email) != null
-        );
+        userService.isEmailAlreadyExists(email);
+        return new EmailDuplicationVerifyResponse(Boolean.FALSE);
     }
 
     @Transactional
@@ -54,7 +50,7 @@ public class UserUsecase {
             JoinRequest joinRequest
     ) {
         final Optional<User> optionalUser = userService.loadByEmail(
-                new Email(joinRequest.email())
+                joinRequest.email()
         );
 
         User user = validateJoinRequest(joinRequest, optionalUser);
@@ -73,13 +69,7 @@ public class UserUsecase {
     }
 
     private void gRPCSendEmailAuth(User user) {
-        final GSendEmailAuthRequest gSendEmailAuthRequest = GSendEmailAuthRequest.newBuilder()
-                .setId(user.getId())
-                .setEmail(user.getEmail().value())
-                .setNickname(user.getProfile().nickname().value())
-                .build();
-
-        gRPCAuth.sendEmailAuth(gSendEmailAuthRequest);
+        gRPCAuth.sendEmailAuth(user);
     }
 
     private void gRPCCreateSocialUser(User user) {

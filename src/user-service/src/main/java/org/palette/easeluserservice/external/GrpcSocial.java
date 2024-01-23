@@ -17,16 +17,14 @@ public class GrpcSocial {
     public GCreateUserResponse createSocialUser(User user) {
         // TODO: 매개변수 및 반환값 변경, 예외처리
         try {
-            final GCreateUserResponse response = gSocialServiceBlockingStub.createUser(
+            return gSocialServiceBlockingStub.createUser(
                     GCreateUserRequest.newBuilder()
                             .setId(user.getId())
-                            .setUsername(user.getUsername().value())
+                            .setUsername(user.getUsername())
                             .setImagePath(user.getProfile().staticContentPath().profileImagePath())
-                            .setNickname(user.getProfile().nickname().value())
-                            .setIsActive(user.getAuthed())
+                            .setNickname(user.getProfile().nickname())
+                            .setIsActive(user.getIsActivated())
                             .build());
-            return response;
-
         } catch (final StatusRuntimeException e) {
             System.out.println(e.getMessage());
             return null;
