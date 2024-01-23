@@ -1,10 +1,12 @@
 package com.smilegate.Easel.presentation.view.Timeline
 
 import android.animation.ObjectAnimator
+import android.content.Context
 import android.graphics.PorterDuff
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.os.Vibrator
 import android.view.GestureDetector
 import android.view.KeyEvent
 import androidx.fragment.app.Fragment
@@ -21,7 +23,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.tabs.TabLayout
 import com.smilegate.Easel.R
 import com.smilegate.Easel.databinding.FragmentTimelineBinding
-import com.smilegate.Easel.presentation.LongClickVibrationListener
 import com.smilegate.Easel.presentation.adapter.TimelineAdapter
 
 class TimelineFragment : Fragment() {
@@ -34,7 +35,7 @@ class TimelineFragment : Fragment() {
     private var isFabOpen = false
     private lateinit var gestureDetector: GestureDetector
 
-    private lateinit var longClickVibrationListener: LongClickVibrationListener
+    private lateinit var vibrator: Vibrator
 
     private var isAnimationRunning = false
 
@@ -104,6 +105,9 @@ class TimelineFragment : Fragment() {
             }
             false
         }
+
+        vibrator = requireContext().getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+
         setFABClickEvent()
     }
 
@@ -144,6 +148,8 @@ class TimelineFragment : Fragment() {
                     binding.fabImage.setElevationCompat(15f)
                     binding.fabWrite.setElevationCompat(15f)
 
+                    vibrator.vibrate(100)
+
                     isAnimationRunning = true
                 }
             }
@@ -167,6 +173,8 @@ class TimelineFragment : Fragment() {
                     binding.fabGif.setElevationCompat(0f)
                     binding.fabImage.setElevationCompat(0f)
                     binding.fabWrite.setElevationCompat(0f)
+
+                    vibrator.vibrate(100)
 
                     isAnimationRunning = false
 

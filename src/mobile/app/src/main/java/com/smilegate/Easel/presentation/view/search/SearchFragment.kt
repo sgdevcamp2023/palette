@@ -1,10 +1,12 @@
 package com.smilegate.Easel.presentation.view.search
 
 import android.animation.ObjectAnimator
+import android.content.Context
 import android.graphics.PorterDuff
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.os.Vibrator
 import android.view.GestureDetector
 import android.view.KeyEvent
 import androidx.fragment.app.Fragment
@@ -13,14 +15,12 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.smilegate.Easel.R
 import com.smilegate.Easel.databinding.FragmentSearchBinding
-import com.smilegate.Easel.presentation.LongClickVibrationListener
 
 
 class SearchFragment : Fragment() {
@@ -33,7 +33,7 @@ class SearchFragment : Fragment() {
     private var isFabOpen = false
     private lateinit var gestureDetector: GestureDetector
 
-    private lateinit var longClickVibrationListener: LongClickVibrationListener
+    private lateinit var vibrator: Vibrator
 
     private var isAnimationRunning = false
 
@@ -93,6 +93,8 @@ class SearchFragment : Fragment() {
             false
         }
 
+        vibrator = requireContext().getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+
         setFABClickEvent()
     }
 
@@ -125,6 +127,8 @@ class SearchFragment : Fragment() {
                     binding.fabImage.setElevationCompat(15f)
                     binding.fabWrite.setElevationCompat(15f)
 
+                    vibrator.vibrate(100)
+
                     isAnimationRunning = true
                 }
             }
@@ -142,6 +146,8 @@ class SearchFragment : Fragment() {
                     binding.fabGif.setElevationCompat(0f)
                     binding.fabImage.setElevationCompat(0f)
                     binding.fabWrite.setElevationCompat(0f)
+
+                    vibrator.vibrate(100)
 
                     isAnimationRunning = false
 

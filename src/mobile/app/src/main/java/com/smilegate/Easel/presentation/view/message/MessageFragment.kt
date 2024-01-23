@@ -1,7 +1,6 @@
 package com.smilegate.Easel.presentation.view.message
 
 import android.animation.ObjectAnimator
-import android.graphics.PorterDuff
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -13,15 +12,10 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.smilegate.Easel.R
 import com.smilegate.Easel.databinding.FragmentMessageBinding
-import com.smilegate.Easel.databinding.FragmentNoticeBinding
-import com.smilegate.Easel.presentation.LongClickVibrationListener
 
 class MessageFragment : Fragment() {
     private lateinit var binding: FragmentMessageBinding
@@ -32,8 +26,6 @@ class MessageFragment : Fragment() {
 
     private var isFabOpen = false
     private lateinit var gestureDetector: GestureDetector
-
-    private lateinit var longClickVibrationListener: LongClickVibrationListener
 
     private var isAnimationRunning = false
 
