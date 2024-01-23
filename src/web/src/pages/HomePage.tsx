@@ -1,64 +1,20 @@
 import { useState } from 'react';
-import { toast } from 'react-toastify';
 import { useNavigate } from '@tanstack/react-router';
 
-import type { TimelineItem } from '@/@types';
-import { createDummyTimelineItem } from '@/utils';
-import {
-  Tabs,
-  Header,
-  ContentLayout,
-  TimelineItemBox,
-  FloatingButton,
-} from '@/components';
+import { Tabs, Header, ContentLayout, TimelineItemBox } from '@/components';
 import {
   ReplyBottomSheet,
   ShareBottomSheet,
   ViewsBottomSheet,
 } from '@/components/bottomSheet';
-import { useThrottle } from '@/hooks';
-
-interface BottomSheetState {
-  reply: boolean;
-  views: boolean;
-  share: boolean;
-}
-
-const INITIAL_BOTTOM_SHEET_OPEN: BottomSheetState = {
-  reply: false,
-  views: false,
-  share: false,
-};
-
-const INITIAL_SHOW_MORE_MENU = {
-  id: '',
-  show: false,
-} as const;
+import { usePaintAction } from '@/hooks';
+import type { TimelineItem } from '@/@types';
+import { createDummyTimelineItem } from '@/utils';
 
 function HomePage() {
   const navigate = useNavigate();
-
-  const [isBottomSheetOpen, setIsBottomSheetOpen] = useState<BottomSheetState>(
-    INITIAL_BOTTOM_SHEET_OPEN,
-  );
+  const paintAction = usePaintAction();
   const [paints] = useState<TimelineItem[]>(() => createDummyTimelineItem(10));
-  const [selectedPostId, setSelectedPostId] = useState<TimelineItem['id']>('');
-  const [isShowMoreMenu, setIsShowMoreMenu] = useState<{
-    id: string;
-    show: boolean;
-  }>(INITIAL_SHOW_MORE_MENU);
-
-  const handleClickTimelineActionIcon = (
-    id: string,
-    type: keyof BottomSheetState,
-  ) => {
-    setSelectedPostId(id);
-    setIsBottomSheetOpen((prev) => ({ ...prev, [type]: !prev[type] }));
-  };
-
-  const handleScrollLayout = useThrottle(() => {
-    setIsShowMoreMenu({ id: '', show: false });
-  }, 500);
 
   return (
     <>
@@ -84,7 +40,7 @@ function HomePage() {
             content: (
               <ContentLayout
                 className="flex flex-col gap-[12px] pl-[12px] pr-[4px] mt-0 pb-[50px] max-h-[calc(100%-94px)] divide-y divide-blueGrey-400"
-                onScroll={handleScrollLayout}
+                onScroll={paintAction.onScrollLayout}
               >
                 {paints.map((paint) => (
                   <TimelineItemBox
@@ -92,7 +48,8 @@ function HomePage() {
                     item={paint}
                     className="pt-[10px]"
                     isShowMenu={
-                      isShowMoreMenu.id === paint.id && isShowMoreMenu.show
+                      paintAction.isShowMoreMenu.id === paint.id &&
+                      paintAction.isShowMoreMenu.show
                     }
                     onClickReply={() =>
                       navigate({
@@ -100,22 +57,11 @@ function HomePage() {
                         search: { postId: paint.id },
                       })
                     }
-                    onClickRetweet={() =>
-                      handleClickTimelineActionIcon(paint.id, 'reply')
-                    }
-                    onClickHeart={() => toast('아직 지원되지 않는 기능입니다.')}
-                    onClickViews={() =>
-                      handleClickTimelineActionIcon(paint.id, 'views')
-                    }
-                    onClickShare={() =>
-                      handleClickTimelineActionIcon(paint.id, 'share')
-                    }
-                    onClickMore={() =>
-                      setIsShowMoreMenu((prev) => ({
-                        id: prev.id ? '' : paint.id,
-                        show: prev.id !== paint.id,
-                      }))
-                    }
+                    onClickRetweet={() => paintAction.onClickRetweet(paint.id)}
+                    onClickHeart={() => paintAction.onClickHeart(paint.id)}
+                    onClickViews={() => paintAction.onClickViews(paint.id)}
+                    onClickShare={() => paintAction.onClickShare(paint.id)}
+                    onClickMore={() => paintAction.onClickMore(paint.id)}
                   />
                 ))}
               </ContentLayout>
@@ -125,42 +71,28 @@ function HomePage() {
             label: '팔로우 중',
             content: (
               <ContentLayout className="flex flex-col gap-[12px] pl-[12px] pr-[4px] mt-0 pb-[50px] max-h-[calc(100%-94px)] divide-y divide-blueGrey-400">
-                {[...paints]
-                  .sort((a, b) => Number(b.id) - Number(a.id))
-                  .map((paint) => (
-                    <TimelineItemBox
-                      key={paint.id}
-                      item={paint}
-                      className="pt-[10px]"
-                      isShowMenu={
-                        isShowMoreMenu.id === paint.id && isShowMoreMenu.show
-                      }
-                      onClickReply={() =>
-                        navigate({
-                          to: '/post/edit',
-                          search: { postId: paint.id },
-                        })
-                      }
-                      onClickRetweet={() =>
-                        handleClickTimelineActionIcon(paint.id, 'reply')
-                      }
-                      onClickHeart={() =>
-                        toast('아직 지원되지 않는 기능입니다.')
-                      }
-                      onClickViews={() =>
-                        handleClickTimelineActionIcon(paint.id, 'views')
-                      }
-                      onClickShare={() =>
-                        handleClickTimelineActionIcon(paint.id, 'share')
-                      }
-                      onClickMore={() =>
-                        setIsShowMoreMenu((prev) => ({
-                          id: prev.id ? '' : paint.id,
-                          show: prev.id !== paint.id,
-                        }))
-                      }
-                    />
-                  ))}
+                {[...paints].reverse().map((paint) => (
+                  <TimelineItemBox
+                    key={paint.id}
+                    item={paint}
+                    className="pt-[10px]"
+                    isShowMenu={
+                      paintAction.isShowMoreMenu.id === paint.id &&
+                      paintAction.isShowMoreMenu.show
+                    }
+                    onClickReply={() =>
+                      navigate({
+                        to: '/post/edit',
+                        search: { postId: paint.id },
+                      })
+                    }
+                    onClickRetweet={() => paintAction.onClickRetweet(paint.id)}
+                    onClickHeart={() => paintAction.onClickHeart(paint.id)}
+                    onClickViews={() => paintAction.onClickViews(paint.id)}
+                    onClickShare={() => paintAction.onClickShare(paint.id)}
+                    onClickMore={() => paintAction.onClickMore(paint.id)}
+                  />
+                ))}
               </ContentLayout>
             ),
           },
@@ -168,26 +100,19 @@ function HomePage() {
         className="mt-[44px]"
       />
       <ReplyBottomSheet
-        id={selectedPostId}
-        isOpen={isBottomSheetOpen.reply}
-        onClose={() =>
-          setIsBottomSheetOpen((prev) => ({ ...prev, reply: false }))
-        }
+        id={paintAction.selectedPostId}
+        isOpen={paintAction.isBottomSheetOpen.reply}
+        onClose={() => paintAction.onCloseBottomSheet('reply')}
       />
       <ViewsBottomSheet
-        isOpen={isBottomSheetOpen.views}
-        onClose={() =>
-          setIsBottomSheetOpen((prev) => ({ ...prev, views: false }))
-        }
+        isOpen={paintAction.isBottomSheetOpen.views}
+        onClose={() => paintAction.onCloseBottomSheet('views')}
       />
       <ShareBottomSheet
-        id={selectedPostId}
-        isOpen={isBottomSheetOpen.share}
-        onClose={() =>
-          setIsBottomSheetOpen((prev) => ({ ...prev, share: false }))
-        }
+        id={paintAction.selectedPostId}
+        isOpen={paintAction.isBottomSheetOpen.share}
+        onClose={() => paintAction.onCloseBottomSheet('share')}
       />
-      <FloatingButton />
     </>
   );
 }
