@@ -96,4 +96,8 @@ public class Paint {
     public void addAllMentions(List<Mentions> mentions) {
         this.mentions = mentions;
     }
+
+    public void addAllTaggedUsers(List<TagsUser> tagsUsers) {
+        this.taggedUsers = tagsUsers;
+    }
 }

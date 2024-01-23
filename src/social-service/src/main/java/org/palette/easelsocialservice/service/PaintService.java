@@ -9,6 +9,7 @@ import org.palette.easelsocialservice.persistence.PaintRepository;
 import org.palette.easelsocialservice.persistence.domain.*;
 import org.palette.easelsocialservice.persistence.relationship.Contains;
 import org.palette.easelsocialservice.persistence.relationship.Mentions;
+import org.palette.easelsocialservice.persistence.relationship.TagsUser;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -52,9 +53,11 @@ public class PaintService {
     }
 
     public void createTaggedUsers(Paint paint, List<User> users) {
+        List<TagsUser> tagsUsers = new LinkedList<>();
         for (User user: users) {
-            paint.addTaggedUser(user);
+            tagsUsers.add(new TagsUser(user));
         }
+        paint.addAllTaggedUsers(tagsUsers);
         paintRepository.save(paint);
     }
 
