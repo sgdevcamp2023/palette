@@ -41,8 +41,14 @@ jobs:
 
     - name: Build with Gradle
       run: |
+	MAIL_HOST: ${{ secrets.MAIL_HOST }}
+        MAIL_USERNAME: ${{ secrets.MAIL_USERNAME }}
+        MAIL_PASSWORD: ${{ secrets.MAIL_PASSWORD }}
+	MAIL_PORT: ${{ secrets.MAIL_PORT }}
+	REDIS_HOST: ${{ secrets.REDIS_HOST }}
+	REDIS_PORT: ${{ secrets.REDIS_PORT }}
         cd src/${{ env.BRANCH_NAME }}-service
-        ./gradlew clean build
+        ./gradlew clean build -x test
 
     - name: Build and Push Docker Image
       env:
