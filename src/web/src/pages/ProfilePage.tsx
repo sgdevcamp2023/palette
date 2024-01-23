@@ -64,7 +64,7 @@ function ProfilePage() {
   const isExpandImage = imageHeight === DEFAULT_IMAGE_HEIGHT;
 
   const handleScroll = useThrottle((e: UIEvent<HTMLElement>) => {
-    const padding = 200;
+    const padding = 220;
     const { scrollTop } = e.target as HTMLElement;
 
     if (scrollTop > padding && imageHeight !== MIN_IMAGE_HEIGHT) {
@@ -154,55 +154,45 @@ function ProfilePage() {
         </motion.div>
       )}
       <div
-        className="max-h-screen h-screen overflow-y-scroll"
+        className="max-h-screen h-screen overflow-y-scroll overflow-x-hidden"
         ref={scrollRef}
         onScroll={handleScroll}
       >
         <div className="pl-3 pr-2">
-          <div className="max-h-screen overflow-y-scroll">
-            <Typography
-              size="headline-4"
-              color="grey-600"
-              className="mt-[10px]"
-            >
-              {user.nickname}
-            </Typography>
-            <Typography size="body-1" color="blueGrey-800" className="mt-[6px]">
-              {user.username}
-            </Typography>
+          <Typography size="headline-4" color="grey-600" className="mt-[10px]">
+            {user.nickname}
+          </Typography>
+          <Typography size="body-1" color="blueGrey-800" className="mt-[6px]">
+            {user.username}
+          </Typography>
 
-            <Typography
-              size="body-2"
-              color="blueGrey-800"
-              className="mt-[16px]"
-            >
-              {user.introduce}
-            </Typography>
+          <Typography size="body-2" color="blueGrey-800" className="mt-[16px]">
+            {user.introduce}
+          </Typography>
 
-            <div className="flex gap-[4px] mt-[12px] items-center">
-              <Icon type="calendar" width={12} height={12} />
-              <Typography size="body-2" color="blueGrey-800">
-                {user.createdAt.toDateString()}
+          <div className="flex gap-[4px] mt-[12px] items-center">
+            <Icon type="calendar" width={12} height={12} />
+            <Typography size="body-2" color="blueGrey-800">
+              {user.createdAt.toDateString()}
+            </Typography>
+          </div>
+
+          <div className="flex gap-[10px] mt-[14px]">
+            <div role="button" tabIndex={0} className="flex gap-[4px]">
+              <Typography as="span" size="headline-8" color="grey-600">
+                {user.followings}
+              </Typography>
+              <Typography as="span" size="body-2" color="blueGrey-800">
+                팔로잉
               </Typography>
             </div>
-
-            <div className="flex gap-[10px] mt-[14px]">
-              <div role="button" tabIndex={0} className="flex gap-[4px]">
-                <Typography as="span" size="headline-8" color="grey-600">
-                  {user.followings}
-                </Typography>
-                <Typography as="span" size="body-2" color="blueGrey-800">
-                  팔로잉
-                </Typography>
-              </div>
-              <div className="flex gap-[4px]">
-                <Typography as="span" size="headline-8" color="grey-600">
-                  {user.followers}
-                </Typography>
-                <Typography as="span" size="body-2" color="blueGrey-800">
-                  팔로워
-                </Typography>
-              </div>
+            <div className="flex gap-[4px]">
+              <Typography as="span" size="headline-8" color="grey-600">
+                {user.followers}
+              </Typography>
+              <Typography as="span" size="body-2" color="blueGrey-800">
+                팔로워
+              </Typography>
             </div>
           </div>
         </div>
@@ -213,7 +203,10 @@ function ProfilePage() {
             {
               label: '게시물',
               content: (
-                <ContentLayout className="flex flex-col divide-y divide-blueGrey-400 pl-[12px] pr-[4px] gap-[12px] mt-0 max-h-none">
+                <ContentLayout
+                  as="section"
+                  className="flex flex-col divide-y divide-blueGrey-400 pl-[12px] pr-[4px] gap-[12px] mt-0 max-h-none"
+                >
                   <TabTimlineList paintAction={paintAction} paints={paints} />
                 </ContentLayout>
               ),
@@ -221,36 +214,56 @@ function ProfilePage() {
             {
               label: '답글',
               content: (
-                <TabTimlineList
-                  paintAction={paintAction}
-                  paints={[...paints].reverse()}
-                />
+                <ContentLayout
+                  as="section"
+                  className="flex flex-col divide-y divide-blueGrey-400 pl-[12px] pr-[4px] gap-[12px] mt-0 max-h-none"
+                >
+                  <TabTimlineList
+                    paintAction={paintAction}
+                    paints={[...paints].reverse()}
+                  />
+                </ContentLayout>
               ),
             },
             {
               label: '하이라이트',
               content: (
-                <TabTimlineList paintAction={paintAction} paints={paints} />
+                <ContentLayout
+                  as="section"
+                  className="flex flex-col divide-y divide-blueGrey-400 pl-[12px] pr-[4px] gap-[12px] mt-0 max-h-none"
+                >
+                  <TabTimlineList paintAction={paintAction} paints={paints} />
+                </ContentLayout>
               ),
             },
             {
               label: '미디어',
               content: (
-                <TabTimlineList
-                  paintAction={paintAction}
-                  paints={[...paints].filter(
-                    (paint) => paint.includes.medias.length,
-                  )}
-                />
+                <ContentLayout
+                  as="section"
+                  className="flex flex-col divide-y divide-blueGrey-400 pl-[12px] pr-[4px] gap-[12px] mt-0 max-h-none"
+                >
+                  <TabTimlineList
+                    paintAction={paintAction}
+                    paints={[...paints].filter(
+                      (paint) => paint.includes.medias.length,
+                    )}
+                  />
+                </ContentLayout>
               ),
             },
             {
               label: '마음에 들어요',
               content: (
-                <TabTimlineList
-                  paintAction={paintAction}
-                  paints={[...paints].reverse()}
-                />
+                <ContentLayout
+                  as="section"
+                  className="flex flex-col divide-y divide-blueGrey-400 pl-[12px] pr-[4px] gap-[12px] mt-0 max-h-none"
+                >
+                  <TabTimlineList
+                    paintAction={paintAction}
+                    paints={[...paints].reverse()}
+                  />
+                </ContentLayout>
               ),
             },
           ]}
