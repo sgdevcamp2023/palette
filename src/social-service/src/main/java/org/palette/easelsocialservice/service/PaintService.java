@@ -94,4 +94,11 @@ public class PaintService {
         paint.addInReplyToPaint(inReplyPaint);
         paintRepository.save(paint);
     }
+
+    public void bindQuotePaint(Paint paint, Long quotePaintId) {
+        // TODO: 예외처리
+        Paint quotePaint = paintRepository.findByPid(quotePaintId).get();
+        paint.addQuotePaint(quotePaint);
+        paintRepository.save(paint);
+    }
 }
