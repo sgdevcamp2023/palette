@@ -2,7 +2,7 @@ import Lottie from 'react-lottie';
 import { toast } from 'react-toastify';
 import { useNavigate } from '@tanstack/react-router';
 
-import earthLottie from '../../public/earth.json';
+import earthLottie from '@/components/common/lottie/earth.json';
 import { Button, Typography, ContentLayout } from '@/components';
 
 function MembershipEntryPage() {

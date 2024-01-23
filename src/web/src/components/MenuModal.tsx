@@ -25,7 +25,7 @@ function MenuModal({ user, onClose }: MenuModalProps) {
   return (
     <motion.div
       key="menu-modal"
-      className="absolute z-[50] w-full px-[28px] h-full bg-white"
+      className="absolute z-[50] w-full px-[28px] h-full bg-white max-w-[420px]"
       initial={{ x: -375 }}
       animate={{ x: 0 }}
       transition={{

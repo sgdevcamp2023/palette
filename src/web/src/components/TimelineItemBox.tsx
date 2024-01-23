@@ -30,7 +30,7 @@ function TimelineItemBox({
   const hasMedia = item.includes.medias.length > 0;
 
   return (
-    <section className={cn('w-full flex gap-[8px]', className)}>
+    <div className={cn('w-full flex gap-[8px]', className)}>
       <img
         src={item.authorImagePath}
         alt={`${item.authorNickname}`}
@@ -69,7 +69,7 @@ function TimelineItemBox({
           <Typography
             size="body-2"
             color="grey-600"
-            className="mt-[2px] mb-[12px] whitespace-pre-line"
+            className="whitespace-pre-line"
           >
             {item.text}
           </Typography>
@@ -79,12 +79,12 @@ function TimelineItemBox({
           <img
             src={item.includes.medias[0].path}
             alt="user-upload-asset"
-            className="w-full max-h-[300px] rounded-[10px] min-h-[300px]"
+            className="w-full max-h-[300px] rounded-[10px] min-h-[300px] mt-[8px] mb-[12px]"
           />
         )}
 
         {/* 페인트에 대한 아이콘 영역(footer) */}
-        <div className="w-full flex justify-between mt-[8px]">
+        <div className="w-full flex justify-between">
           <AccessibleIconButton
             width={16}
             height={16}
@@ -150,7 +150,7 @@ function TimelineItemBox({
           />
         </div>
       </div>
-    </section>
+    </div>
   );
 }
 
