@@ -7,12 +7,10 @@ import org.palette.easelsocialservice.dto.request.LinkRequest;
 import org.palette.easelsocialservice.dto.request.MentionRequest;
 import org.palette.easelsocialservice.persistence.PaintRepository;
 import org.palette.easelsocialservice.persistence.domain.*;
+import org.palette.easelsocialservice.persistence.relationship.*;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -44,38 +42,49 @@ public class PaintService {
     }
 
     public void createMentions(Paint paint, List<MentionRequest> mentions, Map<Long, User> users) {
+        List<Mentions> mentionRelations = new LinkedList<>();
         for (MentionRequest mention: mentions) {
-            paint.addMention(users.get(mention.userId()), mention.start(), mention.end());
+            mentionRelations.add(new Mentions(users.get(mention.userId()), mention.start(), mention.end()));
         }
+        paint.addAllMentions(mentionRelations);
         paintRepository.save(paint);
     }
 
     public void createTaggedUsers(Paint paint, List<User> users) {
+        List<TagsUser> tagsUsers = new LinkedList<>();
         for (User user: users) {
-            paint.addTaggedUser(user);
+            tagsUsers.add(new TagsUser(user));
         }
+        paint.addAllTaggedUsers(tagsUsers);
         paintRepository.save(paint);
     }
 
     public void bindHashtagsWithPaint(Paint paint, List<HashtagRequest> hashtags) {
+        List<Tags> tags = new LinkedList<>();
         for (HashtagRequest hashtag: hashtags) {
-            paint.addHashtag(new Hashtag(hashtag.tag()), hashtag.start(), hashtag.end());
+            Tags tag = new Tags(new Hashtag(hashtag.tag()), hashtag.start(), hashtag.end());
+            tags.add(tag);
         }
+        paint.addAllHashtags(tags);
         paintRepository.save(paint);
     }
 
     public void bindLinksWithPaint(Paint paint, List<LinkRequest> linkRequests, List<Link> links) {
+        List<Contains> contains = new LinkedList<>();
         for (int i = 0; i < linkRequests.size(); i++) {
             LinkRequest request = linkRequests.get(i);
-            paint.addLink(links.get(i), request.start(), request.end());
+            contains.add(new Contains(links.get(i), request.start(), request.end()));
         }
+        paint.addAllLinks(contains);
         paintRepository.save(paint);
     }
 
     public void bindMediaWithPaint(Paint paint, List<Media> medias) {
+        List<Uses> usings = new LinkedList<>();
         for (Media media : medias) {
-            paint.addMedia(media);
+            usings.add(new Uses(media));
         }
+        paint.addAllMedia(usings);
         paintRepository.save(paint);
     }
 }

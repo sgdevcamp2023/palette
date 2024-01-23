@@ -8,7 +8,6 @@ import org.springframework.data.neo4j.core.schema.Node;
 import org.springframework.data.neo4j.core.schema.Relationship;
 
 import java.time.LocalDateTime;
-import java.util.LinkedList;
 import java.util.List;
 
 @Getter
@@ -60,27 +59,6 @@ public class Paint {
         this.author = new Creates(user);
     }
 
-    public void addLink(Link link, int startIdx, int endIdx) {
-        if (this.links == null) {
-            this.links = new LinkedList<>();
-        }
-        this.links.add(new Contains(link, startIdx, endIdx));
-    }
-
-    public void addHashtag(Hashtag hashtag, int startIdx, int endIdx) {
-        if (this.hashtags == null) {
-            this.hashtags = new LinkedList<>();
-        }
-        this.hashtags.add(new Tags(hashtag, startIdx, endIdx));
-    }
-
-    public void addMedia(Media media) {
-        if (this.medias == null) {
-            this.medias = new LinkedList<>();
-        }
-        this.medias.add(new Uses(media));
-    }
-
     public void addInReplyToPaint(Paint paint) {
         this.inReplyToPaint = new Replies(paint);
     }
@@ -89,17 +67,23 @@ public class Paint {
         this.quotePaint = new Quotes(paint);
     }
 
-    public void addTaggedUser(User user) {
-        if (this.taggedUsers == null) {
-            this.taggedUsers = new LinkedList<>();
-        }
-        this.taggedUsers.add(new TagsUser(user));
+    public void addAllLinks(List<Contains> contains) {
+        this.links = contains;
     }
 
-    public void addMention(User user, int start, int end) {
-        if (this.mentions == null) {
-            this.mentions = new LinkedList<>();
-        }
-        this.mentions.add(new Mentions(user, start, end));
+    public void addAllMentions(List<Mentions> mentions) {
+        this.mentions = mentions;
+    }
+
+    public void addAllTaggedUsers(List<TagsUser> tagsUsers) {
+        this.taggedUsers = tagsUsers;
+    }
+
+    public void addAllHashtags(List<Tags> tags) {
+        this.hashtags = tags;
+    }
+
+    public void addAllMedia(List<Uses> medias) {
+        this.medias = medias;
     }
 }
