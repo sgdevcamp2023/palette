@@ -30,7 +30,7 @@ function TimelineItemBox({
   const hasMedia = item.includes.medias.length > 0;
 
   return (
-    <section className={cn('w-full flex gap-[8px]', className)}>
+    <div className={cn('w-full flex gap-[8px]', className)}>
       <img
         src={item.authorImagePath}
         alt={`${item.authorNickname}`}
@@ -150,7 +150,7 @@ function TimelineItemBox({
           />
         </div>
       </div>
-    </section>
+    </div>
   );
 }
 
