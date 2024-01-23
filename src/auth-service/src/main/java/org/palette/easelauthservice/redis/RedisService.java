@@ -12,6 +12,7 @@ import java.util.concurrent.TimeUnit;
 public class RedisService {
 
     private final RedisTemplate<String, EmailAuthComponent> redisTemplate;
+    private static final int TIMEOUT_HOURS = 1;
 
     public void createAuthInformation(
             Long userId,
@@ -48,7 +49,7 @@ public class RedisService {
                         authPayload,
                         false
                 ),
-                1,
+                TIMEOUT_HOURS,
                 TimeUnit.HOURS
         );
     }
