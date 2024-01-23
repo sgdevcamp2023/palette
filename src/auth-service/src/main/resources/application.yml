@@ -1,0 +1,10 @@
+spring:
+  mail:
+    host: ${MAIL_HOST}
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+    port: ${MAIL_PORT}
+  data:
+    redis:
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
