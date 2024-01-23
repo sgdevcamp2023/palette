@@ -76,7 +76,7 @@
         android:layout_marginTop="30dp"
         android:layout_marginEnd="22dp"
         android:layout_marginBottom="28dp"
-        android:background="@drawable/btn_timeline_bottom_sheet"
+        android:backgroundTint="@drawable/btn_timeline_bottom_sheet"
         android:text="@string/cancel_fragment_bottom_sheet"
         android:textColor="@color/Grey_600"
         app:layout_constraintBottom_toBottomOf="parent"
