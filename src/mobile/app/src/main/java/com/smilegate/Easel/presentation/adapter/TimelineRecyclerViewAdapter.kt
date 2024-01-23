@@ -8,6 +8,7 @@ import android.widget.AdapterView
 import android.widget.ImageView
 import android.widget.PopupMenu
 import android.widget.PopupWindow
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -17,7 +18,7 @@ import com.smilegate.Easel.R
 import com.smilegate.Easel.databinding.ItemTimelineBinding
 import com.smilegate.Easel.domain.model.TimelineItem
 
-class TimelineRecyclerViewAdapter(private val timelineList: List<TimelineItem>) :
+class TimelineRecyclerViewAdapter(private val context: Context, private val timelineList: List<TimelineItem>) :
     RecyclerView.Adapter<TimelineRecyclerViewAdapter.TimelineViewHolder>() {
 
     inner class TimelineViewHolder(private val binding: ItemTimelineBinding) :
@@ -102,36 +103,22 @@ class TimelineRecyclerViewAdapter(private val timelineList: List<TimelineItem>) 
     }
 
     private fun showPopupMenu(anchorView: View) {
-        // 팝업 메뉴를 표시하는 코드를 작성
-        val popupMenu = PopupMenu(anchorView.context, anchorView)
-        popupMenu.inflate(R.menu.timeline_popup_menu)
 
-         // 팝업 메뉴 아이템 클릭 리스너 설정
-        popupMenu.setOnMenuItemClickListener { menuItem ->
-            when (menuItem.itemId) {
-                R.id.popup_no_interest -> {
-                    true
-                }
-                R.id.popup_is_follow -> {
-                    true
-                }
-                R.id.popup_add_list -> {
-                    true
-                }
-                R.id.popup_mute -> {
-                    true
-                }
-                R.id.popup_block -> {
-                    true
-                }
-                R.id.popup_report -> {
-                    true
-                }
-                else -> false
-            }
+        val inflater = context?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val customView = inflater.inflate(R.layout.item_timeline_popup, null)
+
+        val popupWindow = PopupWindow(
+            customView,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            true
+        )
+
+        val noInterestTextView = customView.findViewById<TextView>(R.id.tv_no_interest)
+        noInterestTextView.setOnClickListener {
+            popupWindow.dismiss()
         }
 
-        // 팝업 메뉴 표시
-        popupMenu.show()
+        popupWindow.showAsDropDown(anchorView)
     }
 }

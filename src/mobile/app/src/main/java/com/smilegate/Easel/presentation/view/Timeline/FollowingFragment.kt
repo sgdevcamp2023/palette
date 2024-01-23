@@ -96,7 +96,7 @@ class FollowingFragment : Fragment() {
 
         val timelineList = generateDummyTimelineData()
 
-        val adapter = TimelineRecyclerViewAdapter(timelineList)
+        val adapter = TimelineRecyclerViewAdapter(requireContext(), timelineList)
         binding.rvTimeline.adapter = adapter
         binding.rvTimeline.layoutManager = LinearLayoutManager(requireContext())
 
