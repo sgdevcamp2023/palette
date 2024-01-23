@@ -32,6 +32,7 @@ class TimelineRecyclerViewAdapter(private val timelineList: List<TimelineItem>) 
 
             binding.tvTimelineContent.setVisibleOrGone(!item.content.isNullOrEmpty())
             binding.ivTimelineContentImg.setVisibleOrGone(item.contentImg != null)
+            binding.ivTimelineContentCard.setVisibleOrGone(item.contentImg != null)
 
             binding.tvTimelineHashtag.setVisibleOrGone(!item.hashtag.isNullOrEmpty())
             binding.tvTimelineMention.setVisibleOrInvisible(item.replys != null)
