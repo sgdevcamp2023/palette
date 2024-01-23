@@ -7,7 +7,10 @@ import org.palette.easeluserservice.dto.request.JoinRequest;
 import org.palette.easeluserservice.e2e.AcceptanceTestBase;
 import org.palette.easeluserservice.persistence.User;
 import org.palette.easeluserservice.persistence.UserJpaRepository;
-import org.palette.easeluserservice.persistence.embed.*;
+import org.palette.easeluserservice.persistence.embed.Password;
+import org.palette.easeluserservice.persistence.embed.Pin;
+import org.palette.easeluserservice.persistence.embed.Profile;
+import org.palette.easeluserservice.persistence.embed.StaticContentPath;
 import org.palette.easeluserservice.persistence.enums.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -17,7 +20,7 @@ import java.time.LocalDateTime;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class Join extends AcceptanceTestBase {
+class Join extends AcceptanceTestBase {
 
     @Autowired
     private UserJpaRepository userJpaRepository;
@@ -28,18 +31,18 @@ public class Join extends AcceptanceTestBase {
             InstantiationException,
             IllegalAccessException {
 
-        if (userJpaRepository.existsByEmail(new Email("diger@gmail.com"))) return;
+        if (userJpaRepository.existsByEmail("diger@gmail.com")) return;
 
         Class<User> userClass = User.class;
         Constructor<User> constructor = userClass.getDeclaredConstructor(
                 Long.class,
-                Email.class,
-                Username.class,
+                String.class,
+                String.class,
                 Password.class,
                 Profile.class,
-                PaintPin.class,
-                DmPin.class,
+                Pin.class,
                 Role.class,
+                Boolean.class,
                 Boolean.class,
                 LocalDateTime.class,
                 LocalDateTime.class,
@@ -51,21 +54,21 @@ public class Join extends AcceptanceTestBase {
 
         User user = constructor.newInstance(
                 1L,
-                new Email("diger@gmail.com"),
-                new Username(""),
+                "diger@gmail.com",
+                "",
                 new Password(""),
                 new Profile(
-                        new Nickname("digerDisplayName1"),
-                        new Introduce(""),
+                        "digerDisplayName1",
+                        "",
                         new StaticContentPath(
                                 "",
                                 "",
                                 ""
                         )
                 ),
-                new PaintPin(""),
-                new DmPin(""),
+                new Pin("", ""),
                 Role.NORMAL,
+                true,
                 true,
                 null,
                 null,
@@ -78,7 +81,8 @@ public class Join extends AcceptanceTestBase {
 
     @Test
     @DisplayName("회원가입 정상 로직 테스트")
-    public void executePassCase() throws Exception {
+    void executePassCase() throws Exception {
+        System.out.println("userJpaRepository.findByEmail(\"diger@gmail.com\") = " + userJpaRepository.findByEmail("diger@gmail.com"));
         JoinRequest joinRequest = new JoinRequest(
                 "diger@gmail.com",
                 "digerPassword",

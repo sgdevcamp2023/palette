@@ -5,10 +5,8 @@ import jakarta.persistence.Embedded;
 
 @Embeddable
 public record Profile(
-        @Embedded
-        Nickname nickname,
-        @Embedded
-        Introduce introduce,
+        String nickname,
+        String introduce,
         @Embedded
         StaticContentPath staticContentPath
 ) {

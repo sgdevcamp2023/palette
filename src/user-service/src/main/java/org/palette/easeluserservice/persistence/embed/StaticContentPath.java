@@ -9,7 +9,6 @@ import org.hibernate.annotations.DynamicUpdate;
 @DynamicInsert
 @Embeddable
 public record StaticContentPath(
-
         @Column(name = "profile_image_path", nullable = false)
         String profileImagePath,
         @Column(name = "background_image_path", nullable = false)

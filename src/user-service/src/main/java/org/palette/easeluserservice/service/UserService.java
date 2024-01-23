@@ -5,7 +5,8 @@ import org.palette.easeluserservice.exception.BaseException;
 import org.palette.easeluserservice.exception.ExceptionType;
 import org.palette.easeluserservice.persistence.User;
 import org.palette.easeluserservice.persistence.UserJpaRepository;
-import org.palette.easeluserservice.persistence.embed.*;
+import org.palette.easeluserservice.persistence.embed.Profile;
+import org.palette.easeluserservice.persistence.embed.StaticContentPath;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,7 +26,11 @@ public class UserService {
             String email,
             String nickname
     ) {
-        User user = User.preJoin(email, nickname, DEFAULT_STRING_VALUE);
+        User user = User.preJoin(
+                email,
+                nickname,
+                DEFAULT_STRING_VALUE
+        );
 
         userJpaRepository.save(user);
 
@@ -47,7 +52,7 @@ public class UserService {
                 username,
                 new Profile(
                         user.getProfile().nickname(),
-                        new Introduce(introduce.orElse(DEFAULT_STRING_VALUE)),
+                        introduce.orElse(DEFAULT_STRING_VALUE),
                         new StaticContentPath(
                                 profileImagePath.orElse(DEFAULT_STRING_VALUE),
                                 backgroundImagePath.orElse(DEFAULT_STRING_VALUE),
@@ -61,19 +66,15 @@ public class UserService {
         return user;
     }
 
-    public Email isEmailAlreadyExists(String requestedEmail) {
-        Email email = new Email(requestedEmail);
-        if (userJpaRepository.existsByEmail(email)) throw new BaseException(ExceptionType.USER_000006);
-        return email;
+    public void isEmailAlreadyExists(String requestedEmail) {
+        if (userJpaRepository.existsByEmail(requestedEmail)) throw new BaseException(ExceptionType.USER_000006);
     }
 
-    public Username isUsernameAlreadyExists(String requestedUsername) {
-        Username username = new Username(requestedUsername);
-        if (userJpaRepository.existsByUsername(username)) throw new BaseException(ExceptionType.USER_000006);
-        return username;
+    public void isUsernameAlreadyExists(String requestedUsername) {
+        if (userJpaRepository.existsByUsername(requestedUsername)) throw new BaseException(ExceptionType.USER_000006);
     }
 
-    public Optional<User> loadByEmail(Email email) {
+    public Optional<User> loadByEmail(String email) {
         return userJpaRepository.findByEmail(email);
     }
 }
