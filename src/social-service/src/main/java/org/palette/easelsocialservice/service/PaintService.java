@@ -87,4 +87,11 @@ public class PaintService {
         paint.addAllMedia(usings);
         paintRepository.save(paint);
     }
+
+    public void bindReplyPaint(Paint paint, Long inReplyToPaint) {
+        // TODO: 예외처리
+        Paint inReplyPaint = paintRepository.findByPid(inReplyToPaint).get();
+        paint.addInReplyToPaint(inReplyPaint);
+        paintRepository.save(paint);
+    }
 }

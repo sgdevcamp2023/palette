@@ -34,6 +34,8 @@ public class PaintUsecase {
         User user = userService.getUser(userId);
         paintService.bindUserWithPaint(user, paint);
 
+        paintCreateRequest.inReplyToPaintId().ifPresent(inReplyToPaint -> paintService.bindReplyPaint(paint, inReplyToPaint));
+
         paintCreateRequest.mentions().ifPresent(mentions -> {
             List<Long> uids = mentions.stream().map(MentionRequest::userId).distinct().toList();
 
