@@ -1,6 +1,8 @@
 package org.palette.easelauthservice.redis;
 
 import lombok.RequiredArgsConstructor;
+import org.palette.easelauthservice.exception.BaseException;
+import org.palette.easelauthservice.exception.ExceptionType;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
@@ -62,7 +64,6 @@ public class RedisService {
     }
 
     private void isExpired(EmailAuthComponent emailAuthComponent) {
-        // TODO 예외처리
-        if (emailAuthComponent == null) throw new IllegalArgumentException();
+        if (emailAuthComponent == null) throw new BaseException(ExceptionType.AUTH_403_000002);
     }
 }

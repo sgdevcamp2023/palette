@@ -41,8 +41,8 @@ public enum ExceptionType {
 
     AUTH_403_000002(
             "AUTH_403_000002",
-            "EXPIRED_TOKEN",
-            "요청 토큰이 만료되었습니다.",
+            "EXPIRED_PAYLOAD",
+            "요청한 인증번호가 만료되었습니다.",
             HttpStatus.FORBIDDEN
     ),
 
