@@ -1,10 +1,11 @@
 import { useRef } from 'react';
-import type { HTMLAttributes, ReactNode } from 'react';
+import type { ElementType, HTMLAttributes, ReactNode } from 'react';
 
 import BottomNavigation from '../BottomNavigation';
 import { cn } from '@/utils';
 
 interface ContentLayoutProps extends HTMLAttributes<HTMLElement> {
+  as?: ElementType;
   children: ReactNode;
   className?: string;
   isShowBottomNavigation?: boolean;
@@ -13,26 +14,28 @@ interface ContentLayoutProps extends HTMLAttributes<HTMLElement> {
 function ContentLayout({
   children,
   className,
+  as,
   isShowBottomNavigation = true,
   ...props
 }: ContentLayoutProps) {
-  const mainRef = useRef<HTMLElement | null>(null);
+  const Component = as || 'main';
+  const ref = useRef<HTMLElement | null>(null);
 
   return (
     <>
-      <main
+      <Component
         className={cn(
           'px-[24px] mt-[44px] mb-[50px] overflow-y-scroll max-h-[calc(100vh-44px)] overscroll-contain',
           className,
         )}
-        ref={mainRef}
+        ref={ref}
         {...props}
       >
         {children}
-      </main>
+      </Component>
       {isShowBottomNavigation && (
         <footer className="w-[420px] h-[50px]">
-          <BottomNavigation contentRef={mainRef} />
+          <BottomNavigation contentRef={ref} />
         </footer>
       )}
     </>
