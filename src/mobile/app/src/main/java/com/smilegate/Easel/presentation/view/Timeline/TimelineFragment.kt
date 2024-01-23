@@ -104,7 +104,6 @@ class TimelineFragment : Fragment() {
             }
             false
         }
-
         setFABClickEvent()
     }
 
@@ -155,6 +154,12 @@ class TimelineFragment : Fragment() {
 
                     binding.fabMain.scaleX = 1.0f
                     binding.fabMain.scaleY = 1.0f
+
+//                    val translationX = resources.displayMetrics.density * 2
+//                    val translationY = resources.displayMetrics.density * 2
+//
+//                    binding.fabMain.translationX -= translationX
+//                    binding.fabMain.translationY -= translationY
 
                     binding.fabMain.setImageResource(R.drawable.ic_add_text)
                     binding.fabMain.setColorFilter(ContextCompat.getColor(requireContext(), R.color.white), PorterDuff.Mode.SRC_IN)

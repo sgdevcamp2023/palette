@@ -1,21 +1,27 @@
 package com.smilegate.Easel.presentation.view.message
 
+import android.animation.ObjectAnimator
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.view.GestureDetector
 import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.smilegate.Easel.R
 import com.smilegate.Easel.databinding.FragmentMessageBinding
 import com.smilegate.Easel.databinding.FragmentNoticeBinding
+import com.smilegate.Easel.presentation.LongClickVibrationListener
 
 class MessageFragment : Fragment() {
     private lateinit var binding: FragmentMessageBinding
@@ -23,6 +29,13 @@ class MessageFragment : Fragment() {
     private lateinit var navController: NavController
 
     private var doubleBackPressed = false
+
+    private var isFabOpen = false
+    private lateinit var gestureDetector: GestureDetector
+
+    private lateinit var longClickVibrationListener: LongClickVibrationListener
+
+    private var isAnimationRunning = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -74,9 +87,118 @@ class MessageFragment : Fragment() {
             }
             false
         }
+
+        setFABClickEvent()
     }
 
     private fun isCurrentFragment(): Boolean {
         return true
+    }
+
+    private fun setFABClickEvent() {
+
+        gestureDetector = GestureDetector(requireContext(), object : GestureDetector.SimpleOnGestureListener() {
+
+            override fun onLongPress(e: MotionEvent) {
+
+                if (!isAnimationRunning) {
+                    toggleFab()
+
+                    binding.fabMain.scaleX = 0.8f
+                    binding.fabMain.scaleY = 0.8f
+
+                    binding.fabMain.setImageResource(R.drawable.ic_x)
+                    binding.fabMain.setColorFilter(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.Blue_500
+                        ), PorterDuff.Mode.SRC_IN
+                    )
+
+                    binding.fabMain.setElevationCompat(15f)
+                    binding.fabGif.setElevationCompat(15f)
+                    binding.fabImage.setElevationCompat(15f)
+                    binding.fabWrite.setElevationCompat(15f)
+
+                    isAnimationRunning = true
+                }
+            }
+
+            override fun onSingleTapUp(e: MotionEvent): Boolean {
+                if(isFabOpen) {
+                    toggleFab()
+
+                    binding.fabMain.scaleX = 1.0f
+                    binding.fabMain.scaleY = 1.0f
+
+                    binding.fabMain.setImageResource(R.drawable.ic_add_text)
+                    binding.fabMain.setColorFilter(ContextCompat.getColor(requireContext(), R.color.white), PorterDuff.Mode.SRC_IN)
+
+                    binding.fabGif.setElevationCompat(0f)
+                    binding.fabImage.setElevationCompat(0f)
+                    binding.fabWrite.setElevationCompat(0f)
+
+                    isAnimationRunning = false
+
+                }
+                return true
+            }
+        })
+
+        binding.fabMain.setOnTouchListener { _, event ->
+            gestureDetector.onTouchEvent(event)
+        }
+
+        binding.root.setOnTouchListener { _, event ->
+            // 상호작용을 막는 부분
+            return@setOnTouchListener isAnimationRunning
+        }
+
+        // 플로팅 버튼 클릭 이벤트 - 캡처
+        binding.fabImage.setOnClickListener {
+
+        }
+
+        // 플로팅 버튼 클릭 이벤트 - 공유
+        binding.fabGif.setOnClickListener {
+
+        }
+
+        // 플로팅 버튼 클릭 이벤트 - 공유
+        binding.fabWrite.setOnClickListener {
+
+        }
+    }
+
+    private fun toggleFab() {
+        // 플로팅 액션 버튼 닫기 - 열려있는 플로팅 버튼 집어넣는 애니메이션
+        if (isFabOpen) {
+            ObjectAnimator.ofFloat(binding.fabWrite, "translationX", 0f).apply { start() }
+            ObjectAnimator.ofFloat(binding.fabWrite, "translationY", 0f).apply { start() }
+
+            ObjectAnimator.ofFloat(binding.fabGif, "translationX", 0f).apply { start() }
+            ObjectAnimator.ofFloat(binding.fabGif, "translationY", 0f).apply { start() }
+
+            ObjectAnimator.ofFloat(binding.fabImage, "translationX", 0f).apply { start() }
+            ObjectAnimator.ofFloat(binding.fabImage, "translationY", 0f).apply { start() }
+
+            ObjectAnimator.ofFloat(binding.fabMain, View.ROTATION, 180f, 0f).apply { start() }
+        } else { // 플로팅 액션 버튼 열기 - 닫혀있는 플로팅 버튼 꺼내는 애니메이션
+            ObjectAnimator.ofFloat(binding.fabWrite, "translationX", 16 * 1.25f).apply { start() }
+            ObjectAnimator.ofFloat(binding.fabWrite, "translationY", -298 * 1.25f).apply { start() }
+
+            ObjectAnimator.ofFloat(binding.fabGif, "translationX", -170 * 1.25f).apply { start() }
+            ObjectAnimator.ofFloat(binding.fabGif, "translationY", -170 * 1.25f).apply { start() }
+
+            ObjectAnimator.ofFloat(binding.fabImage, "translationX", -260 * 1.25f).apply { start() }
+            ObjectAnimator.ofFloat(binding.fabImage, "translationY", 30 * 1.25f).apply { start() }
+
+            ObjectAnimator.ofFloat(binding.fabMain, View.ROTATION, 180f, 0f).apply { start() }
+        }
+
+        isFabOpen = !isFabOpen
+
+        isAnimationRunning = false
+
     }
 }
