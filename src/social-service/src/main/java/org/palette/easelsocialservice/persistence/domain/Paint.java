@@ -60,13 +60,6 @@ public class Paint {
         this.author = new Creates(user);
     }
 
-    public void addLink(Link link, int startIdx, int endIdx) {
-        if (this.links == null) {
-            this.links = new LinkedList<>();
-        }
-        this.links.add(new Contains(link, startIdx, endIdx));
-    }
-
     public void addHashtag(Hashtag hashtag, int startIdx, int endIdx) {
         if (this.hashtags == null) {
             this.hashtags = new LinkedList<>();
@@ -101,5 +94,9 @@ public class Paint {
             this.mentions = new LinkedList<>();
         }
         this.mentions.add(new Mentions(user, start, end));
+    }
+
+    public void addAllLink(List<Contains> contains) {
+        this.links = contains;
     }
 }

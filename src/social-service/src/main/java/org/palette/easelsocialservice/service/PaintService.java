@@ -7,12 +7,10 @@ import org.palette.easelsocialservice.dto.request.LinkRequest;
 import org.palette.easelsocialservice.dto.request.MentionRequest;
 import org.palette.easelsocialservice.persistence.PaintRepository;
 import org.palette.easelsocialservice.persistence.domain.*;
+import org.palette.easelsocialservice.persistence.relationship.Contains;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -65,10 +63,12 @@ public class PaintService {
     }
 
     public void bindLinksWithPaint(Paint paint, List<LinkRequest> linkRequests, List<Link> links) {
+        List<Contains> contains = new LinkedList<>();
         for (int i = 0; i < linkRequests.size(); i++) {
             LinkRequest request = linkRequests.get(i);
-            paint.addLink(links.get(i), request.start(), request.end());
+            contains.add(new Contains(links.get(i), request.start(), request.end()));
         }
+        paint.addAllLink(contains);
         paintRepository.save(paint);
     }
 
