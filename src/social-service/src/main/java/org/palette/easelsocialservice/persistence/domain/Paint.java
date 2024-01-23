@@ -8,7 +8,6 @@ import org.springframework.data.neo4j.core.schema.Node;
 import org.springframework.data.neo4j.core.schema.Relationship;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -61,8 +60,11 @@ public class Paint {
         this.author = new Creates(user);
     }
 
-    public void addLink(Link link) {
-        this.links.add(new Contains(link));
+    public void addLink(Link link, int startIdx, int endIdx) {
+        if (this.links == null) {
+            this.links = new LinkedList<>();
+        }
+        this.links.add(new Contains(link, startIdx, endIdx));
     }
 
     public void addHashtag(Hashtag hashtag, int startIdx, int endIdx) {

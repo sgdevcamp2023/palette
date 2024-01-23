@@ -15,7 +15,13 @@ public class Contains {
     @TargetNode
     private Link link;
 
-    public Contains(Link link) {
+    private Integer start;
+
+    private Integer end;
+
+    public Contains(Link link, Integer start, Integer end) {
         this.link = link;
+        this.start = start;
+        this.end = end;
     }
 }

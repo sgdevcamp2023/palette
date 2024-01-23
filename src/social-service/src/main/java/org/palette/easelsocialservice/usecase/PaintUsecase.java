@@ -6,8 +6,14 @@ import lombok.RequiredArgsConstructor;
 import org.palette.easelsocialservice.dto.request.MentionRequest;
 import org.palette.easelsocialservice.dto.request.PaintCreateRequest;
 import org.palette.easelsocialservice.dto.response.PaintCreateResponse;
-import org.palette.easelsocialservice.persistence.domain.*;
-import org.palette.easelsocialservice.service.*;
+import org.palette.easelsocialservice.persistence.domain.Link;
+import org.palette.easelsocialservice.persistence.domain.Media;
+import org.palette.easelsocialservice.persistence.domain.Paint;
+import org.palette.easelsocialservice.persistence.domain.User;
+import org.palette.easelsocialservice.service.LinkService;
+import org.palette.easelsocialservice.service.MediaService;
+import org.palette.easelsocialservice.service.PaintService;
+import org.palette.easelsocialservice.service.UserService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -42,13 +48,11 @@ public class PaintUsecase {
             paintService.createTaggedUsers(paint, users);
         });
 
-        paintCreateRequest.hashtags().ifPresent(hashtags -> {
-            paintService.bindHashtagsWithPaint(paint, hashtags);
-        });
+        paintCreateRequest.hashtags().ifPresent(hashtags -> paintService.bindHashtagsWithPaint(paint, hashtags));
 
         paintCreateRequest.links().ifPresent(links -> {
             List<Link> createdLinks = linkService.createLinks(links);
-            paintService.bindLinksWithPaint(paint, createdLinks);
+            paintService.bindLinksWithPaint(paint, links, createdLinks);
         });
 
         paintCreateRequest.medias().ifPresent(medias -> {

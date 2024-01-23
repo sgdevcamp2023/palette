@@ -3,8 +3,9 @@ package org.palette.easelsocialservice.service;
 
 import lombok.RequiredArgsConstructor;
 import org.palette.easelsocialservice.dto.request.HashtagRequest;
+import org.palette.easelsocialservice.dto.request.LinkRequest;
 import org.palette.easelsocialservice.dto.request.MentionRequest;
-import org.palette.easelsocialservice.persistence.*;
+import org.palette.easelsocialservice.persistence.PaintRepository;
 import org.palette.easelsocialservice.persistence.domain.*;
 import org.springframework.stereotype.Service;
 
@@ -63,7 +64,12 @@ public class PaintService {
         paintRepository.save(paint);
     }
 
-    public void bindLinksWithPaint(Paint paint, List<Link> links) {
+    public void bindLinksWithPaint(Paint paint, List<LinkRequest> linkRequests, List<Link> links) {
+        for (int i = 0; i < linkRequests.size(); i++) {
+            LinkRequest request = linkRequests.get(i);
+            paint.addLink(links.get(i), request.start(), request.end());
+        }
+        paintRepository.save(paint);
     }
 
     public void bindMediaWithPaint(Paint paint, List<Media> medias) {
