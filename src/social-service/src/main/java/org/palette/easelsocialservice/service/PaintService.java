@@ -9,6 +9,7 @@ import org.palette.easelsocialservice.persistence.PaintRepository;
 import org.palette.easelsocialservice.persistence.domain.*;
 import org.palette.easelsocialservice.persistence.relationship.Contains;
 import org.palette.easelsocialservice.persistence.relationship.Mentions;
+import org.palette.easelsocialservice.persistence.relationship.Tags;
 import org.palette.easelsocialservice.persistence.relationship.TagsUser;
 import org.springframework.stereotype.Service;
 
@@ -62,9 +63,12 @@ public class PaintService {
     }
 
     public void bindHashtagsWithPaint(Paint paint, List<HashtagRequest> hashtags) {
+        List<Tags> tags = new LinkedList<>();
         for (HashtagRequest hashtag: hashtags) {
-            paint.addHashtag(new Hashtag(hashtag.tag()), hashtag.start(), hashtag.end());
+            Tags tag = new Tags(new Hashtag(hashtag.tag()), hashtag.start(), hashtag.end());
+            tags.add(tag);
         }
+        paint.addAllHashtags(tags);
         paintRepository.save(paint);
     }
 

@@ -82,13 +82,6 @@ public class Paint {
         this.quotePaint = new Quotes(paint);
     }
 
-    public void addTaggedUser(User user) {
-        if (this.taggedUsers == null) {
-            this.taggedUsers = new LinkedList<>();
-        }
-        this.taggedUsers.add(new TagsUser(user));
-    }
-
     public void addAllLinks(List<Contains> contains) {
         this.links = contains;
     }
@@ -99,5 +92,9 @@ public class Paint {
 
     public void addAllTaggedUsers(List<TagsUser> tagsUsers) {
         this.taggedUsers = tagsUsers;
+    }
+
+    public void addAllHashtags(List<Tags> tags) {
+        this.hashtags = tags;
     }
 }
