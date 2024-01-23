@@ -1,13 +1,19 @@
 package com.smilegate.Easel.presentation.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import android.widget.ImageView
+import android.widget.PopupMenu
+import android.widget.PopupWindow
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
+import com.smilegate.Easel.R
 import com.smilegate.Easel.databinding.ItemTimelineBinding
 import com.smilegate.Easel.domain.model.TimelineItem
 
@@ -16,6 +22,20 @@ class TimelineRecyclerViewAdapter(private val timelineList: List<TimelineItem>) 
 
     inner class TimelineViewHolder(private val binding: ItemTimelineBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
+        private val icElseActions: ImageView = binding.root.findViewById(R.id.ic_else_actions)
+        private val icViews: ImageView = binding.root.findViewById(R.id.ic_timeline_views)
+        private val icRetweet: ImageView = binding.root.findViewById(R.id.ic_timeline_retweet)
+        private val icShare: ImageView = binding.root.findViewById(R.id.ic_timeline_share)
+
+        init {
+            // ic_else_actions 아이콘에 클릭 리스너 설정
+            icElseActions.setOnClickListener {
+                // 아이콘을 클릭했을 때의 동작 구현
+                // 여기에 원하는 동작을 추가하면 됩니다.
+                showPopupMenu(icElseActions)  // 예시: 팝업 메뉴 표시 함수 호출
+            }
+        }
 
         fun bind(item: TimelineItem) {
             item.profileImg?.let { binding.ivTimelineProfileImg.setImageResource(it) }
@@ -79,5 +99,39 @@ class TimelineRecyclerViewAdapter(private val timelineList: List<TimelineItem>) 
 
     fun View.setVisibleOrInvisible(isVisible: Boolean) {
         visibility = if (isVisible) View.VISIBLE else View.INVISIBLE
+    }
+
+    private fun showPopupMenu(anchorView: View) {
+        // 팝업 메뉴를 표시하는 코드를 작성
+        val popupMenu = PopupMenu(anchorView.context, anchorView)
+        popupMenu.inflate(R.menu.timeline_popup_menu)
+
+         // 팝업 메뉴 아이템 클릭 리스너 설정
+        popupMenu.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.popup_no_interest -> {
+                    true
+                }
+                R.id.popup_is_follow -> {
+                    true
+                }
+                R.id.popup_add_list -> {
+                    true
+                }
+                R.id.popup_mute -> {
+                    true
+                }
+                R.id.popup_block -> {
+                    true
+                }
+                R.id.popup_report -> {
+                    true
+                }
+                else -> false
+            }
+        }
+
+        // 팝업 메뉴 표시
+        popupMenu.show()
     }
 }
