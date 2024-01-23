@@ -40,13 +40,15 @@ jobs:
       run: chmod +x src/${{ env.BRANCH_NAME }}-service/gradlew
 
     - name: Build with Gradle
-      run: |
-	MAIL_HOST: ${{ secrets.MAIL_HOST }}
+      env:
+        MAIL_HOST: ${{ secrets.MAIL_HOST }}
         MAIL_USERNAME: ${{ secrets.MAIL_USERNAME }}
         MAIL_PASSWORD: ${{ secrets.MAIL_PASSWORD }}
-	MAIL_PORT: ${{ secrets.MAIL_PORT }}
-	REDIS_HOST: ${{ secrets.AUTH_REDIS_HOST }}
-	REDIS_PORT: ${{ secrets.AUTH_REDIS_PORT }}
+        MAIL_PORT: ${{ secrets.MAIL_PORT }}
+        REDIS_HOST: ${{ secrets.AUTH_REDIS_HOST }}
+        REDIS_PORT: ${{ secrets.AUTH_REDIS_PORT }}
+
+      run: |
         cd src/${{ env.BRANCH_NAME }}-service
         ./gradlew clean build -x test
 
