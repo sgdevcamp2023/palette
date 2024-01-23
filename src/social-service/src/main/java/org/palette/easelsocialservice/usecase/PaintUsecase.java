@@ -5,6 +5,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.palette.easelsocialservice.dto.request.MentionRequest;
 import org.palette.easelsocialservice.dto.request.PaintCreateRequest;
+import org.palette.easelsocialservice.dto.request.RepaintRequest;
 import org.palette.easelsocialservice.dto.response.PaintCreateResponse;
 import org.palette.easelsocialservice.persistence.domain.Link;
 import org.palette.easelsocialservice.persistence.domain.Media;
@@ -64,5 +65,10 @@ public class PaintUsecase {
         });
 
         return new PaintCreateResponse(paint.getPid());
+    }
+
+    public void repaint(Long userId, RepaintRequest repaintRequest) {
+        User user = userService.getUser(userId);
+        paintService.bindRepaintWithPaint(user, repaintRequest);
     }
 }

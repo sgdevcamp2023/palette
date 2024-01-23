@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.palette.easelsocialservice.dto.request.HashtagRequest;
 import org.palette.easelsocialservice.dto.request.LinkRequest;
 import org.palette.easelsocialservice.dto.request.MentionRequest;
+import org.palette.easelsocialservice.dto.request.RepaintRequest;
 import org.palette.easelsocialservice.persistence.PaintRepository;
 import org.palette.easelsocialservice.persistence.domain.*;
 import org.palette.easelsocialservice.persistence.relationship.*;
@@ -99,6 +100,13 @@ public class PaintService {
         // TODO: 예외처리
         Paint quotePaint = paintRepository.findByPid(quotePaintId).get();
         paint.addQuotePaint(quotePaint);
+        paintRepository.save(paint);
+    }
+
+    public void bindRepaintWithPaint(User user, RepaintRequest repaintRequest) {
+        // TODO: 예외처리
+        Paint paint = paintRepository.findByPid(repaintRequest.originPaintId()).get();
+        paint.addRepaint(user);
         paintRepository.save(paint);
     }
 }
