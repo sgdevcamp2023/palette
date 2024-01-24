@@ -8,9 +8,7 @@ service GAuthService {
 }
 
 message GSendEmailAuthRequest {
-  int64 id = 1;
-  string email = 2;
-  string nickname = 3;
+  string email = 1;
 }
 
 message GSendEmailAuthResponse {
