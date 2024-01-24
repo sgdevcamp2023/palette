@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    style="@style/BottomSheetDialogTheme"
     android:padding="16dp">
 
     <ImageView
@@ -67,16 +68,17 @@
         app:layout_constraintStart_toEndOf="@+id/ic_bottom_sheet_repost"
         app:layout_constraintTop_toBottomOf="@+id/tv_bottom_sheet_retweet" />
 
-    <Button
+    <android.widget.Button
         android:id="@+id/btn_bottom_sheet_cancel"
         style="@style/Headline7"
-        android:layout_width="330dp"
+        android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginStart="22dp"
+        android:layout_marginStart="12dp"
         android:layout_marginTop="30dp"
-        android:layout_marginEnd="22dp"
+        android:layout_marginEnd="12dp"
         android:layout_marginBottom="28dp"
         android:background="@drawable/btn_timeline_bottom_sheet"
+        android:elevation="0dp"
         android:text="@string/cancel_fragment_bottom_sheet"
         android:textColor="@color/Grey_600"
         app:layout_constraintBottom_toBottomOf="parent"
