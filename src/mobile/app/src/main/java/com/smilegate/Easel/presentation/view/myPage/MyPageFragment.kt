@@ -59,8 +59,19 @@ class MyPageFragment : Fragment() {
             updateSettingVisibility()
         }
 
-        binding.icLightMode.setOnClickListener {
-            Toast.makeText(requireContext(), "아직 지원하지 않는 기능입니다", Toast.LENGTH_SHORT).show()
+        val clickableViews = listOf(
+            binding.icLightMode,
+            binding.tvCustomerMenu, binding.icCustomerMenu,
+            binding.tvListMenu, binding.ivListIcon,
+            binding.tvSpaceMenu, binding.ivSpaceIcon,
+            binding.tvMoneyMenu, binding.ivMoneyIcon,
+            binding.tvPerchaseMenu, binding.icPerchaseMenu,
+        )
+
+        for (view in clickableViews) {
+            view.setOnClickListener {
+                Toast.makeText(requireContext(), "아직 지원하지 않는 기능입니다", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
