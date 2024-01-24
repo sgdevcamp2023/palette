@@ -66,7 +66,7 @@ dependencies {
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation ("com.squareup.okhttp3:okhttp:4.10.0")
     implementation ("com.squareup.okhttp3:logging-interceptor:4.10.0")
-    implementation ("com.github.bumptech.glide:glide:4.14.1") // 이미지로딩 라이브러리
+    implementation ("com.github.bumptech.glide:glide:4.14.1")
 
     //cardview
     implementation ("androidx.cardview:cardview:1.0.0")
@@ -85,6 +85,5 @@ dependencies {
 
     //FloatingActionButton
     implementation ("com.github.clans:fab:1.6.4")
-
 
 }

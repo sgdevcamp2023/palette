@@ -17,6 +17,11 @@
         <item name="android:background">@drawable/bg_bottom_sheet</item>
     </style>
 
+    <style name="PopupMenuTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
     <style name="Theme.Easel" parent="Base.Theme.Easel" />
 
     <!-- FontStyles -->

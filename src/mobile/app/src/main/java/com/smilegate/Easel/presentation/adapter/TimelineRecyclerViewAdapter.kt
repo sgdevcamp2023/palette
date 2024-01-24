@@ -1,15 +1,12 @@
 package com.smilegate.Easel.presentation.adapter
 
 import android.content.Context
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.ImageView
-import android.widget.PopupMenu
-import android.widget.PopupWindow
-import android.widget.TextView
-import androidx.core.content.ContextCompat
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
@@ -17,10 +14,15 @@ import com.bumptech.glide.request.RequestOptions
 import com.smilegate.Easel.R
 import com.smilegate.Easel.databinding.ItemTimelineBinding
 import com.smilegate.Easel.domain.model.TimelineItem
+import com.smilegate.Easel.presentation.TimelinePopupManager
+import com.smilegate.Easel.presentation.view.Timeline.TimelineBottomSheetDialog
 
 class TimelineRecyclerViewAdapter(private val context: Context, private val timelineList: List<TimelineItem>) :
     RecyclerView.Adapter<TimelineRecyclerViewAdapter.TimelineViewHolder>() {
 
+    private val popupManager = TimelinePopupManager(context)
+
+    @RequiresApi(Build.VERSION_CODES.S)
     inner class TimelineViewHolder(private val binding: ItemTimelineBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
@@ -30,11 +32,16 @@ class TimelineRecyclerViewAdapter(private val context: Context, private val time
         private val icShare: ImageView = binding.root.findViewById(R.id.ic_timeline_share)
 
         init {
-            // ic_else_actions 아이콘에 클릭 리스너 설정
             icElseActions.setOnClickListener {
-                // 아이콘을 클릭했을 때의 동작 구현
-                // 여기에 원하는 동작을 추가하면 됩니다.
-                showPopupMenu(icElseActions)  // 예시: 팝업 메뉴 표시 함수 호출
+                popupManager.showPopupMenu(icElseActions)
+            }
+
+            icRetweet.setOnClickListener {
+                //bottomSheetListener?.onRetweetClicked()
+            }
+
+            icShare.setOnClickListener {
+                //bottomSheetListener?.onShareClicked()
             }
         }
 
@@ -79,12 +86,14 @@ class TimelineRecyclerViewAdapter(private val context: Context, private val time
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.S)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TimelineViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ItemTimelineBinding.inflate(inflater, parent, false)
         return TimelineViewHolder(binding)
     }
 
+    @RequiresApi(Build.VERSION_CODES.S)
     override fun onBindViewHolder(holder: TimelineViewHolder, position: Int) {
         val timelineItem = timelineList[position]
         holder.bind(timelineItem)
@@ -102,23 +111,8 @@ class TimelineRecyclerViewAdapter(private val context: Context, private val time
         visibility = if (isVisible) View.VISIBLE else View.INVISIBLE
     }
 
-    private fun showPopupMenu(anchorView: View) {
-
-        val inflater = context?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val customView = inflater.inflate(R.layout.item_timeline_popup, null)
-
-        val popupWindow = PopupWindow(
-            customView,
-            ViewGroup.LayoutParams.WRAP_CONTENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT,
-            true
-        )
-
-        val noInterestTextView = customView.findViewById<TextView>(R.id.tv_no_interest)
-        noInterestTextView.setOnClickListener {
-            popupWindow.dismiss()
-        }
-
-        popupWindow.showAsDropDown(anchorView)
+    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView)
+        popupManager.dismissPopupMenu() // 어댑터가 해제될 때 팝업 닫기
     }
 }

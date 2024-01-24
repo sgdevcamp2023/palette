@@ -1,11 +1,15 @@
 package com.smilegate.Easel
 
 import android.animation.ObjectAnimator
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import android.view.WindowManager
 import android.widget.ImageView
+import androidx.annotation.RequiresApi
+import androidx.constraintlayout.widget.ConstraintSet.Layout
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.fragment.app.DialogFragment
@@ -13,6 +17,7 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.smilegate.Easel.databinding.ActivityMainBinding
+import com.smilegate.Easel.presentation.TimelinePopupManager
 import kotlinx.coroutines.NonCancellable.start
 
 class MainActivity : AppCompatActivity() {
@@ -24,6 +29,7 @@ class MainActivity : AppCompatActivity() {
 
     private var lastSelectedIconId: Int? = null
 
+    @RequiresApi(Build.VERSION_CODES.S)
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
