@@ -1,6 +1,7 @@
 package org.palette.easelauthservice.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.palette.easelauthservice.dto.request.AuthEmailResendRequest;
 import org.palette.easelauthservice.dto.request.EmailAuthRequest;
 import org.palette.easelauthservice.usecase.AuthUsecase;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,14 @@ public class EmailAuthController {
             @RequestBody EmailAuthRequest emailAuthRequest
     ) {
         authUsecase.verify(emailAuthRequest);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/re-send")
+    public ResponseEntity<Void> reSend(
+            @RequestBody AuthEmailResendRequest authEmailResendRequest
+    ) {
+        authUsecase.resend(authEmailResendRequest);
         return ResponseEntity.ok().build();
     }
 

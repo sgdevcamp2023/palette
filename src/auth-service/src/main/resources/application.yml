@@ -1,9 +1,16 @@
 spring:
   mail:
-    host: ${MAIL_HOST}
-    username: ${MAIL_USERNAME}
-    password: ${MAIL_PASSWORD}
-    port: ${MAIL_PORT}
+    host: ${AUTH_MAIL_HOST}
+    username: ${AUTH_MAIL_USERNAME}
+    password: ${AUTH_MAIL_PASSWORD}
+    port: ${AUTH_MAIL_PORT}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          ssl:
+            enable: true
+            trust: smtp.naver.com
   data:
     redis:
       host: ${AUTH_REDIS_HOST}

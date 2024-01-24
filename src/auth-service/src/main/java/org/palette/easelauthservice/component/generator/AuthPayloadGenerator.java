@@ -9,9 +9,9 @@ import java.security.SecureRandom;
 @RequiredArgsConstructor
 public class AuthPayloadGenerator {
 
-    private final SecureRandom random;
+    private static final SecureRandom random = new SecureRandom();
 
-    public String execute() {
+    public static String execute() {
         StringBuilder payload = new StringBuilder();
 
         for (int iterationCount = 0; iterationCount < 6; iterationCount++) {

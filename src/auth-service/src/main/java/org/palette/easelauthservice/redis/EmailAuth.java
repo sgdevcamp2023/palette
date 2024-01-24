@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.palette.easelauthservice.component.generator.AuthPayloadGenerator;
 import org.palette.easelauthservice.exception.BaseException;
 import org.palette.easelauthservice.exception.ExceptionType;
 import org.springframework.data.annotation.Id;
@@ -21,6 +22,11 @@ public class EmailAuth {
     private String authPayload;
 
     private Integer threshold;
+
+    public EmailAuth updateAuthPayload() {
+        this.authPayload = AuthPayloadGenerator.execute();
+        return this;
+    }
 
     public EmailAuth decreaseThreshold() {
         this.threshold -= 1;
