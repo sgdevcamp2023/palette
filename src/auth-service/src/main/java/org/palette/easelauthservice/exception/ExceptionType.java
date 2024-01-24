@@ -84,6 +84,14 @@ public enum ExceptionType {
             HttpStatus.CONFLICT
     ),
 
+    // 409
+    AUTH_500_000001(
+            "AUTH_500_000001",
+            "INTERNAL SERVER ERROR",
+            "서버 간 통신 중 예기치 못한 오류가 발생했습니다.",
+            HttpStatus.INTERNAL_SERVER_ERROR
+    ),
+
     ;
 
     private final String code;

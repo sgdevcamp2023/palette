@@ -3,6 +3,8 @@ package org.palette.easelauthservice.external;
 import io.grpc.StatusRuntimeException;
 import lombok.RequiredArgsConstructor;
 import net.devh.boot.grpc.client.inject.GrpcClient;
+import org.palette.easelauthservice.exception.BaseException;
+import org.palette.easelauthservice.exception.ExceptionType;
 import org.palette.grpc.GUpdateUserAuthStatusRequest;
 import org.palette.grpc.GUpdateUserAuthStatusResponse;
 import org.palette.grpc.GUserServiceGrpc;
@@ -16,7 +18,6 @@ public class GrpcUser {
     private GUserServiceGrpc.GUserServiceBlockingStub gUserServiceBlockingStub;
 
     public GUpdateUserAuthStatusResponse updateUserAuthStatus(String email) {
-        // TODO: 매개변수 및 반환값 변경, 예외처리
         try {
             return gUserServiceBlockingStub.updateUserAuthStatus(
                     GUpdateUserAuthStatusRequest.newBuilder()
@@ -24,8 +25,7 @@ public class GrpcUser {
                             .build()
             );
         } catch (final StatusRuntimeException e) {
-            System.out.println(e.getMessage());
-            return null;
+            throw new BaseException(ExceptionType.AUTH_500_000001);
         }
     }
 }
