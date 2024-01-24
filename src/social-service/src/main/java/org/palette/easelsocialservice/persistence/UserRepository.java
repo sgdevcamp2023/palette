@@ -16,4 +16,6 @@ public interface UserRepository extends Neo4jRepository<User, Long> {
 
     @Query("MATCH (u:User) WHERE u.uid IN $uids RETURN u")
     List<User> findAllByUids(List<Long> uids);
+
+    boolean existsByUid(Long uid);
 }

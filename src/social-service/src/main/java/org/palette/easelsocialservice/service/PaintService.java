@@ -6,6 +6,8 @@ import org.palette.easelsocialservice.dto.request.HashtagRequest;
 import org.palette.easelsocialservice.dto.request.LinkRequest;
 import org.palette.easelsocialservice.dto.request.MentionRequest;
 import org.palette.easelsocialservice.dto.request.RepaintRequest;
+import org.palette.easelsocialservice.exception.BaseException;
+import org.palette.easelsocialservice.exception.ExceptionType;
 import org.palette.easelsocialservice.persistence.PaintRepository;
 import org.palette.easelsocialservice.persistence.domain.*;
 import org.palette.easelsocialservice.persistence.relationship.*;
@@ -20,9 +22,8 @@ import java.util.Map;
 public class PaintService {
     private final PaintRepository paintRepository;
 
-    public Paint createPaint(Paint paint) {
-        // TODO: 예외처리
-        return paintRepository.save(paint);
+    public void createPaint(Paint paint) {
+        paintRepository.save(paint);
     }
 
     public void bindUserWithPaint(User user, Paint paint) {
@@ -78,22 +79,22 @@ public class PaintService {
     }
 
     public void bindReplyPaint(Paint paint, Long inReplyToPaint) {
-        // TODO: 예외처리
-        Paint inReplyPaint = paintRepository.findByPid(inReplyToPaint).get();
+        Paint inReplyPaint = paintRepository.findById(inReplyToPaint)
+                .orElseThrow(() -> new BaseException(ExceptionType.SOCIAL_400_000002));
         paint.addInReplyToPaint(inReplyPaint);
         paintRepository.save(paint);
     }
 
     public void bindQuotePaint(Paint paint, Long quotePaintId) {
-        // TODO: 예외처리
-        Paint quotePaint = paintRepository.findByPid(quotePaintId).get();
+        Paint quotePaint = paintRepository.findById(quotePaintId)
+                .orElseThrow(() -> new BaseException(ExceptionType.SOCIAL_400_000002));
         paint.addQuotePaint(quotePaint);
         paintRepository.save(paint);
     }
 
     public void bindRepaintWithPaint(User user, RepaintRequest repaintRequest) {
-        // TODO: 예외처리
-        Paint paint = paintRepository.findByPid(repaintRequest.originPaintId()).get();
+        Paint paint = paintRepository.findById(repaintRequest.originPaintId())
+                .orElseThrow(() -> new BaseException(ExceptionType.SOCIAL_400_000002));
         paint.addRepaint(user);
         paintRepository.save(paint);
     }
