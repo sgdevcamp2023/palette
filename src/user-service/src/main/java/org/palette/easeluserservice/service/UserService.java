@@ -66,6 +66,10 @@ public class UserService {
         return user;
     }
 
+    public void updateUserAuthStatus(User user) {
+        user.updateToAuthed();
+    }
+
     public void isEmailAlreadyExists(String requestedEmail) {
         if (userJpaRepository.existsByEmail(requestedEmail))
             throw new BaseException(ExceptionType.USER_409_000001);
