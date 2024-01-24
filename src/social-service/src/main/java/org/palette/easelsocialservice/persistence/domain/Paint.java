@@ -8,6 +8,7 @@ import org.springframework.data.neo4j.core.schema.Node;
 import org.springframework.data.neo4j.core.schema.Relationship;
 
 import java.time.LocalDateTime;
+import java.util.LinkedList;
 import java.util.List;
 
 @Getter
@@ -25,6 +26,9 @@ public class Paint {
 
     @Relationship(type = "QUOTES")
     private Quotes quotePaint;
+
+    @Relationship(type = "REPAINTS", direction = Relationship.Direction.INCOMING)
+    private List<Repaints> repaints;
 
     @Relationship(type = "MENTIONS")
     private List<Mentions> mentions;
@@ -65,6 +69,13 @@ public class Paint {
 
     public void addQuotePaint(Paint paint) {
         this.quotePaint = new Quotes(paint);
+    }
+
+    public void addRepaint(User user) {
+        if (this.repaints == null) {
+            this.repaints = new LinkedList<>();
+        }
+        this.repaints.add(new Repaints(user));
     }
 
     public void addAllLinks(List<Contains> contains) {

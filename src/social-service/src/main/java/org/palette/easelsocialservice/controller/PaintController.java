@@ -2,6 +2,7 @@ package org.palette.easelsocialservice.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.palette.easelsocialservice.dto.request.PaintCreateRequest;
+import org.palette.easelsocialservice.dto.request.RepaintRequest;
 import org.palette.easelsocialservice.dto.response.PaintCreateResponse;
 import org.palette.easelsocialservice.usecase.PaintUsecase;
 import org.springframework.http.HttpStatus;
@@ -25,5 +26,14 @@ public class PaintController {
         // TODO: 사용자 ID 추가하기
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(paintUsecase.createPaint(100L, paintCreateRequest));
+    }
+
+    @PostMapping("/repaint")
+    public ResponseEntity<Void> repaint(
+            @RequestBody RepaintRequest repaintRequest
+    ) {
+        // TODO: 사용자 ID 추가하기
+        paintUsecase.repaint(100L, repaintRequest);
+        return ResponseEntity.ok().build();
     }
 }

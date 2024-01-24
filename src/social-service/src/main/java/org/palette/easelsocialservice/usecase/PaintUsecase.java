@@ -5,6 +5,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.palette.easelsocialservice.dto.request.MentionRequest;
 import org.palette.easelsocialservice.dto.request.PaintCreateRequest;
+import org.palette.easelsocialservice.dto.request.RepaintRequest;
 import org.palette.easelsocialservice.dto.response.PaintCreateResponse;
 import org.palette.easelsocialservice.persistence.domain.Link;
 import org.palette.easelsocialservice.persistence.domain.Media;
@@ -29,10 +30,13 @@ public class PaintUsecase {
 
     @Transactional
     public PaintCreateResponse createPaint(Long userId, PaintCreateRequest paintCreateRequest) {
-        Paint paint = paintService.createPaint(paintCreateRequest.text(), paintCreateRequest.inReplyToPaintId(), paintCreateRequest.quotePaintId());
+        Paint paint = new Paint(paintCreateRequest.text());
 
         User user = userService.getUser(userId);
         paintService.bindUserWithPaint(user, paint);
+
+        paintCreateRequest.inReplyToPaintId().ifPresent(inReplyToPaint -> paintService.bindReplyPaint(paint, inReplyToPaint));
+        paintCreateRequest.quotePaintId().ifPresent(quotePaintId -> paintService.bindQuotePaint(paint, quotePaintId));
 
         paintCreateRequest.mentions().ifPresent(mentions -> {
             List<Long> uids = mentions.stream().map(MentionRequest::userId).distinct().toList();
@@ -60,6 +64,13 @@ public class PaintUsecase {
             paintService.bindMediaWithPaint(paint, createdMedias);
         });
 
+        paintService.createPaint(paint);
+
         return new PaintCreateResponse(paint.getPid());
+    }
+
+    public void repaint(Long userId, RepaintRequest repaintRequest) {
+        User user = userService.getUser(userId);
+        paintService.bindRepaintWithPaint(user, repaintRequest);
     }
 }
