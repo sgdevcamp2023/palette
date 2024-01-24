@@ -34,8 +34,13 @@ grpc:
   server:
     port: 11001
   client:
+    user-service:
+      address: 'discovery:///USER-SERVICE'
+      enableKeepAlive: true
+      keepAliveWithoutCalls: true
+      negotiationType: plaintext
     social-service:
-      address: 'discovery:///AUTH-SERVICE'
+      address: 'discovery:///SOCIAL-SERVICE'
       enableKeepAlive: true
       keepAliveWithoutCalls: true
       negotiationType: plaintext
