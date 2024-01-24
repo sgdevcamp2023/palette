@@ -133,7 +133,11 @@
 
         <action
             android:id="@+id/action_timelineFragment_to_myPageFragment"
-            app:destination="@id/myPageFragment"/>
+            app:destination="@id/myPageFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"/>
 
         <action
             android:id="@+id/action_timelineFragment_to_postFragment"

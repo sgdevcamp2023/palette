@@ -17,6 +17,7 @@ import com.smilegate.Easel.R
 import com.smilegate.Easel.databinding.FragmentForYouBinding
 import com.smilegate.Easel.domain.model.TimelineItem
 import com.smilegate.Easel.presentation.adapter.TimelineRecyclerViewAdapter
+import com.smilegate.Easel.presentation.view.myPage.MyPageFragment
 
 class ForYouFragment : Fragment() {
     private lateinit var binding: FragmentForYouBinding
