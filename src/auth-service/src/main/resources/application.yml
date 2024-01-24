@@ -1,4 +1,7 @@
 spring:
+  application:
+    name: auth-service
+  port: 10001
   mail:
     host: ${AUTH_MAIL_HOST}
     username: ${AUTH_MAIL_USERNAME}
@@ -15,3 +18,22 @@ spring:
     redis:
       host: ${AUTH_REDIS_HOST}
       port: ${AUTH_REDIS_PORT}
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+grpc:
+  server:
+    port: 11001
+  client:
+    social-service:
+      address: 'discovery:///AUTH-SERVICE'
+      enableKeepAlive: true
+      keepAliveWithoutCalls: true
+      negotiationType: plaintext

@@ -24,7 +24,7 @@ public enum ExceptionType {
     ),
 
     AUTH_400_000003(
-            "AUTH_400_000002",
+            "AUTH_400_000003",
             "BROKEN_ATTEMPT",
             "인증번호 입력 횟수를 초과했습니다.",
             HttpStatus.BAD_REQUEST
@@ -84,7 +84,7 @@ public enum ExceptionType {
             HttpStatus.CONFLICT
     ),
 
-    // 409
+    // 500
     AUTH_500_000001(
             "AUTH_500_000001",
             "INTERNAL SERVER ERROR",
