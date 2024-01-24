@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class Auth extends AcceptanceTestBase {
+class Auth extends AcceptanceTestBase {
 
     @Autowired
     private RedisEmailAuthService emailAuthService;
