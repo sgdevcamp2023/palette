@@ -15,12 +15,12 @@ public class GrpcUser {
     @GrpcClient("user-service")
     private GUserServiceGrpc.GUserServiceBlockingStub gUserServiceBlockingStub;
 
-    public GUpdateUserAuthStatusResponse updateUserAuthStatus(Long userId) {
+    public GUpdateUserAuthStatusResponse updateUserAuthStatus(String email) {
         // TODO: 매개변수 및 반환값 변경, 예외처리
         try {
             return gUserServiceBlockingStub.updateUserAuthStatus(
                     GUpdateUserAuthStatusRequest.newBuilder()
-                            .setId(userId)
+                            .setEmail(email)
                             .build()
             );
         } catch (final StatusRuntimeException e) {

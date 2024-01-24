@@ -23,6 +23,20 @@ public enum ExceptionType {
             HttpStatus.BAD_REQUEST
     ),
 
+    AUTH_400_000003(
+            "AUTH_400_000002",
+            "BROKEN_ATTEMPT",
+            "인증번호 입력 횟수를 초과했습니다.",
+            HttpStatus.BAD_REQUEST
+    ),
+
+    AUTH_400_000004(
+            "AUTH_400_000002",
+            "BROKEN_PAYLOAD",
+            "인증번호가 올바르지 않습니다.",
+            HttpStatus.BAD_REQUEST
+    ),
+
     // 401
     AUTH_401_000001(
             "AUTH_401_000001",
