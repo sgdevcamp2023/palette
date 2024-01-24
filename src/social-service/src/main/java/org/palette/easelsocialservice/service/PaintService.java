@@ -11,29 +11,17 @@ import org.palette.easelsocialservice.persistence.domain.*;
 import org.palette.easelsocialservice.persistence.relationship.*;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
 public class PaintService {
     private final PaintRepository paintRepository;
 
-    public Paint createPaint(String text, Optional<Long> inReplyToPaintId, Optional<Long> quotePaintId) {
+    public Paint createPaint(Paint paint) {
         // TODO: 예외처리
-        Paint paint = new Paint(text);
-
-        inReplyToPaintId.map(paintRepository::findByPid)
-                .ifPresent(paintOpt -> paintOpt.ifPresentOrElse(
-                        paint::addInReplyToPaint,
-                        () -> { throw new NoSuchElementException("답장할 Paint를 찾을 수 없습니다. ID: " + inReplyToPaintId.get()); }
-                ));
-
-        quotePaintId.map(paintRepository::findByPid)
-                .ifPresent(paintOpt -> paintOpt.ifPresentOrElse(
-                        paint::addQuotePaint,
-                        () -> { throw new NoSuchElementException("인용할 Paint를 찾을 수 없습니다. ID: " + quotePaintId.get()); }
-                ));
-
         return paintRepository.save(paint);
     }
 

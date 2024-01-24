@@ -30,7 +30,7 @@ public class PaintUsecase {
 
     @Transactional
     public PaintCreateResponse createPaint(Long userId, PaintCreateRequest paintCreateRequest) {
-        Paint paint = paintService.createPaint(paintCreateRequest.text(), paintCreateRequest.inReplyToPaintId(), paintCreateRequest.quotePaintId());
+        Paint paint = new Paint(paintCreateRequest.text());
 
         User user = userService.getUser(userId);
         paintService.bindUserWithPaint(user, paint);
@@ -63,6 +63,8 @@ public class PaintUsecase {
             List<Media> createdMedias = mediaService.createMedias(medias);
             paintService.bindMediaWithPaint(paint, createdMedias);
         });
+
+        paintService.createPaint(paint);
 
         return new PaintCreateResponse(paint.getPid());
     }
