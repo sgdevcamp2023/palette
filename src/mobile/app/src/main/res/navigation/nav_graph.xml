@@ -131,6 +131,14 @@
         android:label="fragment_timeline"
         tools:layout="@layout/fragment_timeline">
 
+        <action
+            android:id="@+id/action_timelineFragment_to_profileFragment"
+            app:destination="@id/profileFragment"/>
+
+        <action
+            android:id="@+id/action_timelineFragment_to_postFragment"
+            app:destination="@id/postFragment"/>
+
     </fragment>
 
     <fragment
@@ -139,6 +147,10 @@
         android:label="fragment_search"
         tools:layout="@layout/fragment_search">
 
+        <action
+            android:id="@+id/action_searchFragment_to_postFragment"
+            app:destination="@id/postFragment"/>
+
     </fragment>
 
     <fragment
@@ -146,6 +158,10 @@
         android:name="com.smilegate.Easel.presentation.view.notice.NoticeFragment"
         android:label="fragment_notice"
         tools:layout="@layout/fragment_notice">
+
+        <action
+            android:id="@+id/action_noticeFragment_to_postFragment"
+            app:destination="@id/postFragment"/>
 
     </fragment>
 
@@ -162,6 +178,14 @@
         android:name="com.smilegate.Easel.presentation.view.profile.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/postFragment"
+        android:name="com.smilegate.Easel.presentation.view.post.PostFragment"
+        android:label="fragment_post"
+        tools:layout="@layout/fragment_post">
 
     </fragment>
 
