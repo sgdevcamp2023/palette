@@ -18,6 +18,7 @@ import com.smilegate.Easel.domain.model.TimelineItem
 import com.smilegate.Easel.presentation.TimelinePopupManager
 import com.smilegate.Easel.presentation.view.timeline.RetweetBottomSheetDialog
 import com.smilegate.Easel.presentation.view.timeline.ShareBottomSheetDialog
+import com.smilegate.Easel.presentation.view.timeline.ViewBottomSheetDialog
 
 class TimelineRecyclerViewAdapter(private val context: Context, private val timelineList: List<TimelineItem>) :
     RecyclerView.Adapter<TimelineRecyclerViewAdapter.TimelineViewHolder>() {
@@ -44,6 +45,10 @@ class TimelineRecyclerViewAdapter(private val context: Context, private val time
 
             icShare.setOnClickListener {
                 shareBottomSheet()
+            }
+
+            icViews.setOnClickListener {
+                viewBottomSheet()
             }
         }
 
@@ -125,6 +130,11 @@ class TimelineRecyclerViewAdapter(private val context: Context, private val time
 
     private fun shareBottomSheet() {
         val modal = ShareBottomSheetDialog()
+        modal.show((context as MainActivity).supportFragmentManager, "BasicBottomModalSheet")
+    }
+
+    private fun viewBottomSheet() {
+        val modal = ViewBottomSheetDialog()
         modal.show((context as MainActivity).supportFragmentManager, "BasicBottomModalSheet")
     }
 }
