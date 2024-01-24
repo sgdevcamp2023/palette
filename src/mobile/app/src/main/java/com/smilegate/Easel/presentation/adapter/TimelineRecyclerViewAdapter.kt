@@ -11,17 +11,19 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
+import com.smilegate.Easel.MainActivity
 import com.smilegate.Easel.R
 import com.smilegate.Easel.databinding.ItemTimelineBinding
 import com.smilegate.Easel.domain.model.TimelineItem
 import com.smilegate.Easel.presentation.TimelinePopupManager
-import com.smilegate.Easel.presentation.view.timeline.TimelineBottomSheetDialog
+import com.smilegate.Easel.presentation.view.timeline.RetweetBottomSheetDialog
+import com.smilegate.Easel.presentation.view.timeline.ShareBottomSheetDialog
 
 class TimelineRecyclerViewAdapter(private val context: Context, private val timelineList: List<TimelineItem>) :
     RecyclerView.Adapter<TimelineRecyclerViewAdapter.TimelineViewHolder>() {
 
     private val popupManager = TimelinePopupManager(context)
-    private val bottomSheetDialog = TimelineBottomSheetDialog()
+    private val bottomSheetDialog = RetweetBottomSheetDialog()
     @RequiresApi(Build.VERSION_CODES.S)
     inner class TimelineViewHolder(private val binding: ItemTimelineBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -37,13 +39,11 @@ class TimelineRecyclerViewAdapter(private val context: Context, private val time
             }
 
             icRetweet.setOnClickListener {
-                //bottomSheetListener?.onRetweetClicked()
-                bottomSheetDialog.bottomSheetListener?.onRetweetClicked()
+                retweetBottomSheet()
             }
 
             icShare.setOnClickListener {
-                //bottomSheetListener?.onShareClicked()
-                bottomSheetDialog.bottomSheetListener?.onShareClicked()
+                shareBottomSheet()
             }
         }
 
@@ -115,6 +115,16 @@ class TimelineRecyclerViewAdapter(private val context: Context, private val time
 
     override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
         super.onDetachedFromRecyclerView(recyclerView)
-        popupManager.dismissPopupMenu() // 어댑터가 해제될 때 팝업 닫기
+        popupManager.dismissPopupMenu()
+    }
+
+    private fun retweetBottomSheet() {
+        val modal = RetweetBottomSheetDialog()
+        modal.show((context as MainActivity).supportFragmentManager, "BasicBottomModalSheet")
+    }
+
+    private fun shareBottomSheet() {
+        val modal = ShareBottomSheetDialog()
+        modal.show((context as MainActivity).supportFragmentManager, "BasicBottomModalSheet")
     }
 }

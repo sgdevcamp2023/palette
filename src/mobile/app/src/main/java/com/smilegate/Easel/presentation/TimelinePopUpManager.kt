@@ -36,6 +36,7 @@ class TimelinePopupManager(private val context: Context) {
     @RequiresApi(Build.VERSION_CODES.S)
     fun showPopupMenu(anchorView: View) {
         dismissPopupMenu() // 기존 팝업이 열려 있다면 닫기
+        applyBlurEffect() // showAsDropDown 이전에 블러 효과를 적용
 
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val customView = inflater.inflate(R.layout.item_timeline_popup, null)
@@ -46,8 +47,6 @@ class TimelinePopupManager(private val context: Context) {
             ViewGroup.LayoutParams.WRAP_CONTENT,
             true
         )
-
-        applyBlurEffect() // showAsDropDown 이전에 블러 효과를 적용
 
         val noInterestTextView = customView.findViewById<TextView>(R.id.tv_no_interest)
         noInterestTextView.setOnClickListener {

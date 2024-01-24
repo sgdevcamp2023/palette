@@ -24,7 +24,7 @@
         android:layout_marginStart="30dp"
         android:layout_marginTop="14dp"
         android:backgroundTint="@color/BlueGrey_800"
-        android:src="@drawable/ic_retweet"
+        android:src="@drawable/ic_clip"
         app:layout_constraintStart_toStartOf="parent"
         android:clickable="true"
         app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_bar" />
@@ -37,7 +37,7 @@
         android:layout_marginStart="18dp"
         android:layout_marginTop="14dp"
         android:clickable="true"
-        android:text="@string/retweet_fragment_bottom_sheet"
+        android:text="@string/link_Share_fragment_bottom_sheet"
         android:textColor="@color/Grey_600"
         app:layout_constraintStart_toEndOf="@+id/ic_bottom_sheet_retweet"
         app:layout_constraintTop_toBottomOf="@+id/bottom_sheet_bar" />
@@ -50,7 +50,7 @@
         android:layout_marginTop="40dp"
         android:backgroundTint="@color/BlueGrey_800"
         android:clickable="true"
-        android:src="@drawable/ic_pen"
+        android:src="@drawable/ic_share"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ic_bottom_sheet_retweet" />
 
@@ -60,9 +60,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="18dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="46dp"
         android:clickable="true"
-        android:text="@string/repost_fragment_bottom_sheet"
+        android:text="@string/Share_fragment_bottom_sheet"
         android:textColor="@color/Grey_600"
         app:layout_constraintStart_toEndOf="@+id/ic_bottom_sheet_repost"
         app:layout_constraintTop_toBottomOf="@+id/tv_bottom_sheet_retweet" />
@@ -76,7 +76,7 @@
         android:layout_marginTop="30dp"
         android:layout_marginEnd="22dp"
         android:layout_marginBottom="28dp"
-        android:backgroundTint="@drawable/btn_timeline_bottom_sheet"
+        android:background="@drawable/btn_timeline_bottom_sheet"
         android:text="@string/cancel_fragment_bottom_sheet"
         android:textColor="@color/Grey_600"
         app:layout_constraintBottom_toBottomOf="parent"
