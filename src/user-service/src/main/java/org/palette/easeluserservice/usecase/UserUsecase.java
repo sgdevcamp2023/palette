@@ -42,7 +42,7 @@ public class UserUsecase {
                 temporaryJoinRequest.nickname()
         );
 
-//        gRPCSendEmailAuth(user);
+        gRPCSendEmailAuth(user);
     }
 
     @Transactional
@@ -77,9 +77,9 @@ public class UserUsecase {
     }
 
     private User validateJoinRequest(JoinRequest joinRequest, Optional<User> optionalUser) {
-        if (optionalUser.isEmpty()) throw new BaseException(ExceptionType.USER_000004);
+        if (optionalUser.isEmpty()) throw new BaseException(ExceptionType.USER_404_000001);
         User user = optionalUser.get();
-        if (user.isUserNotAuthed()) throw new BaseException(ExceptionType.USER_000002);
+        if (user.isUserNotAuthed()) throw new BaseException(ExceptionType.USER_401_000001);
         userService.isUsernameAlreadyExists(joinRequest.username());
         return user;
     }

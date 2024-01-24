@@ -17,7 +17,7 @@ public class GlobalExceptionHandler {
             MethodArgumentTypeMismatchException.class,
     })
     public ResponseEntity<ExceptionResponse> handleRequestValidationException(Exception e) {
-        ExceptionType exceptionType = ExceptionType.USER_000001;
+        ExceptionType exceptionType = ExceptionType.USER_404_000001;
         ExceptionResponse exceptionResponse = ExceptionResponse.builder()
                 .code(exceptionType.getCode())
                 .message(exceptionType.getMessage())
