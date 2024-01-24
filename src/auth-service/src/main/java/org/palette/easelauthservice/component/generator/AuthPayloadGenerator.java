@@ -3,13 +3,13 @@ package org.palette.easelauthservice.component.generator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.Random;
+import java.security.SecureRandom;
 
 @Component
 @RequiredArgsConstructor
 public class AuthPayloadGenerator {
 
-    private final Random random;
+    private final SecureRandom random;
 
     public String execute() {
         StringBuilder payload = new StringBuilder();
