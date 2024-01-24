@@ -330,6 +330,18 @@
             app:layout_constraintStart_toEndOf="@+id/ic_setting_menu"
             app:layout_constraintTop_toBottomOf="@+id/ic_customer_menu" />
 
+
+        <ImageView
+            android:id="@+id/ic_light_mode"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="28dp"
+            android:layout_marginBottom="40dp"
+            android:backgroundTint="@color/black"
+            android:src="@drawable/ic_sun"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </RelativeLayout>

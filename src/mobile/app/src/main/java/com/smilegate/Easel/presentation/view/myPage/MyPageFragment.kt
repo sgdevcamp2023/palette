@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -56,6 +57,10 @@ class MyPageFragment : Fragment() {
         binding.icToggleDown.setOnClickListener {
             isSettingExpanded = !isSettingExpanded
             updateSettingVisibility()
+        }
+
+        binding.icLightMode.setOnClickListener {
+            Toast.makeText(requireContext(), "아직 지원하지 않는 기능입니다", Toast.LENGTH_SHORT).show()
         }
     }
 
