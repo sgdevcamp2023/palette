@@ -168,12 +168,12 @@ class SearchFragment : Fragment() {
 
         binding.fabMain.setOnClickListener {
             if(!isFabOpen) {
-                findNavController().navigate(R.id.action_timelineFragment_to_postFragment)
+                findNavController().navigate(R.id.action_searchFragment_to_postFragment)
             }
         }
 
         binding.fabImage.setOnClickListener {
-            findNavController().navigate(R.id.action_timelineFragment_to_postFragment)
+            findNavController().navigate(R.id.action_searchFragment_to_postFragment)
         }
 
         binding.fabGif.setOnClickListener {
@@ -185,7 +185,7 @@ class SearchFragment : Fragment() {
         }
 
         binding.fabWrite.setOnClickListener {
-            findNavController().navigate(R.id.action_timelineFragment_to_postFragment)
+            findNavController().navigate(R.id.action_searchFragment_to_postFragment)
         }
     }
 
