@@ -38,4 +38,8 @@ public class RedisEmailAuthService {
         );
         repository.save(newEmailAuth);
     }
+
+    public void delete(EmailAuth emailAuth) {
+        repository.delete(emailAuth);
+    }
 }

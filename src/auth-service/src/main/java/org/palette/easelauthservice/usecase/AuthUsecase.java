@@ -25,6 +25,8 @@ public class AuthUsecase extends GAuthServiceGrpc.GAuthServiceImplBase {
         emailAuth.isAbusing();
         if (emailAuth.comparePayload(emailAuth.getAuthPayload())) {
             grpcUser.updateUserAuthStatus(email);
+            redisEmailAuthService.delete(emailAuth);
+            return;
         }
         emailAuth.decreaseThreshold();
         redisEmailAuthService.update(emailAuth);
