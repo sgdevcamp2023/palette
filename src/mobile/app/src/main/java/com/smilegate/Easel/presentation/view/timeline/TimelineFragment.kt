@@ -1,6 +1,7 @@
 package com.smilegate.Easel.presentation.view.timeline
 
 import android.animation.ObjectAnimator
+import android.animation.PropertyValuesHolder
 import android.content.Context
 import android.graphics.Color
 import android.graphics.PorterDuff
@@ -133,12 +134,15 @@ class TimelineFragment : Fragment() {
 
             override fun onLongPress(e: MotionEvent) {
 
+                binding.overlay.visibility = View.VISIBLE
+
                 if (!isAnimationRunning) {
                     toggleFab()
 
                     binding.fabMain.scaleX = 0.8f
                     binding.fabMain.scaleY = 0.8f
 
+                    binding.fabMain.setBackgroundColor(Color.WHITE)
                     binding.fabMain.setImageResource(R.drawable.ic_x)
                     binding.fabMain.setColorFilter(
                         ContextCompat.getColor(
@@ -159,17 +163,14 @@ class TimelineFragment : Fragment() {
             }
 
             override fun onSingleTapUp(e: MotionEvent): Boolean {
+
+                binding.overlay.visibility = View.GONE
+
                 if(isFabOpen) {
                     toggleFab()
 
                     binding.fabMain.scaleX = 1.0f
                     binding.fabMain.scaleY = 1.0f
-
-//                    val translationX = resources.displayMetrics.density * 2
-//                    val translationY = resources.displayMetrics.density * 2
-//
-//                    binding.fabMain.translationX -= translationX
-//                    binding.fabMain.translationY -= translationY
 
                     binding.fabMain.setImageResource(R.drawable.ic_add_text)
                     binding.fabMain.setColorFilter(ContextCompat.getColor(requireContext(), R.color.white), PorterDuff.Mode.SRC_IN)

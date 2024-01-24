@@ -112,9 +112,6 @@ class SearchFragment : Fragment() {
                 if (!isAnimationRunning) {
                     toggleFab()
 
-                    binding.fabMain.scaleX = 0.8f
-                    binding.fabMain.scaleY = 0.8f
-
                     binding.fabMain.setImageResource(R.drawable.ic_x)
                     binding.fabMain.setColorFilter(
                         ContextCompat.getColor(
@@ -137,9 +134,6 @@ class SearchFragment : Fragment() {
             override fun onSingleTapUp(e: MotionEvent): Boolean {
                 if(isFabOpen) {
                     toggleFab()
-
-                    binding.fabMain.scaleX = 1.0f
-                    binding.fabMain.scaleY = 1.0f
 
                     binding.fabMain.setImageResource(R.drawable.ic_add_text)
                     binding.fabMain.setColorFilter(ContextCompat.getColor(requireContext(), R.color.white), PorterDuff.Mode.SRC_IN)
@@ -203,16 +197,16 @@ class SearchFragment : Fragment() {
 
             ObjectAnimator.ofFloat(binding.fabMain, View.ROTATION, 180f, 0f).apply { start() }
         } else { // 플로팅 액션 버튼 열기 - 닫혀있는 플로팅 버튼 꺼내는 애니메이션
-            ObjectAnimator.ofFloat(binding.fabWrite, "translationX", 16 * 1.25f).apply { start() }
-            ObjectAnimator.ofFloat(binding.fabWrite, "translationY", -298 * 1.25f).apply { start() }
+            ObjectAnimator.ofFloat(binding.fabWrite, "translationX", 0f).apply { start() }
+            ObjectAnimator.ofFloat(binding.fabWrite, "translationY", -540f).apply { start() }
 
-            ObjectAnimator.ofFloat(binding.fabGif, "translationX", -170 * 1.25f).apply { start() }
-            ObjectAnimator.ofFloat(binding.fabGif, "translationY", -170 * 1.25f).apply { start() }
+            ObjectAnimator.ofFloat(binding.fabGif, "translationX", 0f).apply { start() }
+            ObjectAnimator.ofFloat(binding.fabGif, "translationY", -360f).apply { start() }
 
-            ObjectAnimator.ofFloat(binding.fabImage, "translationX", -260 * 1.25f).apply { start() }
-            ObjectAnimator.ofFloat(binding.fabImage, "translationY", 30 * 1.25f).apply { start() }
+            ObjectAnimator.ofFloat(binding.fabImage, "translationX", 0f).apply { start() }
+            ObjectAnimator.ofFloat(binding.fabImage, "translationY", -180f).apply { start() }
 
-            ObjectAnimator.ofFloat(binding.fabMain, View.ROTATION, 180f, 0f).apply { start() }
+            ObjectAnimator.ofFloat(binding.fabMain, View.ROTATION, 0f, 180f).apply { start() }
         }
 
         isFabOpen = !isFabOpen

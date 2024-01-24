@@ -29,6 +29,13 @@
         android:layout_below="@id/tabLayout"
         app:layout_constraintBottom_toBottomOf="parent" />
 
+    <View
+        android:id="@+id/overlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:background="#90FFFFFF" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -95,6 +102,7 @@
             app:fab_colorNormal="@color/black"
             app:fab_colorPressed="@color/black"
             app:fab_colorRipple="@color/black"
+            android:longClickable="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:rippleColor="@color/black" />
