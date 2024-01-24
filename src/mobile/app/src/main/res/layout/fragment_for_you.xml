@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/ForYouScrollView"
-    tools:context=".presentation.view.Timeline.ForYouFragment">
+    tools:context=".presentation.view.timeline.ForYouFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvTimeline"

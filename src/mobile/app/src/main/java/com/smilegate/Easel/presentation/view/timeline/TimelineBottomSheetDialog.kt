@@ -1,4 +1,4 @@
-package com.smilegate.Easel.presentation.view.Timeline
+package com.smilegate.Easel.presentation.view.timeline
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -17,11 +17,7 @@ class TimelineBottomSheetDialog : BottomSheetDialogFragment() {
         fun onShareClicked()
     }
 
-    private var bottomSheetListener: BottomSheetListener? = null
-
-    fun setBottomSheetListener(listener: BottomSheetListener) {
-        bottomSheetListener = listener
-    }
+    var bottomSheetListener: BottomSheetListener? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

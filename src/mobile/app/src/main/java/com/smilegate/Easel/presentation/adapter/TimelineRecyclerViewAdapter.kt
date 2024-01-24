@@ -15,13 +15,13 @@ import com.smilegate.Easel.R
 import com.smilegate.Easel.databinding.ItemTimelineBinding
 import com.smilegate.Easel.domain.model.TimelineItem
 import com.smilegate.Easel.presentation.TimelinePopupManager
-import com.smilegate.Easel.presentation.view.Timeline.TimelineBottomSheetDialog
+import com.smilegate.Easel.presentation.view.timeline.TimelineBottomSheetDialog
 
 class TimelineRecyclerViewAdapter(private val context: Context, private val timelineList: List<TimelineItem>) :
     RecyclerView.Adapter<TimelineRecyclerViewAdapter.TimelineViewHolder>() {
 
     private val popupManager = TimelinePopupManager(context)
-
+    private val bottomSheetDialog = TimelineBottomSheetDialog()
     @RequiresApi(Build.VERSION_CODES.S)
     inner class TimelineViewHolder(private val binding: ItemTimelineBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -38,10 +38,12 @@ class TimelineRecyclerViewAdapter(private val context: Context, private val time
 
             icRetweet.setOnClickListener {
                 //bottomSheetListener?.onRetweetClicked()
+                bottomSheetDialog.bottomSheetListener?.onRetweetClicked()
             }
 
             icShare.setOnClickListener {
                 //bottomSheetListener?.onShareClicked()
+                bottomSheetDialog.bottomSheetListener?.onShareClicked()
             }
         }
 

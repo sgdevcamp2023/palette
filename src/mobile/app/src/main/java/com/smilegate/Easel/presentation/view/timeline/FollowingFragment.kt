@@ -1,4 +1,4 @@
-package com.smilegate.Easel.presentation.view.Timeline
+package com.smilegate.Easel.presentation.view.timeline
 
 import android.content.Context
 import android.os.Bundle
