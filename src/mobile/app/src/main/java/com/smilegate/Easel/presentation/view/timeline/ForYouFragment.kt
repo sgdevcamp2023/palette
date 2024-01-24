@@ -39,7 +39,7 @@ class ForYouFragment : Fragment() {
         profileButton.setImageResource(R.drawable.ic_circle_person)
         profileButton.visibility = View.VISIBLE
         profileButton.setOnClickListener {
-            findNavController().navigate(R.id.profileFragment)
+            findNavController().navigate(R.id.myPageFragment)
         }
 
         val settingButton = toolbar.findViewById<ImageView>(R.id.else_btn)

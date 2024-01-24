@@ -132,8 +132,8 @@
         tools:layout="@layout/fragment_timeline">
 
         <action
-            android:id="@+id/action_timelineFragment_to_profileFragment"
-            app:destination="@id/profileFragment"/>
+            android:id="@+id/action_timelineFragment_to_myPageFragment"
+            app:destination="@id/myPageFragment"/>
 
         <action
             android:id="@+id/action_timelineFragment_to_postFragment"
@@ -186,6 +186,22 @@
         android:name="com.smilegate.Easel.presentation.view.post.PostFragment"
         android:label="fragment_post"
         tools:layout="@layout/fragment_post">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/myPageFragment"
+        android:name="com.smilegate.Easel.presentation.view.myPage.MyPageFragment"
+        android:label="fragment_my_page"
+        tools:layout="@layout/fragment_my_page">
+
+        <action
+            android:id="@+id/action_myPageFragment_to_TimelineFragment"
+            app:destination="@id/timelineFragment"/>
+
+        <action
+            android:id="@+id/action_myPageFragment_to_profileFragment"
+            app:destination="@id/profileFragment"/>
 
     </fragment>
 

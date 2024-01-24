@@ -42,7 +42,7 @@ class FollowingFragment : Fragment() {
         profileButton.setImageResource(com.smilegate.Easel.R.drawable.ic_circle_person)
         profileButton.visibility = View.VISIBLE
         profileButton.setOnClickListener {
-            findNavController().navigate(com.smilegate.Easel.R.id.profileFragment)
+            findNavController().navigate(com.smilegate.Easel.R.id.myPageFragment)
         }
 
         val settingButton = toolbar.findViewById<ImageView>(com.smilegate.Easel.R.id.else_btn)
