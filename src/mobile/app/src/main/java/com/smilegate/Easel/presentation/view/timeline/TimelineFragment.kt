@@ -2,6 +2,7 @@ package com.smilegate.Easel.presentation.view.timeline
 
 import android.animation.ObjectAnimator
 import android.content.Context
+import android.graphics.Color
 import android.graphics.PorterDuff
 import android.os.Bundle
 import android.os.Handler
@@ -15,6 +16,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
@@ -23,7 +25,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.tabs.TabLayout
 import com.smilegate.Easel.R
 import com.smilegate.Easel.databinding.FragmentTimelineBinding
+import com.smilegate.Easel.domain.createCustomToast
 import com.smilegate.Easel.presentation.adapter.TimelineAdapter
+
 
 class TimelineFragment : Fragment() {
     private lateinit var binding: FragmentTimelineBinding
@@ -116,7 +120,6 @@ class TimelineFragment : Fragment() {
     }
 
     private fun setupViewPager(viewPager: ViewPager) {
-        // 여러 개의 프래그먼트를 추가하여 ViewPager에 연결
         val adapter = TimelineAdapter(childFragmentManager)
         adapter.addFragment(ForYouFragment(), "추천")
         adapter.addFragment(FollowingFragment(), "팔로우 중")
@@ -192,19 +195,26 @@ class TimelineFragment : Fragment() {
             return@setOnTouchListener isAnimationRunning
         }
 
-        // 플로팅 버튼 클릭 이벤트 - 캡처
+        binding.fabMain.setOnClickListener {
+            if(!isFabOpen) {
+                findNavController().navigate(R.id.action_timelineFragment_to_postFragment)
+            }
+        }
+
         binding.fabImage.setOnClickListener {
-
+            findNavController().navigate(R.id.action_timelineFragment_to_postFragment)
         }
 
-        // 플로팅 버튼 클릭 이벤트 - 공유
         binding.fabGif.setOnClickListener {
-
+            Toast.makeText(requireContext(), "아직 지원하지 않는 기능입니다", Toast.LENGTH_SHORT).show()
+//            val message = "Custom Toast with Background Color"
+//            val backgroundColor = Color.parseColor("#95FFFFFF")
+//            val customToast = createCustomToast(requireContext(), message, backgroundColor)
+//            customToast.show()
         }
 
-        // 플로팅 버튼 클릭 이벤트 - 공유
         binding.fabWrite.setOnClickListener {
-
+            findNavController().navigate(R.id.action_timelineFragment_to_postFragment)
         }
     }
 

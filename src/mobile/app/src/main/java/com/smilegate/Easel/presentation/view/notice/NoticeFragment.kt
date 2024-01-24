@@ -15,6 +15,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
@@ -163,19 +164,26 @@ class NoticeFragment : Fragment() {
             return@setOnTouchListener isAnimationRunning
         }
 
-        // 플로팅 버튼 클릭 이벤트 - 캡처
+        binding.fabMain.setOnClickListener {
+            if(!isFabOpen) {
+                findNavController().navigate(R.id.action_timelineFragment_to_postFragment)
+            }
+        }
+
         binding.fabImage.setOnClickListener {
-
+            findNavController().navigate(R.id.action_timelineFragment_to_postFragment)
         }
 
-        // 플로팅 버튼 클릭 이벤트 - 공유
         binding.fabGif.setOnClickListener {
-
+            Toast.makeText(requireContext(), "아직 지원하지 않는 기능입니다", Toast.LENGTH_SHORT).show()
+//            val message = "Custom Toast with Background Color"
+//            val backgroundColor = Color.parseColor("#95FFFFFF")
+//            val customToast = createCustomToast(requireContext(), message, backgroundColor)
+//            customToast.show()
         }
 
-        // 플로팅 버튼 클릭 이벤트 - 공유
         binding.fabWrite.setOnClickListener {
-
+            findNavController().navigate(R.id.action_timelineFragment_to_postFragment)
         }
     }
 
