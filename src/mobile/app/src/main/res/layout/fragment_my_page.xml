@@ -247,8 +247,8 @@
 
         <ImageView
             android:id="@+id/ic_toggle_down"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
             android:layout_marginTop="40dp"
             android:backgroundTint="@color/Grey_600"
             android:src="@drawable/ic_down_arrow"
