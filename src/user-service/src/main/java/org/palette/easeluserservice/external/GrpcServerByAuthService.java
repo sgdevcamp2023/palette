@@ -27,5 +27,11 @@ public class GrpcServerByAuthService extends GUserServiceGrpc.GUserServiceImplBa
         Optional<User> user = userService.loadByEmail(request.getEmail());
         if (user.isEmpty()) throw new BaseException(ExceptionType.USER_500_000001);
         userService.updateUserAuthStatus(user.get());
+
+        GUpdateUserAuthStatusResponse response = GUpdateUserAuthStatusResponse.newBuilder()
+                .setMessage(true)
+                .build();
+        responseObserver.onNext(response);
+        responseObserver.onCompleted();
     }
 }
