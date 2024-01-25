@@ -73,7 +73,10 @@
     <string name="view_bottom_sheet">조회수</string>
     <string name="announce_bottom_sheet">이 게시물이 조회된 횟수입니다. 자세히 알아보려면 <u><b>고객\n센터</b></u>를 방문하세요.</string>
     <string name="hide_bottom_sheet">숨기기</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!--HighLightFragment-->
+    <string name="highlight_fragment_headline">프로필에 하이라이트 추가</string>
+    <string name="highlight_fragment_announce">프로필에 게시물을 하이라이트하려면 Premium을 구독해\n야 합니다.</string>
+    <string name="highlight_fragment_subscribe">Premium 구독하기</string>
 
 </resources>
