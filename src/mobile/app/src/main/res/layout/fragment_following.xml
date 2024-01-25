@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/FollowScrollView"
-    tools:context=".presentation.view.Timeline.FollowingFragment">
+    tools:context=".presentation.view.timeline.FollowingFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvTimeline"

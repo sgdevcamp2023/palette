@@ -1,20 +1,57 @@
 package com.smilegate.Easel.presentation.adapter
 
+import android.content.Context
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
+import com.smilegate.Easel.MainActivity
+import com.smilegate.Easel.R
 import com.smilegate.Easel.databinding.ItemTimelineBinding
 import com.smilegate.Easel.domain.model.TimelineItem
+import com.smilegate.Easel.presentation.TimelinePopupManager
+import com.smilegate.Easel.presentation.view.timeline.RetweetBottomSheetDialog
+import com.smilegate.Easel.presentation.view.timeline.ShareBottomSheetDialog
+import com.smilegate.Easel.presentation.view.timeline.ViewBottomSheetDialog
 
-class TimelineRecyclerViewAdapter(private val timelineList: List<TimelineItem>) :
+class TimelineRecyclerViewAdapter(private val context: Context, private val timelineList: List<TimelineItem>) :
     RecyclerView.Adapter<TimelineRecyclerViewAdapter.TimelineViewHolder>() {
 
+    private val popupManager = TimelinePopupManager(context)
+    private val bottomSheetDialog = RetweetBottomSheetDialog()
+    @RequiresApi(Build.VERSION_CODES.S)
     inner class TimelineViewHolder(private val binding: ItemTimelineBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
+        private val icElseActions: ImageView = binding.root.findViewById(R.id.ic_else_actions)
+        private val icViews: ImageView = binding.root.findViewById(R.id.ic_timeline_views)
+        private val icRetweet: ImageView = binding.root.findViewById(R.id.ic_timeline_retweet)
+        private val icShare: ImageView = binding.root.findViewById(R.id.ic_timeline_share)
+
+        init {
+            icElseActions.setOnClickListener {
+                popupManager.showPopupMenu(icElseActions)
+            }
+
+            icRetweet.setOnClickListener {
+                retweetBottomSheet()
+            }
+
+            icShare.setOnClickListener {
+                shareBottomSheet()
+            }
+
+            icViews.setOnClickListener {
+                viewBottomSheet()
+            }
+        }
+
         fun bind(item: TimelineItem) {
             item.profileImg?.let { binding.ivTimelineProfileImg.setImageResource(it) }
             binding.tvTimelineNickname.text = item.nickName
@@ -30,6 +67,7 @@ class TimelineRecyclerViewAdapter(private val timelineList: List<TimelineItem>) 
 
             binding.tvTimelineContent.setVisibleOrGone(!item.content.isNullOrEmpty())
             binding.ivTimelineContentImg.setVisibleOrGone(item.contentImg != null)
+            binding.ivTimelineContentCard.setVisibleOrGone(item.contentImg != null)
 
             binding.tvTimelineHashtag.setVisibleOrGone(!item.hashtag.isNullOrEmpty())
             binding.tvTimelineMention.setVisibleOrInvisible(item.replys != null)
@@ -55,12 +93,14 @@ class TimelineRecyclerViewAdapter(private val timelineList: List<TimelineItem>) 
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.S)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TimelineViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ItemTimelineBinding.inflate(inflater, parent, false)
         return TimelineViewHolder(binding)
     }
 
+    @RequiresApi(Build.VERSION_CODES.S)
     override fun onBindViewHolder(holder: TimelineViewHolder, position: Int) {
         val timelineItem = timelineList[position]
         holder.bind(timelineItem)
@@ -76,5 +116,25 @@ class TimelineRecyclerViewAdapter(private val timelineList: List<TimelineItem>) 
 
     fun View.setVisibleOrInvisible(isVisible: Boolean) {
         visibility = if (isVisible) View.VISIBLE else View.INVISIBLE
+    }
+
+    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView)
+        popupManager.dismissPopupMenu()
+    }
+
+    private fun retweetBottomSheet() {
+        val modal = RetweetBottomSheetDialog()
+        modal.show((context as MainActivity).supportFragmentManager, "BasicBottomModalSheet")
+    }
+
+    private fun shareBottomSheet() {
+        val modal = ShareBottomSheetDialog()
+        modal.show((context as MainActivity).supportFragmentManager, "BasicBottomModalSheet")
+    }
+
+    private fun viewBottomSheet() {
+        val modal = ViewBottomSheetDialog()
+        modal.show((context as MainActivity).supportFragmentManager, "BasicBottomModalSheet")
     }
 }

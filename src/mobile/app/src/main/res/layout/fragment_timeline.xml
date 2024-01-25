@@ -5,24 +5,108 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.view.Timeline.TimelineFragment">
+    tools:context=".presentation.view.timeline.TimelineFragment">
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:elevation="1dp"
-        app:tabSelectedTextColor="@color/Grey_600"
-        app:tabTextColor="@color/BlueGrey_800"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tabGravity="fill"
         app:tabIndicatorHeight="3dp"
-        app:tabTextAppearance="@style/Headline8"
         app:tabMode="fixed"
-        app:tabGravity="fill"/>
+        app:tabSelectedTextColor="@color/Grey_600"
+        app:tabTextAppearance="@style/Headline8"
+        app:tabTextColor="@color/BlueGrey_800" />
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/tabLayout"/>
+        android:layout_below="@id/tabLayout"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <View
+        android:id="@+id/overlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:background="#90FFFFFF" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom|end">
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_write"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_margin="12dp"
+            android:src="@drawable/ic_add_text"
+            app:fab_colorNormal="@color/Blue_500"
+            app:fab_colorPressed="@color/Blue_500"
+            app:fab_colorRipple="@color/Blue_500"
+            app:fab_elevationCompat="0dp"
+            app:layout_constraintBottom_toBottomOf="@+id/fab_main"
+            app:layout_constraintEnd_toEndOf="@+id/fab_main"
+            app:layout_constraintStart_toStartOf="@+id/fab_main"
+            app:layout_constraintTop_toTopOf="@+id/fab_main"
+            app:rippleColor="@color/Blue_500" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_image"
+            fab_iconTintColor="@color/white"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_margin="12dp"
+            android:src="@drawable/ic_image"
+            app:fab_colorNormal="@color/Blue_500"
+            app:fab_colorPressed="@color/Blue_500"
+            app:fab_colorRipple="@color/Blue_500"
+            app:fab_elevationCompat="0dp"
+            app:layout_constraintBottom_toBottomOf="@+id/fab_main"
+            app:layout_constraintEnd_toEndOf="@+id/fab_main"
+            app:layout_constraintStart_toStartOf="@+id/fab_main"
+            app:layout_constraintTop_toTopOf="@+id/fab_main"
+            app:rippleColor="@color/Blue_500" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_gif"
+            fab_iconTintColor="@color/white"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_margin="12dp"
+            android:src="@drawable/ic_gif"
+            app:fab_colorNormal="@color/Blue_500"
+            app:fab_colorPressed="@color/Blue_500"
+            app:fab_colorRipple="@color/Blue_500"
+            app:fab_elevationCompat="0dp"
+            app:layout_constraintBottom_toBottomOf="@+id/fab_main"
+            app:layout_constraintEnd_toEndOf="@+id/fab_main"
+            app:layout_constraintStart_toStartOf="@+id/fab_main"
+            app:layout_constraintTop_toTopOf="@+id/fab_main"
+            app:rippleColor="@color/Blue_500" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_main"
+            fab_iconTintColor="@color/white"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_margin="12dp"
+            android:src="@drawable/ic_add_text"
+            app:circularflow_defaultRadius="30dp"
+            app:fab_colorNormal="@color/black"
+            app:fab_colorPressed="@color/black"
+            app:fab_colorRipple="@color/black"
+            android:longClickable="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:rippleColor="@color/black" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </RelativeLayout>

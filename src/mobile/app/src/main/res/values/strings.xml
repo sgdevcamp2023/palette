@@ -60,4 +60,18 @@
     <string name="ask_name_fragment_hint">사용자 아이디</string>
     <string name="ask_name_fragment_accept">가입</string>
 
+    <!-- RetweetBottomSheetDialog -->
+    <string name="retweet_fragment_bottom_sheet">재게시</string>
+    <string name="repost_fragment_bottom_sheet">인용</string>
+    <string name="cancel_fragment_bottom_sheet">취소</string>
+
+    <!-- ShareBottomSheetDialog -->
+    <string name="link_Share_fragment_bottom_sheet">링크 복사</string>
+    <string name="Share_fragment_bottom_sheet">공유하기</string>
+
+    <!--ViewBottomSheetDialog-->
+    <string name="view_bottom_sheet">조회수</string>
+    <string name="announce_bottom_sheet">이 게시물이 조회된 횟수입니다. 자세히 알아보려면 <u><b>고객\n센터</b></u>를 방문하세요.</string>
+    <string name="hide_bottom_sheet">숨기기</string>
+
 </resources>

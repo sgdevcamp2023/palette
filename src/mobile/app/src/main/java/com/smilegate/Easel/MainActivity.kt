@@ -1,20 +1,24 @@
 package com.smilegate.Easel
 
+import android.animation.ObjectAnimator
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
-import android.view.MotionEvent
-import android.widget.Toolbar
-import androidx.activity.OnBackPressedCallback
+import android.view.View
+import android.view.WindowManager
+import android.widget.ImageView
+import androidx.annotation.RequiresApi
+import androidx.constraintlayout.widget.ConstraintSet.Layout
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import androidx.fragment.app.DialogFragment
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.AppBarConfiguration
-import com.google.android.material.bottomnavigation.LabelVisibilityMode
-import com.google.android.material.navigation.NavigationBarView
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.smilegate.Easel.databinding.ActivityMainBinding
+import com.smilegate.Easel.presentation.TimelinePopupManager
+import kotlinx.coroutines.NonCancellable.start
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,6 +29,7 @@ class MainActivity : AppCompatActivity() {
 
     private var lastSelectedIconId: Int? = null
 
+    @RequiresApi(Build.VERSION_CODES.S)
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -60,6 +65,30 @@ class MainActivity : AppCompatActivity() {
         binding.navView.setOnNavigationItemSelectedListener { item ->
             onNavigationItemSelected(item)
         }
+
+        var down = false
+        var height:Float? = null
+        val bottomNavView: BottomNavigationView = findViewById(R.id.nav_view)
+
+        binding.navView.setOnScrollChangeListener { _, _, scY, _, odscY ->
+            if (height == null) {
+                height = bottomNavView.height.toFloat()
+            }
+            if (scY > odscY) {
+                if (down) {
+                    down = false
+                    bottomNavView.clearAnimation()
+                    bottomNavView.animate().translationY(height!!).duration = 200
+                }
+            } else {
+                if (!down) {
+                    down = true
+                    bottomNavView.clearAnimation()
+                    bottomNavView.animate().translationY(0f).duration = 200
+                }
+            }
+        }
+
     }
 
     private fun updateIcon(itemId: Int, iconResId: Int) {
@@ -126,3 +155,4 @@ class MainActivity : AppCompatActivity() {
         }
     }
 }
+
