@@ -60,23 +60,11 @@ class MessageFragment : Fragment() {
         view.isFocusableInTouchMode = true
         view.requestFocus()
         view.setOnKeyListener { _, keyCode, _ ->
-            if (keyCode == KeyEvent.KEYCODE_BACK) {
-                if (isCurrentFragment()) {
-                    // 현재 프래그먼트에서 뒤로가기 버튼 처리
-                    if (doubleBackPressed) {
-                        // 두 번째 눌림
-                        requireActivity().finish()
-                    } else {
-                        // 첫 번째 눌림
-                        doubleBackPressed = true
-                        // 2초 내에 두 번 누르지 않으면 초기화
-                        Handler(Looper.getMainLooper()).postDelayed({
-                            doubleBackPressed = false
-                        }, 2000)
-                    }
-                    return@setOnKeyListener true
-                }
+            if (keyCode == KeyEvent.KEYCODE_BACK && isCurrentFragment()) {
+                handleBackPressed()
+                return@setOnKeyListener true
             }
+
             false
         }
 
@@ -130,5 +118,17 @@ class MessageFragment : Fragment() {
 
         isAnimationRunning = false
 
+    }
+
+    private fun handleBackPressed() {
+        if (doubleBackPressed) {
+            requireActivity().finish()
+            return
+        }
+
+        doubleBackPressed = true
+        Handler(Looper.getMainLooper()).postDelayed({
+            doubleBackPressed = false
+        }, 2000)
     }
 }
