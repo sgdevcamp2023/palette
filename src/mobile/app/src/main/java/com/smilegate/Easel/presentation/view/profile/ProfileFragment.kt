@@ -1,11 +1,15 @@
 package com.smilegate.Easel.presentation.view.profile
 
+import android.graphics.PorterDuff
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
+import androidx.annotation.ColorRes
+import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -15,9 +19,15 @@ import com.smilegate.Easel.databinding.FragmentProfileImageBinding
 import com.smilegate.Easel.databinding.FragmentStartBinding
 
 class ProfileFragment : Fragment() {
+
     private lateinit var binding: FragmentProfileBinding
 
     private lateinit var navController: NavController
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        requireActivity().setTheme(R.style.ProfileTheme)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,7 +37,7 @@ class ProfileFragment : Fragment() {
         binding = FragmentProfileBinding.inflate(inflater, container, false)
 
         val toolbar = requireActivity().findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar_container)
-        toolbar.visibility = View.VISIBLE
+        toolbar.visibility = View.GONE
 
         val bottomNavigation = activity?.findViewById<BottomNavigationView>(R.id.nav_view)
         bottomNavigation?.visibility = View.VISIBLE
