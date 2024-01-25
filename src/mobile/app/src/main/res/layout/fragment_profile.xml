@@ -216,7 +216,7 @@
           android:id="@+id/view4"
           android:layout_width="match_parent"
           android:layout_height="1dp"
-          android:background="@color/BlueGrey_500"
+          android:background="@color/BlueGrey_300"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toBottomOf="@+id/tabLayout" />
@@ -224,8 +224,9 @@
       <androidx.viewpager.widget.ViewPager
           android:id="@+id/profile_view_pager"
           android:layout_width="match_parent"
-          android:layout_height="wrap_content"
+          android:layout_height="0dp"
           android:layout_below="@id/tabLayout"
+          app:layout_constraintBottom_toBottomOf="parent"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toBottomOf="@+id/view4" />
