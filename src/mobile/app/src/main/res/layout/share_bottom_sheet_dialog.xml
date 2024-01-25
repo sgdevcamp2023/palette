@@ -80,6 +80,7 @@
         android:background="@drawable/btn_timeline_bottom_sheet"
         android:elevation="0dp"
         android:text="@string/cancel_fragment_bottom_sheet"
+        android:stateListAnimator="@null"
         android:textColor="@color/Grey_600"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

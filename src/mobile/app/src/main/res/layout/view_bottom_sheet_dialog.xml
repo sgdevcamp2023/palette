@@ -53,6 +53,7 @@
         android:layout_marginBottom="28dp"
         android:background="@drawable/btn_timeline_bottom_sheet"
         android:text="@string/hide_bottom_sheet"
+        android:stateListAnimator="@null"
         android:textColor="@color/Grey_600"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
