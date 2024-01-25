@@ -1,6 +1,5 @@
 package org.palette.easelauthservice.external;
 
-import io.grpc.StatusRuntimeException;
 import lombok.RequiredArgsConstructor;
 import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.palette.easelauthservice.exception.BaseException;
@@ -23,7 +22,7 @@ public class GrpcUserClient {
                             .setEmail(email)
                             .build()
             );
-        } catch (final StatusRuntimeException e) {
+        } catch (final Exception e) {
             throw new BaseException(ExceptionType.AUTH_500_000001);
         }
     }
