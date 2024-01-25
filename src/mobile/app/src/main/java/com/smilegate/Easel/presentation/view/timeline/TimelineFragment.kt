@@ -129,21 +129,12 @@ class TimelineFragment : Fragment() {
                 if (!isAnimationRunning) {
                     toggleFab()
 
-                    binding.fabMain.scaleX = 0.8f
-                    binding.fabMain.scaleY = 0.8f
+                    scaleFab(binding.fabMain, 0.8f)
+                    setFabAttributes(binding.fabMain, R.drawable.ic_x, R.color.Blue_500)
 
-                    binding.fabMain.setBackgroundColor(Color.WHITE)
-                    binding.fabMain.setImageResource(R.drawable.ic_x)
-                    binding.fabMain.setColorFilter(
-                        ContextCompat.getColor(
-                            requireContext(),
-                            R.color.Blue_500
-                        ), PorterDuff.Mode.SRC_IN
-                    )
-
-                    binding.fabGif.setElevationCompat(15f)
-                    binding.fabImage.setElevationCompat(15f)
-                    binding.fabWrite.setElevationCompat(15f)
+                    setElevationCompat(binding.fabGif, 15f)
+                    setElevationCompat(binding.fabImage, 15f)
+                    setElevationCompat(binding.fabWrite, 15f)
 
                     vibrator.vibrate(100)
 
@@ -158,20 +149,16 @@ class TimelineFragment : Fragment() {
                 if(isFabOpen) {
                     toggleFab()
 
-                    binding.fabMain.scaleX = 1.0f
-                    binding.fabMain.scaleY = 1.0f
+                    scaleFab(binding.fabMain, 1.0f)
+                    setFabAttributes(binding.fabMain, R.drawable.ic_add_text, R.color.white)
 
-                    binding.fabMain.setImageResource(R.drawable.ic_add_text)
-                    binding.fabMain.setColorFilter(ContextCompat.getColor(requireContext(), R.color.white), PorterDuff.Mode.SRC_IN)
-
-                    binding.fabGif.setElevationCompat(0f)
-                    binding.fabImage.setElevationCompat(0f)
-                    binding.fabWrite.setElevationCompat(0f)
+                    setElevationCompat(binding.fabGif, 0f)
+                    setElevationCompat(binding.fabImage, 0f)
+                    setElevationCompat(binding.fabWrite, 0f)
 
                     vibrator.vibrate(100)
 
                     isAnimationRunning = false
-
                 }
                 return true
             }
@@ -246,5 +233,22 @@ class TimelineFragment : Fragment() {
     private fun moveFab(fab: FloatingActionButton, translationX: Float, translationY: Float) {
         ObjectAnimator.ofFloat(fab, "translationX", translationX).apply { start() }
         ObjectAnimator.ofFloat(fab, "translationY", translationY).apply { start() }
+    }
+
+    private fun scaleFab(fab: FloatingActionButton, scaleFactor: Float) {
+        fab.scaleX = scaleFactor
+        fab.scaleY = scaleFactor
+    }
+
+    private fun setFabAttributes(fab: FloatingActionButton, imageResource: Int, colorResource: Int) {
+        fab.setImageResource(imageResource)
+        fab.setColorFilter(
+            ContextCompat.getColor(requireContext(), colorResource),
+            PorterDuff.Mode.SRC_IN
+        )
+    }
+
+    private fun setElevationCompat(fab: FloatingActionButton, elevation: Float) {
+        fab.setElevationCompat(elevation)
     }
 }
