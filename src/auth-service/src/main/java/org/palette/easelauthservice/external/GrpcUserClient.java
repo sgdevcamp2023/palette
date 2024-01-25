@@ -6,20 +6,19 @@ import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.palette.easelauthservice.exception.BaseException;
 import org.palette.easelauthservice.exception.ExceptionType;
 import org.palette.grpc.GUpdateUserAuthStatusRequest;
-import org.palette.grpc.GUpdateUserAuthStatusResponse;
 import org.palette.grpc.GUserServiceGrpc;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class GrpcUser {
+public class GrpcUserClient {
 
     @GrpcClient("user-service")
     private GUserServiceGrpc.GUserServiceBlockingStub gUserServiceBlockingStub;
 
-    public GUpdateUserAuthStatusResponse updateUserAuthStatus(String email) {
+    public void updateUserAuthStatus(String email) {
         try {
-            return gUserServiceBlockingStub.updateUserAuthStatus(
+            gUserServiceBlockingStub.updateUserAuthStatus(
                     GUpdateUserAuthStatusRequest.newBuilder()
                             .setEmail(email)
                             .build()

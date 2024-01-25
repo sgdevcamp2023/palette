@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.palette.easelauthservice.component.mailsender.EmailAuthMailSender;
 import org.palette.easelauthservice.dto.request.AuthEmailResendRequest;
 import org.palette.easelauthservice.dto.request.EmailAuthRequest;
-import org.palette.easelauthservice.external.GrpcUser;
+import org.palette.easelauthservice.external.GrpcUserClient;
 import org.palette.easelauthservice.redis.EmailAuth;
 import org.palette.easelauthservice.redis.RedisEmailAuthService;
 import org.palette.grpc.GAuthServiceGrpc;
@@ -17,14 +17,14 @@ public class AuthUsecase extends GAuthServiceGrpc.GAuthServiceImplBase {
 
     private final RedisEmailAuthService redisEmailAuthService;
     private final EmailAuthMailSender emailAuthMailSender;
-    private final GrpcUser grpcUser;
+    private final GrpcUserClient grpcUserClient;
 
     public void verify(EmailAuthRequest emailAuthRequest) {
         String email = emailAuthRequest.email();
         EmailAuth emailAuth = redisEmailAuthService.loadByEmail(email);
         emailAuth.isAbusing();
         if (emailAuth.comparePayload(emailAuth.getAuthPayload())) {
-            grpcUser.updateUserAuthStatus(email);
+            grpcUserClient.updateUserAuthStatus(email);
             redisEmailAuthService.delete(emailAuth);
             return;
         }
