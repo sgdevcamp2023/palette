@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { type ChangeEvent } from 'react';
 
 import { StepTitle } from '..';
-import type { LoginInfo } from './loginReducer';
+import type { LoginInfo } from '@/@types';
 import { Button, Input, Typography } from '../common';
 
 interface LoginPasswordBoxProps {

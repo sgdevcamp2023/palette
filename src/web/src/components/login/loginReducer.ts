@@ -26,8 +26,3 @@ export type LoginStepDispatcher = Dispatch<{
 export interface NavigationEvent {
   onNextStep: VoidFunction;
 }
-
-export interface LoginInfo {
-  email: string;
-  password: string;
-}
