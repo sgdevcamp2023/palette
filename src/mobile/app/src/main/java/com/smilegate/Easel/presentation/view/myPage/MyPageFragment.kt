@@ -2,17 +2,16 @@ package com.smilegate.Easel.presentation.view.myPage
 
 import android.animation.ObjectAnimator
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.smilegate.Easel.R
 import com.smilegate.Easel.databinding.FragmentMyPageBinding
-import com.smilegate.Easel.databinding.FragmentProfileBinding
 
 class MyPageFragment : Fragment() {
     private lateinit var binding: FragmentMyPageBinding
@@ -43,7 +42,6 @@ class MyPageFragment : Fragment() {
         navController = findNavController()
 
         val navigateTimeLine = listOf(
-            binding.icCloseBtn,
             binding.ivProfileIcon,
             binding.tvProfileMenu,
             binding.tvProfileMenu,
@@ -51,7 +49,7 @@ class MyPageFragment : Fragment() {
 
         for (view in navigateTimeLine) {
             view.setOnClickListener {
-                navController.navigate(R.id.action_myPageFragment_to_TimelineFragment)
+                navController.navigate(R.id.action_myPageFragment_to_profileFragment)
             }
         }
 
@@ -66,6 +64,9 @@ class MyPageFragment : Fragment() {
             }
         }
 
+        binding.icCloseBtn.setOnClickListener {
+            navController.navigate(R.id.action_myPageFragment_to_TimelineFragment)
+        }
 
         binding.icToggleDown.setOnClickListener {
             isSettingExpanded = !isSettingExpanded
