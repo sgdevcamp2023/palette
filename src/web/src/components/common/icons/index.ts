@@ -3,10 +3,7 @@ import BarChart from './BarChart.svg?react';
 import Bell from './Bell.svg?react';
 import BlingStar from './BlingStar.svg?react';
 import Bookmark from './Bookmark.svg?react';
-<<<<<<< HEAD
 import Calendar from './Calendar.svg?react';
-=======
->>>>>>> 812250e40141b1125a073420719516620a38d826
 import Camera from './Camera.svg?react';
 import Cart from './Cart.svg?react';
 import Check from './Check.svg?react';
@@ -64,10 +61,7 @@ export const ICONS = {
   bell: Bell,
   blingStar: BlingStar,
   bookmark: Bookmark,
-<<<<<<< HEAD
   calendar: Calendar,
-=======
->>>>>>> 812250e40141b1125a073420719516620a38d826
   camera: Camera,
   cart: Cart,
   check: Check,
