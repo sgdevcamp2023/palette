@@ -263,6 +263,18 @@
             android:id="@+id/action_myPageFragment_to_profileFragment"
             app:destination="@id/profileFragment"/>
 
+        <action
+            android:id="@+id/action_myPageFragment_to_bookMarkFragment"
+            app:destination="@id/bookMarkFragment"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/bookMarkFragment"
+        android:name="com.smilegate.Easel.presentation.view.myPage.BookMarkFragment"
+        android:label="fragment_book_mark"
+        tools:layout="@layout/fragment_book_mark">
+
     </fragment>
 
 </navigation>
