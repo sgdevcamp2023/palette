@@ -3,6 +3,7 @@ import type { User } from '@/@types';
 export const DUMMY_USER: User = {
   id: '123',
   email: 'poiu694@naver.com',
+  password: '',
   profileImagePath:
     'https://pbs.twimg.com/profile_images/1734036193585893376/BkzwxOn2_400x400.png',
   backgroundImagePath:
