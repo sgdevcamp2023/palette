@@ -42,17 +42,30 @@ class MyPageFragment : Fragment() {
 
         navController = findNavController()
 
-        binding.icCloseBtn.setOnClickListener {
-            navController.navigate(R.id.action_myPageFragment_to_TimelineFragment)
+        val navigateTimeLine = listOf(
+            binding.icCloseBtn,
+            binding.ivProfileIcon,
+            binding.tvProfileMenu,
+            binding.tvProfileMenu,
+        )
+
+        for (view in navigateTimeLine) {
+            view.setOnClickListener {
+                navController.navigate(R.id.action_myPageFragment_to_TimelineFragment)
+            }
         }
 
-        binding.ivProfileIcon.setOnClickListener {
-            navController.navigate(R.id.action_myPageFragment_to_profileFragment)
+        val navigateBookMark = listOf(
+            binding.ivBookmarkIcon,
+            binding.tvBookmarkMenu,
+        )
+
+        for (view in navigateBookMark) {
+            view.setOnClickListener {
+                navController.navigate(R.id.action_myPageFragment_to_bookMarkFragment)
+            }
         }
 
-        binding.tvProfileMenu.setOnClickListener {
-            navController.navigate(R.id.action_myPageFragment_to_profileFragment)
-        }
 
         binding.icToggleDown.setOnClickListener {
             isSettingExpanded = !isSettingExpanded

@@ -1,60 +1,151 @@
 package com.smilegate.Easel.presentation.view.myPage
 
+import android.content.Context
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.util.TypedValue
+import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.core.content.ContextCompat
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.smilegate.Easel.MainActivity
 import com.smilegate.Easel.R
+import com.smilegate.Easel.databinding.FragmentBookMarkBinding
+import com.smilegate.Easel.databinding.FragmentFollowingBinding
+import com.smilegate.Easel.domain.model.TimelineItem
+import com.smilegate.Easel.presentation.adapter.TimelineRecyclerViewAdapter
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [BookMarkFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class BookMarkFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private lateinit var binding: FragmentBookMarkBinding
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var navController: NavController
+
+    private var savedScrollPosition: Int = 0
+
+    private lateinit var mainActivity: MainActivity
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_book_mark, container, false)
+    ): View {
+        binding = FragmentBookMarkBinding.inflate(inflater, container, false)
+
+        val toolbar = requireActivity().findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar_container)
+        toolbar.visibility = View.VISIBLE
+
+        val backButton = toolbar.findViewById<ImageView>(R.id.back_btn)
+        backButton.setImageResource(R.drawable.ic_left_stick_arrow)
+        backButton.visibility = View.VISIBLE
+        backButton.setOnClickListener {
+            findNavController().navigateUp()
+        }
+
+        val settingButton = toolbar.findViewById<ImageView>(R.id.else_btn)
+        settingButton.setImageResource(R.drawable.ic_three_dot)
+        settingButton.visibility = View.VISIBLE
+
+        navController = findNavController()
+
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment BookMarkFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            BookMarkFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        // MainActivity의 참조를 가져옴
+        if (context is MainActivity) {
+            mainActivity = context
+        }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // 바텀 네비게이션바 보이기
+        val bottomNavigation = activity?.findViewById<BottomNavigationView>(R.id.nav_view)
+        bottomNavigation?.visibility = View.VISIBLE
+
+        // 뒤로가기 버튼을 처리하는 부분
+        view.isFocusableInTouchMode = true
+        view.requestFocus()
+
+        val bookMarkList = generateDummyTimelineData()
+
+        val adapter = TimelineRecyclerViewAdapter(requireContext(), bookMarkList)
+        binding.rvTimeline.adapter = adapter
+        binding.rvTimeline.layoutManager = LinearLayoutManager(requireContext())
+
+        // 스크롤 리스너를 이용하여 스크롤 위치 저장
+        binding.ScrollView.setOnScrollChangeListener { _, _, scrollY, _, _ ->
+            savedScrollPosition = scrollY
+        }
+
+        // 저장된 스크롤 위치 복원
+        binding.ScrollView.post {
+            binding.ScrollView.scrollTo(0, savedScrollPosition)
+        }
+    }
+
+    private fun generateDummyTimelineData(): List<TimelineItem> {
+        val profileImgId = R.drawable.sample_profile_img5
+        val profileImgId1 = R.drawable.sample_profile_img1
+        val profileImgId2 = R.drawable.sample_profile_img2
+        val profileImgId3 = R.drawable.sample_profile_img3
+        val profileImgId4 = R.drawable.sample_profile_img4
+
+        val contentImgId = R.drawable.sample_content_img1
+        val contentImgId1 = R.drawable.sample_content_img2
+        val contentImgId2 = R.drawable.sample_content_img3
+        val contentImgId3 = R.drawable.sample_content_img4
+
+        return listOf(
+            TimelineItem(profileImgId, "이원영", "@courtney81819", "1시간",
+                "아 슈뢰딩거가 아닌가?ㅋ", null, null,
+                2, 1, null, 24),
+
+
+            TimelineItem(profileImgId2, "이상민", "@isangmi92157279", "32분",
+                "비가 내리는 날이에요.\n추적이는 바닥을 보며 걷다보니 카페가 나와 커피를 사 봤어요.", contentImgId, null,
+                4, 2, 5, 121),
+
+            TimelineItem(profileImgId1, "박희원", "@_Parking1_", "18분",
+                "타래 스타트", contentImgId1, null,
+                1, 1, null, 114),
+
+            TimelineItem(profileImgId4, "김도율", "@doxxx93", "8분",
+                "테스트", null, null,
+                1, null, 2, 32),
+
+            TimelineItem(profileImgId2, "이상민", "@isangmi92157279", "1주",
+                "커피는 아이스 아메리카노에요.\n컵에 스며든 물방울처럼, 제 마음을 촉촉하게 만들어 주네요..^^", contentImgId2, null,
+                3, 4, 2, 89),
+
+            TimelineItem(profileImgId3, "김도현", "@KittenDiger", "4일",
+                "테스트 인용의 인용", null, null,
+                1, null, null, 30),
+
+            TimelineItem(profileImgId, "이원영", "@courtney81819", "3시간",
+                "청하 로제", contentImgId3, null,
+                3, null, 2, 334),
+
+            TimelineItem(profileImgId3, "김도현", "@KittenDiger", "4일",
+                "구글인ㅇㅎㅇ의 인용의 인용", null, null,
+                1, 2, null, 50),
+        )
+
+    }
+
+    override fun onPause() {
+        super.onPause()
+        savedScrollPosition = binding.ScrollView.scrollY
     }
 }
