@@ -5,11 +5,11 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.KeyEvent
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -97,6 +97,11 @@ class FollowingFragment : Fragment() {
         binding.FollowScrollView.post {
             binding.FollowScrollView.scrollTo(0, savedScrollPosition)
         }
+
+        val swipeRefreshLayout = binding.swipeRefreshLayout
+        swipeRefreshLayout.setOnRefreshListener {
+            refreshTimelineData()
+        }
     }
 
     private fun isCurrentFragment(): Boolean {
@@ -115,7 +120,7 @@ class FollowingFragment : Fragment() {
         val contentImgId2 = com.smilegate.Easel.R.drawable.sample_content_img3
         val contentImgId3 = com.smilegate.Easel.R.drawable.sample_content_img4
 
-        return listOf(
+        val timelineList = listOf(
             TimelineItem(profileImgId, "이원영", "@courtney81819", "1시간",
                 "아 슈뢰딩거가 아닌가?ㅋ", null, null,
                 2, 1, null, 24),
@@ -150,6 +155,7 @@ class FollowingFragment : Fragment() {
                 1, 2, null, 50),
         )
 
+        return timelineList.shuffled()
     }
 
     override fun onPause() {
@@ -167,5 +173,12 @@ class FollowingFragment : Fragment() {
         Handler(Looper.getMainLooper()).postDelayed({
             doubleBackPressed = false
         }, 2000)
+    }
+
+    private fun refreshTimelineData() {
+        val shuffledTimelineList = generateDummyTimelineData().shuffled()
+        (binding.rvTimeline.adapter as? TimelineRecyclerViewAdapter)?.updateData(shuffledTimelineList)
+
+        binding.swipeRefreshLayout.isRefreshing = false
     }
 }
