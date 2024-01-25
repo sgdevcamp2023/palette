@@ -2,17 +2,16 @@ package com.smilegate.Easel.presentation.view.profile
 
 import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.smilegate.Easel.MainActivity
 import com.smilegate.Easel.R
 import com.smilegate.Easel.databinding.FragmentLikedBinding
-import com.smilegate.Easel.databinding.FragmentReplyBinding
 import com.smilegate.Easel.domain.model.TimelineItem
 import com.smilegate.Easel.presentation.adapter.TimelineRecyclerViewAdapter
 
