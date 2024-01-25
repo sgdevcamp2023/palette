@@ -101,7 +101,6 @@ class TimelineFragment : Fragment() {
             false
         }
 
-
         vibrator = requireContext().getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
 
         setFABClickEvent()
