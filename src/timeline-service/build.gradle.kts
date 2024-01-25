@@ -24,6 +24,7 @@ repositories {
 extra["springCloudVersion"] = "2023.0.0"
 
 dependencies {
+	implementation(project(":common-module"))
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
 	compileOnly("org.projectlombok:lombok")
