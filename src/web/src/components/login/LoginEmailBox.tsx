@@ -1,8 +1,9 @@
 import type { ChangeEvent } from 'react';
 
 import { StepTitle } from '..';
+import type { LoginInfo } from '@/@types';
 import { Button, Input, Typography } from '../common';
-import type { LoginInfo, NavigationEvent } from './loginReducer';
+import type { NavigationEvent } from './loginReducer';
 
 interface LoginEmailBoxProps extends NavigationEvent {
   email: string;

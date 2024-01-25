@@ -3,8 +3,8 @@ import type { ChangeEvent } from 'react';
 import { useReducer, useState } from 'react';
 import { useNavigate } from '@tanstack/react-router';
 
+import type { LoginInfo } from '@/@types';
 import { ContentLayout, Header } from '@/components';
-import type { LoginInfo } from '@/components/login/loginReducer';
 import { LoginStep, LoginStepReducer } from '@/components/login/loginReducer';
 import { LoginEmailBox, LoginPasswordBox } from '@/components/login';
 

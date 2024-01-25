@@ -1,6 +1,7 @@
 export interface User {
   id: string;
   email: string;
+  password: string;
   profileImagePath: string;
   backgroundImagePath: string;
   status: 'private' | 'public';
