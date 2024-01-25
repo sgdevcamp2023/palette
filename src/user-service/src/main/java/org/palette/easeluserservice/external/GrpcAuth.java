@@ -26,7 +26,6 @@ public class GrpcAuth {
                             .build()
             );
         } catch (final StatusRuntimeException e) {
-            System.out.println("e.getLocalizedMessage() = " + e.getLocalizedMessage());
             throw new BaseException(ExceptionType.USER_500_000001);
         }
     }

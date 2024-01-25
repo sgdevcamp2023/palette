@@ -82,7 +82,6 @@ class Join extends AcceptanceTestBase {
     @Test
     @DisplayName("회원가입 정상 로직 테스트")
     void executePassCase() throws Exception {
-        System.out.println("userJpaRepository.findByEmail(\"diger@gmail.com\") = " + userJpaRepository.findByEmail("diger@gmail.com"));
         JoinRequest joinRequest = new JoinRequest(
                 "diger@gmail.com",
                 "digerPassword",
