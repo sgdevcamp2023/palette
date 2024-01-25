@@ -13,8 +13,6 @@ import org.palette.easeluserservice.service.UserService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-
 @RequiredArgsConstructor
 @Service
 @Transactional(readOnly = true)
@@ -49,11 +47,8 @@ public class UserUsecase {
     public void executeJoin(
             JoinRequest joinRequest
     ) {
-        final Optional<User> optionalUser = userService.loadByEmail(
-                joinRequest.email()
-        );
-
-        User user = validateJoinRequest(joinRequest, optionalUser);
+        User user = userService.loadByEmail(joinRequest.email());
+        validateJoinRequest(joinRequest, user);
 
         user = userService.createCompletedUser(
                 user,
@@ -68,11 +63,10 @@ public class UserUsecase {
         gRPCSocialClient.createSocialUser(user);
     }
 
-    private User validateJoinRequest(JoinRequest joinRequest, Optional<User> optionalUser) {
-        if (optionalUser.isEmpty()) throw new BaseException(ExceptionType.USER_404_000001);
-        User user = optionalUser.get();
-        if (user.isUserNotAuthed()) throw new BaseException(ExceptionType.USER_401_000001);
+    private void validateJoinRequest(JoinRequest joinRequest, User user) {
+        if (user.isUserNotAuthed()) {
+            throw new BaseException(ExceptionType.USER_401_000001);
+        }
         userService.isUsernameAlreadyExists(joinRequest.username());
-        return user;
     }
 }

@@ -71,16 +71,20 @@ public class UserService {
     }
 
     public void isEmailAlreadyExists(String requestedEmail) {
-        if (userJpaRepository.existsByEmail(requestedEmail))
+        if (userJpaRepository.existsByEmail(requestedEmail)) {
             throw new BaseException(ExceptionType.USER_409_000001);
+        }
     }
 
     public void isUsernameAlreadyExists(String requestedUsername) {
-        if (userJpaRepository.existsByUsername(requestedUsername))
+        if (userJpaRepository.existsByUsername(requestedUsername)) {
             throw new BaseException(ExceptionType.USER_409_000001);
+        }
     }
 
-    public Optional<User> loadByEmail(String email) {
-        return userJpaRepository.findByEmail(email);
+    public User loadByEmail(String email) {
+        return userJpaRepository.findByEmail(email).orElseThrow(() ->
+                new BaseException(ExceptionType.USER_404_000001)
+        );
     }
 }
