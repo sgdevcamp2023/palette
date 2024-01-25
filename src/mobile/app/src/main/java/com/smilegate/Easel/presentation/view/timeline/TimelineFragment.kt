@@ -141,7 +141,6 @@ class TimelineFragment : Fragment() {
                         ), PorterDuff.Mode.SRC_IN
                     )
 
-                    binding.fabMain.setElevationCompat(15f)
                     binding.fabGif.setElevationCompat(15f)
                     binding.fabImage.setElevationCompat(15f)
                     binding.fabWrite.setElevationCompat(15f)
