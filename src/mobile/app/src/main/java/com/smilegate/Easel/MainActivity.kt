@@ -37,8 +37,10 @@ class MainActivity : AppCompatActivity() {
 
         /* Status Bar & Navigation Bar */
         val barColor = ContextCompat.getColor(this, R.color.white)
+        val statusColor = ContextCompat.getColor(this, android.R.color.transparent)
+
         with(window) {
-            statusBarColor = barColor
+            statusBarColor = statusColor
             navigationBarColor = barColor
         }
         with(WindowInsetsControllerCompat(window, window.decorView)) {
