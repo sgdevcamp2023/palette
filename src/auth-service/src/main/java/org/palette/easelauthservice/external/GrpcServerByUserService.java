@@ -2,17 +2,17 @@ package org.palette.easelauthservice.external;
 
 import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
+import net.devh.boot.grpc.server.service.GrpcService;
 import org.palette.easelauthservice.component.generator.AuthPayloadGenerator;
 import org.palette.easelauthservice.component.mailsender.EmailAuthMailSender;
 import org.palette.easelauthservice.redis.RedisEmailAuthService;
 import org.palette.grpc.GAuthServiceGrpc;
 import org.palette.grpc.GSendEmailAuthRequest;
 import org.palette.grpc.GSendEmailAuthResponse;
-import org.springframework.stereotype.Service;
 
-@Service
+@GrpcService
 @RequiredArgsConstructor
-public class GrpcServer extends GAuthServiceGrpc.GAuthServiceImplBase {
+public class GrpcServerByUserService extends GAuthServiceGrpc.GAuthServiceImplBase {
 
     private final RedisEmailAuthService redisEmailAuthService;
     private final EmailAuthMailSender emailAuthMailSender;
