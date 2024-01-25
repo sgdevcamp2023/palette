@@ -19,6 +19,7 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import com.github.clans.fab.FloatingActionButton
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.smilegate.Easel.R
 import com.smilegate.Easel.databinding.FragmentSearchBinding
@@ -174,25 +175,15 @@ class SearchFragment : Fragment() {
     private fun toggleFab() {
         // 플로팅 액션 버튼 닫기 - 열려있는 플로팅 버튼 집어넣는 애니메이션
         if (isFabOpen) {
-            ObjectAnimator.ofFloat(binding.fabWrite, "translationX", 0f).apply { start() }
-            ObjectAnimator.ofFloat(binding.fabWrite, "translationY", 0f).apply { start() }
-
-            ObjectAnimator.ofFloat(binding.fabGif, "translationX", 0f).apply { start() }
-            ObjectAnimator.ofFloat(binding.fabGif, "translationY", 0f).apply { start() }
-
-            ObjectAnimator.ofFloat(binding.fabImage, "translationX", 0f).apply { start() }
-            ObjectAnimator.ofFloat(binding.fabImage, "translationY", 0f).apply { start() }
+            moveFab(binding.fabWrite, 0f, 0f)
+            moveFab(binding.fabGif, 0f, 0f)
+            moveFab(binding.fabImage, 0f, 0f)
 
             ObjectAnimator.ofFloat(binding.fabMain, View.ROTATION, 180f, 0f).apply { start() }
         } else { // 플로팅 액션 버튼 열기 - 닫혀있는 플로팅 버튼 꺼내는 애니메이션
-            ObjectAnimator.ofFloat(binding.fabWrite, "translationX", 0f).apply { start() }
-            ObjectAnimator.ofFloat(binding.fabWrite, "translationY", -540f).apply { start() }
-
-            ObjectAnimator.ofFloat(binding.fabGif, "translationX", 0f).apply { start() }
-            ObjectAnimator.ofFloat(binding.fabGif, "translationY", -360f).apply { start() }
-
-            ObjectAnimator.ofFloat(binding.fabImage, "translationX", 0f).apply { start() }
-            ObjectAnimator.ofFloat(binding.fabImage, "translationY", -180f).apply { start() }
+            moveFab(binding.fabWrite, 0f, -540f)
+            moveFab(binding.fabGif, 0f, -360f)
+            moveFab(binding.fabImage, 0f, -180f)
 
             ObjectAnimator.ofFloat(binding.fabMain, View.ROTATION, 0f, 180f).apply { start() }
         }
@@ -202,6 +193,7 @@ class SearchFragment : Fragment() {
         isAnimationRunning = false
 
     }
+
 
     private fun handleBackPressed() {
         if (doubleBackPressed) {
@@ -213,5 +205,10 @@ class SearchFragment : Fragment() {
         Handler(Looper.getMainLooper()).postDelayed({
             doubleBackPressed = false
         }, 2000)
+    }
+
+    private fun moveFab(fab: FloatingActionButton, translationX: Float, translationY: Float) {
+        ObjectAnimator.ofFloat(fab, "translationX", translationX).apply { start() }
+        ObjectAnimator.ofFloat(fab, "translationY", translationY).apply { start() }
     }
 }
