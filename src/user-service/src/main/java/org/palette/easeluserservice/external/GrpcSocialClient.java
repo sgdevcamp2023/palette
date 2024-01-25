@@ -11,7 +11,7 @@ import org.palette.grpc.GSocialServiceGrpc;
 import org.springframework.stereotype.Component;
 
 @Component
-public class GrpcSocial {
+public class GrpcSocialClient {
 
     @GrpcClient("social-service")
     private GSocialServiceGrpc.GSocialServiceBlockingStub gSocialServiceBlockingStub;

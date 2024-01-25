@@ -15,7 +15,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class GrpcServerByAuth extends GUserServiceGrpc.GUserServiceImplBase {
+public class GrpcServerByAuthService extends GUserServiceGrpc.GUserServiceImplBase {
 
     private final UserService userService;
 
