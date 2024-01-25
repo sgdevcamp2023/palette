@@ -10,7 +10,7 @@ import java.util.Optional;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-class PaintCreate extends AcceptanceTestBase {
+class PaintCreateTest extends AcceptanceTestBase {
     @Test
     @DisplayName("페인트 생성 정상 로직 테스트")
     void executePassCase() throws Exception {

@@ -44,14 +44,12 @@ public class AcceptanceTestBase {
     }
 
     public ResultActions executeGet(
-            final String url,
-            final Object requestDto
+            final String url
     ) {
 
         try {
             return mvc.perform(
                             get(url)
-                                    .content(objectMapper.writeValueAsString(requestDto))
                                     .contentType(APPLICATION_JSON)
                                     .accept(APPLICATION_JSON))
                     .andDo(print());
