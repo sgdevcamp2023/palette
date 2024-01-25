@@ -39,6 +39,7 @@ module.exports = {
       "error",
       { "ignoreExpressions": true, "max": 2 }
     ], // class는 최대 2개까지 사용 가능합니다.
-    "class-methods-use-this": "off" // this 사용에 대한 제한을 사용하지 않습니다.
+    "class-methods-use-this": "off", // this 사용에 대한 제한을 사용하지 않습니다.
+    "no-param-reassign": "off"
   },
 };
