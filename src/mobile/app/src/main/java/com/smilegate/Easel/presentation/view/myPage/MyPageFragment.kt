@@ -79,32 +79,38 @@ class MyPageFragment : Fragment() {
         if (isSettingExpanded) {
             // 설정 메뉴가 열린 상태
             binding.icToggleDown.setImageResource(R.drawable.ic_up_arrow)
-            binding.icToggleDown.setColorFilter(R.color.Blue_500)
             ObjectAnimator.ofFloat(binding.icToggleDown, View.ROTATION, 180f, 0f).apply { start() }
 
-            binding.tvSettingMenu.visibility = View.VISIBLE
-            binding.icSettingMenu.visibility = View.VISIBLE
+            val clickableViews = listOf(
+                binding.tvSettingMenu,
+                binding.icSettingMenu,
+                binding.tvCustomerMenu,
+                binding.icCustomerMenu,
+                binding.tvPerchaseMenu,
+                binding.icPerchaseMenu,
+            )
 
-            binding.tvCustomerMenu.visibility = View.VISIBLE
-            binding.icCustomerMenu.visibility = View.VISIBLE
-
-            binding.tvPerchaseMenu.visibility = View.VISIBLE
-            binding.icPerchaseMenu.visibility = View.VISIBLE
+            for (view in clickableViews) {
+                view.visibility = View.VISIBLE
+            }
 
         } else {
             // 설정 메뉴가 닫힌 상태
             binding.icToggleDown.setImageResource(R.drawable.ic_down_arrow)
-            binding.icToggleDown.setColorFilter(R.color.black)
             ObjectAnimator.ofFloat(binding.icToggleDown, View.ROTATION, 180f, 0f).apply { start() }
 
-            binding.tvSettingMenu.visibility = View.GONE
-            binding.icSettingMenu.visibility = View.GONE
+            val clickableViews = listOf(
+                binding.tvSettingMenu,
+                binding.icSettingMenu,
+                binding.tvCustomerMenu,
+                binding.icCustomerMenu,
+                binding.tvPerchaseMenu,
+                binding.icPerchaseMenu,
+            )
 
-            binding.tvCustomerMenu.visibility = View.GONE
-            binding.icCustomerMenu.visibility = View.GONE
-
-            binding.tvPerchaseMenu.visibility = View.GONE
-            binding.icPerchaseMenu.visibility = View.GONE
+            for (view in clickableViews) {
+                view.visibility = View.GONE
+            }
         }
     }
 }
