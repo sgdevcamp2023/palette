@@ -98,4 +98,8 @@ public class PaintService {
         paint.addRepaint(user);
         paintRepository.save(paint);
     }
+
+    public Paint getPaintById(Long userId, Long paintId) {
+        return paintRepository.findByPid(paintId).get();
+    }
 }

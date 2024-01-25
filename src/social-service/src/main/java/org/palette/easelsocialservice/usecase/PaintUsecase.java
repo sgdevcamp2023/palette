@@ -73,4 +73,9 @@ public class PaintUsecase {
         User user = userService.getUser(userId);
         paintService.bindRepaintWithPaint(user, repaintRequest);
     }
+
+    public Paint getSinglePaint(Long userId, Long paintId) {
+        // TODO: compare userId for like
+        return paintService.getPaintById(userId, paintId);
+    }
 }
