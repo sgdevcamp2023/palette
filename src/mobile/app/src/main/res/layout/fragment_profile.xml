@@ -207,12 +207,13 @@
           app:layout_constraintTop_toBottomOf="@+id/tv_following_num"
           app:tabGravity="fill"
           app:tabIndicatorHeight="3dp"
-          app:tabMode="fixed"
+          app:tabMode="scrollable"
           app:tabSelectedTextColor="@color/Grey_600"
           app:tabTextAppearance="@style/Headline8"
           app:tabTextColor="@color/BlueGrey_800" />
 
       <View
+          android:id="@+id/view4"
           android:layout_width="match_parent"
           android:layout_height="1dp"
           android:background="@color/BlueGrey_500"
@@ -220,7 +221,14 @@
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toBottomOf="@+id/tabLayout" />
 
-
+      <androidx.viewpager.widget.ViewPager
+          android:id="@+id/profile_view_pager"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_below="@id/tabLayout"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/view4" />
 
    </androidx.constraintlayout.widget.ConstraintLayout>
 

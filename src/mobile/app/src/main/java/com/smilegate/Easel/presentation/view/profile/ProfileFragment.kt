@@ -12,11 +12,16 @@ import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import androidx.viewpager.widget.ViewPager
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.tabs.TabLayout
 import com.smilegate.Easel.R
 import com.smilegate.Easel.databinding.FragmentProfileBinding
 import com.smilegate.Easel.databinding.FragmentProfileImageBinding
 import com.smilegate.Easel.databinding.FragmentStartBinding
+import com.smilegate.Easel.presentation.adapter.TimelineAdapter
+import com.smilegate.Easel.presentation.view.timeline.FollowingFragment
+import com.smilegate.Easel.presentation.view.timeline.ForYouFragment
 
 class ProfileFragment : Fragment() {
 
@@ -42,6 +47,14 @@ class ProfileFragment : Fragment() {
         val bottomNavigation = activity?.findViewById<BottomNavigationView>(R.id.nav_view)
         bottomNavigation?.visibility = View.VISIBLE
 
+        val viewPager: ViewPager = binding.root.findViewById(R.id.profile_view_pager)
+        setupViewPager(viewPager)
+
+        val tabLayout: TabLayout = binding.root.findViewById(R.id.tabLayout)
+        tabLayout.setupWithViewPager(viewPager)
+        tabLayout.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.white))
+        tabLayout.setSelectedTabIndicatorColor(ContextCompat.getColor(requireContext(), R.color.Blue_500))
+
         return binding.root
     }
 
@@ -50,5 +63,15 @@ class ProfileFragment : Fragment() {
 
         navController = findNavController()
 
+    }
+
+    private fun setupViewPager(viewPager: ViewPager) {
+        val adapter = TimelineAdapter(childFragmentManager)
+        adapter.addFragment(MyPostFragment(), "게시물")
+        adapter.addFragment(ReplyFragment(), "답글")
+        adapter.addFragment(HighlightFragment(), "하이라이트")
+        adapter.addFragment(MediaFragment(), "미디어")
+        adapter.addFragment(LikedFragment(), "마음에 들어요")
+        viewPager.adapter = adapter
     }
 }
