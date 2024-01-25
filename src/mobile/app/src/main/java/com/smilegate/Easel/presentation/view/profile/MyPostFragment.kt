@@ -1,5 +1,6 @@
-package com.smilegate.Easel.presentation.view.timeline
+package com.smilegate.Easel.presentation.view.profile
 
+import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -13,96 +14,83 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.smilegate.Easel.MainActivity
 import com.smilegate.Easel.R
-import com.smilegate.Easel.databinding.FragmentForYouBinding
+import com.smilegate.Easel.databinding.FragmentFollowingBinding
+import com.smilegate.Easel.databinding.FragmentMyPostBinding
 import com.smilegate.Easel.domain.model.TimelineItem
 import com.smilegate.Easel.presentation.adapter.TimelineRecyclerViewAdapter
-import com.smilegate.Easel.presentation.view.myPage.MyPageFragment
 
-class ForYouFragment : Fragment() {
-    private lateinit var binding: FragmentForYouBinding
+class MyPostFragment : Fragment() {
+    private lateinit var binding: FragmentMyPostBinding
 
     private lateinit var navController: NavController
 
-    private var doubleBackPressed = false
-
     private var savedScrollPosition: Int = 0
+
+    private lateinit var mainActivity: MainActivity
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentForYouBinding.inflate(inflater, container, false)
+        binding = FragmentMyPostBinding.inflate(inflater, container, false)
 
         val toolbar = requireActivity().findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar_container)
+        toolbar.visibility = View.GONE
 
-        val profileButton = toolbar.findViewById<ImageView>(R.id.back_btn)
-        profileButton.setImageResource(R.drawable.ic_circle_person)
-        profileButton.visibility = View.VISIBLE
-        profileButton.setOnClickListener {
-            findNavController().navigate(R.id.myPageFragment)
-        }
-
-        val settingButton = toolbar.findViewById<ImageView>(R.id.else_btn)
-        settingButton.setImageResource(R.drawable.ic_setting)
-        settingButton.visibility = View.VISIBLE
+        val bottomNavigation = activity?.findViewById<BottomNavigationView>(R.id.nav_view)
+        bottomNavigation?.visibility = View.VISIBLE
 
         navController = findNavController()
 
         return binding.root
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        // MainActivity의 참조를 가져옴
+        if (context is MainActivity) {
+            mainActivity = context
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        // 바텀 네비게이션바 보이기
-        val bottomNavigation = activity?.findViewById<BottomNavigationView>(R.id.nav_view)
-        bottomNavigation?.visibility = View.VISIBLE
 
         // 뒤로가기 버튼을 처리하는 부분
         view.isFocusableInTouchMode = true
         view.requestFocus()
-        view.setOnKeyListener { _, keyCode, _ ->
-            if (keyCode == KeyEvent.KEYCODE_BACK && isCurrentFragment()) {
-                handleBackPressed()
-                return@setOnKeyListener true
-            }
 
-            false
-        }
+        val myPostList = generateDummyTimelineData()
 
-        val timelineList = generateDummyTimelineData()
-
-        val adapter = TimelineRecyclerViewAdapter(requireContext(), timelineList)
+        val adapter = TimelineRecyclerViewAdapter(requireContext(), myPostList)
         binding.rvTimeline.adapter = adapter
         binding.rvTimeline.layoutManager = LinearLayoutManager(requireContext())
 
         // 스크롤 리스너를 이용하여 스크롤 위치 저장
-        binding.ForYouScrollView.setOnScrollChangeListener { _, _, scrollY, _, _ ->
+        binding.ScrollView.setOnScrollChangeListener { _, _, scrollY, _, _ ->
             savedScrollPosition = scrollY
         }
 
         // 저장된 스크롤 위치 복원
-        binding.ForYouScrollView.post {
-            binding.ForYouScrollView.scrollTo(0, savedScrollPosition)
+        binding.ScrollView.post {
+            binding.ScrollView.scrollTo(0, savedScrollPosition)
         }
     }
 
-    private fun isCurrentFragment(): Boolean {
-        return true
-    }
-
     private fun generateDummyTimelineData(): List<TimelineItem> {
-        val profileImgId = com.smilegate.Easel.R.drawable.sample_profile_img5
-        val profileImgId1 = com.smilegate.Easel.R.drawable.sample_profile_img1
-        val profileImgId2 = com.smilegate.Easel.R.drawable.sample_profile_img2
-        val profileImgId3 = com.smilegate.Easel.R.drawable.sample_profile_img3
-        val profileImgId4 = com.smilegate.Easel.R.drawable.sample_profile_img4
+        val profileImgId = R.drawable.sample_profile_img5
+        val profileImgId1 = R.drawable.sample_profile_img1
+        val profileImgId2 = R.drawable.sample_profile_img2
+        val profileImgId3 = R.drawable.sample_profile_img3
+        val profileImgId4 = R.drawable.sample_profile_img4
 
-        val contentImgId = com.smilegate.Easel.R.drawable.sample_content_img1
-        val contentImgId1 = com.smilegate.Easel.R.drawable.sample_content_img2
-        val contentImgId2 = com.smilegate.Easel.R.drawable.sample_content_img3
-        val contentImgId3 = com.smilegate.Easel.R.drawable.sample_content_img4
+        val contentImgId = R.drawable.sample_content_img1
+        val contentImgId1 = R.drawable.sample_content_img2
+        val contentImgId2 = R.drawable.sample_content_img3
+        val contentImgId3 = R.drawable.sample_content_img4
 
         return listOf(
             TimelineItem(profileImgId, "이원영", "@courtney81819", "1시간",
@@ -138,22 +126,11 @@ class ForYouFragment : Fragment() {
                 "구글인ㅇㅎㅇ의 인용의 인용", null, null,
                 1, 2, null, 50),
         )
+
     }
 
     override fun onPause() {
         super.onPause()
-        savedScrollPosition = binding.ForYouScrollView.scrollY
-    }
-
-    private fun handleBackPressed() {
-        if (doubleBackPressed) {
-            requireActivity().finish()
-            return
-        }
-
-        doubleBackPressed = true
-        Handler(Looper.getMainLooper()).postDelayed({
-            doubleBackPressed = false
-        }, 2000)
+        savedScrollPosition = binding.ScrollView.scrollY
     }
 }

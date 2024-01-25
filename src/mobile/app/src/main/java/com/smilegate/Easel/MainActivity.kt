@@ -1,24 +1,16 @@
 package com.smilegate.Easel
 
-import android.animation.ObjectAnimator
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
-import android.view.View
-import android.view.WindowManager
-import android.widget.ImageView
 import androidx.annotation.RequiresApi
-import androidx.constraintlayout.widget.ConstraintSet.Layout
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowInsetsControllerCompat
-import androidx.fragment.app.DialogFragment
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.smilegate.Easel.databinding.ActivityMainBinding
-import com.smilegate.Easel.presentation.TimelinePopupManager
-import kotlinx.coroutines.NonCancellable.start
 
 class MainActivity : AppCompatActivity() {
 
@@ -37,8 +29,10 @@ class MainActivity : AppCompatActivity() {
 
         /* Status Bar & Navigation Bar */
         val barColor = ContextCompat.getColor(this, R.color.white)
+        val statusColor = ContextCompat.getColor(this, android.R.color.transparent)
+
         with(window) {
-            statusBarColor = barColor
+            statusBarColor = statusColor
             navigationBarColor = barColor
         }
         with(WindowInsetsControllerCompat(window, window.decorView)) {

@@ -17,13 +17,19 @@
         <item name="android:background">@drawable/bg_bottom_sheet</item>
     </style>
 
-    <style name="YourButtonStyle" parent="Widget.MaterialComponents.Button">
-        <item name="android:stateListAnimator">@null</item>
+    <style name="Theme.SeeMeet.TransparentStatusBar" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
     </style>
 
     <style name="PopupMenuTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowIsTranslucent">true</item>
+    </style>
+
+    <style name="ProfileTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
     <style name="Theme.Easel" parent="Base.Theme.Easel" />

@@ -45,17 +45,21 @@ class NoticeFragment : Fragment() {
         binding = FragmentNoticeBinding.inflate(inflater, container, false)
 
         val toolbar = requireActivity().findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar_container)
+        toolbar.visibility = View.VISIBLE
 
         val profileButton = toolbar.findViewById<ImageView>(R.id.back_btn)
         profileButton.setImageResource(R.drawable.ic_circle_person)
         profileButton.visibility = View.VISIBLE
         profileButton.setOnClickListener {
-            findNavController().navigate(R.id.profileFragment)
+            findNavController().navigate(R.id.myPageFragment)
         }
 
         val settingButton = toolbar.findViewById<ImageView>(R.id.else_btn)
         settingButton.setImageResource(R.drawable.ic_setting)
         settingButton.visibility = View.VISIBLE
+
+        val bottomNavigation = activity?.findViewById<BottomNavigationView>(R.id.nav_view)
+        bottomNavigation?.visibility = View.VISIBLE
 
         navController = findNavController()
 
