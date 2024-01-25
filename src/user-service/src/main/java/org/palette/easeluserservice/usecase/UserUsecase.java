@@ -42,7 +42,7 @@ public class UserUsecase {
                 temporaryJoinRequest.nickname()
         );
 
-        gRPCSendEmailAuth(user);
+        gRPCAuthClient.sendEmailAuth(user);
     }
 
     @Transactional
@@ -65,14 +65,6 @@ public class UserUsecase {
                 joinRequest.websitePath()
         );
 
-        gRPCCreateSocialUser(user);
-    }
-
-    private void gRPCSendEmailAuth(User user) {
-        gRPCAuthClient.sendEmailAuth(user);
-    }
-
-    private void gRPCCreateSocialUser(User user) {
         gRPCSocialClient.createSocialUser(user);
     }
 
