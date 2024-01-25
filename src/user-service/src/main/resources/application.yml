@@ -1,5 +1,5 @@
 server:
-  port: 10002
+  port: 10003
 
 spring:
   application:
@@ -30,7 +30,7 @@ eureka:
 
 grpc:
   server:
-    port: 11002
+    port: 11003
   client:
     social-service:
       address: 'discovery:///SOCIAL-SERVICE'
