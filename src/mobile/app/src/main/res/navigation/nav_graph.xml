@@ -183,6 +183,50 @@
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile">
 
+        <action
+            android:id="@+id/action_profileFragment_to_timeLineFragment"
+            app:destination="@id/timelineFragment"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/myPostFragment"
+        android:name="com.smilegate.Easel.presentation.view.profile.MyPostFragment"
+        android:label="fragment_my_post"
+        tools:layout="@layout/fragment_my_post">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/replyFragment"
+        android:name="com.smilegate.Easel.presentation.view.profile.ReplyFragment"
+        android:label="fragment_reply"
+        tools:layout="@layout/fragment_reply">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/highlightFragment"
+        android:name="com.smilegate.Easel.presentation.view.profile.HighlightFragment"
+        android:label="fragment_highlight"
+        tools:layout="@layout/fragment_highlight">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/mediaFragment"
+        android:name="com.smilegate.Easel.presentation.view.profile.MediaFragment"
+        android:label="fragment_media"
+        tools:layout="@layout/fragment_media">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/likedFragment"
+        android:name="com.smilegate.Easel.presentation.view.profile.LikedFragment"
+        android:label="fragment_liked"
+        tools:layout="@layout/fragment_liked">
+
     </fragment>
 
     <fragment

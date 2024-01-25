@@ -63,6 +63,11 @@ class ProfileFragment : Fragment() {
 
         navController = findNavController()
 
+        val backButton = activity?.findViewById<ImageView>(R.id.iv_back_btn)
+        backButton?.setOnClickListener {
+            findNavController().navigate(R.id.action_profileFragment_to_timeLineFragment)
+        }
+
     }
 
     private fun setupViewPager(viewPager: ViewPager) {
