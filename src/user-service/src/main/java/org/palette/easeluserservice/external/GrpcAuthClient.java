@@ -1,7 +1,6 @@
 package org.palette.easeluserservice.external;
 
 import io.grpc.StatusRuntimeException;
-import lombok.RequiredArgsConstructor;
 import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.palette.easeluserservice.exception.BaseException;
 import org.palette.easeluserservice.exception.ExceptionType;
@@ -11,7 +10,6 @@ import org.palette.grpc.GSendEmailAuthRequest;
 import org.springframework.stereotype.Component;
 
 @Component
-@RequiredArgsConstructor
 public class GrpcAuthClient {
 
     @GrpcClient("auth-service")
