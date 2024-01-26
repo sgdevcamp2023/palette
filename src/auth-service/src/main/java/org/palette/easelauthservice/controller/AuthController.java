@@ -52,7 +52,7 @@ public class AuthController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/web")
+    @PostMapping("/mobile")
     public ResponseEntity<JwtPair> mobileLogin(
             @RequestBody LoginRequest loginRequest
     ) {

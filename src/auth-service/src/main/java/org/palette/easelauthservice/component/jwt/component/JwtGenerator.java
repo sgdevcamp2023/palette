@@ -38,7 +38,6 @@ public class JwtGenerator {
 
     private Claims buildClaims(String email) {
         Claims claims = Jwts.claims();
-        claims.setSubject(JWT_CLAIMS_EMAIL_COMPONENT);
         claims.put(JWT_CLAIMS_EMAIL_COMPONENT, email);
         return claims;
     }
