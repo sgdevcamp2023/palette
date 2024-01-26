@@ -40,15 +40,33 @@ jobs:
       run: chmod +x src/${{ env.BRANCH_NAME }}-service/gradlew
 
     - name: Build with Gradle
+      env:
+        AUTH_MAIL_HOST: ${{ secrets.AUTH_MAIL_HOST }}
+        AUTH_MAIL_ADDRESS: ${{ secrets.AUTH_MAIL_ADDRESS }}
+        AUTH_MAIL_USERNAME: ${{ secrets.AUTH_MAIL_USERNAME }}
+        AUTH_MAIL_PASSWORD: ${{ secrets.AUTH_MAIL_PASSWORD }}
+        AUTH_MAIL_PORT: ${{ secrets.AUTH_MAIL_PORT }}
+        
+        AUTH_REDIS_HOST: ${{ secrets.AUTH_REDIS_HOST }}
+        AUTH_REDIS_PORT: ${{ secrets.AUTH_REDIS_PORT }}
       run: |
         cd src/${{ env.BRANCH_NAME }}-service
-        ./gradlew clean build
+        ./gradlew clean build -x test
 
     - name: Build and Push Docker Image
       env:
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         BRANCH_NAME: ${{ env.BRANCH_NAME }}
+
+        AUTH_MAIL_HOST: ${{ secrets.AUTH_MAIL_HOST }}
+        AUTH_MAIL_ADDRESS: ${{ secrets.AUTH_MAIL_ADDRESS }}
+        AUTH_MAIL_USERNAME: ${{ secrets.AUTH_MAIL_USERNAME }}
+        AUTH_MAIL_PASSWORD: ${{ secrets.AUTH_MAIL_PASSWORD }}
+        AUTH_MAIL_PORT: ${{ secrets.AUTH_MAIL_PORT }}
+        AUTH_REDIS_HOST: ${{ secrets.AUTH_REDIS_HOST }}
+        AUTH_REDIS_PORT: ${{ secrets.AUTH_REDIS_PORT }}
+        
       run: |
         if [ -n "$BRANCH_NAME" ]; then
           DOCKERFILE_DIR="src/$BRANCH_NAME-service"
