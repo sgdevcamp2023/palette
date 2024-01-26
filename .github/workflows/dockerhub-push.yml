@@ -67,7 +67,6 @@ jobs:
         AUTH_MAIL_PORT: ${{ secrets.AUTH_MAIL_PORT }}
         AUTH_REDIS_HOST: ${{ secrets.AUTH_REDIS_HOST }}
         AUTH_REDIS_PORT: ${{ secrets.AUTH_REDIS_PORT }}
-
 	AUTH_JWT_SECRET_KEY: ${{ secrets.AUTH_JWT_SECRET_KEY }}
 
       run: |
