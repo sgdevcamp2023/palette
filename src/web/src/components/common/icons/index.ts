@@ -52,6 +52,7 @@ import SolidUser from './SolidUser.svg?react';
 import Sun from './Sun.svg?react';
 import Stop from './Stop.svg?react';
 import ThreeDot from './ThreeDot.svg?react';
+import Trash from './Trash.svg?react';
 import User from './User.svg?react';
 import UserMinus from './UserMinus.svg?react';
 import UserPlus from './UserPlus.svg?react';
@@ -113,6 +114,7 @@ export const ICONS = {
   solidUser: SolidUser,
   sun: Sun,
   stop: Stop,
+  trash: Trash,
   threeDot: ThreeDot,
   user: User,
   userMinus: UserMinus,
