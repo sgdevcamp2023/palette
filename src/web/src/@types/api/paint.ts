@@ -30,12 +30,10 @@ export interface TimelineItem {
 
 export interface EditPaint {
   text: string;
-  medias: [
-    {
-      id: string;
-      type: 'image' | 'video';
-    },
-  ];
+  medias: {
+    id: string;
+    type: 'image' | 'video';
+  }[];
   taggedUserIds: string[];
   quotePaintId: string;
   inReplyToPaintId: string;
