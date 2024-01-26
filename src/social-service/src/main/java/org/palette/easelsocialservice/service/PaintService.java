@@ -140,8 +140,11 @@ public class PaintService {
     }
 
     private Includes convertToInclude(Paint paint) {
-        // TODO: includes 구성
-        return new Includes(null, null, null);
+        List<MediaResponse> medias = convertToMediaResponse(paint.getMedias());
+        List<UserResponse> taggedUsers = convertToUserResponses(paint.getTaggedUsers());
+        List<LinkResponse> links = convertToLinkResponses(paint.getLinks());
+
+        return new Includes(medias, taggedUsers, links);
     }
 
     private List<HashtagResponse> convertToHashtagResponse(List<Tags> hashtags) {
@@ -159,6 +162,34 @@ public class PaintService {
                 .map(m -> new MentionResponse(
                         m.getStart(), m.getEnd(), m.getUser().getUid(), m.getUser().getUsername()
                 ))
+                .toList();
+    }
+
+    private List<MediaResponse> convertToMediaResponse(List<Uses> medias) {
+        return medias
+                .stream()
+                .map(media -> new MediaResponse(
+                        media.getMedia().getType(), media.getMedia().getPath()
+                ))
+                .toList();
+    }
+
+    private List<UserResponse> convertToUserResponses(List<TagsUser> taggedUsers) {
+        return taggedUsers
+                .stream()
+                .map(u -> new UserResponse(
+                        u.getUser().getUid(), u.getUser().getNickname(), u.getUser().getUsername()
+                ))
+                .toList();
+    }
+
+    private List<LinkResponse> convertToLinkResponses(List<Contains> links) {
+        return links
+                .stream()
+                .map(link -> new LinkResponse(
+                        link.getStart(), link.getEnd(), link.getLink().getShortLink(), link.getLink().getOriginalLink()
+                        )
+                )
                 .toList();
     }
 }
