@@ -7,13 +7,13 @@ import org.palette.easeluserservice.e2e.AcceptanceTestBase;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class TemporaryJoin extends AcceptanceTestBase {
+class TemporaryJoin extends AcceptanceTestBase {
 
     @Test
     @DisplayName("임시 회원가입 정상 로직 테스트")
-    public void executePassCase() throws Exception {
+    void executePassCase() throws Exception {
         TemporaryJoinRequest temporaryJoinRequest = new TemporaryJoinRequest(
-                "diger@gmail.com",
+                "kitten.diger@gmail.com",
                 "digerDisplayName"
         );
         executePost(

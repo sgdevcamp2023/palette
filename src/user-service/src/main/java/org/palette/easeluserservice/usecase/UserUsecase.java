@@ -6,14 +6,12 @@ import org.palette.easeluserservice.dto.request.TemporaryJoinRequest;
 import org.palette.easeluserservice.dto.response.EmailDuplicationVerifyResponse;
 import org.palette.easeluserservice.exception.BaseException;
 import org.palette.easeluserservice.exception.ExceptionType;
-import org.palette.easeluserservice.external.GrpcAuth;
-import org.palette.easeluserservice.external.GrpcSocial;
+import org.palette.easeluserservice.external.GrpcAuthClient;
+import org.palette.easeluserservice.external.GrpcSocialClient;
 import org.palette.easeluserservice.persistence.User;
 import org.palette.easeluserservice.service.UserService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -21,8 +19,8 @@ import java.util.Optional;
 public class UserUsecase {
 
     private final UserService userService;
-    private final GrpcSocial gRPCSocial;
-    private final GrpcAuth gRPCAuth;
+    private final GrpcSocialClient gRPCSocialClient;
+    private final GrpcAuthClient gRPCAuthClient;
 
     public EmailDuplicationVerifyResponse executeNicknameDuplicationVerify(
             String email
@@ -42,18 +40,15 @@ public class UserUsecase {
                 temporaryJoinRequest.nickname()
         );
 
-//        gRPCSendEmailAuth(user);
+        gRPCAuthClient.sendEmailAuth(user);
     }
 
     @Transactional
     public void executeJoin(
             JoinRequest joinRequest
     ) {
-        final Optional<User> optionalUser = userService.loadByEmail(
-                joinRequest.email()
-        );
-
-        User user = validateJoinRequest(joinRequest, optionalUser);
+        User user = userService.loadByEmail(joinRequest.email());
+        validateJoinRequest(joinRequest, user);
 
         user = userService.createCompletedUser(
                 user,
@@ -65,22 +60,13 @@ public class UserUsecase {
                 joinRequest.websitePath()
         );
 
-        gRPCCreateSocialUser(user);
+        gRPCSocialClient.createSocialUser(user);
     }
 
-    private void gRPCSendEmailAuth(User user) {
-        gRPCAuth.sendEmailAuth(user);
-    }
-
-    private void gRPCCreateSocialUser(User user) {
-        gRPCSocial.createSocialUser(user);
-    }
-
-    private User validateJoinRequest(JoinRequest joinRequest, Optional<User> optionalUser) {
-        if (optionalUser.isEmpty()) throw new BaseException(ExceptionType.USER_000004);
-        User user = optionalUser.get();
-        if (user.isUserNotAuthed()) throw new BaseException(ExceptionType.USER_000002);
+    private void validateJoinRequest(JoinRequest joinRequest, User user) {
+        if (user.isUserNotAuthed()) {
+            throw new BaseException(ExceptionType.USER_401_000001);
+        }
         userService.isUsernameAlreadyExists(joinRequest.username());
-        return user;
     }
 }

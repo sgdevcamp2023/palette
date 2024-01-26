@@ -65,6 +65,10 @@ public class User {
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt = null;
 
+    public void updateToAuthed() {
+        this.authed = true;
+    }
+
     public Boolean isUserNotAuthed() {
         return !this.getAuthed();
     }
