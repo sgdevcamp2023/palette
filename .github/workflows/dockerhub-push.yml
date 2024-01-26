@@ -19,7 +19,7 @@ jobs:
       run: |
         BRANCH_NAME=$(echo $GITHUB_REF | awk -F'/' '{print $3}')
         echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
-    
+
     - name: Cache Gradle dependencies
       uses: actions/cache@v2
       with:
@@ -46,10 +46,11 @@ jobs:
         AUTH_MAIL_USERNAME: ${{ secrets.AUTH_MAIL_USERNAME }}
         AUTH_MAIL_PASSWORD: ${{ secrets.AUTH_MAIL_PASSWORD }}
         AUTH_MAIL_PORT: ${{ secrets.AUTH_MAIL_PORT }}
-        
+
         AUTH_REDIS_HOST: ${{ secrets.AUTH_REDIS_HOST }}
         AUTH_REDIS_PORT: ${{ secrets.AUTH_REDIS_PORT }}
-	AUTH_JWT_SECRET_KEY: ${{ secrets.AUTH_JWT_SECRET_KEY }}
+        AUTH_JWT_SECRET_KEY: ${{ secrets.AUTH_JWT_SECRET_KEY }}
+
       run: |
         cd src/${{ env.BRANCH_NAME }}-service
         ./gradlew clean build -x test
@@ -67,8 +68,7 @@ jobs:
         AUTH_MAIL_PORT: ${{ secrets.AUTH_MAIL_PORT }}
         AUTH_REDIS_HOST: ${{ secrets.AUTH_REDIS_HOST }}
         AUTH_REDIS_PORT: ${{ secrets.AUTH_REDIS_PORT }}
-
-	AUTH_JWT_SECRET_KEY: ${{ secrets.AUTH_JWT_SECRET_KEY }}
+        AUTH_JWT_SECRET_KEY: ${{ secrets.AUTH_JWT_SECRET_KEY }}
 
       run: |
         if [ -n "$BRANCH_NAME" ]; then
