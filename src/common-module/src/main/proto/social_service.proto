@@ -8,11 +8,11 @@ service GSocialService {
 }
 
 message GCreateUserRequest {
-  int64 id = 1;
-  string username = 2;
-  string nickname = 3;
-  string imagePath = 4;
-  bool isActive = 5;
+  int64 id = 2;
+  string username = 3;
+  string nickname = 4;
+  string imagePath = 5;
+  bool isActive = 6;
 }
 
 message GCreateUserResponse {
