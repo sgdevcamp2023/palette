@@ -7,6 +7,7 @@ import org.palette.easeluserservice.persistence.User;
 import org.palette.easeluserservice.persistence.UserJpaRepository;
 import org.palette.easeluserservice.persistence.embed.Profile;
 import org.palette.easeluserservice.persistence.embed.StaticContentPath;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +21,7 @@ public class UserService {
     private static final String DEFAULT_STRING_VALUE = "";
 
     private final UserJpaRepository userJpaRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Transactional
     public User createTemporaryUser(
@@ -29,7 +31,8 @@ public class UserService {
         User user = User.preJoin(
                 email,
                 nickname,
-                DEFAULT_STRING_VALUE
+                DEFAULT_STRING_VALUE,
+                passwordEncoder
         );
 
         userJpaRepository.save(user);
@@ -49,6 +52,7 @@ public class UserService {
     ) {
         user.join(
                 password,
+                passwordEncoder,
                 username,
                 new Profile(
                         user.getProfile().nickname(),
@@ -68,6 +72,20 @@ public class UserService {
 
     public void updateUserAuthStatus(User user) {
         user.updateToAuthed();
+    }
+
+    public void checkEmailAndPasswordByUser(
+            User user,
+            String email,
+            String password
+    ) {
+        isEmailNotMatched(user, email);
+
+        user.getPassword().match(password, passwordEncoder);
+    }
+
+    private void isEmailNotMatched(User user, String email) {
+        if (!user.getEmail().equals(email)) throw new BaseException(ExceptionType.USER_400_000002);
     }
 
     public void isEmailAlreadyExists(String requestedEmail) {

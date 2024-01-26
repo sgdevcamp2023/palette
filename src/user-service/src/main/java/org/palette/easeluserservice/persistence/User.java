@@ -12,6 +12,7 @@ import org.palette.easeluserservice.persistence.embed.StaticContentPath;
 import org.palette.easeluserservice.persistence.enums.Role;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDateTime;
 
@@ -80,7 +81,8 @@ public class User {
     public static User preJoin(
             String email,
             String nickname,
-            String defaultStringValue
+            String defaultStringValue,
+            PasswordEncoder passwordEncoder
     ) {
         return User.builder()
                 .email(email)
@@ -93,7 +95,7 @@ public class User {
                         + LocalDateTime.now().getSecond()
                 )
                 .password(
-                        new Password(defaultStringValue)
+                        new Password(defaultStringValue, passwordEncoder)
                 )
                 .profile(
                         new Profile(
@@ -116,10 +118,11 @@ public class User {
 
     public void join(
             String password,
+            PasswordEncoder passwordEncoder,
             String username,
             Profile profile
     ) {
-        this.password = new Password(password);
+        this.password = new Password(password, passwordEncoder);
         this.username = username;
         this.profile = profile;
         this.role = Role.NORMAL;
