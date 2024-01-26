@@ -17,8 +17,8 @@ public class JwtProperties {
     protected static final String JWT_HEADER_PARAM_VALUE = "JWT";
     protected static final String JWT_CLAIMS_SUBJECT = "jwt";
     protected static final String JWT_CLAIMS_EMAIL_COMPONENT = "email";
-    protected static final Long ACCESS_TOKEN_EXPIRE_TIME = 30 * 60 * 1000L;
-    protected static final Long REFRESH_TOKEN_EXPIRE_TIME = 270 * 24 * 60 * 60 * 1000L;
+    protected static final Long ACCESS_TOKEN_EXPIRE_TIME = 30 * 60 * 1000L; // 30분
+    protected static final Long REFRESH_TOKEN_EXPIRE_TIME = 270 * 24 * 60 * 60 * 1000L; // 270일
 
     public Key getSigningKey() {
         final byte[] keyBytes = Decoders.BASE64.decode(this.key);
