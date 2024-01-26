@@ -9,12 +9,12 @@ service GUserService {
 }
 
 message GUpdateUserAuthStatusRequest {
-  string email = 1;
+  string email = 2;
 }
 
 message GCheckEmailAndPasswordRequest {
-  string email = 1;
-  string password = 2;
+  string email = 2;
+  string password = 3;
 }
 
 message GUpdateUserAuthStatusResponse {
