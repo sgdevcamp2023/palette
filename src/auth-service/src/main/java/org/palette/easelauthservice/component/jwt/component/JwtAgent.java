@@ -23,6 +23,6 @@ public class JwtAgent {
     public Long parseUserId(String jwt) {
         jwt = jwt.substring(BEARER_PREFIX);
         jwtVerifier.execute(jwt);
-        return jwtParser.getId(jwt);
+        return jwtParser.getEmail(jwt);
     }
 }

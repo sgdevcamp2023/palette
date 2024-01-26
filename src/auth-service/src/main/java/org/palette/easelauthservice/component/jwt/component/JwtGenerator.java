@@ -42,7 +42,7 @@ public class JwtGenerator {
         return claims;
     }
 
-    private Date buildExpiredAt(Long expiredType) {
-        return new Date(new Date().getTime() + expiredType);
+    private Date buildExpiredAt(Long expiredTime) {
+        return new Date(new Date().getTime() + expiredTime);
     }
 }
