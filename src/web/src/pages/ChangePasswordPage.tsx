@@ -35,7 +35,11 @@ function ChangePasswordPage() {
           height: 26,
         }}
       />
-      <ContentLayout isShowBottomNavigation={false} className="h-full">
+      <ContentLayout
+        isShowBottomNavigation={false}
+        className="h-full"
+        isShowFloatingButton={false}
+      >
         <div className="flex flex-col gap-[54px]">
           <StepTitle
             title="내 Easel 계정 찾기"
