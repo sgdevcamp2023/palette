@@ -1,6 +1,8 @@
 package org.palette.easelauthservice.usecase;
 
 import lombok.RequiredArgsConstructor;
+import org.palette.easelauthservice.component.jwt.JwtAgent;
+import org.palette.easelauthservice.component.jwt.component.JwtPair;
 import org.palette.easelauthservice.component.mailsender.EmailAuthMailSender;
 import org.palette.easelauthservice.dto.request.AuthEmailResendRequest;
 import org.palette.easelauthservice.dto.request.EmailAuthRequest;
@@ -20,6 +22,7 @@ public class AuthUsecase extends GAuthServiceGrpc.GAuthServiceImplBase {
     private final RedisEmailAuthService redisEmailAuthService;
     private final EmailAuthMailSender emailAuthMailSender;
     private final GrpcUserClient grpcUserClient;
+    private final JwtAgent jwtAgent;
 
     public void verifyEmail(EmailAuthRequest emailAuthRequest) {
         String email = emailAuthRequest.email();
@@ -45,8 +48,12 @@ public class AuthUsecase extends GAuthServiceGrpc.GAuthServiceImplBase {
         emailAuthMailSender.send(email, emailAuth.getAuthPayload());
     }
 
-    public void webLogin(LoginRequest loginRequest) {
+    public JwtPair login(LoginRequest loginRequest) {
         String email = loginRequest.email();
+        String password = loginRequest.password();
 
+        grpcUserClient.checkEmailWithPassword(email, password);
+
+        return jwtAgent.provide(email);
     }
 }
