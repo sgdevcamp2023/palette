@@ -32,6 +32,9 @@ eureka:
     service-url:
       defaultZone: http://host.docker.internal:8761/eureka
 
+jwt:
+  secret-key: ${AUTH_JWT_SECRET_KEY}
+
 grpc:
   server:
     port: 11002
