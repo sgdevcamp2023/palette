@@ -1,7 +1,7 @@
 package org.palette.easelauthservice.usecase;
 
 import lombok.RequiredArgsConstructor;
-import org.palette.easelauthservice.component.jwt.component.JwtAgent;
+import org.palette.easelauthservice.component.jwt.JwtAgent;
 import org.palette.easelauthservice.component.jwt.component.JwtPair;
 import org.palette.easelauthservice.component.mailsender.EmailAuthMailSender;
 import org.palette.easelauthservice.dto.request.AuthEmailResendRequest;

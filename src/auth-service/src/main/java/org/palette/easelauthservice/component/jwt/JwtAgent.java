@@ -1,6 +1,10 @@
-package org.palette.easelauthservice.component.jwt.component;
+package org.palette.easelauthservice.component.jwt;
 
 import lombok.RequiredArgsConstructor;
+import org.palette.easelauthservice.component.jwt.component.JwtGenerator;
+import org.palette.easelauthservice.component.jwt.component.JwtPair;
+import org.palette.easelauthservice.component.jwt.component.JwtParser;
+import org.palette.easelauthservice.component.jwt.component.JwtVerifier;
 import org.springframework.stereotype.Component;
 
 @Component
