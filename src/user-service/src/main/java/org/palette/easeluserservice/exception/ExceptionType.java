@@ -16,6 +16,13 @@ public enum ExceptionType {
             HttpStatus.BAD_REQUEST
     ),
 
+    USER_400_000002(
+            "USER_400_000002",
+            "INCORRECT_EMAIL_PASSWORD",
+            "이메일 혹은 비밀번호가 올바르지 않습니다.",
+            HttpStatus.BAD_REQUEST
+    ),
+
     // 401
     USER_401_000001(
             "USER_401_000001",
