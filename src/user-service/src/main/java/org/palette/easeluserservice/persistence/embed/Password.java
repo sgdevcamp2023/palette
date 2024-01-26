@@ -2,14 +2,25 @@ package org.palette.easeluserservice.persistence.embed;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
-import org.palette.easeluserservice.common.PasswordUtilizer;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+import org.palette.easeluserservice.exception.BaseException;
+import org.palette.easeluserservice.exception.ExceptionType;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Embeddable
-public record Password(
-        @Column(name = "password", nullable = false, length = 100)
-        String value
-) {
-    public Password(String value) {
-        this.value = PasswordUtilizer.hashPassword(value);
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class Password {
+    @Column(name = "password", nullable = false, length = 100)
+    String value;
+
+    public Password(String value, PasswordEncoder passwordEncoder) {
+        this.value = passwordEncoder.encode(value);
+    }
+
+    public void match(String requestedPassword, PasswordEncoder passwordEncoder) {
+        if (!passwordEncoder.matches(requestedPassword, this.value)) {
+            throw new BaseException(ExceptionType.USER_400_000002);
+        }
     }
 }
