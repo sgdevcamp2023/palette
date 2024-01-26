@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class Resend extends AcceptanceTestBase {
+class Resend extends AcceptanceTestBase {
 
     @Autowired
     private RedisEmailAuthService emailAuthService;
