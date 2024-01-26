@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.palette.easelsocialservice.dto.request.PaintCreateRequest;
 import org.palette.easelsocialservice.dto.request.RepaintRequest;
 import org.palette.easelsocialservice.dto.response.PaintCreateResponse;
+import org.palette.easelsocialservice.dto.response.PaintResponse;
 import org.palette.easelsocialservice.persistence.domain.Paint;
 import org.palette.easelsocialservice.usecase.PaintUsecase;
 import org.springframework.http.HttpStatus;
@@ -36,7 +37,7 @@ public class PaintController {
     }
 
     @GetMapping("/{paintId}")
-    public ResponseEntity<Paint> repaint(
+    public ResponseEntity<PaintResponse> repaint(
             @PathVariable Long paintId
     ) {
         // TODO: 사용자 ID 추가하기

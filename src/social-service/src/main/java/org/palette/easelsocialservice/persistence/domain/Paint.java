@@ -1,6 +1,7 @@
 package org.palette.easelsocialservice.persistence.domain;
 
 import lombok.Getter;
+import lombok.ToString;
 import org.palette.easelsocialservice.persistence.relationship.*;
 import org.springframework.data.neo4j.core.schema.GeneratedValue;
 import org.springframework.data.neo4j.core.schema.Id;
@@ -13,6 +14,7 @@ import java.util.List;
 
 @Getter
 @Node
+@ToString
 public class Paint {
     @Id
     @GeneratedValue(PaintIdGenerator.class)
@@ -63,7 +65,7 @@ public class Paint {
         this.author = new Creates(user);
     }
 
-    public void addInReplyToPaint(Paint paint) {
+    public void setInReplyToPaint(Paint paint) {
         this.inReplyToPaint = new Replies(paint);
     }
 

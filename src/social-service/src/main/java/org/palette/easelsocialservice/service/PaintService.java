@@ -6,6 +6,7 @@ import org.palette.easelsocialservice.dto.request.HashtagRequest;
 import org.palette.easelsocialservice.dto.request.LinkRequest;
 import org.palette.easelsocialservice.dto.request.MentionRequest;
 import org.palette.easelsocialservice.dto.request.RepaintRequest;
+import org.palette.easelsocialservice.dto.response.*;
 import org.palette.easelsocialservice.exception.BaseException;
 import org.palette.easelsocialservice.exception.ExceptionType;
 import org.palette.easelsocialservice.persistence.PaintRepository;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -81,7 +83,7 @@ public class PaintService {
     public void bindReplyPaint(Paint paint, Long inReplyToPaint) {
         Paint inReplyPaint = paintRepository.findById(inReplyToPaint)
                 .orElseThrow(() -> new BaseException(ExceptionType.SOCIAL_400_000002));
-        paint.addInReplyToPaint(inReplyPaint);
+        paint.setInReplyToPaint(inReplyPaint);
         paintRepository.save(paint);
     }
 
@@ -99,7 +101,64 @@ public class PaintService {
         paintRepository.save(paint);
     }
 
-    public Paint getPaintById(Long userId, Long paintId) {
-        return paintRepository.findByPid(paintId).get();
+    public PaintResponse getPaintById(Long userId, Long paintId) {
+        Paint paint = paintRepository.findByPid(paintId)
+                .orElseThrow(() -> new BaseException(ExceptionType.SOCIAL_400_000002));
+
+        Entities entities = covertToEntities(paint);
+        Includes includes = convertToInclude(paint);
+
+        // TODO: replyCount, likeCount, myLike, myRepaint, myMarked
+        // first depth's getId == relationship's id
+        return PaintResponse.builder()
+                .id(paint.getPid())
+                .isReply(paint.getInReplyToPaint() != null)
+                .authorId(paint.getAuthor().getUser().getUid())
+                .authorUsername(paint.getAuthor().getUser().getUsername())
+                .authorNickname(paint.getAuthor().getUser().getNickname())
+                .authorImagePath(paint.getAuthor().getUser().getImagePath())
+                .authorStatus(paint.getAuthor().getUser().getIsActive()? "public" : "private")
+                .createdAt(paint.getCreatedAt())
+                .text(paint.getContent())
+                .replyCount(0)
+                .repaintCount(paint.getRepaints().size())
+                .likeCount(0)
+                .like(false)
+                .repainted(false)
+                .marked(false)
+                .views(paint.getViews())
+                .entities(entities)
+                .includes(includes)
+                .build();
+    }
+
+    private Entities covertToEntities(Paint paint) {
+        List<HashtagResponse> hashtags = convertToHashtagResponse(paint.getHashtags());
+        List<MentionResponse> mentions = convertToMentionResponse(paint.getMentions());
+
+        return new Entities(hashtags, mentions);
+    }
+
+    private Includes convertToInclude(Paint paint) {
+        // TODO: includes 구성
+        return new Includes(null, null, null);
+    }
+
+    private List<HashtagResponse> convertToHashtagResponse(List<Tags> hashtags) {
+        return hashtags
+                .stream()
+                .map(tag -> new HashtagResponse(
+                        tag.getStartIdx(), tag.getEndIdx(), tag.getHashtag().getTag()
+                ))
+                .toList();
+    }
+
+    private List<MentionResponse> convertToMentionResponse(List<Mentions> mentions) {
+        return mentions
+                .stream()
+                .map(m -> new MentionResponse(
+                        m.getStart(), m.getEnd(), m.getUser().getUid(), m.getUser().getUsername()
+                ))
+                .toList();
     }
 }
