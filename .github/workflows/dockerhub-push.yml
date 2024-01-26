@@ -50,6 +50,7 @@ jobs:
         AUTH_REDIS_HOST: ${{ secrets.AUTH_REDIS_HOST }}
         AUTH_REDIS_PORT: ${{ secrets.AUTH_REDIS_PORT }}
 	AUTH_JWT_SECRET_KEY: ${{ secrets.AUTH_JWT_SECRET_KEY }}
+ 
       run: |
         cd src/${{ env.BRANCH_NAME }}-service
         ./gradlew clean build -x test
