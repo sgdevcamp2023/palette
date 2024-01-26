@@ -15,24 +15,19 @@ public class JwtGenerator {
 
     private final JwtProperties jwtProperties;
 
-    public JwtPair execute(String email) {
-        return new JwtPair(buildAccessToken(email), buildRefreshToken());
+public JwtPair execute(String email) {
+        return new JwtPair(
+                buildJwtToken(buildClaims(email), ACCESS_TOKEN_EXPIRE_TIME), 
+                buildJwtToken(Jwts.claims(), REFRESH_TOKEN_EXPIRE_TIME)
+        );
     }
 
-    private String buildAccessToken(String email) {
+    private String buildJwtToken(Claims claims, Long expiryTimeInMilliseconds) {
         return Jwts.builder()
                 .signWith(jwtProperties.getSigningKey())
                 .setHeaderParam(JWT_HEADER_PARAM_KEY, JWT_HEADER_PARAM_VALUE)
-                .setClaims(buildClaims(email))
-                .setExpiration(buildExpiredAt(ACCESS_TOKEN_EXPIRE_TIME))
-                .compact();
-    }
-
-    private String buildRefreshToken() {
-        return Jwts.builder()
-                .signWith(jwtProperties.getSigningKey())
-                .setHeaderParam(JWT_HEADER_PARAM_KEY, JWT_HEADER_PARAM_VALUE)
-                .setExpiration(buildExpiredAt(REFRESH_TOKEN_EXPIRE_TIME))
+                .setClaims(claims)
+                .setExpiration(getExpiryDate(expiryTimeInMilliseconds))
                 .compact();
     }
 
@@ -42,7 +37,7 @@ public class JwtGenerator {
         return claims;
     }
 
-    private Date buildExpiredAt(Long expiredTime) {
-        return new Date(new Date().getTime() + expiredTime);
+    private Date getExpiryDate(Long expiryTimeInMilliseconds) {
+        return new Date(new Date().getTime() + expiryTimeInMilliseconds);
     }
 }
