@@ -13,6 +13,7 @@ import org.palette.easeluserservice.persistence.embed.Profile;
 import org.palette.easeluserservice.persistence.embed.StaticContentPath;
 import org.palette.easeluserservice.persistence.enums.Role;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -24,6 +25,9 @@ class Join extends AcceptanceTestBase {
 
     @Autowired
     private UserJpaRepository userJpaRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @BeforeEach
     public void insertTemporaryUser() throws NoSuchMethodException,
@@ -56,7 +60,7 @@ class Join extends AcceptanceTestBase {
                 1L,
                 "diger@gmail.com",
                 "",
-                new Password(""),
+                new Password("", passwordEncoder),
                 new Profile(
                         "digerDisplayName1",
                         "",
