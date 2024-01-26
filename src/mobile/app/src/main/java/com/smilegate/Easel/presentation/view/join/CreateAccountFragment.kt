@@ -1,7 +1,6 @@
 package com.smilegate.Easel.presentation.view.join
 
 import android.graphics.Color
-import android.graphics.PorterDuff
 import android.os.Bundle
 import android.text.Editable
 import android.text.SpannableString
@@ -9,20 +8,15 @@ import android.text.TextPaint
 import android.text.TextWatcher
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
 import android.widget.ImageView
 import android.widget.Toast
-import android.widget.Toolbar
-import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.smilegate.Easel.R
@@ -180,7 +174,7 @@ class CreateAccountFragment : Fragment() {
     private fun validateEmail() {
         val email = binding.createAccountInfoField.text.toString().trim()
         val blue = ContextCompat.getColor(requireContext(), R.color.Blue_500)
-        val red = ContextCompat.getColor(requireContext(), R.color.Red_200)
+        val red = ContextCompat.getColor(requireContext(), R.color.Pink_200)
 
         if (!isEmailValid(email)) {
             // 이메일 형식이 유효하지 않은 경우
