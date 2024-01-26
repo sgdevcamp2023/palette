@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/auth")
-public class EmailAuthController {
+public class AuthController {
 
     private final AuthUsecase authUsecase;
 
@@ -21,7 +21,7 @@ public class EmailAuthController {
     public ResponseEntity<Void> auth(
             @RequestBody EmailAuthRequest emailAuthRequest
     ) {
-        authUsecase.verify(emailAuthRequest);
+        authUsecase.verifyEmail(emailAuthRequest);
         return ResponseEntity.ok().build();
     }
 
@@ -33,4 +33,11 @@ public class EmailAuthController {
         return ResponseEntity.ok().build();
     }
 
+    @PostMapping("/web")
+    public ResponseEntity<Void> webLogin(
+            @RequestBody AuthEmailResendRequest authEmailResendRequest
+    ) {
+        authUsecase.webLogin(authEmailResendRequest);
+        return ResponseEntity.ok().build();
+    }
 }

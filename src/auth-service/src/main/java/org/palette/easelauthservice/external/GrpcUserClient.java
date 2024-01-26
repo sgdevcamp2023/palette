@@ -26,4 +26,16 @@ public class GrpcUserClient {
             throw new BaseException(ExceptionType.AUTH_500_000001);
         }
     }
+
+    public void checkEmailWithPassword(String email, String password) {
+        try {
+            gUserServiceBlockingStub.updateUserAuthStatus(
+                    GUpdateUserAuthStatusRequest.newBuilder()
+                            .setEmail(email)
+                            .build()
+            );
+        } catch (final Exception e) {
+            throw new BaseException(ExceptionType.AUTH_500_000001);
+        }
+    }
 }
