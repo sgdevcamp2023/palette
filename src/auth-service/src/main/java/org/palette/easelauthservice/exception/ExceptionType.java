@@ -60,6 +60,13 @@ public enum ExceptionType {
             HttpStatus.FORBIDDEN
     ),
 
+    AUTH_403_000003(
+            "AUTH_403_000003",
+            "EXPIRED_PAYLOAD",
+            "토큰이 만료되었습니다. 다시 로그인해주세요",
+            HttpStatus.FORBIDDEN
+    ),
+
     // 404
     AUTH_404_000001(
             "AUTH_404_000001",
