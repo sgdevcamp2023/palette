@@ -55,17 +55,17 @@ class LikedFragment : Fragment() {
         val likedList = generateDummyTimelineData()
 
         val adapter = TimelineRecyclerViewAdapter(requireContext(), likedList)
-        binding.rvTimeline.adapter = adapter
-        binding.rvTimeline.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvLiked.adapter = adapter
+        binding.rvLiked.layoutManager = LinearLayoutManager(requireContext())
 
         // 스크롤 리스너를 이용하여 스크롤 위치 저장
-        binding.ScrollView.setOnScrollChangeListener { _, _, scrollY, _, _ ->
+        binding.rvLiked.setOnScrollChangeListener { _, _, scrollY, _, _ ->
             savedScrollPosition = scrollY
         }
 
         // 저장된 스크롤 위치 복원
-        binding.ScrollView.post {
-            binding.ScrollView.scrollTo(0, savedScrollPosition)
+        binding.rvLiked.post {
+            binding.rvLiked.scrollTo(0, savedScrollPosition)
         }
     }
 
@@ -120,6 +120,6 @@ class LikedFragment : Fragment() {
 
     override fun onPause() {
         super.onPause()
-        savedScrollPosition = binding.ScrollView.scrollY
+        savedScrollPosition = binding.rvLiked.scrollY
     }
 }

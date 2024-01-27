@@ -2,17 +2,16 @@ package com.smilegate.Easel.presentation.view.profile
 
 import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.smilegate.Easel.MainActivity
 import com.smilegate.Easel.R
 import com.smilegate.Easel.databinding.FragmentMediaBinding
-import com.smilegate.Easel.databinding.FragmentReplyBinding
 import com.smilegate.Easel.domain.model.TimelineItem
 import com.smilegate.Easel.presentation.adapter.TimelineRecyclerViewAdapter
 
@@ -56,17 +55,17 @@ class MediaFragment : Fragment() {
         val mediaList = generateDummyTimelineData()
 
         val adapter = TimelineRecyclerViewAdapter(requireContext(), mediaList)
-        binding.rvTimeline.adapter = adapter
-        binding.rvTimeline.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvMedia.adapter = adapter
+        binding.rvMedia.layoutManager = LinearLayoutManager(requireContext())
 
         // 스크롤 리스너를 이용하여 스크롤 위치 저장
-        binding.ScrollView.setOnScrollChangeListener { _, _, scrollY, _, _ ->
+        binding.rvMedia.setOnScrollChangeListener { _, _, scrollY, _, _ ->
             savedScrollPosition = scrollY
         }
 
         // 저장된 스크롤 위치 복원
-        binding.ScrollView.post {
-            binding.ScrollView.scrollTo(0, savedScrollPosition)
+        binding.rvMedia.post {
+            binding.rvMedia.scrollTo(0, savedScrollPosition)
         }
     }
 
@@ -121,6 +120,6 @@ class MediaFragment : Fragment() {
 
     override fun onPause() {
         super.onPause()
-        savedScrollPosition = binding.ScrollView.scrollY
+        savedScrollPosition = binding.rvMedia.scrollY
     }
 }
