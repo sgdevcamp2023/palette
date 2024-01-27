@@ -8,26 +8,19 @@
     android:id="@+id/swipeRefreshLayout"
     tools:context=".presentation.view.timeline.ForYouFragment">
 
-    <ScrollView
-        android:id="@+id/ForYouScrollView"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvTimeline"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvTimeline"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingRight="10dp"
-            android:overScrollMode="always"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            app:layout_constraintTop_toBottomOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            tools:listitem="@layout/item_timeline"
-            android:clipToPadding="false" />
-
-    </ScrollView>
+        android:layout_height="wrap_content"
+        android:paddingRight="10dp"
+        android:overScrollMode="always"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layout_constraintTop_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:listitem="@layout/item_timeline"
+        android:clipToPadding="false" />
 
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

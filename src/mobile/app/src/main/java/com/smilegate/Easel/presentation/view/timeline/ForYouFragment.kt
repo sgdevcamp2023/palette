@@ -77,13 +77,13 @@ class ForYouFragment : Fragment() {
         binding.rvTimeline.layoutManager = LinearLayoutManager(requireContext())
 
         // 스크롤 리스너를 이용하여 스크롤 위치 저장
-        binding.ForYouScrollView.setOnScrollChangeListener { _, _, scrollY, _, _ ->
+        binding.rvTimeline.setOnScrollChangeListener { _, _, scrollY, _, _ ->
             savedScrollPosition = scrollY
         }
 
         // 저장된 스크롤 위치 복원
-        binding.ForYouScrollView.post {
-            binding.ForYouScrollView.scrollTo(0, savedScrollPosition)
+        binding.rvTimeline.post {
+            binding.rvTimeline.scrollTo(0, savedScrollPosition)
         }
 
         val swipeRefreshLayout = binding.swipeRefreshLayout
@@ -148,7 +148,7 @@ class ForYouFragment : Fragment() {
 
     override fun onPause() {
         super.onPause()
-        savedScrollPosition = binding.ForYouScrollView.scrollY
+        savedScrollPosition = binding.rvTimeline.scrollY
     }
 
     private fun handleBackPressed() {
