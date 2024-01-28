@@ -10,6 +10,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
@@ -34,6 +35,21 @@ public class AcceptanceTestBase {
             return mvc.perform(
                             post(url)
                                     .content(objectMapper.writeValueAsString(requestDto))
+                                    .contentType(APPLICATION_JSON)
+                                    .accept(APPLICATION_JSON))
+                    .andDo(print());
+        } catch (Exception e) {
+            throw new BuildResultActionsException(e.getCause());
+        }
+    }
+
+    public ResultActions executeGet(
+            final String url
+    ) {
+
+        try {
+            return mvc.perform(
+                            get(url)
                                     .contentType(APPLICATION_JSON)
                                     .accept(APPLICATION_JSON))
                     .andDo(print());

@@ -7,6 +7,7 @@ import org.palette.easelsocialservice.dto.request.MentionRequest;
 import org.palette.easelsocialservice.dto.request.PaintCreateRequest;
 import org.palette.easelsocialservice.dto.request.RepaintRequest;
 import org.palette.easelsocialservice.dto.response.PaintCreateResponse;
+import org.palette.easelsocialservice.dto.response.PaintResponse;
 import org.palette.easelsocialservice.persistence.domain.Link;
 import org.palette.easelsocialservice.persistence.domain.Media;
 import org.palette.easelsocialservice.persistence.domain.Paint;
@@ -72,5 +73,10 @@ public class PaintUsecase {
     public void repaint(Long userId, RepaintRequest repaintRequest) {
         User user = userService.getUser(userId);
         paintService.bindRepaintWithPaint(user, repaintRequest);
+    }
+
+    public PaintResponse getSinglePaint(Long userId, Long paintId) {
+        // TODO: compare userId for like
+        return paintService.getPaintById(userId, paintId);
     }
 }

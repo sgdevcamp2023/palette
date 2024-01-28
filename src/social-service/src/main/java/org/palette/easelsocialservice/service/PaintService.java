@@ -6,6 +6,7 @@ import org.palette.easelsocialservice.dto.request.HashtagRequest;
 import org.palette.easelsocialservice.dto.request.LinkRequest;
 import org.palette.easelsocialservice.dto.request.MentionRequest;
 import org.palette.easelsocialservice.dto.request.RepaintRequest;
+import org.palette.easelsocialservice.dto.response.*;
 import org.palette.easelsocialservice.exception.BaseException;
 import org.palette.easelsocialservice.exception.ExceptionType;
 import org.palette.easelsocialservice.persistence.PaintRepository;
@@ -33,7 +34,7 @@ public class PaintService {
 
     public void createMentions(Paint paint, List<MentionRequest> mentions, Map<Long, User> users) {
         List<Mentions> mentionRelations = new LinkedList<>();
-        for (MentionRequest mention: mentions) {
+        for (MentionRequest mention : mentions) {
             mentionRelations.add(new Mentions(users.get(mention.userId()), mention.start(), mention.end()));
         }
         paint.addAllMentions(mentionRelations);
@@ -42,7 +43,7 @@ public class PaintService {
 
     public void createTaggedUsers(Paint paint, List<User> users) {
         List<TagsUser> tagsUsers = new LinkedList<>();
-        for (User user: users) {
+        for (User user : users) {
             tagsUsers.add(new TagsUser(user));
         }
         paint.addAllTaggedUsers(tagsUsers);
@@ -51,7 +52,7 @@ public class PaintService {
 
     public void bindHashtagsWithPaint(Paint paint, List<HashtagRequest> hashtags) {
         List<Tags> tags = new LinkedList<>();
-        for (HashtagRequest hashtag: hashtags) {
+        for (HashtagRequest hashtag : hashtags) {
             Tags tag = new Tags(new Hashtag(hashtag.tag()), hashtag.start(), hashtag.end());
             tags.add(tag);
         }
@@ -81,7 +82,7 @@ public class PaintService {
     public void bindReplyPaint(Paint paint, Long inReplyToPaint) {
         Paint inReplyPaint = paintRepository.findById(inReplyToPaint)
                 .orElseThrow(() -> new BaseException(ExceptionType.SOCIAL_400_000002));
-        paint.addInReplyToPaint(inReplyPaint);
+        paint.setInReplyToPaint(inReplyPaint);
         paintRepository.save(paint);
     }
 
@@ -97,5 +98,67 @@ public class PaintService {
                 .orElseThrow(() -> new BaseException(ExceptionType.SOCIAL_400_000002));
         paint.addRepaint(user);
         paintRepository.save(paint);
+    }
+
+    public PaintResponse getPaintById(Long userId, Long paintId) {
+        Paint paint = paintRepository.findByPid(paintId)
+                .orElseThrow(() -> new BaseException(ExceptionType.SOCIAL_400_000002));
+
+        Entities entities = covertToEntities(paint);
+        Includes includes = convertToIncludes(paint);
+
+        // TODO: replyCount, likeCount, myLike, myRepaint, myMarked functions
+        // first depth's getId()== relationship's id
+        return PaintResponse.buildByPaint(paint, entities, includes);
+    }
+
+    private Entities covertToEntities(Paint paint) {
+        List<HashtagResponse> hashtags = convertToHashtagResponse(paint.getHashtags());
+        List<MentionResponse> mentions = convertToMentionResponse(paint.getMentions());
+
+        return new Entities(hashtags, mentions);
+    }
+
+    private Includes convertToIncludes(Paint paint) {
+        List<MediaResponse> medias = convertToMediaResponse(paint.getMedias());
+        List<UserResponse> taggedUsers = convertToUserResponses(paint.getTaggedUsers());
+        List<LinkResponse> links = convertToLinkResponses(paint.getLinks());
+
+        return new Includes(medias, taggedUsers, links);
+    }
+
+    private List<HashtagResponse> convertToHashtagResponse(List<Tags> hashtags) {
+        return hashtags
+                .stream()
+                .map(HashtagResponse::from)
+                .toList();
+    }
+
+    private List<MentionResponse> convertToMentionResponse(List<Mentions> mentions) {
+        return mentions
+                .stream()
+                .map(MentionResponse::from)
+                .toList();
+    }
+
+    private List<MediaResponse> convertToMediaResponse(List<Uses> medias) {
+        return medias
+                .stream()
+                .map(MediaResponse::from)
+                .toList();
+    }
+
+    private List<UserResponse> convertToUserResponses(List<TagsUser> taggedUsers) {
+        return taggedUsers
+                .stream()
+                .map(UserResponse::from)
+                .toList();
+    }
+
+    private List<LinkResponse> convertToLinkResponses(List<Contains> links) {
+        return links
+                .stream()
+                .map(LinkResponse::from)
+                .toList();
     }
 }

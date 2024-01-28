@@ -24,7 +24,7 @@ public class LinkService {
         Long lid = generateLid();
         for (LinkRequest link : linkRequests) {
             String shortUrl = pathEncoder.encode(lid);
-            links.add(new Link(lid++, shortUrl, link.url()));
+            links.add(new Link(lid++, shortUrl, link.link()));
         }
         return linkRepository.saveAll(links);
     }
