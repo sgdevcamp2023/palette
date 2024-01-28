@@ -8,6 +8,7 @@ import Camera from './Camera.svg?react';
 import Cart from './Cart.svg?react';
 import Check from './Check.svg?react';
 import CirclePerson from './CirclePerson.svg?react';
+import CirclePlus from './CirclePlus.svg?react';
 import CircleQuestion from './CircleQuestion.svg?react';
 import CircleX from './CircleX.svg?react';
 import Clip from './Clip.svg?react';
@@ -27,6 +28,7 @@ import Image from './Image.svg?react';
 import LeftStickArrow from './LeftStickArrow.svg?react';
 import LeftUpArrow from './LeftUpArrow.svg?react';
 import List from './List.svg?react';
+import Location from './Location.svg?react';
 import Mail from './Mail.svg?react';
 import Mic from './Mic.svg?react';
 import Minimize from './Minimize.svg?react';
@@ -36,6 +38,7 @@ import Mute from './Mute.svg?react';
 import Palette from './Palette.svg?react';
 import Pen from './Pen.svg?react';
 import PurpleStar from './PurpleStar.svg?react';
+import Record from './Record.svg?react';
 import Retweet from './Retweet.svg?react';
 import RightArrow from './RightArrow.svg?react';
 import Search from './Search.svg?react';
@@ -49,10 +52,12 @@ import SolidUser from './SolidUser.svg?react';
 import Sun from './Sun.svg?react';
 import Stop from './Stop.svg?react';
 import ThreeDot from './ThreeDot.svg?react';
+import Trash from './Trash.svg?react';
 import User from './User.svg?react';
 import UserMinus from './UserMinus.svg?react';
 import UserPlus from './UserPlus.svg?react';
 import Verified from './Verified.svg?react';
+import Vote from './Vote.svg?react';
 import X from './X.svg?react';
 
 export const ICONS = {
@@ -66,6 +71,7 @@ export const ICONS = {
   cart: Cart,
   check: Check,
   circlePerson: CirclePerson,
+  circlePlus: CirclePlus,
   circleQuestion: CircleQuestion,
   circleX: CircleX,
   clip: Clip,
@@ -85,6 +91,7 @@ export const ICONS = {
   leftStickArrow: LeftStickArrow,
   leftUpArrow: LeftUpArrow,
   list: List,
+  location: Location,
   mail: Mail,
   mic: Mic,
   minimize: Minimize,
@@ -94,6 +101,7 @@ export const ICONS = {
   palette: Palette,
   pen: Pen,
   purpleStar: PurpleStar,
+  record: Record,
   retweet: Retweet,
   rightArrow: RightArrow,
   search: Search,
@@ -106,10 +114,12 @@ export const ICONS = {
   solidUser: SolidUser,
   sun: Sun,
   stop: Stop,
+  trash: Trash,
   threeDot: ThreeDot,
   user: User,
   userMinus: UserMinus,
   userPlus: UserPlus,
   verified: Verified,
+  vote: Vote,
   x: X,
 } as const;

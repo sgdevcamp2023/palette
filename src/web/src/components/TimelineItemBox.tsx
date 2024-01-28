@@ -122,7 +122,7 @@ function TimelineItemBox({
             />
             <Typography
               size="body-3"
-              color={item.like ? 'red-100' : 'blueGrey-800'}
+              color={item.like ? 'pink-100' : 'blueGrey-800'}
             >
               {item.likeCount}
             </Typography>

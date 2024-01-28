@@ -60,11 +60,15 @@ function Button({
         }),
         className,
         disabled
-          ? 'bg-grey-400'
+          ? `${color === 'black' ? 'bg-grey-400' : 'bg-blue-300'}`
           : `cursor-pointer ${
               color === 'black' ? 'hover:bg-grey-500' : 'hover:bg-blue-400'
             }`,
-        variant === 'outlined' ? 'bg-white border-grey-300' : '',
+        variant === 'outlined'
+          ? `bg-white ${
+              color === 'black' ? 'border-grey-300' : 'border-blue-400'
+            }`
+          : '',
       )}
       {...props}
     >

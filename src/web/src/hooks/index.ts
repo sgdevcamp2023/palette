@@ -1,3 +1,4 @@
+export * from './useAutoHeightTextArea';
 export * from './useLongPress';
 export * from './usePaintAction';
 export * from './usePreservedCallback';

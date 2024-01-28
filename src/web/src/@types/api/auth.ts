@@ -1,7 +1,21 @@
-import type { User } from '../models';
-
 export interface Passport {
   passport: string;
+}
+
+export interface User {
+  id: string;
+  email: string;
+  password: string;
+  profileImagePath: string;
+  backgroundImagePath: string;
+  status: 'private' | 'public';
+  username: string;
+  nickname: string;
+  introduce: string;
+  websitePath: string;
+  createdAt: Date;
+  followers: number;
+  followings: number;
 }
 
 export type LoginInfo = Pick<User, 'email' | 'password'>;

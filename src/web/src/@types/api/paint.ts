@@ -1,18 +1,4 @@
-export interface User {
-  id: string;
-  email: string;
-  password: string;
-  profileImagePath: string;
-  backgroundImagePath: string;
-  status: 'private' | 'public';
-  username: string;
-  nickname: string;
-  introduce: string;
-  websitePath: string;
-  createdAt: Date;
-  followers: number;
-  followings: number;
-}
+import type { User } from './auth';
 
 export interface TimelineItem {
   id: string;
@@ -40,4 +26,31 @@ export interface TimelineItem {
     paint: TimelineItem | null;
     users: Pick<User, 'id' | 'nickname' | 'username' | 'createdAt'>[];
   };
+}
+
+export interface EditPaint {
+  text: string;
+  medias: {
+    id: string;
+    type: 'image' | 'video';
+  }[];
+  taggedUserIds: string[];
+  quotePaintId: string;
+  inReplyToPaintId: string;
+  hashtags: {
+    start: number;
+    end: number;
+    tag: string;
+  }[];
+  mentions: {
+    start: number;
+    end: number;
+    userId: User['id'];
+    mention: string;
+  }[];
+  links: {
+    start: number;
+    end: number;
+    link: string;
+  }[];
 }
