@@ -1,7 +1,6 @@
 package org.palette.easelsocialservice.persistence.domain;
 
 import lombok.Getter;
-import lombok.ToString;
 import org.palette.easelsocialservice.persistence.relationship.*;
 import org.springframework.data.neo4j.core.schema.GeneratedValue;
 import org.springframework.data.neo4j.core.schema.Id;
