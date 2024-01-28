@@ -1,4 +1,4 @@
-package org.palette.easelauthservice.component.generator;
+package org.palette.easelauthservice.component.generator.emailauth;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

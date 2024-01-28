@@ -3,7 +3,7 @@ package org.palette.easelauthservice.external;
 import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
 import net.devh.boot.grpc.server.service.GrpcService;
-import org.palette.easelauthservice.component.generator.AuthPayloadGenerator;
+import org.palette.easelauthservice.component.generator.emailauth.AuthPayloadGenerator;
 import org.palette.easelauthservice.component.mailsender.EmailAuthMailSender;
 import org.palette.easelauthservice.redis.RedisEmailAuthService;
 import org.palette.grpc.GAuthServiceGrpc;
