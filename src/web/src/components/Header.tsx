@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { cva } from 'class-variance-authority';
-import type { MouseEvent, MouseEventHandler } from 'react';
+import type { MouseEvent, MouseEventHandler, ReactNode } from 'react';
 
 import { DUMMY_USER, cn } from '@/utils';
 import MenuModal from './MenuModal';
@@ -25,6 +25,11 @@ type HeaderType =
       label: string;
       className?: string;
       onClick?: MouseEventHandler<HTMLButtonElement>;
+    }
+  | {
+      type: 'node';
+      onClick?: MouseEventHandler<HTMLButtonElement>;
+      node: ReactNode;
     };
 
 const HeaderButtonVariants = cva<{
@@ -52,7 +57,7 @@ function HeaderButton({
 
   return (
     <>
-      {header.type !== 'text' && (
+      {header.type !== 'text' && header.type !== 'node' && (
         <AccessibleIconButton
           width={header.width ?? 20}
           height={header.height ?? 20}
@@ -75,6 +80,7 @@ function HeaderButton({
           </Typography>
         </button>
       )}
+      {header.type === 'node' && header.node}
     </>
   );
 }
@@ -114,6 +120,7 @@ function Header({ left, center, right, position, className }: HeaderProps) {
     if (isProfile) {
       setIsProfileModalOpen((prev) => !prev);
     }
+    if (left?.type === 'node') return;
     left?.onClick?.(e);
   };
 
