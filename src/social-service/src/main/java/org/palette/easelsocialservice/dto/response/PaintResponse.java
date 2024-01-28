@@ -1,10 +1,9 @@
 package org.palette.easelsocialservice.dto.response;
 
-import lombok.Builder;
+import org.palette.easelsocialservice.persistence.domain.Paint;
 
 import java.time.LocalDateTime;
 
-@Builder
 public record PaintResponse(
         Long id,
         Boolean isReply,
@@ -25,4 +24,26 @@ public record PaintResponse(
         Entities entities,
         Includes includes
 ) {
+    public static PaintResponse buildByPaint(Paint paint, Entities entities, Includes includes) {
+        return new PaintResponse(
+                paint.getPid(),
+                paint.getInReplyToPaint() != null,
+                paint.getAuthor().getUser().getUid(),
+                paint.getAuthor().getUser().getUsername(),
+                paint.getAuthor().getUser().getNickname(),
+                paint.getAuthor().getUser().getImagePath(),
+                paint.getAuthor().getUser().getIsActive() ? "public" : "private",
+                paint.getCreatedAt(),
+                paint.getContent(),
+                0,
+                paint.getRepaints().size(),
+                0,
+                false,
+                false,
+                false,
+                paint.getViews(),
+                entities,
+                includes
+        );
+    }
 }

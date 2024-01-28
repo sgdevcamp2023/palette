@@ -110,26 +110,7 @@ public class PaintService {
 
         // TODO: replyCount, likeCount, myLike, myRepaint, myMarked functions
         // first depth's getId()== relationship's id
-        return PaintResponse.builder()
-                .id(paint.getPid())
-                .isReply(paint.getInReplyToPaint() != null)
-                .authorId(paint.getAuthor().getUser().getUid())
-                .authorUsername(paint.getAuthor().getUser().getUsername())
-                .authorNickname(paint.getAuthor().getUser().getNickname())
-                .authorImagePath(paint.getAuthor().getUser().getImagePath())
-                .authorStatus(paint.getAuthor().getUser().getIsActive()? "public" : "private")
-                .createdAt(paint.getCreatedAt())
-                .text(paint.getContent())
-                .replyCount(0)
-                .repaintCount(paint.getRepaints().size())
-                .likeCount(0)
-                .like(false)
-                .repainted(false)
-                .marked(false)
-                .views(paint.getViews())
-                .entities(entities)
-                .includes(includes)
-                .build();
+        return PaintResponse.buildByPaint(paint, entities, includes);
     }
 
     private Entities covertToEntities(Paint paint) {
