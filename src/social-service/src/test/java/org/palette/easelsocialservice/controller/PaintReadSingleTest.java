@@ -6,7 +6,7 @@ import org.palette.easelsocialservice.AcceptanceTestBase;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-class ReadSinglePaintTest extends AcceptanceTestBase {
+class PaintReadSingleTest extends AcceptanceTestBase {
     @Test
     @DisplayName("페인트 단일 조회 로직 테스트")
     void executePassCase() throws Exception {

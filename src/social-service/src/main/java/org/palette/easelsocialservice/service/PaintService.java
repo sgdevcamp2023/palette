@@ -108,8 +108,8 @@ public class PaintService {
         Entities entities = covertToEntities(paint);
         Includes includes = convertToInclude(paint);
 
-        // TODO: replyCount, likeCount, myLike, myRepaint, myMarked
-        // first depth's getId == relationship's id
+        // TODO: replyCount, likeCount, myLike, myRepaint, myMarked functions
+        // first depth's getId()== relationship's id
         return PaintResponse.builder()
                 .id(paint.getPid())
                 .isReply(paint.getInReplyToPaint() != null)
