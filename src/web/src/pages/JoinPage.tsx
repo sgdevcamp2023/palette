@@ -134,7 +134,11 @@ function JoinPage() {
           height: 26,
         }}
       />
-      <ContentLayout isShowBottomNavigation={false} className="h-full">
+      <ContentLayout
+        isShowBottomNavigation={false}
+        className="h-full"
+        isShowFloatingButton={false}
+      >
         <div className="flex flex-col h-full pb-[24px] justify-between overflow-hidden">
           {children}
         </div>

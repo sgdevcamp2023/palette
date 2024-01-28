@@ -9,7 +9,11 @@ function MembershipEntryPage() {
   const navigate = useNavigate();
 
   return (
-    <ContentLayout isShowBottomNavigation={false} className="h-full">
+    <ContentLayout
+      isShowBottomNavigation={false}
+      className="h-full"
+      isShowFloatingButton={false}
+    >
       <div className="flex flex-col h-full pb-[50px] justify-between overflow-hidden">
         <Typography size="headline-1" color="grey-600" className="mt-[28px]">
           지금 세계에서 무슨 일이 일어나고 있는지 알아보세요.
