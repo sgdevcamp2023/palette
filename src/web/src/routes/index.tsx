@@ -87,7 +87,7 @@ export const editPostRoute = new Route({
   path: '/edit',
   component: () => <PostEditPage />,
   validateSearch: (search: Record<string, string>): { postId?: string } => ({
-    postId: search.postId || '0',
+    postId: search.postId,
   }),
 });
 
