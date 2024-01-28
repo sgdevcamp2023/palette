@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { toast } from 'react-toastify';
-import type { ChangeEvent, KeyboardEvent } from 'react';
+import type { ChangeEvent } from 'react';
 import { useRouter } from '@tanstack/react-router';
 
 import type { EditPaint } from '@/@types';
@@ -12,7 +12,6 @@ import {
   countByte,
   forEditPaint,
   generateLocalStorage,
-  linkRegex,
 } from '@/utils';
 import {
   AccessibleIconButton,
@@ -20,8 +19,10 @@ import {
   CircularProgress,
   Header,
   Icon,
+  TempSavedPostModal,
   Typography,
 } from '@/components';
+import { editPostRoute } from '@/routes';
 
 const EMPTY_LENGTH = 0;
 const MAX_BYTE = 280;
@@ -41,14 +42,18 @@ const tempSavedStorage =
 function PostEditPage() {
   const user = DUMMY_USER;
   const router = useRouter();
-  const [text, setText] = useState<string>('');
-  const textAreaRef = useAutoHeightTextArea(text);
+  const search = editPostRoute.useSearch();
+  const [editPostInfo, setEditPostInfo] = useState<EditPaint>(forEditPaint({}));
+  const textAreaRef = useAutoHeightTextArea(editPostInfo.text);
   const [image, setImage] = useState<string>('');
   const isNotDirty =
-    text.length === EMPTY_LENGTH && image.length === EMPTY_LENGTH;
+    editPostInfo.text.length === EMPTY_LENGTH && image.length === EMPTY_LENGTH;
 
-  const [isCancelModalOpen, setIsCancelModal] = useState<boolean>(false);
-
+  const [isModalOpen, setIsModalOpen] = useState<{
+    cancel: boolean;
+    tempSaved: boolean;
+  }>({ cancel: false, tempSaved: false });
+  const hasTempSavedPost = !!tempSavedStorage.get()?.length;
   const [tempSavedPost] = useState<EditPaint[]>(
     () => tempSavedStorage.get() ?? [],
   );
@@ -75,17 +80,7 @@ function PostEditPage() {
       router.history.back();
       return;
     }
-    setIsCancelModal(true);
-  };
-
-  const handleKeyUpTextArea = (e: KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key !== ' ' && e.key !== 'Enter') return;
-
-    const nextStyledText = text.replace(
-      linkRegex,
-      (match) => `<span className="text-blue-500">${match}</span>`,
-    );
-    textAreaRef.current.innerHTML = nextStyledText;
+    setIsModalOpen((prev) => ({ ...prev, cancel: true }));
   };
 
   const handleChangeTextInput = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -94,10 +89,22 @@ function PostEditPage() {
       showOnlyOneToast();
       return;
     }
-    setText(e.target.value);
+    setEditPostInfo((prev) => ({ ...prev, text: e.target.value }));
   };
 
   const handleClickNotSupport = () => toast('아직 지원되지 않는 기능입니다.');
+
+  const handleSubmitPost = async () => {
+    toast(
+      JSON.stringify(
+        forEditPaint({
+          text: editPostInfo.text,
+          medias: image ? [convertToMedia(image, 'image')] : [],
+          quotePaintId: search.postId,
+        }),
+      ),
+    );
+  };
 
   return (
     <>
@@ -117,10 +124,10 @@ function PostEditPage() {
                 color="blue"
                 disabled={isNotDirty}
                 className="w-[64px] py-1 px-0"
+                onClick={handleSubmitPost}
               >
                 <Typography
                   role="button"
-                  onClick={handleClickBackButton}
                   size="body-3"
                   color={isNotDirty ? 'blue-200' : 'white'}
                   className="font-bold"
@@ -128,13 +135,18 @@ function PostEditPage() {
                   게시하기
                 </Typography>
               </Button>
-              {tempSavedPost.length > 0 && (
+              {hasTempSavedPost && (
                 <Typography
                   role="button"
-                  onClick={handleClickBackButton}
                   size="body-3"
                   color="blue-500"
-                  className="absolute right-[100px] top-[4px] whitespace-nowrap font-bold"
+                  className="absolute right-[100px] top-[4px] whitespace-nowrap font-bold cursor-pointer transition-colors hover:text-blue-300"
+                  onClick={() =>
+                    setIsModalOpen((prev) => ({
+                      ...prev,
+                      tempSaved: true,
+                    }))
+                  }
                 >
                   임시 보관함
                 </Typography>
@@ -153,7 +165,7 @@ function PostEditPage() {
           <div className="w-full flex flex-col gap-[16px]">
             <textarea
               ref={textAreaRef}
-              value={text}
+              value={editPostInfo.text}
               onChange={handleChangeTextInput}
               autoCapitalize="sentences"
               autoCorrect="on"
@@ -167,7 +179,6 @@ function PostEditPage() {
                           placeholder:text-blueGrey-800 placeholder:text-[18px]
                           focus:outline-0
                         "
-              onKeyUp={handleKeyUpTextArea}
             />
             {/* 이미지 */}
             {image && (
@@ -213,7 +224,13 @@ function PostEditPage() {
                 onClick={handleClickNotSupport}
               />
               <label htmlFor="input-image">
-                <Icon type="image" width={20} height={20} fill="blue-500" />
+                <Icon
+                  type="image"
+                  width={20}
+                  height={20}
+                  fill="blue-500"
+                  className="cursor-pointer"
+                />
                 <input
                   id="input-image"
                   type="file"
@@ -250,7 +267,7 @@ function PostEditPage() {
 
           <div className="flex divide-x divide-blueGrey-200">
             <CircularProgress
-              value={countByte(text)}
+              value={countByte(editPostInfo.text)}
               minValue={0}
               maxValue={MAX_BYTE}
               className="mr-4"
@@ -271,25 +288,35 @@ function PostEditPage() {
       </main>
 
       {/* 모달 */}
-      {isCancelModalOpen && (
+      {isModalOpen.cancel && (
         <EditPostCancelBottomSheet
-          isOpen={isCancelModalOpen}
-          onClose={() => setIsCancelModal(false)}
+          isOpen={isModalOpen.cancel}
+          onClose={() => setIsModalOpen((prev) => ({ ...prev, cancel: false }))}
           onClickDelete={() => {
             router.history.back();
-            setIsCancelModal(false);
+            setIsModalOpen((prev) => ({ ...prev, cancel: false }));
           }}
           onClickSave={() => {
             router.history.back();
             tempSavedStorage.set([
               ...tempSavedPost,
               {
-                ...forEditPaint({ text }),
-                medias: [convertToMedia(image, 'image')],
+                ...forEditPaint({ text: editPostInfo.text }),
+                medias: image ? [convertToMedia(image, 'image')] : [],
               },
             ]);
-            setIsCancelModal(false);
+            setIsModalOpen((prev) => ({ ...prev, cancel: false }));
           }}
+        />
+      )}
+
+      {isModalOpen.tempSaved && (
+        <TempSavedPostModal
+          onClose={() =>
+            setIsModalOpen((prev) => ({ ...prev, tempSaved: false }))
+          }
+          setImage={setImage}
+          setEditPostInfo={setEditPostInfo}
         />
       )}
     </>
