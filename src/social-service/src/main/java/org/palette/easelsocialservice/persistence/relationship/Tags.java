@@ -15,13 +15,13 @@ public class Tags {
     @TargetNode
     private Hashtag hashtag;
 
-    private Integer startIdx;
+    private Integer start;
 
-    private Integer endIdx;
+    private Integer end;
 
-    public Tags(Hashtag hashtag, Integer startIdx, Integer endIdx) {
+    public Tags(Hashtag hashtag, Integer start, Integer end) {
         this.hashtag = hashtag;
-        this.startIdx = startIdx;
-        this.endIdx = endIdx;
+        this.start = start;
+        this.end = end;
     }
 }

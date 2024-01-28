@@ -34,7 +34,7 @@ public class PaintService {
 
     public void createMentions(Paint paint, List<MentionRequest> mentions, Map<Long, User> users) {
         List<Mentions> mentionRelations = new LinkedList<>();
-        for (MentionRequest mention: mentions) {
+        for (MentionRequest mention : mentions) {
             mentionRelations.add(new Mentions(users.get(mention.userId()), mention.start(), mention.end()));
         }
         paint.addAllMentions(mentionRelations);
@@ -43,7 +43,7 @@ public class PaintService {
 
     public void createTaggedUsers(Paint paint, List<User> users) {
         List<TagsUser> tagsUsers = new LinkedList<>();
-        for (User user: users) {
+        for (User user : users) {
             tagsUsers.add(new TagsUser(user));
         }
         paint.addAllTaggedUsers(tagsUsers);
@@ -52,7 +52,7 @@ public class PaintService {
 
     public void bindHashtagsWithPaint(Paint paint, List<HashtagRequest> hashtags) {
         List<Tags> tags = new LinkedList<>();
-        for (HashtagRequest hashtag: hashtags) {
+        for (HashtagRequest hashtag : hashtags) {
             Tags tag = new Tags(new Hashtag(hashtag.tag()), hashtag.start(), hashtag.end());
             tags.add(tag);
         }
@@ -130,46 +130,35 @@ public class PaintService {
     private List<HashtagResponse> convertToHashtagResponse(List<Tags> hashtags) {
         return hashtags
                 .stream()
-                .map(tag -> new HashtagResponse(
-                        tag.getStartIdx(), tag.getEndIdx(), tag.getHashtag().getTag()
-                ))
+                .map(HashtagResponse::from)
                 .toList();
     }
 
     private List<MentionResponse> convertToMentionResponse(List<Mentions> mentions) {
         return mentions
                 .stream()
-                .map(m -> new MentionResponse(
-                        m.getStart(), m.getEnd(), m.getUser().getUid(), m.getUser().getUsername()
-                ))
+                .map(MentionResponse::from)
                 .toList();
     }
 
     private List<MediaResponse> convertToMediaResponse(List<Uses> medias) {
         return medias
                 .stream()
-                .map(media -> new MediaResponse(
-                        media.getMedia().getType(), media.getMedia().getPath()
-                ))
+                .map(MediaResponse::from)
                 .toList();
     }
 
     private List<UserResponse> convertToUserResponses(List<TagsUser> taggedUsers) {
         return taggedUsers
                 .stream()
-                .map(u -> new UserResponse(
-                        u.getUser().getUid(), u.getUser().getNickname(), u.getUser().getUsername()
-                ))
+                .map(UserResponse::from)
                 .toList();
     }
 
     private List<LinkResponse> convertToLinkResponses(List<Contains> links) {
         return links
                 .stream()
-                .map(link -> new LinkResponse(
-                        link.getStart(), link.getEnd(), link.getLink().getShortLink(), link.getLink().getOriginalLink()
-                        )
-                )
+                .map(LinkResponse::from)
                 .toList();
     }
 }
