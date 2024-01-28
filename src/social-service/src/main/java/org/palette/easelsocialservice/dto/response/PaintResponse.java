@@ -32,7 +32,7 @@ public record PaintResponse(
                 paint.getAuthor().getUser().getUsername(),
                 paint.getAuthor().getUser().getNickname(),
                 paint.getAuthor().getUser().getImagePath(),
-                paint.getAuthor().getUser().getIsActive() ? "public" : "private",
+                paint.getAuthor().getUser().getActiveString(),
                 paint.getCreatedAt(),
                 paint.getContent(),
                 0,

@@ -29,8 +29,11 @@ public class User {
     }
 
 
-
     public User(Long uid) {
         this.uid = uid;
+    }
+
+    public String getActiveString() {
+        return this.getIsActive() ? "public" : "private";
     }
 }
