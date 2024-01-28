@@ -105,7 +105,7 @@ public class PaintService {
                 .orElseThrow(() -> new BaseException(ExceptionType.SOCIAL_400_000002));
 
         Entities entities = covertToEntities(paint);
-        Includes includes = convertToInclude(paint);
+        Includes includes = convertToIncludes(paint);
 
         // TODO: replyCount, likeCount, myLike, myRepaint, myMarked functions
         // first depth's getId()== relationship's id
@@ -119,7 +119,7 @@ public class PaintService {
         return new Entities(hashtags, mentions);
     }
 
-    private Includes convertToInclude(Paint paint) {
+    private Includes convertToIncludes(Paint paint) {
         List<MediaResponse> medias = convertToMediaResponse(paint.getMedias());
         List<UserResponse> taggedUsers = convertToUserResponses(paint.getTaggedUsers());
         List<LinkResponse> links = convertToLinkResponses(paint.getLinks());
