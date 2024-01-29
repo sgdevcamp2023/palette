@@ -100,16 +100,31 @@ public class PaintService {
         paintRepository.save(paint);
     }
 
+    // TODO: replyCount, likeCount, myLike, myRepaint, myMarked functions
+    // first depth's getId()== relationship's id
     public PaintResponse getPaintById(Long userId, Long paintId) {
         Paint paint = paintRepository.findByPid(paintId)
                 .orElseThrow(() -> new BaseException(ExceptionType.SOCIAL_400_000002));
 
+        return convertToPaintResponse(paint);
+    }
+
+    public List<PaintResponse> getPaintBeforeById(Long userId, Long paintId) {
+        List<Paint> paints = paintRepository.findAllBeforePaintByPid(paintId);
+        return convertToPaintResponse(paints);
+    }
+
+    private PaintResponse convertToPaintResponse (Paint paint){
         Entities entities = covertToEntities(paint);
         Includes includes = convertToIncludes(paint);
 
-        // TODO: replyCount, likeCount, myLike, myRepaint, myMarked functions
-        // first depth's getId()== relationship's id
         return PaintResponse.buildByPaint(paint, entities, includes);
+    }
+
+    private List<PaintResponse> convertToPaintResponse(List<Paint> paints) {
+        return paints.stream()
+                .map(this::convertToPaintResponse)
+                .toList();
     }
 
     private Entities covertToEntities(Paint paint) {

@@ -1,23 +1,16 @@
 package org.palette.passport;
 
-import org.springframework.beans.factory.annotation.Value;
+import lombok.RequiredArgsConstructor;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import java.util.Base64;
 
+@RequiredArgsConstructor
 public class HMACEncoder {
 
     private final String HMacAlgorithm;
     private final String passportSecretKey;
-
-    public HMACEncoder(
-            @Value("${passport.algorithm}") String HMacAlgorithm,
-            @Value("${passport.key}") String passportSecretKey
-    ) {
-        this.HMacAlgorithm = HMacAlgorithm;
-        this.passportSecretKey = passportSecretKey;
-    }
 
     protected String createHMACIntegrityKey(String userInfoString) {
         SecretKeySpec secretKeySpec = new SecretKeySpec(
