@@ -199,6 +199,10 @@
             android:id="@+id/action_profileFragment_to_timeLineFragment"
             app:destination="@id/timelineFragment"/>
 
+        <action
+            android:id="@+id/action_profileFragment_to_postFragment"
+            app:destination="@id/postFragment"/>
+
     </fragment>
 
     <fragment

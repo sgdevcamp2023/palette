@@ -158,12 +158,12 @@ class ProfileFragment : Fragment() {
 
         binding.fabMain.setOnClickListener {
             if(!isFabOpen) {
-                findNavController().navigate(R.id.action_timelineFragment_to_postFragment)
+                findNavController().navigate(R.id.action_profileFragment_to_postFragment)
             }
         }
 
         binding.fabImage.setOnClickListener {
-            findNavController().navigate(R.id.action_timelineFragment_to_postFragment)
+            findNavController().navigate(R.id.action_profileFragment_to_postFragment)
         }
 
         binding.fabGif.setOnClickListener {
@@ -171,7 +171,7 @@ class ProfileFragment : Fragment() {
         }
 
         binding.fabWrite.setOnClickListener {
-            findNavController().navigate(R.id.action_timelineFragment_to_postFragment)
+            findNavController().navigate(R.id.action_profileFragment_to_postFragment)
         }
     }
 

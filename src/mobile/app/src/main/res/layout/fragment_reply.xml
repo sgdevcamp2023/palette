@@ -1,19 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.recyclerview.widget.RecyclerView
-    android:id="@+id/rvReply"
+<com.smilegate.Easel.presentation.NestedScrollableHost
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".presentation.view.profile.ReplyFragment"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:paddingRight="10dp"
-    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    app:layout_constraintTop_toBottomOf="parent"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    tools:listitem="@layout/item_timeline"
-    android:clipToPadding="false" />
+    tools:context=".presentation.view.profile.ReplyFragment">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvReply"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingRight="10dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layout_constraintTop_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:listitem="@layout/item_timeline"
+        android:clipToPadding="false" />
+
+</com.smilegate.Easel.presentation.NestedScrollableHost>
 
