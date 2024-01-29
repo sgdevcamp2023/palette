@@ -7,10 +7,18 @@ service GAuthService {
   rpc SendEmailAuth (GSendEmailAuthRequest) returns (GSendEmailAuthResponse) {}
 }
 
+message GValidateJWTRequest {
+  string jwtPayload = 1;
+}
+
+message GValidateJWTResponse {
+  string passportPayload = 1;
+}
+
 message GSendEmailAuthRequest {
   string email = 2;
 }
 
 message GSendEmailAuthResponse {
-  bool message = 1;
+  bool isSuccess = 1;
 }
