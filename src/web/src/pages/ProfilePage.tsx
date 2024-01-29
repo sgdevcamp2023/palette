@@ -7,49 +7,17 @@ import type { TimelineItem } from '@/@types';
 import { DUMMY_USER, createDummyTimelineItem } from '@/utils';
 import {
   AccessibleIconButton,
+  AsyncBoundary,
   Button,
   ContentLayout,
+  ErrorWithResetBox,
   Icon,
   Tabs,
-  TimelineItemBox,
+  TimelineItemList,
   Typography,
 } from '@/components';
-import { usePaintAction, useThrottle } from '@/hooks';
-import {
-  ReplyBottomSheet,
-  ShareBottomSheet,
-  ViewsBottomSheet,
-} from '@/components/bottomSheet';
-
-function TabTimlineList({
-  paints,
-  paintAction,
-}: {
-  paints: TimelineItem[];
-  paintAction: ReturnType<typeof usePaintAction>;
-}) {
-  return (
-    <>
-      {paints.map((paint) => (
-        <TimelineItemBox
-          key={paint.id}
-          item={paint}
-          className="pt-[10px]"
-          isShowMenu={
-            paintAction.isShowMoreMenu.id === paint.id &&
-            paintAction.isShowMoreMenu.show
-          }
-          onClickHeart={() => paintAction.onClickHeart(paint.id)}
-          onClickMore={() => paintAction.onClickMore(paint.id)}
-          onClickReply={() => paintAction.onClickReply(paint.id)}
-          onClickShare={() => paintAction.onClickShare(paint.id)}
-          onClickRetweet={() => paintAction.onClickRetweet(paint.id)}
-          onClickViews={() => paintAction.onClickViews(paint.id)}
-        />
-      ))}
-    </>
-  );
-}
+import { useThrottle } from '@/hooks';
+import { TimelineItemListSkeleton } from '@/components/skeleton';
 
 const MIN_IMAGE_HEIGHT = 50;
 const DEFAULT_IMAGE_HEIGHT = 124;
@@ -57,7 +25,6 @@ const user = DUMMY_USER;
 function ProfilePage() {
   const navigate = useNavigate();
   const router = useRouter();
-  const paintAction = usePaintAction();
   const scrollRef = useRef<HTMLDivElement | null>(null);
   const [paints] = useState<TimelineItem[]>(() => createDummyTimelineItem(10));
   const [imageHeight, setImageHeight] = useState<number>(DEFAULT_IMAGE_HEIGHT);
@@ -205,9 +172,16 @@ function ProfilePage() {
               content: (
                 <ContentLayout
                   as="section"
-                  className="flex flex-col divide-y divide-blueGrey-400 pl-[12px] pr-[4px] gap-[12px] mt-0 max-h-none"
+                  className="mt-0 pl-[12px] pr-[4px] max-h-none"
                 >
-                  <TabTimlineList paintAction={paintAction} paints={paints} />
+                  <AsyncBoundary
+                    pendingFallback={<TimelineItemListSkeleton />}
+                    rejectedFallback={(props) => (
+                      <ErrorWithResetBox {...props} />
+                    )}
+                  >
+                    <TimelineItemList type="my-post" />
+                  </AsyncBoundary>
                 </ContentLayout>
               ),
             },
@@ -216,12 +190,16 @@ function ProfilePage() {
               content: (
                 <ContentLayout
                   as="section"
-                  className="flex flex-col divide-y divide-blueGrey-400 pl-[12px] pr-[4px] gap-[12px] mt-0 max-h-none"
+                  className="mt-0 pl-[12px] pr-[4px] max-h-none"
                 >
-                  <TabTimlineList
-                    paintAction={paintAction}
-                    paints={[...paints].reverse()}
-                  />
+                  <AsyncBoundary
+                    pendingFallback={<TimelineItemListSkeleton />}
+                    rejectedFallback={(props) => (
+                      <ErrorWithResetBox {...props} />
+                    )}
+                  >
+                    <TimelineItemList type="my-reply" />
+                  </AsyncBoundary>
                 </ContentLayout>
               ),
             },
@@ -230,9 +208,16 @@ function ProfilePage() {
               content: (
                 <ContentLayout
                   as="section"
-                  className="flex flex-col divide-y divide-blueGrey-400 pl-[12px] pr-[4px] gap-[12px] mt-0 max-h-none"
+                  className="mt-0 pl-[12px] pr-[4px] max-h-none"
                 >
-                  <TabTimlineList paintAction={paintAction} paints={paints} />
+                  <AsyncBoundary
+                    pendingFallback={<TimelineItemListSkeleton />}
+                    rejectedFallback={(props) => (
+                      <ErrorWithResetBox {...props} />
+                    )}
+                  >
+                    <TimelineItemList type="my-post" />
+                  </AsyncBoundary>
                 </ContentLayout>
               ),
             },
@@ -241,14 +226,16 @@ function ProfilePage() {
               content: (
                 <ContentLayout
                   as="section"
-                  className="flex flex-col divide-y divide-blueGrey-400 pl-[12px] pr-[4px] gap-[12px] mt-0 max-h-none"
+                  className="mt-0 pl-[12px] pr-[4px] max-h-none"
                 >
-                  <TabTimlineList
-                    paintAction={paintAction}
-                    paints={[...paints].filter(
-                      (paint) => paint.includes.medias.length,
+                  <AsyncBoundary
+                    pendingFallback={<TimelineItemListSkeleton />}
+                    rejectedFallback={(props) => (
+                      <ErrorWithResetBox {...props} />
                     )}
-                  />
+                  >
+                    <TimelineItemList type="media" />
+                  </AsyncBoundary>
                 </ContentLayout>
               ),
             },
@@ -257,33 +244,22 @@ function ProfilePage() {
               content: (
                 <ContentLayout
                   as="section"
-                  className="flex flex-col divide-y divide-blueGrey-400 pl-[12px] pr-[4px] gap-[12px] mt-0 max-h-none"
+                  className="mt-0 pl-[12px] pr-[4px] max-h-none"
                 >
-                  <TabTimlineList
-                    paintAction={paintAction}
-                    paints={[...paints].reverse()}
-                  />
+                  <AsyncBoundary
+                    pendingFallback={<TimelineItemListSkeleton />}
+                    rejectedFallback={(props) => (
+                      <ErrorWithResetBox {...props} />
+                    )}
+                  >
+                    <TimelineItemList type="heart" />
+                  </AsyncBoundary>
                 </ContentLayout>
               ),
             },
           ]}
         />
       </div>
-
-      <ReplyBottomSheet
-        id={paintAction.selectedPostId}
-        isOpen={paintAction.isBottomSheetOpen.reply}
-        onClose={() => paintAction.onCloseBottomSheet('reply')}
-      />
-      <ViewsBottomSheet
-        isOpen={paintAction.isBottomSheetOpen.views}
-        onClose={() => paintAction.onCloseBottomSheet('views')}
-      />
-      <ShareBottomSheet
-        id={paintAction.selectedPostId}
-        isOpen={paintAction.isBottomSheetOpen.share}
-        onClose={() => paintAction.onCloseBottomSheet('share')}
-      />
     </main>
   );
 }

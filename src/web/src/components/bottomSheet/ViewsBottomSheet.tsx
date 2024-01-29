@@ -1,7 +1,7 @@
 import type { ComponentProps } from 'react';
 
+import NotSupportText from '../NotSupportText';
 import { BottomSheet, Typography } from '../common';
-import { NotSupportText } from '..';
 
 interface ViewsBottomSheetProps {
   isOpen: ComponentProps<typeof BottomSheet>['isOpen'];
