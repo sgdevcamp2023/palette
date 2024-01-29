@@ -22,7 +22,7 @@ message GCreateUserResponse {
 }
 
 message GFollowerIdsRequest {
-  Passport passport = 1;
+  GPassport passport = 1;
 }
 
 message GFollowerIdsResponse {
