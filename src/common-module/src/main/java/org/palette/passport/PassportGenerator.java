@@ -12,8 +12,7 @@ import java.util.Base64;
 
 @RequiredArgsConstructor
 public class PassportGenerator {
-    private static final String USER_INFO = "userInfo";
-    private static final String INTEGRITY_KEY = "integrityKey";
+
     private final ObjectMapper objectMapper;
     private final HMACEncoder hmacEncoder;
 

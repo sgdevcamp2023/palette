@@ -15,7 +15,7 @@ public class PassportValidator {
     private final ObjectMapper objectMapper;
     private final HMACEncoder hmacEncoder;
 
-    public boolean validatePassport(String requestedPassport) {
+    public void validatePassport(String requestedPassport) {
         String encodedUserInfo;
         String integrityKey;
 
@@ -36,7 +36,6 @@ public class PassportValidator {
             throw new BaseException(ExceptionType.COMMON_500_000002);
         }
 
-        return true;
     }
 
     private void isEqualByRequestedPassport(
