@@ -14,6 +14,7 @@ import CircleX from './CircleX.svg?react';
 import Clip from './Clip.svg?react';
 import Comment from './Comment.svg?react';
 import DownArrow from './DownArrow.svg?react';
+import EmptyCircle from './EmptyCircle.svg?react';
 import EyeOff from './EyeOff.svg?react';
 import EyeOn from './EyeOn.svg?react';
 import FilePlus from './FilePlus.svg?react';
@@ -77,6 +78,7 @@ export const ICONS = {
   clip: Clip,
   comment: Comment,
   downArrow: DownArrow,
+  emptyCircle: EmptyCircle,
   eyeOff: EyeOff,
   eyeOn: EyeOn,
   filePlus: FilePlus,
