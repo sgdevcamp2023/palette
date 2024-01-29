@@ -7,9 +7,11 @@ import org.palette.exception.BaseException;
 import org.palette.exception.ExceptionType;
 import org.palette.passport.component.Passport;
 import org.palette.passport.component.UserInfo;
+import org.springframework.stereotype.Component;
 
 import java.util.Base64;
 
+@Component
 @RequiredArgsConstructor
 public class PassportGenerator {
 
