@@ -58,3 +58,7 @@ test {
 clean {
     delete 'src/generated'
 }
+
+bootJar {
+    enabled = false
+}
