@@ -9,228 +9,248 @@
     android:fitsSystemWindows="true"
     tools:context=".presentation.view.profile.ProfileFragment">
 
+   <androidx.core.widget.NestedScrollView
+       android:id="@+id/header"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       app:layout_constraintBottom_toBottomOf="parent"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintTop_toTopOf="parent">
+
+      <androidx.constraintlayout.widget.ConstraintLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent">
+
+         <ImageView
+             android:id="@+id/iv_profile_header"
+             android:layout_width="match_parent"
+             android:layout_height="124dp"
+             android:background="@color/Blue_500"
+             android:scaleType="centerCrop"
+             app:layout_constraintEnd_toEndOf="parent"
+             app:layout_constraintStart_toStartOf="parent"
+             app:layout_constraintTop_toTopOf="parent"
+             app:tint="@color/Blue_500" />
+
+         <ImageView
+             android:id="@+id/iv_back_btn"
+             android:layout_width="32dp"
+             android:layout_height="32dp"
+             android:layout_marginStart="16dp"
+             android:layout_marginBottom="10dp"
+             android:background="@drawable/bg_profile_toolbar_btn"
+             app:layout_constraintBottom_toTopOf="@+id/circleImageView"
+             app:layout_constraintStart_toStartOf="parent" />
+
+         <ImageView
+             android:id="@+id/ic_back"
+             android:layout_width="16dp"
+             android:layout_height="16dp"
+             android:src="@drawable/ic_left_stick_arrow"
+             app:layout_constraintBottom_toBottomOf="@+id/iv_back_btn"
+             app:layout_constraintEnd_toEndOf="@+id/iv_back_btn"
+             app:layout_constraintStart_toStartOf="@+id/iv_back_btn"
+             app:layout_constraintTop_toTopOf="@+id/iv_back_btn"
+             app:tint="@color/white" />
+
+         <ImageView
+             android:id="@+id/iv_search_btn"
+             android:layout_width="32dp"
+             android:layout_height="32dp"
+             android:layout_marginEnd="16dp"
+             android:layout_marginBottom="10dp"
+             android:background="@drawable/bg_profile_toolbar_btn"
+             app:layout_constraintBottom_toTopOf="@+id/circleImageView"
+             app:layout_constraintEnd_toEndOf="parent" />
+
+         <ImageView
+             android:id="@+id/ic_search"
+             android:layout_width="16dp"
+             android:layout_height="16dp"
+             android:src="@drawable/ic_search"
+             app:layout_constraintBottom_toBottomOf="@+id/iv_search_btn"
+             app:layout_constraintEnd_toEndOf="@+id/iv_search_btn"
+             app:layout_constraintStart_toStartOf="@+id/iv_search_btn"
+             app:layout_constraintTop_toTopOf="@+id/iv_search_btn"
+             app:tint="@color/white" />
+
+         <de.hdodenhof.circleimageview.CircleImageView
+             android:id="@+id/circleImageView"
+             android:layout_width="70dp"
+             android:layout_height="70dp"
+             android:layout_marginStart="10dp"
+             android:layout_marginTop="100dp"
+             android:src="@drawable/sample_profile_img1"
+             app:layout_constraintStart_toStartOf="parent"
+             app:layout_constraintTop_toTopOf="parent" />
+
+         <android.widget.Button
+             android:id="@+id/btn_edit_profile"
+             style="@style/Headline8"
+             android:layout_width="wrap_content"
+             android:layout_height="30dp"
+             android:layout_marginTop="10dp"
+             android:layout_marginEnd="16dp"
+             android:background="@drawable/btn_timeline_bottom_sheet"
+             android:stateListAnimator="@null"
+             android:text="프로필 수정"
+             android:textColor="@color/Grey_600"
+             app:layout_constraintEnd_toEndOf="parent"
+             app:layout_constraintTop_toBottomOf="@+id/iv_profile_header" />
+
+         <TextView
+             android:id="@+id/tv_nick_name"
+             style="@style/Headline4"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_marginStart="12dp"
+             android:layout_marginTop="10dp"
+             android:text="바키"
+             android:textColor="@color/Grey_600"
+             app:layout_constraintStart_toStartOf="parent"
+             app:layout_constraintTop_toBottomOf="@+id/circleImageView" />
+
+         <TextView
+             android:id="@+id/tv_user_name"
+             style="@style/Body1"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_marginTop="6dp"
+             android:text="\@_parking1_"
+             android:textColor="@color/BlueGrey_600"
+             app:layout_constraintStart_toStartOf="@+id/tv_nick_name"
+             app:layout_constraintTop_toBottomOf="@+id/tv_nick_name" />
+
+         <TextView
+             android:id="@+id/tv_user_bio"
+             style="@style/Body2"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_marginStart="12dp"
+             android:layout_marginTop="16dp"
+             android:text="안녕하세요"
+             android:textColor="@color/Grey_600"
+             app:layout_constraintStart_toStartOf="parent"
+             app:layout_constraintTop_toBottomOf="@+id/tv_user_name" />
+
+         <ImageView
+             android:id="@+id/iv_calander_icon"
+             android:layout_width="12dp"
+             android:layout_height="12dp"
+             android:layout_marginStart="12dp"
+             android:layout_marginTop="12dp"
+             android:src="@drawable/ic_calander"
+             app:layout_constraintStart_toStartOf="parent"
+             app:layout_constraintTop_toBottomOf="@+id/tv_user_bio"
+             app:tint="@color/BlueGrey_800" />
+
+         <TextView
+             android:id="@+id/tv_user_join_date"
+             style="@style/Body3"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_marginStart="4dp"
+             android:layout_marginTop="11dp"
+             android:text="2023년 12월에 가입합"
+             android:textColor="@color/BlueGrey_800"
+             app:layout_constraintStart_toEndOf="@+id/iv_calander_icon"
+             app:layout_constraintTop_toBottomOf="@+id/tv_user_bio" />
+
+         <TextView
+             android:id="@+id/tv_following_num"
+             style="@style/Headline8"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_marginStart="12dp"
+             android:layout_marginTop="14dp"
+             android:text="4"
+             android:textColor="@color/Grey_600"
+             app:layout_constraintStart_toStartOf="parent"
+             app:layout_constraintTop_toBottomOf="@+id/iv_calander_icon" />
+
+         <TextView
+             android:id="@+id/tv_following"
+             style="@style/Body2"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_marginStart="2dp"
+             android:layout_marginTop="14dp"
+             android:text="팔로잉"
+             android:textColor="@color/BlueGrey_800"
+             app:layout_constraintStart_toEndOf="@+id/tv_following_num"
+             app:layout_constraintTop_toBottomOf="@+id/iv_calander_icon" />
+
+         <TextView
+             android:id="@+id/tv_follower_num"
+             style="@style/Headline8"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_marginStart="10dp"
+             android:layout_marginTop="14dp"
+             android:text="4"
+             android:textColor="@color/Grey_600"
+             app:layout_constraintStart_toEndOf="@+id/tv_following"
+             app:layout_constraintTop_toBottomOf="@+id/iv_calander_icon" />
+
+         <TextView
+             android:id="@+id/tv_follower"
+             style="@style/Body2"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_marginStart="2dp"
+             android:layout_marginTop="14dp"
+             android:text="팔로워"
+             android:textColor="@color/BlueGrey_800"
+             app:layout_constraintStart_toEndOf="@+id/tv_follower_num"
+             app:layout_constraintTop_toBottomOf="@+id/iv_calander_icon" />
+
+         <com.google.android.material.tabs.TabLayout
+             android:id="@+id/tabLayout"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_marginTop="10dp"
+             android:background="@drawable/bg_profile_tab_layout"
+             android:elevation="0dp"
+             app:layout_constraintEnd_toEndOf="parent"
+             app:layout_constraintStart_toStartOf="parent"
+             app:layout_constraintTop_toBottomOf="@+id/tv_following_num"
+             app:tabGravity="fill"
+             app:tabIndicatorHeight="3dp"
+             app:tabMode="scrollable"
+             app:tabSelectedTextColor="@color/Grey_600"
+             app:tabTextAppearance="@style/Headline8"
+             app:tabTextColor="@color/BlueGrey_800" />
+
+         <View
+             android:id="@+id/view4"
+             android:layout_width="match_parent"
+             android:layout_height="1dp"
+             android:background="@color/BlueGrey_300"
+             app:layout_constraintEnd_toEndOf="parent"
+             app:layout_constraintStart_toStartOf="parent"
+             app:layout_constraintTop_toBottomOf="@+id/tabLayout" />
+
+         </androidx.constraintlayout.widget.ConstraintLayout>
+
+      </androidx.core.widget.NestedScrollView>
+
    <androidx.constraintlayout.widget.ConstraintLayout
-       android:layout_width="match_parent"
-       android:layout_height="match_parent">
-
-      <ImageView
-          android:id="@+id/iv_profile_header"
-          android:layout_width="match_parent"
-          android:layout_height="124dp"
-          android:background="@color/Blue_500"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toTopOf="parent" />
-
-      <ImageView
-          android:id="@+id/iv_back_btn"
-          android:layout_width="32dp"
-          android:layout_height="32dp"
-          android:layout_marginStart="16dp"
-          android:layout_marginBottom="10dp"
-          android:background="@drawable/bg_profile_toolbar_btn"
-          app:layout_constraintBottom_toTopOf="@+id/circleImageView"
-          app:layout_constraintStart_toStartOf="parent" />
-
-      <ImageView
-          android:id="@+id/ic_back"
-          android:layout_width="16dp"
-          android:layout_height="16dp"
-          android:src="@drawable/ic_left_stick_arrow"
-          app:layout_constraintBottom_toBottomOf="@+id/iv_back_btn"
-          app:layout_constraintEnd_toEndOf="@+id/iv_back_btn"
-          app:layout_constraintStart_toStartOf="@+id/iv_back_btn"
-          app:layout_constraintTop_toTopOf="@+id/iv_back_btn"
-          app:tint="@color/white" />
-
-      <ImageView
-          android:id="@+id/iv_search_btn"
-          android:layout_width="32dp"
-          android:layout_height="32dp"
-          android:layout_marginEnd="16dp"
-          android:layout_marginBottom="10dp"
-          android:background="@drawable/bg_profile_toolbar_btn"
-          app:layout_constraintBottom_toTopOf="@+id/circleImageView"
-          app:layout_constraintEnd_toEndOf="parent" />
-
-      <ImageView
-          android:id="@+id/ic_search"
-          android:layout_width="16dp"
-          android:layout_height="16dp"
-          android:src="@drawable/ic_search"
-          app:layout_constraintBottom_toBottomOf="@+id/iv_search_btn"
-          app:layout_constraintEnd_toEndOf="@+id/iv_search_btn"
-          app:layout_constraintStart_toStartOf="@+id/iv_search_btn"
-          app:layout_constraintTop_toTopOf="@+id/iv_search_btn"
-          app:tint="@color/white" />
-
-      <de.hdodenhof.circleimageview.CircleImageView
-          android:id="@+id/circleImageView"
-          android:layout_width="70dp"
-          android:layout_height="70dp"
-          android:layout_marginStart="10dp"
-          android:layout_marginTop="100dp"
-          android:src="@drawable/sample_profile_img1"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toTopOf="parent" />
-
-      <android.widget.Button
-          android:id="@+id/btn_edit_profile"
-          style="@style/Headline8"
-          android:layout_width="wrap_content"
-          android:layout_height="30dp"
-          android:layout_marginTop="10dp"
-          android:layout_marginEnd="16dp"
-          android:background="@drawable/btn_timeline_bottom_sheet"
-          android:stateListAnimator="@null"
-          android:text="프로필 수정"
-          android:textColor="@color/Grey_600"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintTop_toBottomOf="@+id/iv_profile_header" />
-
-      <TextView
-          android:id="@+id/tv_nick_name"
-          style="@style/Headline4"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginStart="12dp"
-          android:layout_marginTop="10dp"
-          android:text="바키"
-          android:textColor="@color/Grey_600"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@+id/circleImageView" />
-
-      <TextView
-          android:id="@+id/tv_user_name"
-          style="@style/Body1"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginTop="6dp"
-          android:text="\@_parking1_"
-          android:textColor="@color/BlueGrey_600"
-          app:layout_constraintStart_toStartOf="@+id/tv_nick_name"
-          app:layout_constraintTop_toBottomOf="@+id/tv_nick_name" />
-
-      <TextView
-          android:id="@+id/tv_user_bio"
-          style="@style/Body2"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginStart="12dp"
-          android:layout_marginTop="16dp"
-          android:layout_marginEnd="12dp"
-          android:text="안녕하세요"
-          android:textColor="@color/Grey_600"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@+id/tv_user_name" />
-
-      <ImageView
-          android:id="@+id/iv_calander_icon"
-          android:layout_width="12dp"
-          android:layout_height="12dp"
-          android:layout_marginStart="12dp"
-          android:layout_marginTop="12dp"
-          android:src="@drawable/ic_calander"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@+id/tv_user_bio"
-          app:tint="@color/BlueGrey_800" />
-
-      <TextView
-          android:id="@+id/tv_user_join_date"
-          style="@style/Body3"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginStart="4dp"
-          android:layout_marginTop="11dp"
-          android:text="2023년 12월에 가입합"
-          android:textColor="@color/BlueGrey_800"
-          app:layout_constraintStart_toEndOf="@+id/iv_calander_icon"
-          app:layout_constraintTop_toBottomOf="@+id/tv_user_bio" />
-
-      <TextView
-          android:id="@+id/tv_following_num"
-          style="@style/Headline8"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginStart="12dp"
-          android:layout_marginTop="14dp"
-          android:text="4"
-          android:textColor="@color/Grey_600"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@+id/iv_calander_icon" />
-
-      <TextView
-          android:id="@+id/tv_following"
-          style="@style/Body2"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginStart="2dp"
-          android:layout_marginTop="14dp"
-          android:text="팔로잉"
-          android:textColor="@color/BlueGrey_800"
-          app:layout_constraintStart_toEndOf="@+id/tv_following_num"
-          app:layout_constraintTop_toBottomOf="@+id/iv_calander_icon" />
-
-      <TextView
-          android:id="@+id/tv_follower_num"
-          style="@style/Headline8"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginStart="10dp"
-          android:layout_marginTop="14dp"
-          android:text="4"
-          android:textColor="@color/Grey_600"
-          app:layout_constraintStart_toEndOf="@+id/tv_following"
-          app:layout_constraintTop_toBottomOf="@+id/iv_calander_icon" />
-
-      <TextView
-          android:id="@+id/tv_follower"
-          style="@style/Body2"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginStart="2dp"
-          android:layout_marginTop="14dp"
-          android:text="팔로워"
-          android:textColor="@color/BlueGrey_800"
-          app:layout_constraintStart_toEndOf="@+id/tv_follower_num"
-          app:layout_constraintTop_toBottomOf="@+id/iv_calander_icon" />
-
-      <com.google.android.material.tabs.TabLayout
-          android:id="@+id/tabLayout"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginTop="10dp"
-          android:background="@drawable/bg_profile_tab_layout"
-          android:elevation="0dp"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@+id/tv_following_num"
-          app:tabGravity="fill"
-          app:tabIndicatorHeight="3dp"
-          app:tabMode="scrollable"
-          app:tabSelectedTextColor="@color/Grey_600"
-          app:tabTextAppearance="@style/Headline8"
-          app:tabTextColor="@color/BlueGrey_800" />
-
-      <View
-          android:id="@+id/view4"
-          android:layout_width="match_parent"
-          android:layout_height="1dp"
-          android:background="@color/BlueGrey_300"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@+id/tabLayout" />
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_below="@+id/header">
 
       <androidx.viewpager.widget.ViewPager
           android:id="@+id/profile_view_pager"
           android:layout_width="match_parent"
           android:layout_height="0dp"
-          android:layout_below="@id/tabLayout"
           app:layout_constraintBottom_toBottomOf="parent"
           app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@+id/view4" />
+          app:layout_constraintStart_toStartOf="parent" />
 
       <View
           android:id="@+id/overlay"
