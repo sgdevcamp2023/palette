@@ -4,9 +4,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.palette.exception.BaseException;
 import org.palette.exception.ExceptionType;
+import org.springframework.stereotype.Component;
 
 import java.util.Base64;
 
+@Component
 @RequiredArgsConstructor
 public class PassportValidator {
 
