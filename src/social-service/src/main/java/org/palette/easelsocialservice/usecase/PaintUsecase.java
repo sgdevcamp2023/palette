@@ -3,9 +3,11 @@ package org.palette.easelsocialservice.usecase;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.palette.easelsocialservice.dto.request.LinkRequest;
 import org.palette.easelsocialservice.dto.request.MentionRequest;
 import org.palette.easelsocialservice.dto.request.PaintCreateRequest;
 import org.palette.easelsocialservice.dto.request.RepaintRequest;
+import org.palette.easelsocialservice.dto.response.LinkResponse;
 import org.palette.easelsocialservice.dto.response.PaintCreateResponse;
 import org.palette.easelsocialservice.dto.response.PaintResponse;
 import org.palette.easelsocialservice.persistence.domain.Link;
@@ -20,6 +22,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -36,34 +39,45 @@ public class PaintUsecase {
         User user = userService.getUser(userId);
         paintService.bindUserWithPaint(user, paint);
 
-        paintCreateRequest.inReplyToPaintId().ifPresent(inReplyToPaint -> paintService.bindReplyPaint(paint, inReplyToPaint));
-        paintCreateRequest.quotePaintId().ifPresent(quotePaintId -> paintService.bindQuotePaint(paint, quotePaintId));
 
-        paintCreateRequest.mentions().ifPresent(mentions -> {
+        if (paintCreateRequest.quotePaintId() != null) {
+            paintService.bindQuotePaint(paint, paintCreateRequest.quotePaintId());
+        }
+
+        if (paintCreateRequest.inReplyToPaintId() != null) {
+            paintService.bindReplyPaint(paint, paintCreateRequest.inReplyToPaintId());
+        }
+
+        if (paintCreateRequest.mentions() != null) {
+            List<MentionRequest> mentions = paintCreateRequest.mentions();
             List<Long> uids = mentions.stream().map(MentionRequest::userId).distinct().toList();
 
             userService.checkUserExists(uids);
             Map<Long, User> users = userService.getUserMapByUids(uids);
             paintService.createMentions(paint, mentions, users);
-        });
+        }
 
-        paintCreateRequest.taggedUserIds().ifPresent(taggedUserIds -> {
+        if (paintCreateRequest.taggedUserIds() != null) {
+            List<Long> taggedUserIds = paintCreateRequest.taggedUserIds();
             userService.checkUserExists(taggedUserIds);
             List<User> users = userService.getUsersByUids(taggedUserIds);
             paintService.createTaggedUsers(paint, users);
-        });
+        }
 
-        paintCreateRequest.hashtags().ifPresent(hashtags -> paintService.bindHashtagsWithPaint(paint, hashtags));
+        if (paintCreateRequest.hashtags() != null) {
+            paintService.bindHashtagsWithPaint(paint, paintCreateRequest.hashtags());
+        }
 
-        paintCreateRequest.links().ifPresent(links -> {
+        if (paintCreateRequest.links() != null) {
+            List<LinkRequest> links = paintCreateRequest.links();
             List<Link> createdLinks = linkService.createLinks(links);
             paintService.bindLinksWithPaint(paint, links, createdLinks);
-        });
+        }
 
-        paintCreateRequest.medias().ifPresent(medias -> {
-            List<Media> createdMedias = mediaService.createMedias(medias);
+        if (paintCreateRequest.medias() != null) {
+            List<Media> createdMedias = mediaService.createMedias(paintCreateRequest.medias());
             paintService.bindMediaWithPaint(paint, createdMedias);
-        });
+        }
 
         paintService.createPaint(paint);
 
