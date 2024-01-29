@@ -4,6 +4,7 @@ import {
   ContentLayout,
   TimelineItemList,
   AsyncBoundary,
+  ErrorWithResetBox,
 } from '@/components';
 import { TimelineItemListSkeleton } from '@/components/skeleton';
 
@@ -30,8 +31,11 @@ function HomePage() {
           {
             label: '추천',
             content: (
-              <ContentLayout className="mt-0 pl-[12px] pr-[4px] pb-[50px] max-h-[calc(100%-94px)]">
-                <AsyncBoundary pendingFallback={<TimelineItemListSkeleton />}>
+              <ContentLayout className="mt-0 pl-[12px] pr-[4px] pb-[50px] h-full max-h-[calc(100%-94px)]">
+                <AsyncBoundary
+                  pendingFallback={<TimelineItemListSkeleton />}
+                  rejectedFallback={(props) => <ErrorWithResetBox {...props} />}
+                >
                   <TimelineItemList type="recommend" />
                 </AsyncBoundary>
               </ContentLayout>
@@ -40,8 +44,11 @@ function HomePage() {
           {
             label: '팔로우 중',
             content: (
-              <ContentLayout className="mt-0 pl-[12px] pr-[4px] pb-[50px] max-h-[calc(100%-94px)]">
-                <AsyncBoundary pendingFallback={<TimelineItemListSkeleton />}>
+              <ContentLayout className="mt-0 pl-[12px] pr-[4px] pb-[50px] h-full max-h-[calc(100%-94px)]">
+                <AsyncBoundary
+                  pendingFallback={<TimelineItemListSkeleton />}
+                  rejectedFallback={(props) => <ErrorWithResetBox {...props} />}
+                >
                   <TimelineItemList type="follow" />
                 </AsyncBoundary>
               </ContentLayout>

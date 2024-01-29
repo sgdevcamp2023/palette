@@ -1,6 +1,7 @@
 import { useNavigate } from '@tanstack/react-router';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
+import { apis } from '@/api';
 import { usePaintAction } from '@/hooks';
 import type { TimelineItem } from '@/@types';
 import TimelineItemBox from './TimelineItemBox';
@@ -28,7 +29,7 @@ function getQueryFnByType(
     case 'follow':
       return delay(1250);
     case 'recommend':
-      return delay(1250);
+      return apis.users.logout() as unknown as Promise<TimelineItem[]>;
     case 'my-post':
       return delay(1250);
     case 'my-reply':

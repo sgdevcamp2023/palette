@@ -10,6 +10,7 @@ import {
   AsyncBoundary,
   Button,
   ContentLayout,
+  ErrorWithResetBox,
   Icon,
   Tabs,
   TimelineItemList,
@@ -173,7 +174,12 @@ function ProfilePage() {
                   as="section"
                   className="mt-0 pl-[12px] pr-[4px] max-h-none"
                 >
-                  <AsyncBoundary pendingFallback={<TimelineItemListSkeleton />}>
+                  <AsyncBoundary
+                    pendingFallback={<TimelineItemListSkeleton />}
+                    rejectedFallback={(props) => (
+                      <ErrorWithResetBox {...props} />
+                    )}
+                  >
                     <TimelineItemList type="my-post" />
                   </AsyncBoundary>
                 </ContentLayout>
@@ -186,7 +192,12 @@ function ProfilePage() {
                   as="section"
                   className="mt-0 pl-[12px] pr-[4px] max-h-none"
                 >
-                  <AsyncBoundary pendingFallback={<TimelineItemListSkeleton />}>
+                  <AsyncBoundary
+                    pendingFallback={<TimelineItemListSkeleton />}
+                    rejectedFallback={(props) => (
+                      <ErrorWithResetBox {...props} />
+                    )}
+                  >
                     <TimelineItemList type="my-reply" />
                   </AsyncBoundary>
                 </ContentLayout>
@@ -199,7 +210,12 @@ function ProfilePage() {
                   as="section"
                   className="mt-0 pl-[12px] pr-[4px] max-h-none"
                 >
-                  <AsyncBoundary pendingFallback={<TimelineItemListSkeleton />}>
+                  <AsyncBoundary
+                    pendingFallback={<TimelineItemListSkeleton />}
+                    rejectedFallback={(props) => (
+                      <ErrorWithResetBox {...props} />
+                    )}
+                  >
                     <TimelineItemList type="my-post" />
                   </AsyncBoundary>
                 </ContentLayout>
@@ -212,7 +228,12 @@ function ProfilePage() {
                   as="section"
                   className="mt-0 pl-[12px] pr-[4px] max-h-none"
                 >
-                  <AsyncBoundary pendingFallback={<TimelineItemListSkeleton />}>
+                  <AsyncBoundary
+                    pendingFallback={<TimelineItemListSkeleton />}
+                    rejectedFallback={(props) => (
+                      <ErrorWithResetBox {...props} />
+                    )}
+                  >
                     <TimelineItemList type="media" />
                   </AsyncBoundary>
                 </ContentLayout>
@@ -225,7 +246,12 @@ function ProfilePage() {
                   as="section"
                   className="mt-0 pl-[12px] pr-[4px] max-h-none"
                 >
-                  <AsyncBoundary pendingFallback={<TimelineItemListSkeleton />}>
+                  <AsyncBoundary
+                    pendingFallback={<TimelineItemListSkeleton />}
+                    rejectedFallback={(props) => (
+                      <ErrorWithResetBox {...props} />
+                    )}
+                  >
                     <TimelineItemList type="heart" />
                   </AsyncBoundary>
                 </ContentLayout>
