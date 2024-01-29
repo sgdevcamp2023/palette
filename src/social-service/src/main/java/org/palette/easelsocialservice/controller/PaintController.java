@@ -37,7 +37,16 @@ public class PaintController {
     }
 
     @GetMapping("/{paintId}")
-    public ResponseEntity<PaintResponse> repaint(
+    public ResponseEntity<PaintResponse> singleRead(
+            @PathVariable Long paintId
+    ) {
+        // TODO: 사용자 ID 추가하기
+        paintUsecase.getSinglePaint(100L, paintId);
+        return ResponseEntity.ok().body(paintUsecase.getSinglePaint(100L, paintId));
+    }
+
+    @GetMapping("/{paintId}/before")
+    public ResponseEntity<PaintResponse> singleBeforeRead(
             @PathVariable Long paintId
     ) {
         // TODO: 사용자 ID 추가하기

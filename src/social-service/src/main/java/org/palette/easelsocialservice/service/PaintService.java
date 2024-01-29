@@ -161,4 +161,9 @@ public class PaintService {
                 .map(LinkResponse::from)
                 .toList();
     }
+
+    public List<PaintResponse> getPaintBeforeById(Long userId, Long paintId) {
+
+        return null;
+    }
 }
