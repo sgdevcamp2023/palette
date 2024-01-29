@@ -7,6 +7,7 @@ import type { TimelineItem } from '@/@types';
 import { DUMMY_USER, createDummyTimelineItem } from '@/utils';
 import {
   AccessibleIconButton,
+  AsyncBoundary,
   Button,
   ContentLayout,
   Icon,
@@ -15,6 +16,7 @@ import {
   Typography,
 } from '@/components';
 import { useThrottle } from '@/hooks';
+import { TimelineItemListSkeleton } from '@/components/skeleton';
 
 const MIN_IMAGE_HEIGHT = 50;
 const DEFAULT_IMAGE_HEIGHT = 124;
@@ -171,7 +173,9 @@ function ProfilePage() {
                   as="section"
                   className="mt-0 pl-[12px] pr-[4px] max-h-none"
                 >
-                  <TimelineItemList list={paints} />
+                  <AsyncBoundary pendingFallback={<TimelineItemListSkeleton />}>
+                    <TimelineItemList type="my-post" />
+                  </AsyncBoundary>
                 </ContentLayout>
               ),
             },
@@ -182,7 +186,9 @@ function ProfilePage() {
                   as="section"
                   className="mt-0 pl-[12px] pr-[4px] max-h-none"
                 >
-                  <TimelineItemList list={[...paints].reverse()} />
+                  <AsyncBoundary pendingFallback={<TimelineItemListSkeleton />}>
+                    <TimelineItemList type="my-reply" />
+                  </AsyncBoundary>
                 </ContentLayout>
               ),
             },
@@ -193,7 +199,9 @@ function ProfilePage() {
                   as="section"
                   className="mt-0 pl-[12px] pr-[4px] max-h-none"
                 >
-                  <TimelineItemList list={paints} />
+                  <AsyncBoundary pendingFallback={<TimelineItemListSkeleton />}>
+                    <TimelineItemList type="my-post" />
+                  </AsyncBoundary>
                 </ContentLayout>
               ),
             },
@@ -204,11 +212,9 @@ function ProfilePage() {
                   as="section"
                   className="mt-0 pl-[12px] pr-[4px] max-h-none"
                 >
-                  <TimelineItemList
-                    list={[...paints].filter(
-                      (paint) => paint.includes.medias.length,
-                    )}
-                  />
+                  <AsyncBoundary pendingFallback={<TimelineItemListSkeleton />}>
+                    <TimelineItemList type="media" />
+                  </AsyncBoundary>
                 </ContentLayout>
               ),
             },
@@ -219,7 +225,9 @@ function ProfilePage() {
                   as="section"
                   className="mt-0 pl-[12px] pr-[4px] max-h-none"
                 >
-                  <TimelineItemList list={[...paints].reverse()} />
+                  <AsyncBoundary pendingFallback={<TimelineItemListSkeleton />}>
+                    <TimelineItemList type="heart" />
+                  </AsyncBoundary>
                 </ContentLayout>
               ),
             },

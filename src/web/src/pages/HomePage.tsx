@@ -1,12 +1,13 @@
-import { useState } from 'react';
-
-import type { TimelineItem } from '@/@types';
-import { createDummyTimelineItem } from '@/utils';
-import { Tabs, Header, ContentLayout, TimelineItemList } from '@/components';
+import {
+  Tabs,
+  Header,
+  ContentLayout,
+  TimelineItemList,
+  AsyncBoundary,
+} from '@/components';
+import { TimelineItemListSkeleton } from '@/components/skeleton';
 
 function HomePage() {
-  const [paints] = useState<TimelineItem[]>(() => createDummyTimelineItem(10));
-
   return (
     <>
       <Header
@@ -30,7 +31,9 @@ function HomePage() {
             label: '추천',
             content: (
               <ContentLayout className="mt-0 pl-[12px] pr-[4px] pb-[50px] max-h-[calc(100%-94px)]">
-                <TimelineItemList list={paints} />
+                <AsyncBoundary pendingFallback={<TimelineItemListSkeleton />}>
+                  <TimelineItemList type="recommend" />
+                </AsyncBoundary>
               </ContentLayout>
             ),
           },
@@ -38,7 +41,9 @@ function HomePage() {
             label: '팔로우 중',
             content: (
               <ContentLayout className="mt-0 pl-[12px] pr-[4px] pb-[50px] max-h-[calc(100%-94px)]">
-                <TimelineItemList list={[...paints].reverse()} />
+                <AsyncBoundary pendingFallback={<TimelineItemListSkeleton />}>
+                  <TimelineItemList type="follow" />
+                </AsyncBoundary>
               </ContentLayout>
             ),
           },
