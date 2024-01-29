@@ -83,6 +83,5 @@ public class PaintUsecase {
     public List<PaintResponse> getSingleBefore(Long userId, Long paintId) {
         // TODO: compasre userId for like, repaint, mark
         return paintService.getPaintBeforeById(userId, paintId);
-
     }
 }
