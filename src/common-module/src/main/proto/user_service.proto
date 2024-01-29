@@ -4,8 +4,8 @@ option java_multiple_files = true;
 option java_package = "org.palette.grpc";
 
 service GUserService {
-  rpc updateUserAuthStatus (GUpdateUserAuthStatusRequest) returns (GUpdateUserAuthStatusResponse) {}
-  rpc checkEmailAndPassword (GCheckEmailAndPasswordRequest) returns (GCheckEmailAndPasswordResponse) {}
+  rpc UpdateUserAuthStatus (GUpdateUserAuthStatusRequest) returns (GUpdateUserAuthStatusResponse) {}
+  rpc CheckEmailAndPassword (GCheckEmailAndPasswordRequest) returns (GCheckEmailAndPasswordResponse) {}
 }
 
 message GUpdateUserAuthStatusRequest {
@@ -18,9 +18,9 @@ message GCheckEmailAndPasswordRequest {
 }
 
 message GUpdateUserAuthStatusResponse {
-  bool message = 1;
+  bool isSuccess = 1;
 }
 
 message GCheckEmailAndPasswordResponse {
-  bool message = 1;
+  bool isSuccess = 1;
 }
