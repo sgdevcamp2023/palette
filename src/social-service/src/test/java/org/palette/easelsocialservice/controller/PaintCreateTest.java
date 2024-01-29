@@ -16,25 +16,25 @@ class PaintCreateTest extends AcceptanceTestBase {
     void executePassCase() throws Exception {
         PaintCreateRequest paintCreateRequest = new PaintCreateRequest(
                 "Learn how to use the user Tweet timeline and user mention timeline endpoints in the X API v2 to explore Tweet...",
-                Optional.of(Arrays.asList(
+                Arrays.asList(
                         new MediaRequest("/67674912/ttt.png", "image"),
                         new MediaRequest("/6dddttt12/ttt.png", "image")
-                )),
-                Optional.of(Arrays.asList(103L, 108L)),
-                Optional.empty(),
-                Optional.empty(),
-                Optional.of(Arrays.asList(
+                ),
+                Arrays.asList(103L, 108L),
+                null,
+                null,
+                Arrays.asList(
                         new HashtagRequest(7, 9, "yyyy"),
                         new HashtagRequest(4, 7, "hapggggggpy")
-                )),
-                Optional.of(Arrays.asList(
+                ),
+                Arrays.asList(
                         new MentionRequest(0, 3, 101L, "wonyoung"),
                         new MentionRequest(4, 7, 102L, "bella")
-                )),
-                Optional.of(Arrays.asList(
+                ),
+                Arrays.asList(
                         new LinkRequest(0, 3, "http://example.com"),
                         new LinkRequest(4, 7, "http://anotherexample.com")
-                ))
+                )
         );
 
         executePost(

@@ -39,45 +39,41 @@ public class PaintUsecase {
         User user = userService.getUser(userId);
         paintService.bindUserWithPaint(user, paint);
 
+        Optional.ofNullable(paintCreateRequest.quotePaintId())
+                .ifPresent(quotePaintId -> paintService.bindQuotePaint(paint, quotePaintId));
 
-        if (paintCreateRequest.quotePaintId() != null) {
-            paintService.bindQuotePaint(paint, paintCreateRequest.quotePaintId());
-        }
+        Optional.ofNullable(paintCreateRequest.inReplyToPaintId())
+                .ifPresent(inReplyToPaintId -> paintService.bindReplyPaint(paint, inReplyToPaintId));
 
-        if (paintCreateRequest.inReplyToPaintId() != null) {
-            paintService.bindReplyPaint(paint, paintCreateRequest.inReplyToPaintId());
-        }
+        Optional.ofNullable(paintCreateRequest.mentions())
+                .ifPresent(mentions -> {
+                    List<Long> uids = mentions.stream().map(MentionRequest::userId).distinct().toList();
+                    userService.checkUserExists(uids);
+                    Map<Long, User> users = userService.getUserMapByUids(uids);
+                    paintService.createMentions(paint, mentions, users);
+                });
 
-        if (paintCreateRequest.mentions() != null) {
-            List<MentionRequest> mentions = paintCreateRequest.mentions();
-            List<Long> uids = mentions.stream().map(MentionRequest::userId).distinct().toList();
+        Optional.ofNullable(paintCreateRequest.taggedUserIds())
+                .ifPresent(taggedUserIds -> {
+                    userService.checkUserExists(taggedUserIds);
+                    List<User> users = userService.getUsersByUids(taggedUserIds);
+                    paintService.createTaggedUsers(paint, users);
+                });
 
-            userService.checkUserExists(uids);
-            Map<Long, User> users = userService.getUserMapByUids(uids);
-            paintService.createMentions(paint, mentions, users);
-        }
+        Optional.ofNullable(paintCreateRequest.hashtags())
+                .ifPresent(hashtags -> paintService.bindHashtagsWithPaint(paint, hashtags));
 
-        if (paintCreateRequest.taggedUserIds() != null) {
-            List<Long> taggedUserIds = paintCreateRequest.taggedUserIds();
-            userService.checkUserExists(taggedUserIds);
-            List<User> users = userService.getUsersByUids(taggedUserIds);
-            paintService.createTaggedUsers(paint, users);
-        }
+        Optional.ofNullable(paintCreateRequest.links())
+                .ifPresent(links -> {
+                    List<Link> createdLinks = linkService.createLinks(links);
+                    paintService.bindLinksWithPaint(paint, links, createdLinks);
+                });
 
-        if (paintCreateRequest.hashtags() != null) {
-            paintService.bindHashtagsWithPaint(paint, paintCreateRequest.hashtags());
-        }
-
-        if (paintCreateRequest.links() != null) {
-            List<LinkRequest> links = paintCreateRequest.links();
-            List<Link> createdLinks = linkService.createLinks(links);
-            paintService.bindLinksWithPaint(paint, links, createdLinks);
-        }
-
-        if (paintCreateRequest.medias() != null) {
-            List<Media> createdMedias = mediaService.createMedias(paintCreateRequest.medias());
-            paintService.bindMediaWithPaint(paint, createdMedias);
-        }
+        Optional.ofNullable(paintCreateRequest.medias())
+                .ifPresent(medias -> {
+                    List<Media> createdMedias = mediaService.createMedias(medias);
+                    paintService.bindMediaWithPaint(paint, createdMedias);
+                });
 
         paintService.createPaint(paint);
 
