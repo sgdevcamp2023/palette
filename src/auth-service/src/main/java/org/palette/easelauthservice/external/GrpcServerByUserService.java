@@ -37,7 +37,7 @@ public class GrpcServerByUserService extends GAuthServiceGrpc.GAuthServiceImplBa
         );
 
         GSendEmailAuthResponse response = GSendEmailAuthResponse.newBuilder()
-                .setMessage(true)
+                .setIsSuccess(true)
                 .build();
         responseObserver.onNext(response);
         responseObserver.onCompleted();
