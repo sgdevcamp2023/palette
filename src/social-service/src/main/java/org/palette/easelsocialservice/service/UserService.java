@@ -28,7 +28,7 @@ public class UserService extends GSocialServiceGrpc.GSocialServiceImplBase {
         }
 
         userRepository.save(convertToUser(request));
-        GCreateUserResponse response = GCreateUserResponse.newBuilder().setMessage(true).build();
+        GCreateUserResponse response = GCreateUserResponse.newBuilder().setIsSuccess(true).build();
         responseStreamObserver.onNext(response);
         responseStreamObserver.onCompleted();
     }
