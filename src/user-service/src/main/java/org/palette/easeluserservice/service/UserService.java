@@ -105,4 +105,11 @@ public class UserService {
                 new BaseException(ExceptionType.USER_404_000001)
         );
     }
+
+    public User loadById(Long id) {
+        return userJpaRepository.findById(id).orElseThrow(() ->
+                new BaseException(ExceptionType.USER_404_000001)
+        );
+    }
+
 }

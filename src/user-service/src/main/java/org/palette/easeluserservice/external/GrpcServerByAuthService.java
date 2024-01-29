@@ -25,7 +25,7 @@ public class GrpcServerByAuthService extends GUserServiceGrpc.GUserServiceImplBa
         userService.updateUserAuthStatus(user);
 
         GUpdateUserAuthStatusResponse response = GUpdateUserAuthStatusResponse.newBuilder()
-                .setMessage(true)
+                .setIsSuccess(true)
                 .build();
         responseObserver.onNext(response);
         responseObserver.onCompleted();
@@ -45,9 +45,30 @@ public class GrpcServerByAuthService extends GUserServiceGrpc.GUserServiceImplBa
         );
 
         GCheckEmailAndPasswordResponse response = GCheckEmailAndPasswordResponse.newBuilder()
-                .setMessage(true)
+                .setIsSuccess(true)
                 .build();
         responseObserver.onNext(response);
+        responseObserver.onCompleted();
+    }
+
+    @Override
+    public void loadUserInfoFromId(
+            GLoadUserInfoFromIdRequest request,
+            StreamObserver<GLoadUserInfoFromIdResponse> responseObserver
+    ) {
+        User user = userService.loadById(request.getId());
+
+        responseObserver.onNext(GLoadUserInfoFromIdResponse.newBuilder()
+                .setEmail(user.getEmail())
+                .setNickname(user.getProfile().nickname())
+                .setUsername(user.getUsername())
+                .setRole(user.getRole().name())
+                .setIsActivated(user.getIsActivated())
+                .setAccessedAt(user.getAccessedAt().toString())
+                .setCreatedAt(user.getCreatedAt().toString())
+                .setDeletedAt(user.getDeletedAt().toString())
+                .build()
+        );
         responseObserver.onCompleted();
     }
 }
