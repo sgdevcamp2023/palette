@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "org.palette.grpc";
+
+service GUserService {
+  rpc UpdateUserAuthStatus (GUpdateUserAuthStatusRequest) returns (GUpdateUserAuthStatusResponse) {}
+  rpc CheckEmailAndPassword (GCheckEmailAndPasswordRequest) returns (GCheckEmailAndPasswordResponse) {}
+}
+
+message GUpdateUserAuthStatusRequest {
+  string email = 2;
+}
+
+message GCheckEmailAndPasswordRequest {
+  string email = 2;
+  string password = 3;
+}
+
+message GUpdateUserAuthStatusResponse {
+  bool isSuccess = 1;
+}
+
+message GCheckEmailAndPasswordResponse {
+  bool isSuccess = 1;
+}
