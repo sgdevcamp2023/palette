@@ -5,6 +5,15 @@ option java_package = "org.palette.grpc";
 
 service GAuthService {
   rpc SendEmailAuth (GSendEmailAuthRequest) returns (GSendEmailAuthResponse) {}
+  rpc ValidateJWT (GValidateJWTRequest) returns (GValidateJWTResponse) {}
+}
+
+message GValidateJWTRequest {
+  string jwtPayload = 1;
+}
+
+message GValidateJWTResponse {
+  string passportPayload = 1;
 }
 
 message GValidateJWTRequest {
