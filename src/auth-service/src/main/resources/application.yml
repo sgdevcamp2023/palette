@@ -49,3 +49,7 @@ grpc:
       enableKeepAlive: true
       keepAliveWithoutCalls: true
       negotiationType: plaintext
+
+passport:
+  key: ${PASSPORT_KEY}
+  algorithm: ${PASSPORT_ALGORITHM}
