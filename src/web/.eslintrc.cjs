@@ -40,6 +40,13 @@ module.exports = {
       { "ignoreExpressions": true, "max": 2 }
     ], // class는 최대 2개까지 사용 가능합니다.
     "class-methods-use-this": "off", // this 사용에 대한 제한을 사용하지 않습니다.
-    "no-param-reassign": "off"
+    "no-param-reassign": "off", // param을 reassign 할 수 있게 만듭니다.
+    "react/no-unstable-nested-components": [
+      "off",
+      {
+        "allowAsProps":  true,
+        "customValidators": [] /* optional array of validators used for propTypes validation */
+      }
+    ]// error-boundary에서 fallback을 받기위해 사용합니다.
   },
 };
