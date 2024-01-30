@@ -97,3 +97,5 @@ export const usePaintAction = () => {
     onCloseBottomSheet: handleClickCloseBottomSheet,
   };
 };
+
+export type PaintAction = ReturnType<typeof usePaintAction>;

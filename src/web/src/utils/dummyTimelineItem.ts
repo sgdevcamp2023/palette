@@ -12,7 +12,7 @@ function getRandomAdjustedDate(): Date {
 const DUMMY_ITEM: TimelineItem = {
   id: '12',
   isReply: false,
-  authorId: '',
+  authorId: '1',
   authorUsername: '@sangmin',
   authorNickname: '이상민',
   authorImagePath:
@@ -127,3 +127,26 @@ export const createDummyTimelineItem = (length: number): TimelineItem[] =>
           : [],
     },
   }));
+
+export const dummyPosts = createDummyTimelineItem(10);
+export const dummyMainPost = dummyPosts[0];
+export const dummyBeforePosts = dummyPosts.slice(1, 4);
+export const dummyAfterPosts = dummyPosts.slice(4, 7);
+export const fetchMainPost: () => Promise<TimelineItem> = () =>
+  new Promise((res) => {
+    setTimeout(() => {
+      res(dummyMainPost);
+    }, 1000);
+  });
+export const fetchAfterPost: () => Promise<TimelineItem[]> = () =>
+  new Promise((res) => {
+    setTimeout(() => {
+      res(dummyAfterPosts);
+    }, 2500);
+  });
+export const fetchBeforePost: () => Promise<TimelineItem[]> = () =>
+  new Promise((res) => {
+    setTimeout(() => {
+      res(dummyBeforePosts);
+    }, 2500);
+  });
