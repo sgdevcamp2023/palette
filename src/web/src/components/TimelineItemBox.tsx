@@ -1,3 +1,5 @@
+import { useNavigate } from '@tanstack/react-router';
+
 import { cn, getDiffDateText } from '@/utils';
 import type { TimelineItem } from '@/@types';
 import Typography from './common/Typography';
@@ -27,6 +29,7 @@ function TimelineItemBox({
   onClickShare,
   onClickMore,
 }: TimelineItemBoxProps) {
+  const navigate = useNavigate();
   const hasMedia = item.includes.medias.length > 0;
 
   return (
@@ -36,7 +39,17 @@ function TimelineItemBox({
         alt={`${item.authorNickname}`}
         className="rounded-full w-[44px] h-[44px] min-w-[44px]"
       />
-      <div className="w-full">
+      <div
+        role="button"
+        tabIndex={0}
+        className="w-full text-left"
+        onClick={() => {
+          navigate({
+            to: '/post/$postId',
+            params: { postId: item.id },
+          });
+        }}
+      >
         {/* 헤더 */}
         <div className="w-full flex justify-between relative">
           <div className="flex gap-[4px] items-center items-center">
