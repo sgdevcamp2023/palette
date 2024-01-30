@@ -39,8 +39,6 @@ class ProfileFragment : Fragment() {
 
     private var isAnimationRunning = false
 
-    private var initialX = 0f
-    private val SWIPE_THRESHOLD = 100 // 스와이프 임계값, 조정 가능
     private val tabTitles = listOf("게시물", "답글", "하이라이트", "미디어", "마음에 들어요")
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -129,6 +127,11 @@ class ProfileFragment : Fragment() {
         vibrator = requireContext().getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
 
         setFABClickEvent()
+
+        val swipeRefreshLayout = binding.swipeRefreshLayout
+        swipeRefreshLayout.setOnRefreshListener {
+            refreshTimelineData()
+        }
 
     }
 
@@ -316,5 +319,12 @@ class ProfileFragment : Fragment() {
         )
 
         return timelineList.shuffled()
+    }
+
+    private fun refreshTimelineData() {
+        val shuffledTimelineList = generateDummyTimelineData().shuffled()
+        (binding.rvProfile.adapter as? TimelineRecyclerViewAdapter)?.updateData(shuffledTimelineList)
+
+        binding.swipeRefreshLayout.isRefreshing = false
     }
 }
