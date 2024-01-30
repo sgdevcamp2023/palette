@@ -34,6 +34,7 @@ class ProfileFragment : Fragment() {
 
     private var isFabOpen = false
     private lateinit var gestureDetector: GestureDetector
+    private lateinit var gestureDetectorTab: GestureDetector
 
     private lateinit var vibrator: Vibrator
 
@@ -131,6 +132,41 @@ class ProfileFragment : Fragment() {
         val swipeRefreshLayout = binding.swipeRefreshLayout
         swipeRefreshLayout.setOnRefreshListener {
             refreshTimelineData()
+        }
+
+        gestureDetectorTab = GestureDetector(requireContext(), object : GestureDetector.SimpleOnGestureListener() {
+            override fun onFling(
+                e1: MotionEvent?,
+                e2: MotionEvent,
+                velocityX: Float,
+                velocityY: Float
+            ): Boolean {
+                // 스와이프 동작 감지
+                if (e1 != null && e2 != null) {
+                    val deltaX = e2.x - e1.x
+                    val deltaY = e2.y - e1.y
+                    if (Math.abs(deltaX) > Math.abs(deltaY)) {
+                        // 가로로 스와이프된 경우
+                        if (Math.abs(deltaX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
+                            if (deltaX > 0) {
+                                // 오른쪽으로 스와이프한 경우
+                                navigateToPreviousTab()
+                            } else {
+                                // 왼쪽으로 스와이프한 경우
+                                navigateToNextTab()
+                            }
+                            return true
+                        }
+                    }
+                }
+                return false
+            }
+        })
+
+        // RecyclerView에 터치 리스너 설정
+        recyclerView.setOnTouchListener { _, event ->
+            gestureDetectorTab.onTouchEvent(event)
+            false
         }
 
     }
@@ -326,5 +362,29 @@ class ProfileFragment : Fragment() {
         (binding.rvProfile.adapter as? TimelineRecyclerViewAdapter)?.updateData(shuffledTimelineList)
 
         binding.swipeRefreshLayout.isRefreshing = false
+    }
+
+    // 탭 전환 메서드
+    private fun navigateToNextTab() {
+        val tabLayout = binding.tabLayout
+
+        val currentTab = tabLayout.selectedTabPosition
+        if (currentTab < tabTitles.size - 1) {
+            tabLayout.getTabAt(currentTab + 1)?.select()
+        }
+    }
+
+    private fun navigateToPreviousTab() {
+        val tabLayout = binding.tabLayout
+
+        val currentTab = tabLayout.selectedTabPosition
+        if (currentTab > 0) {
+            tabLayout.getTabAt(currentTab - 1)?.select()
+        }
+    }
+
+    companion object {
+        private const val SWIPE_THRESHOLD = 100
+        private const val SWIPE_VELOCITY_THRESHOLD = 100
     }
 }
