@@ -16,17 +16,19 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import androidx.viewpager.widget.ViewPager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.clans.fab.FloatingActionButton
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.tabs.TabLayout
 import com.smilegate.Easel.R
 import com.smilegate.Easel.databinding.FragmentProfileBinding
-import com.smilegate.Easel.presentation.adapter.TimelineAdapter
+import com.smilegate.Easel.domain.model.TimelineItem
+import com.smilegate.Easel.presentation.adapter.TimelineRecyclerViewAdapter
 
 class ProfileFragment : Fragment() {
 
     private lateinit var binding: FragmentProfileBinding
+    private lateinit var recyclerViewAdapter: TimelineRecyclerViewAdapter
 
     private lateinit var navController: NavController
 
@@ -36,6 +38,10 @@ class ProfileFragment : Fragment() {
     private lateinit var vibrator: Vibrator
 
     private var isAnimationRunning = false
+
+    private var initialX = 0f
+    private val SWIPE_THRESHOLD = 100 // 스와이프 임계값, 조정 가능
+    private val tabTitles = listOf("게시물", "답글", "하이라이트", "미디어", "마음에 들어요")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,14 +61,6 @@ class ProfileFragment : Fragment() {
         val bottomNavigation = activity?.findViewById<BottomNavigationView>(R.id.nav_view)
         bottomNavigation?.visibility = View.VISIBLE
 
-        val viewPager: ViewPager = binding.root.findViewById(R.id.profile_view_pager)
-        setupViewPager(viewPager)
-
-        val tabLayout: TabLayout = binding.root.findViewById(R.id.tabLayout)
-        tabLayout.setupWithViewPager(viewPager)
-        tabLayout.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.white))
-        tabLayout.setSelectedTabIndicatorColor(ContextCompat.getColor(requireContext(), R.color.Blue_500))
-
         return binding.root
     }
 
@@ -70,6 +68,37 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         navController = findNavController()
+
+        val tabLayout = binding.tabLayout
+
+        tabLayout.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.white))
+        tabLayout.setSelectedTabIndicatorColor(ContextCompat.getColor(requireContext(), R.color.Blue_500))
+
+        val recyclerView = binding.rvProfile
+
+        val timelineList = generateDummyTimelineData()
+        recyclerViewAdapter = TimelineRecyclerViewAdapter(requireContext(), timelineList) // 초기화시 데이터는 비어있을 수 있음
+        recyclerView.adapter = recyclerViewAdapter
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+        for (i in tabTitles.indices) {
+            tabLayout.addTab(tabLayout.newTab().setText(tabTitles[i]))
+        }
+
+        tabLayout.getTabAt(0)?.select()
+
+        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                // 선택된 탭에 따라 다른 데이터를 가져와서 리사이클러뷰를 업데이트하거나 로딩
+                updateRecyclerViewDataForTab(tab?.position ?: 0)
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {}
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {}
+        })
+
+        updateRecyclerViewDataForTab(0)
 
         view.isFocusableInTouchMode = true
         view.requestFocus()
@@ -85,20 +114,29 @@ class ProfileFragment : Fragment() {
             false
         }
 
+
         vibrator = requireContext().getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
 
         setFABClickEvent()
 
     }
 
-    private fun setupViewPager(viewPager: ViewPager) {
-        val adapter = TimelineAdapter(childFragmentManager)
-        adapter.addFragment(MyPostFragment(), "게시물")
-        adapter.addFragment(ReplyFragment(), "답글")
-        adapter.addFragment(HighlightFragment(), "하이라이트")
-        adapter.addFragment(MediaFragment(), "미디어")
-        adapter.addFragment(LikedFragment(), "마음에 들어요")
-        viewPager.adapter = adapter
+    private fun updateRecyclerViewDataForTab(tabPosition: Int) {
+        val dataForTab = getDataForTab(tabPosition)
+        recyclerViewAdapter.updateData(dataForTab)
+    }
+
+    private fun getDataForTab(tabPosition: Int): List<TimelineItem> {
+        //TODO: 각 탭에 맞는 데이터를 가져오는 로직을 구현합니다.
+        // 예를 들어, 탭에 따라 다른 데이터를 데이터베이스에서 가져오거나 서버로부터 요청합니다.
+        return when (tabPosition) {
+            0 -> generateDummyTimelineData() // 게시물
+            1 -> generateDummyTimelineData() // 답글
+            2 -> generateDummyTimelineData() // 하이라이트
+            3 -> generateDummyTimelineData() // 미디어
+            4 -> generateDummyTimelineData() // 마음에 들어요
+            else -> emptyList() // 기본적으로 빈 리스트 반환
+        }
     }
 
     private fun setFABClickEvent() {
@@ -217,5 +255,55 @@ class ProfileFragment : Fragment() {
 
     private fun setElevationCompat(fab: FloatingActionButton, elevation: Float) {
         fab.setElevationCompat(elevation)
+    }
+
+    private fun generateDummyTimelineData(): List<TimelineItem> {
+        val profileImgId = R.drawable.sample_profile_img5
+        val profileImgId1 = R.drawable.sample_profile_img1
+        val profileImgId2 = R.drawable.sample_profile_img2
+        val profileImgId3 = R.drawable.sample_profile_img3
+        val profileImgId4 = R.drawable.sample_profile_img4
+
+        val contentImgId = R.drawable.sample_content_img1
+        val contentImgId1 = R.drawable.sample_content_img2
+        val contentImgId2 = R.drawable.sample_content_img3
+        val contentImgId3 = R.drawable.sample_content_img4
+
+        val timelineList = listOf(
+            TimelineItem(profileImgId, "이원영", "@courtney81819", "1시간",
+                "아 슈뢰딩거가 아닌가?ㅋ", null, null,
+                2, 1, null, 24),
+
+
+            TimelineItem(profileImgId2, "이상민", "@isangmi92157279", "32분",
+                "비가 내리는 날이에요.\n추적이는 바닥을 보며 걷다보니 카페가 나와 커피를 사 봤어요.", contentImgId, null,
+                4, 2, 5, 121),
+
+            TimelineItem(profileImgId1, "박희원", "@_Parking1_", "18분",
+                "타래 스타트", contentImgId1, null,
+                1, 1, null, 114),
+
+            TimelineItem(profileImgId4, "김도율", "@doxxx93", "8분",
+                "테스트", null, null,
+                1, null, 2, 32),
+
+            TimelineItem(profileImgId2, "이상민", "@isangmi92157279", "1주",
+                "커피는 아이스 아메리카노에요.\n컵에 스며든 물방울처럼, 제 마음을 촉촉하게 만들어 주네요..^^", contentImgId2, null,
+                3, 4, 2, 89),
+
+            TimelineItem(profileImgId3, "김도현", "@KittenDiger", "4일",
+                "테스트 인용의 인용", null, null,
+                1, null, null, 30),
+
+            TimelineItem(profileImgId, "이원영", "@courtney81819", "3시간",
+                "청하 로제", contentImgId3, null,
+                3, null, 2, 334),
+
+            TimelineItem(profileImgId3, "김도현", "@KittenDiger", "4일",
+                "구글인ㅇㅎㅇ의 인용의 인용", null, null,
+                1, 2, null, 50),
+        )
+
+        return timelineList.shuffled()
     }
 }
