@@ -1,4 +1,4 @@
-import { useState, type ChangeEvent } from 'react';
+import { useState, type ChangeEvent, memo } from 'react';
 
 import { StepTitle } from '..';
 import { Button, Input, Typography } from '../common';
@@ -61,4 +61,6 @@ function JoinPasswordBox({
   );
 }
 
-export default JoinPasswordBox;
+const MemoizedJoinPasswordBox = memo(JoinPasswordBox);
+
+export default MemoizedJoinPasswordBox;

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import { toast } from 'react-toastify';
 import type { ChangeEvent } from 'react';
 
@@ -130,4 +130,6 @@ function JoinProfileImageBox({
   );
 }
 
-export default JoinProfileImageBox;
+const MemoizedJoinProfileImageBox = memo(JoinProfileImageBox);
+
+export default MemoizedJoinProfileImageBox;

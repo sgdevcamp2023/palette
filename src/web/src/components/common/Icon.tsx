@@ -1,4 +1,4 @@
-import { cloneElement } from 'react';
+import { cloneElement, memo } from 'react';
 import { cva } from 'class-variance-authority';
 
 import { ICONS } from './icons';
@@ -107,4 +107,6 @@ function Icon({
   );
 }
 
-export default Icon;
+const MemoizedIcon = memo(Icon);
+
+export default MemoizedIcon;

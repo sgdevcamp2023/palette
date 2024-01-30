@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import { motion } from 'framer-motion';
 import type { Dispatch, SetStateAction } from 'react';
 
@@ -133,4 +133,6 @@ function TempSavedPostModal({
   );
 }
 
-export default TempSavedPostModal;
+const MemoizedTempSavedPostModal = memo(TempSavedPostModal);
+
+export default MemoizedTempSavedPostModal;

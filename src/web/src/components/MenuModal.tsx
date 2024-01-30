@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { toast } from 'react-toastify';
 import { useNavigate } from '@tanstack/react-router';
@@ -232,4 +232,6 @@ function MenuModal({ user, onClose }: MenuModalProps) {
   );
 }
 
-export default MenuModal;
+const MemoizedMenuModal = memo(MenuModal);
+
+export default MemoizedMenuModal;

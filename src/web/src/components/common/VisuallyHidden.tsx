@@ -1,4 +1,4 @@
-import type { HTMLAttributes, ElementType } from 'react';
+import { type HTMLAttributes, type ElementType, memo } from 'react';
 
 interface VisuallyHiddenProps extends HTMLAttributes<HTMLSpanElement> {
   as?: ElementType;
@@ -44,4 +44,6 @@ function VisuallyHidden({ as, ...props }: VisuallyHiddenProps) {
   );
 }
 
-export default VisuallyHidden;
+const MemoizedVisuallyHidden = memo(VisuallyHidden);
+
+export default MemoizedVisuallyHidden;

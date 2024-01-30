@@ -1,4 +1,4 @@
-import { useState, type ChangeEvent, useMemo } from 'react';
+import { useState, type ChangeEvent, useMemo, memo } from 'react';
 
 import { isValidEmail } from '@/utils';
 import { NotSupportText, StepTitle } from '..';
@@ -90,4 +90,6 @@ function JoinEmailBox({
   );
 }
 
-export default JoinEmailBox;
+const MemoizedJoinEmailBox = memo(JoinEmailBox);
+
+export default MemoizedJoinEmailBox;

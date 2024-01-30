@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { memo, useEffect, useRef, useState } from 'react';
 import type { ElementType, HTMLAttributes, ReactNode } from 'react';
 
 import FloatingButton from './FloatingButton';
@@ -75,4 +75,6 @@ function ContentLayout({
   );
 }
 
-export default ContentLayout;
+const MemoizedContentLayout = memo(ContentLayout);
+
+export default MemoizedContentLayout;

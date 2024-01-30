@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { useNavigate } from '@tanstack/react-router';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
@@ -99,4 +100,6 @@ function TimelineItemList({ type }: TimelineItemListProps) {
   );
 }
 
-export default TimelineItemList;
+const MemoizedTimelineItemList = memo(TimelineItemList);
+
+export default MemoizedTimelineItemList;

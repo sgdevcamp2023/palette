@@ -1,4 +1,4 @@
-import type { ChangeEvent } from 'react';
+import { memo, type ChangeEvent } from 'react';
 
 import { StepTitle } from '..';
 import type { JoinInfo } from './joinReducer';
@@ -52,4 +52,6 @@ function JoinNameBox({
   );
 }
 
-export default JoinNameBox;
+const MemoizedJoinNameBox = memo(JoinNameBox);
+
+export default MemoizedJoinNameBox;

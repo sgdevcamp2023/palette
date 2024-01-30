@@ -1,4 +1,4 @@
-import type { ButtonHTMLAttributes } from 'react';
+import { memo, type ButtonHTMLAttributes } from 'react';
 import { cva } from 'class-variance-authority';
 import { cn } from '@/utils';
 
@@ -77,4 +77,6 @@ function Button({
   );
 }
 
-export default Button;
+const MemoizedButton = memo(Button);
+
+export default MemoizedButton;

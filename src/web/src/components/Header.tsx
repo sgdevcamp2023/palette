@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import { cva } from 'class-variance-authority';
 import type { MouseEvent, MouseEventHandler, ReactNode } from 'react';
 
@@ -157,4 +157,6 @@ function Header({ left, center, right, position, className }: HeaderProps) {
   );
 }
 
-export default Header;
+const MemoizedHeader = memo(Header);
+
+export default MemoizedHeader;

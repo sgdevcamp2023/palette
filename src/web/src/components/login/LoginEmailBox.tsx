@@ -1,4 +1,4 @@
-import type { ChangeEvent } from 'react';
+import { memo, type ChangeEvent } from 'react';
 
 import { StepTitle } from '..';
 import type { LoginInfo } from '@/@types';
@@ -64,4 +64,6 @@ function LoginEmailBox({
   );
 }
 
-export default LoginEmailBox;
+const MemoizedLoginEmailBox = memo(LoginEmailBox);
+
+export default MemoizedLoginEmailBox;

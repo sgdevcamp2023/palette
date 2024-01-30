@@ -1,5 +1,5 @@
 import { cva } from 'class-variance-authority';
-import type { InputHTMLAttributes } from 'react';
+import { memo, type InputHTMLAttributes } from 'react';
 
 import Icon from './Icon';
 import { cn } from '@/utils';
@@ -96,4 +96,6 @@ function Input({
   );
 }
 
-export default Input;
+const MemoizedInput = memo(Input);
+
+export default MemoizedInput;
