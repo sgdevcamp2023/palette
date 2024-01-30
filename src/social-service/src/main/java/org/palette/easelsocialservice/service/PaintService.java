@@ -114,6 +114,10 @@ public class PaintService {
         return convertToPaintResponse(paints);
     }
 
+    public List<ThreadResponse> getPaintAfterById(Long userId, Long paintId) {
+        return null;
+    }
+
     private PaintResponse convertToPaintResponse (Paint paint){
         Entities entities = covertToEntities(paint);
         Includes includes = convertToIncludes(paint);
