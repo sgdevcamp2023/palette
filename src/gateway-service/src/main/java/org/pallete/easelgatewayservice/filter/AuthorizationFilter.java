@@ -1,52 +1,56 @@
 package org.pallete.easelgatewayservice.filter;
 
-import org.pallete.easelgatewayservice.external.GrpcAuthClient;
-import org.springframework.cloud.gateway.filter.GatewayFilterChain;
-import org.springframework.cloud.gateway.filter.GlobalFilter;
-import org.springframework.core.Ordered;
+import org.pallete.easelgatewayservice.external.FeignAuthClient;
+import org.springframework.cloud.gateway.filter.GatewayFilter;
+import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
-import reactor.core.publisher.Mono;
 
 @Component
-public class AuthorizationFilter implements GlobalFilter, Ordered {
+public class AuthorizationFilter extends AbstractGatewayFilterFactory<AuthorizationFilter.Config> {
 
     private static final String AUTHORIZATION_HEADER_NAME = "Authorization";
+    private final FeignAuthClient feignAuthClient;
 
-    private final GrpcAuthClient grpcAuthClient;
+    public AuthorizationFilter(@Lazy FeignAuthClient feignAuthClient) {
+        super(Config.class);
+        this.feignAuthClient = feignAuthClient;
+    }
 
-    public AuthorizationFilter(GrpcAuthClient grpcAuthClient) {
-        this.grpcAuthClient = grpcAuthClient;
+    public static class Config {
     }
 
     @Override
-    public Mono<Void> filter(
-            ServerWebExchange exchange,
-            GatewayFilterChain chain
-    ) {
-        if (isRequestContainsAuthorization(exchange)) {
-            ServerHttpRequest request = exchange
-                    .getRequest()
-                    .mutate()
-                    .header(
-                            AUTHORIZATION_HEADER_NAME,
-                            grpcAuthClient.validateJWT(extractJWT(exchange)).getPassportPayload())
-                    .build();
+    public GatewayFilter apply(Config config) {
+        return (exchange, chain) -> {
 
-            return chain.filter(
-                    exchange.mutate()
-                            .request(request)
-                            .build()
-            );
-        }
+            String uri = exchange.getRequest().getURI().getPath();
 
-        return null;
-    }
+            if (isWhiteList(uri)) {
+                return chain.filter(exchange);
+            }
 
-    @Override
-    public int getOrder() {
-        return -1;
+            if (isRequestContainsAuthorization(exchange)) {
+                String passport = feignAuthClient.validateAndProvidedPassport(extractJWT(exchange));
+
+                ServerHttpRequest request = exchange
+                        .getRequest()
+                        .mutate()
+                        .header(
+                                AUTHORIZATION_HEADER_NAME,
+                                passport
+                        )
+                        .build();
+
+                return chain.filter(exchange.mutate()
+                        .request(request)
+                        .build()
+                );
+            }
+            return chain.filter(exchange);
+        };
     }
 
     private String extractJWT(ServerWebExchange exchange) {
@@ -56,4 +60,14 @@ public class AuthorizationFilter implements GlobalFilter, Ordered {
     private boolean isRequestContainsAuthorization(ServerWebExchange exchange) {
         return exchange.getRequest().getHeaders().get(AUTHORIZATION_HEADER_NAME).size() == 1;
     }
+
+    private boolean isWhiteList(String target) {
+        for (WhiteListURI whiteListURI : WhiteListURI.values()) {
+            if (whiteListURI.uri.equals(target)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
