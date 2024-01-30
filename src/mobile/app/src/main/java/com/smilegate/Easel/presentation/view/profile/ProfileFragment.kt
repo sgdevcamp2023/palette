@@ -5,6 +5,7 @@ import android.content.Context
 import android.graphics.PorterDuff
 import android.os.Bundle
 import android.os.Vibrator
+import android.util.Log
 import android.view.GestureDetector
 import android.view.KeyEvent
 import android.view.LayoutInflater
@@ -21,8 +22,9 @@ import com.github.clans.fab.FloatingActionButton
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.tabs.TabLayout
 import com.smilegate.Easel.R
+import com.smilegate.Easel.data.ProfileTapRvDataHelper
+import com.smilegate.Easel.data.refreshTimelineData
 import com.smilegate.Easel.databinding.FragmentProfileBinding
-import com.smilegate.Easel.domain.model.TimelineItem
 import com.smilegate.Easel.presentation.adapter.TimelineRecyclerViewAdapter
 
 class ProfileFragment : Fragment() {
@@ -84,18 +86,23 @@ class ProfileFragment : Fragment() {
         tabLayout.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.white))
         tabLayout.setSelectedTabIndicatorColor(ContextCompat.getColor(requireContext(), R.color.Blue_500))
 
-        val recyclerView = binding.rvProfile
-
-        val timelineList = generateDummyTimelineData()
-        recyclerViewAdapter = TimelineRecyclerViewAdapter(requireContext(), timelineList) // 초기화시 데이터는 비어있을 수 있음
-        recyclerView.adapter = recyclerViewAdapter
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
-
         for (i in tabTitles.indices) {
             tabLayout.addTab(tabLayout.newTab().setText(tabTitles[i]))
         }
 
         tabLayout.getTabAt(0)?.select()
+
+        val recyclerView = binding.rvProfile
+
+        val currentTabPosition = tabLayout.selectedTabPosition
+        val timelineList = ProfileTapRvDataHelper.getDataForTab(currentTabPosition)
+        Log.d("TimelineData", timelineList.toString())
+
+        recyclerViewAdapter = TimelineRecyclerViewAdapter(requireContext(), timelineList)
+
+        recyclerView.adapter = recyclerViewAdapter
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        recyclerViewAdapter.notifyDataSetChanged()
 
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
@@ -172,21 +179,8 @@ class ProfileFragment : Fragment() {
     }
 
     private fun updateRecyclerViewDataForTab(tabPosition: Int) {
-        val dataForTab = getDataForTab(tabPosition)
+        val dataForTab = ProfileTapRvDataHelper.getDataForTab(tabPosition)
         recyclerViewAdapter.updateData(dataForTab)
-    }
-
-    private fun getDataForTab(tabPosition: Int): List<TimelineItem> {
-        //TODO: 각 탭에 맞는 데이터를 가져오는 로직을 구현합니다.
-        // 예를 들어, 탭에 따라 다른 데이터를 데이터베이스에서 가져오거나 서버로부터 요청합니다.
-        return when (tabPosition) {
-            0 -> generateDummyTimelineData() // 게시물
-            1 -> generateDummyTimelineData() // 답글
-            2 -> generateDummyTimelineData() // 하이라이트
-            3 -> generateDummyTimelineData() // 미디어
-            4 -> generateDummyTimelineData() // 마음에 들어요
-            else -> emptyList() // 기본적으로 빈 리스트 반환
-        }
     }
 
     private fun setFABClickEvent() {
@@ -306,64 +300,6 @@ class ProfileFragment : Fragment() {
     private fun setElevationCompat(fab: FloatingActionButton, elevation: Float) {
         fab.setElevationCompat(elevation)
     }
-
-    private fun generateDummyTimelineData(): List<TimelineItem> {
-        val profileImgId = R.drawable.sample_profile_img5
-        val profileImgId1 = R.drawable.sample_profile_img1
-        val profileImgId2 = R.drawable.sample_profile_img2
-        val profileImgId3 = R.drawable.sample_profile_img3
-        val profileImgId4 = R.drawable.sample_profile_img4
-
-        val contentImgId = R.drawable.sample_content_img1
-        val contentImgId1 = R.drawable.sample_content_img2
-        val contentImgId2 = R.drawable.sample_content_img3
-        val contentImgId3 = R.drawable.sample_content_img4
-
-        val timelineList = listOf(
-            TimelineItem(profileImgId, "이원영", "@courtney81819", "1시간",
-                "아 슈뢰딩거가 아닌가?ㅋ", null, null,
-                2, 1, null, 24),
-
-
-            TimelineItem(profileImgId2, "이상민", "@isangmi92157279", "32분",
-                "비가 내리는 날이에요.\n추적이는 바닥을 보며 걷다보니 카페가 나와 커피를 사 봤어요.", contentImgId, null,
-                4, 2, 5, 121),
-
-            TimelineItem(profileImgId1, "박희원", "@_Parking1_", "18분",
-                "타래 스타트", contentImgId1, null,
-                1, 1, null, 114),
-
-            TimelineItem(profileImgId4, "김도율", "@doxxx93", "8분",
-                "테스트", null, null,
-                1, null, 2, 32),
-
-            TimelineItem(profileImgId2, "이상민", "@isangmi92157279", "1주",
-                "커피는 아이스 아메리카노에요.\n컵에 스며든 물방울처럼, 제 마음을 촉촉하게 만들어 주네요..^^", contentImgId2, null,
-                3, 4, 2, 89),
-
-            TimelineItem(profileImgId3, "김도현", "@KittenDiger", "4일",
-                "테스트 인용의 인용", null, null,
-                1, null, null, 30),
-
-            TimelineItem(profileImgId, "이원영", "@courtney81819", "3시간",
-                "청하 로제", contentImgId3, null,
-                3, null, 2, 334),
-
-            TimelineItem(profileImgId3, "김도현", "@KittenDiger", "4일",
-                "구글인ㅇㅎㅇ의 인용의 인용", null, null,
-                1, 2, null, 50),
-        )
-
-        return timelineList.shuffled()
-    }
-
-    private fun refreshTimelineData() {
-        val shuffledTimelineList = generateDummyTimelineData().shuffled()
-        (binding.rvProfile.adapter as? TimelineRecyclerViewAdapter)?.updateData(shuffledTimelineList)
-
-        binding.swipeRefreshLayout.isRefreshing = false
-    }
-
     // 탭 전환 메서드
     private fun navigateToNextTab() {
         val tabLayout = binding.tabLayout
