@@ -115,16 +115,17 @@ public class PaintService {
     }
 
     public List<ThreadResponse> getPaintAfterById(Long userId, Long paintId) {
+        // TODO: clean up methods
         List<Paint> paints = distinctPaintsByPid(paintRepository.findAllAfterPaintByPid(paintId));
 
         List<ThreadResponse> threads = new LinkedList<>();
         int threadId = 0;
         for (Paint paint : paints) {
-            if (paint.getAuthor() == null) continue;
-            List<Paint> subPaints = distinctPaintsByPid(paintRepository.findAllAfterPaintByPid(paint.getPid()));
+            if (paint.getQuotePaint() != null) {
+                paint.addQuotePaint(paintRepository.findByPid(paint.getQuotePaint().getPaint().getPid()).get());
+            }
+            List<Paint> subPaints = distinctPaintsByPid(paintRepository.findAllAfterPaintsByPid(paint.getPid()));
             subPaints.add(0, paint);
-            System.out.println("added first ::::: " + paint);
-
 
             threads.add(new ThreadResponse(threadId++, convertToPaintResponse(subPaints)));
         }
@@ -133,14 +134,16 @@ public class PaintService {
     }
 
     private List<Paint> distinctPaintsByPid(List<Paint> paints) {
-        for (Paint paint: paints) {
-            System.out.println("~~~~" + paint.getPid() + "  " + paint.getAuthor());
-        }
         return paints.stream()
+                .filter(paint -> !isQuotePaint(paint))
                 .collect(Collectors.collectingAndThen(
                         Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(Paint::getPid))),
                         ArrayList::new
                 ));
+    }
+
+    private boolean isQuotePaint(Paint paint) {
+        return paint.getAuthor() == null;
     }
 
     private PaintResponse convertToPaintResponse (Paint paint) {
@@ -151,17 +154,17 @@ public class PaintService {
         return PaintResponse.buildByPaint(paint, quotePaint, entities, includes);
     }
 
+    private PaintResponse getQuotePaint(Paint paint) {
+        return Optional.ofNullable(paint.getQuotePaint())
+                .map(qp -> convertToQuotePaintResponse(qp.getPaint()))
+                .orElse(null);
+    }
+
     private PaintResponse convertToQuotePaintResponse (Paint paint) {
         Entities entities = covertToEntities(paint);
         Includes includes = convertToIncludes(paint);
 
         return PaintResponse.buildByPaint(paint, entities, includes);
-    }
-
-    private PaintResponse getQuotePaint(Paint paint) {
-        return Optional.ofNullable(paint.getQuotePaint())
-                .map(qp -> convertToQuotePaintResponse(qp.getPaint()))
-                .orElse(null);
     }
 
     private List<PaintResponse> convertToPaintResponse(List<Paint> paints) {

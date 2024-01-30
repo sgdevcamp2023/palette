@@ -27,6 +27,7 @@ public record PaintResponse(
         Includes includes
 ) {
     public static PaintResponse buildByPaint(Paint paint, PaintResponse quotePaint, Entities entities, Includes includes) {
+        System.out.println(paint + "==================");
         User author = paint.getAuthor().getUser();
         return new PaintResponse(
                 paint.getPid(),
