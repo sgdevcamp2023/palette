@@ -16,14 +16,6 @@ message GValidateJWTResponse {
   string passportPayload = 1;
 }
 
-message GValidateJWTRequest {
-  string jwtPayload = 1;
-}
-
-message GValidateJWTResponse {
-  string passportPayload = 1;
-}
-
 message GSendEmailAuthRequest {
   string email = 2;
 }
