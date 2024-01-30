@@ -127,4 +127,8 @@ public class User {
         this.profile = profile;
         this.role = Role.NORMAL;
     }
+
+    public boolean isNotDeleted() {
+        return this.deletedAt == null;
+    }
 }

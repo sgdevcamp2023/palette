@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @GrpcService
 @RequiredArgsConstructor
-public class GrpcServerByAuthService extends GUserServiceGrpc.GUserServiceImplBase {
+public class GrpcServer extends GUserServiceGrpc.GUserServiceImplBase {
 
     private final UserService userService;
 
@@ -46,6 +46,7 @@ public class GrpcServerByAuthService extends GUserServiceGrpc.GUserServiceImplBa
 
         GCheckEmailAndPasswordResponse response = GCheckEmailAndPasswordResponse.newBuilder()
                 .setIsSuccess(true)
+                .setUserId(user.getId())
                 .build();
         responseObserver.onNext(response);
         responseObserver.onCompleted();
@@ -57,6 +58,22 @@ public class GrpcServerByAuthService extends GUserServiceGrpc.GUserServiceImplBa
             StreamObserver<GLoadUserInfoFromIdResponse> responseObserver
     ) {
         User user = userService.loadById(request.getId());
+
+        if (user.isNotDeleted()) {
+            responseObserver.onNext(GLoadUserInfoFromIdResponse.newBuilder()
+                    .setEmail(user.getEmail())
+                    .setNickname(user.getProfile().nickname())
+                    .setUsername(user.getUsername())
+                    .setRole(user.getRole().name())
+                    .setIsActivated(user.getIsActivated())
+                    .setAccessedAt(user.getAccessedAt().toString())
+                    .setCreatedAt(user.getCreatedAt().toString())
+                    .setDeletedAt("")
+                    .build()
+            );
+            responseObserver.onCompleted();
+            return;
+        }
 
         responseObserver.onNext(GLoadUserInfoFromIdResponse.newBuilder()
                 .setEmail(user.getEmail())
