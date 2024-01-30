@@ -9,15 +9,15 @@ spring:
     redis:
       host: ${TIMELINE_REDIS_HOST}
       port: ${TIMELINE_REDIS_PORT}
+      password: ${TIMELINE_REDIS_PASSWORD}
 
   kafka:
+    bootstrap-servers: ${KAFKA_SERVERS}
     consumer:
-      bootstrap-servers: ${KAFKA_SERVER}
-      group-id: timeline-consumer
+      group-id: timeline-consumer-group
       auto-offset-reset: earliest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
 
 eureka:
   instance:
@@ -26,8 +26,7 @@ eureka:
     fetch-registry: true
     register-with-eureka: true
     service-url:
-      #      defaultZone: http://host.docker.internal:8761/eureka
-      defaultZone: http://localhost:8761/eureka
+      defaultZone: http://host.docker.internal:8761/eureka
 
 grpc:
   server:
