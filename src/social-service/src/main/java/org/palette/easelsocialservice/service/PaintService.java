@@ -14,9 +14,8 @@ import org.palette.easelsocialservice.persistence.domain.*;
 import org.palette.easelsocialservice.persistence.relationship.*;
 import org.springframework.stereotype.Service;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -110,19 +109,59 @@ public class PaintService {
     }
 
     public List<PaintResponse> getPaintBeforeById(Long userId, Long paintId) {
-        List<Paint> paints = paintRepository.findAllBeforePaintByPid(paintId);
+        List<Paint> paints = distinctPaintsByPid(paintRepository.findAllBeforePaintByPid(paintId));
+
         return convertToPaintResponse(paints);
     }
 
     public List<ThreadResponse> getPaintAfterById(Long userId, Long paintId) {
-        return null;
+        List<Paint> paints = distinctPaintsByPid(paintRepository.findAllAfterPaintByPid(paintId));
+
+        List<ThreadResponse> threads = new LinkedList<>();
+        int threadId = 0;
+        for (Paint paint : paints) {
+            if (paint.getAuthor() == null) continue;
+            List<Paint> subPaints = distinctPaintsByPid(paintRepository.findAllAfterPaintByPid(paint.getPid()));
+            subPaints.add(0, paint);
+            System.out.println("added first ::::: " + paint);
+
+
+            threads.add(new ThreadResponse(threadId++, convertToPaintResponse(subPaints)));
+        }
+
+        return threads;
     }
 
-    private PaintResponse convertToPaintResponse (Paint paint){
+    private List<Paint> distinctPaintsByPid(List<Paint> paints) {
+        for (Paint paint: paints) {
+            System.out.println("~~~~" + paint.getPid() + "  " + paint.getAuthor());
+        }
+        return paints.stream()
+                .collect(Collectors.collectingAndThen(
+                        Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(Paint::getPid))),
+                        ArrayList::new
+                ));
+    }
+
+    private PaintResponse convertToPaintResponse (Paint paint) {
+        PaintResponse quotePaint = getQuotePaint(paint);
+        Entities entities = covertToEntities(paint);
+        Includes includes = convertToIncludes(paint);
+
+        return PaintResponse.buildByPaint(paint, quotePaint, entities, includes);
+    }
+
+    private PaintResponse convertToQuotePaintResponse (Paint paint) {
         Entities entities = covertToEntities(paint);
         Includes includes = convertToIncludes(paint);
 
         return PaintResponse.buildByPaint(paint, entities, includes);
+    }
+
+    private PaintResponse getQuotePaint(Paint paint) {
+        return Optional.ofNullable(paint.getQuotePaint())
+                .map(qp -> convertToQuotePaintResponse(qp.getPaint()))
+                .orElse(null);
     }
 
     private List<PaintResponse> convertToPaintResponse(List<Paint> paints) {
