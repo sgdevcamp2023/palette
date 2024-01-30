@@ -84,13 +84,15 @@ export const postDetailRoute = new Route({
   parseParams: (parse): { postId: string } => ({
     postId: parse.postId || '1',
   }),
-  shouldReload: true,
 });
 
 export const profileRoute = new Route({
   getParentRoute: () => rootRoute,
   path: '/profile/$userId',
   component: () => <ProfilePage />,
+  parseParams: (parse): { userId: string } => ({
+    userId: parse.userId || '1',
+  }),
 });
 
 export const editPostRoute = new Route({
