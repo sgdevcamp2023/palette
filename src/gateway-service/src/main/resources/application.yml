@@ -107,3 +107,4 @@ grpc:
 passport:
   key: ${PASSPORT_KEY}
   algorithm: ${PASSPORT_ALGORITHM}
+      defaultZone: http://host.docker.internal:8761/eureka

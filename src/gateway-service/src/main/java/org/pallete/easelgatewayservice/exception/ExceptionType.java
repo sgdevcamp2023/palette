@@ -64,7 +64,6 @@ public enum ExceptionType {
             HttpStatus.INTERNAL_SERVER_ERROR
     ),
 
-
     ;
 
     private final String code;
