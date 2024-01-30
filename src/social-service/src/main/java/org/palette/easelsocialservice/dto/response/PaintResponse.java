@@ -13,6 +13,7 @@ public record PaintResponse(
         String authorNickname,
         String authorImagePath,
         String authorStatus,
+        PaintResponse quotePaint,
         LocalDateTime createdAt,
         String text,
         Integer replyCount,
@@ -25,6 +26,31 @@ public record PaintResponse(
         Entities entities,
         Includes includes
 ) {
+    public static PaintResponse buildByPaint(Paint paint, PaintResponse quotePaint, Entities entities, Includes includes) {
+        User author = paint.getAuthor().getUser();
+        return new PaintResponse(
+                paint.getPid(),
+                paint.getInReplyToPaint() != null,
+                author.getUid(),
+                author.getUsername(),
+                author.getNickname(),
+                author.getImagePath(),
+                author.getActiveString(),
+                quotePaint,
+                paint.getCreatedAt(),
+                paint.getContent(),
+                0,
+                paint.getRepaints().size(),
+                0,
+                false,
+                false,
+                false,
+                paint.getViews(),
+                entities,
+                includes
+        );
+    }
+
     public static PaintResponse buildByPaint(Paint paint, Entities entities, Includes includes) {
         User author = paint.getAuthor().getUser();
         return new PaintResponse(
@@ -35,6 +61,7 @@ public record PaintResponse(
                 author.getNickname(),
                 author.getImagePath(),
                 author.getActiveString(),
+                null,
                 paint.getCreatedAt(),
                 paint.getContent(),
                 0,

@@ -10,6 +10,7 @@ import org.palette.easelsocialservice.dto.request.RepaintRequest;
 import org.palette.easelsocialservice.dto.response.LinkResponse;
 import org.palette.easelsocialservice.dto.response.PaintCreateResponse;
 import org.palette.easelsocialservice.dto.response.PaintResponse;
+import org.palette.easelsocialservice.dto.response.ThreadResponse;
 import org.palette.easelsocialservice.persistence.domain.Link;
 import org.palette.easelsocialservice.persistence.domain.Media;
 import org.palette.easelsocialservice.persistence.domain.Paint;
@@ -93,5 +94,9 @@ public class PaintUsecase {
     public List<PaintResponse> getSingleBefore(Long userId, Long paintId) {
         // TODO: compasre userId for like, repaint, mark
         return paintService.getPaintBeforeById(userId, paintId);
+    }
+
+    public List<ThreadResponse> getSingleAfter(Long userId, Long paintId) {
+        return paintService.getPaintAfterById(userId, paintId);
     }
 }

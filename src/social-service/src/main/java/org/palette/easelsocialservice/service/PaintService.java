@@ -14,9 +14,8 @@ import org.palette.easelsocialservice.persistence.domain.*;
 import org.palette.easelsocialservice.persistence.relationship.*;
 import org.springframework.stereotype.Service;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -29,7 +28,6 @@ public class PaintService {
 
     public void bindUserWithPaint(User user, Paint paint) {
         paint.setAuthor(user);
-        paintRepository.save(paint);
     }
 
     public void createMentions(Paint paint, List<MentionRequest> mentions, Map<Long, User> users) {
@@ -38,7 +36,6 @@ public class PaintService {
             mentionRelations.add(new Mentions(users.get(mention.userId()), mention.start(), mention.end()));
         }
         paint.addAllMentions(mentionRelations);
-        paintRepository.save(paint);
     }
 
     public void createTaggedUsers(Paint paint, List<User> users) {
@@ -47,7 +44,6 @@ public class PaintService {
             tagsUsers.add(new TagsUser(user));
         }
         paint.addAllTaggedUsers(tagsUsers);
-        paintRepository.save(paint);
     }
 
     public void bindHashtagsWithPaint(Paint paint, List<HashtagRequest> hashtags) {
@@ -57,7 +53,6 @@ public class PaintService {
             tags.add(tag);
         }
         paint.addAllHashtags(tags);
-        paintRepository.save(paint);
     }
 
     public void bindLinksWithPaint(Paint paint, List<LinkRequest> linkRequests, List<Link> links) {
@@ -67,7 +62,6 @@ public class PaintService {
             contains.add(new Contains(links.get(i), request.start(), request.end()));
         }
         paint.addAllLinks(contains);
-        paintRepository.save(paint);
     }
 
     public void bindMediaWithPaint(Paint paint, List<Media> medias) {
@@ -76,28 +70,24 @@ public class PaintService {
             usings.add(new Uses(media));
         }
         paint.addAllMedia(usings);
-        paintRepository.save(paint);
     }
 
     public void bindReplyPaint(Paint paint, Long inReplyToPaint) {
         Paint inReplyPaint = paintRepository.findById(inReplyToPaint)
                 .orElseThrow(() -> new BaseException(ExceptionType.SOCIAL_400_000002));
         paint.setInReplyToPaint(inReplyPaint);
-        paintRepository.save(paint);
     }
 
     public void bindQuotePaint(Paint paint, Long quotePaintId) {
         Paint quotePaint = paintRepository.findById(quotePaintId)
                 .orElseThrow(() -> new BaseException(ExceptionType.SOCIAL_400_000002));
         paint.addQuotePaint(quotePaint);
-        paintRepository.save(paint);
     }
 
     public void bindRepaintWithPaint(User user, RepaintRequest repaintRequest) {
         Paint paint = paintRepository.findById(repaintRequest.originPaintId())
                 .orElseThrow(() -> new BaseException(ExceptionType.SOCIAL_400_000002));
         paint.addRepaint(user);
-        paintRepository.save(paint);
     }
 
     // TODO: replyCount, likeCount, myLike, myRepaint, myMarked functions
@@ -110,11 +100,62 @@ public class PaintService {
     }
 
     public List<PaintResponse> getPaintBeforeById(Long userId, Long paintId) {
-        List<Paint> paints = paintRepository.findAllBeforePaintByPid(paintId);
+        List<Paint> paints = distinctPaintsByPid(paintRepository.findAllBeforePaintByPid(paintId));
+
         return convertToPaintResponse(paints);
     }
 
-    private PaintResponse convertToPaintResponse (Paint paint){
+    public List<ThreadResponse> getPaintAfterById(Long userId, Long paintId) {
+        List<Paint> paints = distinctPaintsByPid(paintRepository.findAllAfterPaintByPid(paintId));
+
+        List<ThreadResponse> threads = new LinkedList<>();
+        int threadId = 0;
+        for (Paint paint : paints) {
+            checkAndSetQuotePaint(paint);
+            List<Paint> subPaints = distinctPaintsByPid(paintRepository.findAllAfterPaintsByPid(paint.getPid()));
+            subPaints.add(0, paint);
+
+            threads.add(new ThreadResponse(threadId++, convertToPaintResponse(subPaints)));
+        }
+
+        return threads;
+    }
+
+    private void checkAndSetQuotePaint(Paint paint) {
+        if (paint.getQuotePaint() == null) return;
+        Paint quotePaint = paintRepository.findByPid(paint.getQuotePaint().getPaint().getPid())
+                .orElseThrow(() -> new BaseException(ExceptionType.SOCIAL_400_000002));
+        paint.addQuotePaint(quotePaint);
+    }
+
+    private List<Paint> distinctPaintsByPid(List<Paint> paints) {
+        return paints.stream()
+                .filter(paint -> !isQuotePaint(paint))  // because a quotePaint comes with the paint list
+                .collect(Collectors.collectingAndThen(
+                        Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(Paint::getPid))),
+                        ArrayList::new
+                ));
+    }
+
+    private boolean isQuotePaint(Paint paint) {
+        return paint.getAuthor() == null;
+    }
+
+    private PaintResponse convertToPaintResponse(Paint paint) {
+        PaintResponse quotePaint = getQuotePaint(paint);
+        Entities entities = covertToEntities(paint);
+        Includes includes = convertToIncludes(paint);
+
+        return PaintResponse.buildByPaint(paint, quotePaint, entities, includes);
+    }
+
+    private PaintResponse getQuotePaint(Paint paint) {
+        return Optional.ofNullable(paint.getQuotePaint())
+                .map(qp -> convertToQuotePaintResponse(qp.getPaint()))
+                .orElse(null);
+    }
+
+    private PaintResponse convertToQuotePaintResponse(Paint paint) {
         Entities entities = covertToEntities(paint);
         Includes includes = convertToIncludes(paint);
 
