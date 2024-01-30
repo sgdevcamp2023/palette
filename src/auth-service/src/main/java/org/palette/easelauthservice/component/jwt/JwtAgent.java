@@ -16,8 +16,8 @@ public class JwtAgent {
     private final JwtParser jwtParser;
     private static final int BEARER_PREFIX = 7;
 
-    public JwtPair provide(String email) {
-        return jwtGenerator.execute(email);
+    public JwtPair provide(Long id) {
+        return jwtGenerator.execute(id);
     }
 
     public void verify(String jwt) {
@@ -26,7 +26,6 @@ public class JwtAgent {
 
     public Long parseUserId(String jwt) {
         jwt = jwt.substring(BEARER_PREFIX);
-        jwtVerifier.execute(jwt);
-        return jwtParser.getEmail(jwt);
+        return jwtParser.getId(jwt);
     }
 }

@@ -8,18 +8,20 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class JwtParser {
 
-    private static final String EMAIL_FILED = "email";
+    private static final String ID_FILED = "id";
 
     private final JwtProperties jwtProperties;
     private final JwtVerifier jwtVerifier;
 
-    public Long getEmail(String token) {
+    public Long getId(String token) {
         jwtVerifier.execute(token);
+
         Object id = Jwts.parserBuilder()
                 .setSigningKey(jwtProperties.getSigningKey())
                 .build()
                 .parseClaimsJws(token)
-                .getBody().get(EMAIL_FILED);
+                .getBody().get(ID_FILED);
+
         return Long.valueOf(String.valueOf(id));
     }
 }
