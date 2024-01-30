@@ -28,7 +28,6 @@ public class PaintService {
 
     public void bindUserWithPaint(User user, Paint paint) {
         paint.setAuthor(user);
-        paintRepository.save(paint);
     }
 
     public void createMentions(Paint paint, List<MentionRequest> mentions, Map<Long, User> users) {
@@ -37,7 +36,6 @@ public class PaintService {
             mentionRelations.add(new Mentions(users.get(mention.userId()), mention.start(), mention.end()));
         }
         paint.addAllMentions(mentionRelations);
-        paintRepository.save(paint);
     }
 
     public void createTaggedUsers(Paint paint, List<User> users) {
@@ -46,7 +44,6 @@ public class PaintService {
             tagsUsers.add(new TagsUser(user));
         }
         paint.addAllTaggedUsers(tagsUsers);
-        paintRepository.save(paint);
     }
 
     public void bindHashtagsWithPaint(Paint paint, List<HashtagRequest> hashtags) {
@@ -56,7 +53,6 @@ public class PaintService {
             tags.add(tag);
         }
         paint.addAllHashtags(tags);
-        paintRepository.save(paint);
     }
 
     public void bindLinksWithPaint(Paint paint, List<LinkRequest> linkRequests, List<Link> links) {
@@ -66,7 +62,6 @@ public class PaintService {
             contains.add(new Contains(links.get(i), request.start(), request.end()));
         }
         paint.addAllLinks(contains);
-        paintRepository.save(paint);
     }
 
     public void bindMediaWithPaint(Paint paint, List<Media> medias) {
@@ -75,28 +70,24 @@ public class PaintService {
             usings.add(new Uses(media));
         }
         paint.addAllMedia(usings);
-        paintRepository.save(paint);
     }
 
     public void bindReplyPaint(Paint paint, Long inReplyToPaint) {
         Paint inReplyPaint = paintRepository.findById(inReplyToPaint)
                 .orElseThrow(() -> new BaseException(ExceptionType.SOCIAL_400_000002));
         paint.setInReplyToPaint(inReplyPaint);
-        paintRepository.save(paint);
     }
 
     public void bindQuotePaint(Paint paint, Long quotePaintId) {
         Paint quotePaint = paintRepository.findById(quotePaintId)
                 .orElseThrow(() -> new BaseException(ExceptionType.SOCIAL_400_000002));
         paint.addQuotePaint(quotePaint);
-        paintRepository.save(paint);
     }
 
     public void bindRepaintWithPaint(User user, RepaintRequest repaintRequest) {
         Paint paint = paintRepository.findById(repaintRequest.originPaintId())
                 .orElseThrow(() -> new BaseException(ExceptionType.SOCIAL_400_000002));
         paint.addRepaint(user);
-        paintRepository.save(paint);
     }
 
     // TODO: replyCount, likeCount, myLike, myRepaint, myMarked functions
