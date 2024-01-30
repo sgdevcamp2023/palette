@@ -11,6 +11,9 @@ import org.palette.easelauthservice.external.GrpcUserClient;
 import org.palette.easelauthservice.redis.EmailAuth;
 import org.palette.easelauthservice.redis.RedisEmailAuthService;
 import org.palette.grpc.GAuthServiceGrpc;
+import org.palette.grpc.GLoadUserInfoFromIdResponse;
+import org.palette.passport.PassportGenerator;
+import org.palette.passport.component.UserInfo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +26,7 @@ public class AuthUsecase extends GAuthServiceGrpc.GAuthServiceImplBase {
     private final EmailAuthMailSender emailAuthMailSender;
     private final GrpcUserClient grpcUserClient;
     private final JwtAgent jwtAgent;
+    private final PassportGenerator passportGenerator;
 
     public void verifyEmail(EmailAuthRequest emailAuthRequest) {
         String email = emailAuthRequest.email();
@@ -52,8 +56,27 @@ public class AuthUsecase extends GAuthServiceGrpc.GAuthServiceImplBase {
         String email = loginRequest.email();
         String password = loginRequest.password();
 
-        grpcUserClient.checkEmailWithPassword(email, password);
+        return jwtAgent.provide(
+                grpcUserClient.checkEmailWithPassword(email, password)
+        );
+    }
 
-        return jwtAgent.provide(email);
+    public String validateJWT(String jwtPayload) {
+        Long userId = jwtAgent.parseUserId(jwtPayload);
+        GLoadUserInfoFromIdResponse gLoadUserInfoFromIdResponse = grpcUserClient.loadById(userId);
+
+        return passportGenerator.generatePassport(
+                new UserInfo(
+                        userId,
+                        gLoadUserInfoFromIdResponse.getEmail(),
+                        gLoadUserInfoFromIdResponse.getNickname(),
+                        gLoadUserInfoFromIdResponse.getUsername(),
+                        gLoadUserInfoFromIdResponse.getRole(),
+                        gLoadUserInfoFromIdResponse.getIsActivated(),
+                        gLoadUserInfoFromIdResponse.getAccessedAt(),
+                        gLoadUserInfoFromIdResponse.getCreatedAt(),
+                        gLoadUserInfoFromIdResponse.getDeletedAt()
+                )
+        );
     }
 }
