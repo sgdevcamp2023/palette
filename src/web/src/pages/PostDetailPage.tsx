@@ -1,16 +1,24 @@
-import { useLayoutEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { useNavigate, useRouter } from '@tanstack/react-router';
 
 import { usePaintAction } from '@/hooks';
-import { postDetailRoute } from '@/routes';
 import {
+  AfterTimelineList,
+  AsyncBoundary,
+  BeforeTimelineList,
   ContentLayout,
   Header,
   MainPostBox,
-  TimelineItemBox,
   Typography,
 } from '@/components';
-import { DUMMY_USER, createDummyTimelineItem } from '@/utils';
+import { DUMMY_USER } from '@/utils';
+import {
+  ReplyBottomSheet,
+  ShareBottomSheet,
+  ViewsBottomSheet,
+} from '@/components/bottomSheet';
+import { Spinner, TimelineItemBoxSkeleton } from '@/components/skeleton';
+import { postDetailRoute } from '@/routes';
 
 function PostDetailPage() {
   const me = DUMMY_USER;
@@ -20,23 +28,7 @@ function PostDetailPage() {
   const params = postDetailRoute.useParams();
 
   const parentRef = useRef<HTMLDivElement>(null);
-  const mainPost = createDummyTimelineItem(10)[Number(params.postId) % 10];
   const mainPostRef = useRef<HTMLDivElement>(null);
-  const beforePosts = createDummyTimelineItem(3);
-  const beforePostRef = useRef<HTMLDivElement>(null);
-  const afterPosts = createDummyTimelineItem(3);
-
-  useLayoutEffect(() => {
-    const $mainPost = mainPostRef.current;
-    const $beforePost = beforePostRef.current;
-    const $parent = parentRef.current;
-
-    if ($mainPost && $beforePost && $parent) {
-      const headerOffset = 50;
-      $mainPost.scrollIntoView();
-      $parent.scrollBy(0, -headerOffset);
-    }
-  }, [mainPost]);
 
   return (
     <>
@@ -52,91 +44,32 @@ function PostDetailPage() {
         }}
       />
       <ContentLayout
-        className="px-0 py-0 mb-0 overflow-hidden max-h-none"
+        className="px-0 py-0 mt-0 mb-0 overflow-hidden max-h-[calc(100vh-44px)]"
         isShowFloatingButton={false}
       >
         <div
           ref={parentRef}
-          className="px-[10px] overflow-y-scroll max-h-[calc(100vh-94px)]"
+          className="flex flex-col flex-start px-[10px] pt-[44px] pb-[50px] overflow-y-scroll max-h-[calc(100vh-44px)]"
         >
-          {beforePosts.length > 0 && (
-            <div
-              ref={beforePostRef}
-              className="flex flex-col gap-[12px] w-full h-full mt-[44px] mb-[24px]"
-            >
-              {beforePosts.map((post) => (
-                <TimelineItemBox
-                  key={post.id}
-                  item={post}
-                  className="pt-[12px]"
-                  isShowMenu={
-                    paintAction.isShowMoreMenu.id === post.id &&
-                    paintAction.isShowMoreMenu.show
-                  }
-                  onClickReply={() =>
-                    navigate({
-                      to: '/post/edit',
-                      search: { postId: post.id },
-                    })
-                  }
-                  onClickRetweet={() => paintAction.onClickRetweet(post.id)}
-                  onClickHeart={() => paintAction.onClickHeart(post.id)}
-                  onClickViews={() => paintAction.onClickViews(post.id)}
-                  onClickShare={() => paintAction.onClickShare(post.id)}
-                  onClickMore={() => paintAction.onClickMore(post.id)}
-                />
-              ))}
-            </div>
-          )}
+          <AsyncBoundary pendingFallback={<span />}>
+            <BeforeTimelineList
+              mainPostRef={mainPostRef}
+              parentRef={parentRef}
+              paintAction={paintAction}
+            />
+          </AsyncBoundary>
 
-          <MainPostBox
-            item={mainPost}
-            ref={mainPostRef}
-            className={afterPosts.length === 0 ? 'mb-[24px]' : ''}
-            isFollow={mainPost.authorId === ''}
-            isShowMenu={
-              paintAction.isShowMoreMenu.id === mainPost.id &&
-              paintAction.isShowMoreMenu.show
-            }
-            onClickReply={() =>
-              navigate({
-                to: '/post/edit',
-                search: { postId: mainPost.id },
-              })
-            }
-            onClickRetweet={() => paintAction.onClickRetweet(mainPost.id)}
-            onClickHeart={() => paintAction.onClickHeart(mainPost.id)}
-            onClickViews={() => paintAction.onClickViews(mainPost.id)}
-            onClickShare={() => paintAction.onClickShare(mainPost.id)}
-            onClickMore={() => paintAction.onClickMore(mainPost.id)}
-          />
+          <AsyncBoundary pendingFallback={<TimelineItemBoxSkeleton />}>
+            <MainPostBox
+              ref={mainPostRef}
+              paintAction={paintAction}
+              className="mt-[24px]"
+            />
+          </AsyncBoundary>
 
-          {afterPosts.length > 0 && (
-            <div className="flex flex-col gap-[12px] w-full h-full mb-[14px] divide-y divide-blueGrey-400 border-t-[1px] border-blueGrey-200">
-              {afterPosts.map((post) => (
-                <TimelineItemBox
-                  key={post.id}
-                  item={post}
-                  className="pt-[12px]"
-                  isShowMenu={
-                    paintAction.isShowMoreMenu.id === post.id &&
-                    paintAction.isShowMoreMenu.show
-                  }
-                  onClickReply={() =>
-                    navigate({
-                      to: '/post/edit',
-                      search: { postId: post.id },
-                    })
-                  }
-                  onClickRetweet={() => paintAction.onClickRetweet(post.id)}
-                  onClickHeart={() => paintAction.onClickHeart(post.id)}
-                  onClickViews={() => paintAction.onClickViews(post.id)}
-                  onClickShare={() => paintAction.onClickShare(post.id)}
-                  onClickMore={() => paintAction.onClickMore(post.id)}
-                />
-              ))}
-            </div>
-          )}
+          <AsyncBoundary pendingFallback={<Spinner className="mt-10" />}>
+            <AfterTimelineList paintAction={paintAction} />
+          </AsyncBoundary>
         </div>
       </ContentLayout>
 
@@ -145,7 +78,7 @@ function PostDetailPage() {
         type="button"
         className="fixed bottom-[50px] px-[10px] w-full h-[50px] items-center bg-white flex gap-[6px] pt-[6px] border-t border-t-blueGrey400 text-left"
         onClick={() =>
-          navigate({ to: '/post/edit', search: { postId: mainPost.id } })
+          navigate({ to: '/post/edit', search: { postId: params.postId } })
         }
       >
         <img
@@ -159,6 +92,20 @@ function PostDetailPage() {
           </Typography>
         </div>
       </button>
+      <ReplyBottomSheet
+        id={paintAction.selectedPostId}
+        isOpen={paintAction.isBottomSheetOpen.reply}
+        onClose={() => paintAction.onCloseBottomSheet('reply')}
+      />
+      <ViewsBottomSheet
+        isOpen={paintAction.isBottomSheetOpen.views}
+        onClose={() => paintAction.onCloseBottomSheet('views')}
+      />
+      <ShareBottomSheet
+        id={paintAction.selectedPostId}
+        isOpen={paintAction.isBottomSheetOpen.share}
+        onClose={() => paintAction.onCloseBottomSheet('share')}
+      />
     </>
   );
 }

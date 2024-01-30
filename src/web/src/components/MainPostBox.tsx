@@ -1,65 +1,64 @@
-import { forwardRef } from 'react';
+import { forwardRef, memo } from 'react';
 import type { ForwardedRef } from 'react';
+import { useNavigate } from '@tanstack/react-router';
+import { useSuspenseQuery } from '@tanstack/react-query';
 
-import { cn } from '@/utils';
 import { Button } from './common';
-import type { TimelineItem } from '@/@types';
+import type { PaintAction } from '@/hooks';
+import { postDetailRoute } from '@/routes';
 import Typography from './common/Typography';
+import { cn, fetchMainPost } from '@/utils';
 import TimelineItemMenu from './TimelineItemMenu';
 import AccessibleIconButton from './AccessibleIconButton';
 
 interface MainPostBoxProps {
-  item: TimelineItem;
-  isFollow: boolean;
-  isShowMenu: boolean;
   className?: string;
-  onClickReply: VoidFunction;
-  onClickRetweet: VoidFunction;
-  onClickHeart: VoidFunction;
-  onClickViews: VoidFunction;
-  onClickShare: VoidFunction;
-  onClickMore: VoidFunction;
+  paintAction: PaintAction;
 }
 
 const MainPostBox = forwardRef<HTMLDivElement, MainPostBoxProps>(
-  (
-    {
-      item,
-      isFollow,
-      isShowMenu,
-      className,
-      onClickReply,
-      onClickRetweet,
-      onClickHeart,
-      onClickViews,
-      onClickShare,
-      onClickMore,
-    },
-    ref: ForwardedRef<HTMLDivElement>,
-  ) => {
-    const hasMedia = item.includes.medias.length > 0;
+  ({ className, paintAction }, ref: ForwardedRef<HTMLDivElement>) => {
+    const isFollow = false;
+    const navigate = useNavigate();
+    const params = postDetailRoute.useParams();
+    const { data: post } = useSuspenseQuery({
+      queryKey: ['post', params.postId],
+      queryFn: fetchMainPost,
+    });
+    const hasMedia = post?.includes.medias.length > 0;
 
     return (
-      <div className={cn('w-full', className)} ref={ref}>
+      <div id={post.id} className={cn('w-full', className)} ref={ref}>
         <div className="w-full flex gap-[6px]">
-          <img
-            src={item.authorImagePath}
-            alt={`${item.authorNickname}`}
-            className="rounded-full w-[44px] h-[44px] min-w-[44px]"
-          />
+          <button
+            type="button"
+            className="flex"
+            onClick={() =>
+              navigate({
+                to: '/profile/$userId',
+                params: { userId: post.authorId },
+              })
+            }
+          >
+            <img
+              src={post.authorImagePath}
+              alt={`${post.authorNickname}`}
+              className="rounded-full w-[44px] h-[44px] min-w-[44px]"
+            />
+          </button>
           {/* 헤더 */}
           <div className="w-full flex justify-between relative">
             <div className="flex flex-col">
               <Typography size="headline-8" color="grey-600">
-                {item.authorNickname}
+                {post.authorNickname}
               </Typography>
               <Typography size="body-1" color="blueGrey-800">
-                {item.authorUsername}
+                {post.authorUsername}
               </Typography>
             </div>
-            <div className="flex gap-[6px]">
+            <div className="flex gap-[6px] items-center">
               {!isFollow && (
-                <Button variant="filled" className="w-[56px] h-[24px]">
+                <Button variant="filled" className="w-[64px] h-[24px] py-[6px]">
                   <Typography size="headline-8" color="white">
                     팔로우
                   </Typography>
@@ -72,30 +71,31 @@ const MainPostBox = forwardRef<HTMLDivElement, MainPostBoxProps>(
                 height={20}
                 stroke="blueGrey-500"
                 className="relative transition-colors hover:bg-grey-200 rounded-full p-1"
-                onClick={onClickMore}
+                onClick={() => paintAction.onClickMore(post.id)}
               />
             </div>
-            {isShowMenu && (
-              <TimelineItemMenu
-                userId={item.authorId}
-                username={item.authorUsername}
-              />
-            )}
+            {paintAction.isShowMoreMenu.id === post.id &&
+              paintAction.isShowMoreMenu.show && (
+                <TimelineItemMenu
+                  userId={post.authorId}
+                  username={post.authorUsername}
+                />
+              )}
           </div>
         </div>
-        {item.text && (
+        {post.text && (
           <Typography
             size="body-2"
             color="grey-600"
             className="whitespace-pre-line my-[24px]"
           >
-            {item.text}
+            {post.text}
           </Typography>
         )}
 
         {hasMedia && (
           <img
-            src={item.includes.medias[0].path}
+            src={post.includes.medias[0].path}
             alt="user-upload-asset"
             className="w-full max-h-[300px] rounded-[12px] mb-[24px]"
           />
@@ -103,19 +103,19 @@ const MainPostBox = forwardRef<HTMLDivElement, MainPostBoxProps>(
 
         <div className="flex flex-col gap-[16px] divide-y divide-y-blueGrey400">
           <Typography as="span" size="body-2" color="blueGrey-800">
-            {item.createdAt.toDateString()} ·
+            {post.createdAt.toDateString()} ·
             <Typography
               as="span"
               size="headline-8"
               color="grey-600"
               className="mx-0.5"
             >
-              {item.views}
+              {post.views}
             </Typography>
             회
           </Typography>
           <div className="flex gap-[2px]">
-            {item.repaintCount > 0 && (
+            {post.repaintCount > 0 && (
               <Typography
                 as="span"
                 size="body-2"
@@ -129,17 +129,17 @@ const MainPostBox = forwardRef<HTMLDivElement, MainPostBoxProps>(
                   color="grey-600"
                   className="mx-0.5"
                 >
-                  {item.repaintCount}
+                  {post.repaintCount}
                 </Typography>
                 회
               </Typography>
             )}
-            {item.repaintCount > 0 && (
+            {post.repaintCount > 0 && (
               <Typography
                 as="span"
                 size="body-2"
                 color="blueGrey-800"
-                className={`pt-[12px] ${item.repaintCount > 0 ? 'pl-2' : ''}`}
+                className={`pt-[12px] ${post.repaintCount > 0 ? 'pl-2' : ''}`}
               >
                 인용
                 <Typography
@@ -148,14 +148,14 @@ const MainPostBox = forwardRef<HTMLDivElement, MainPostBoxProps>(
                   color="grey-600"
                   className="mx-0.5"
                 >
-                  {item.repaintCount}
+                  {post.repaintCount}
                 </Typography>
                 회
               </Typography>
             )}
           </div>
           <div className="flex gap-[2px]">
-            {item.likeCount > 0 && (
+            {post.likeCount > 0 && (
               <Typography
                 as="span"
                 size="body-2"
@@ -169,17 +169,17 @@ const MainPostBox = forwardRef<HTMLDivElement, MainPostBoxProps>(
                   color="grey-600"
                   className="mx-0.5"
                 >
-                  {item.likeCount}
+                  {post.likeCount}
                 </Typography>
                 회
               </Typography>
             )}
-            {item.likeCount > 0 && (
+            {post.likeCount > 0 && (
               <Typography
                 as="span"
                 size="body-2"
                 color="blueGrey-800"
-                className={`pt-[12px] ${item.likeCount > 0 ? 'pl-2' : ''}`}
+                className={`pt-[12px] ${post.likeCount > 0 ? 'pl-2' : ''}`}
               >
                 북마크
                 <Typography
@@ -188,7 +188,7 @@ const MainPostBox = forwardRef<HTMLDivElement, MainPostBoxProps>(
                   color="grey-600"
                   className="mx-0.5"
                 >
-                  {item.likeCount}
+                  {post.likeCount}
                 </Typography>
                 회
               </Typography>
@@ -204,28 +204,28 @@ const MainPostBox = forwardRef<HTMLDivElement, MainPostBoxProps>(
               label="답글 달기"
               fill="blueGrey-800"
               className="transition-colors hover:bg-grey-200 rounded-full p-1"
-              onClick={onClickReply}
+              onClick={() => paintAction.onClickReply(post.id)}
             />
             <div className="flex gap-[4px] items-center">
               <AccessibleIconButton
                 width={16}
                 height={16}
                 iconType="retweet"
-                stroke={item.repainted ? 'green-200' : undefined}
-                fill={item.repainted ? 'green-200' : undefined}
+                stroke={post.repainted ? 'green-200' : undefined}
+                fill={post.repainted ? 'green-200' : undefined}
                 label="인용 혹은 재게시 하기"
                 className="transition-colors hover:bg-grey-200 rounded-full p-1"
-                onClick={onClickRetweet}
+                onClick={() => paintAction.onClickRetweet(post.id)}
               />
             </div>
             <div className="flex gap-[4px] items-center">
               <AccessibleIconButton
                 width={16}
                 height={16}
-                iconType={item.like ? 'solidHeart' : 'heart'}
+                iconType={post.like ? 'solidHeart' : 'heart'}
                 label="마음에 들어요 누르기"
                 className="transition-colors hover:bg-grey-200 rounded-full p-1"
-                onClick={onClickHeart}
+                onClick={() => paintAction.onClickHeart(post.id)}
               />
             </div>
             <div className="flex gap-[4px] items-center">
@@ -235,7 +235,7 @@ const MainPostBox = forwardRef<HTMLDivElement, MainPostBoxProps>(
                 iconType="barChart"
                 label="조회수 보기"
                 className="transition-colors hover:bg-grey-200 rounded-full p-1"
-                onClick={onClickViews}
+                onClick={() => paintAction.onClickViews(post.id)}
               />
             </div>
             <AccessibleIconButton
@@ -244,7 +244,7 @@ const MainPostBox = forwardRef<HTMLDivElement, MainPostBoxProps>(
               iconType="share"
               label="공유하기"
               className="transition-colors hover:bg-grey-200 rounded-full p-1"
-              onClick={onClickShare}
+              onClick={() => paintAction.onClickShare(post.id)}
             />
           </div>
         </div>
@@ -253,4 +253,6 @@ const MainPostBox = forwardRef<HTMLDivElement, MainPostBoxProps>(
   },
 );
 
-export default MainPostBox;
+const MemoizedMainPostBox = memo(MainPostBox);
+
+export default MemoizedMainPostBox;

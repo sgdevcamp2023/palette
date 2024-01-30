@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { useNavigate } from '@tanstack/react-router';
 
 import { cn, getDiffDateText } from '@/utils';
@@ -34,11 +35,22 @@ function TimelineItemBox({
 
   return (
     <div className={cn('w-full flex gap-[8px]', className)}>
-      <img
-        src={item.authorImagePath}
-        alt={`${item.authorNickname}`}
-        className="rounded-full w-[44px] h-[44px] min-w-[44px]"
-      />
+      <button
+        type="button"
+        className="flex"
+        onClick={() =>
+          navigate({
+            to: '/profile/$userId',
+            params: { userId: item.authorId },
+          })
+        }
+      >
+        <img
+          src={item.authorImagePath}
+          alt={`${item.authorNickname}`}
+          className="rounded-full w-[44px] h-[44px] min-w-[44px]"
+        />
+      </button>
       <div
         role="button"
         tabIndex={0}
@@ -167,4 +179,6 @@ function TimelineItemBox({
   );
 }
 
-export default TimelineItemBox;
+const MemoizedTimelineItemBox = memo(TimelineItemBox);
+
+export default MemoizedTimelineItemBox;
