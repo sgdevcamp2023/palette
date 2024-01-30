@@ -69,6 +69,17 @@ class ProfileFragment : Fragment() {
 
         navController = findNavController()
 
+        val backBtnList = listOf(
+            binding.icBack,
+            binding.ivBackBtn,
+        )
+
+        for (view in backBtnList) {
+            view.setOnClickListener {
+                navController.navigate(R.id.action_profileFragment_to_timeLineFragment)
+            }
+        }
+
         val tabLayout = binding.tabLayout
 
         tabLayout.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.white))
