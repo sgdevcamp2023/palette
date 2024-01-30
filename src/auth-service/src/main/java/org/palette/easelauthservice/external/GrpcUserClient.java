@@ -26,14 +26,15 @@ public class GrpcUserClient {
         }
     }
 
-    public void checkEmailWithPassword(String email, String password) {
+    public Long checkEmailWithPassword(String email, String password) {
         try {
-            gUserServiceBlockingStub.checkEmailAndPassword(
+            return gUserServiceBlockingStub.checkEmailAndPassword(
                     GCheckEmailAndPasswordRequest.newBuilder()
                             .setEmail(email)
                             .setPassword(password)
                             .build()
-            );
+            ).getUserId();
+
         } catch (final Exception e) {
             throw new BaseException(ExceptionType.AUTH_500_000001);
         }
