@@ -1,6 +1,6 @@
 package org.palette.easeltimelineservice;
 
-import org.junit.jupiter.api.AfterEach;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +9,6 @@ import org.springframework.data.redis.core.RedisTemplate;
 
 import java.util.List;
 import java.util.Objects;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 class FollowerPaintMapServiceTest {
@@ -30,6 +28,10 @@ class FollowerPaintMapServiceTest {
         final List<Long> followerIds = List.of(1L, 2L, 3L);
         final long paintId = 1L;
         followerPaintMapService.addPaintToFollowersTimeline(followerIds, paintId);
-        assertThat(redisTemplate.opsForList().range("follow_timeline:1", 0, -1)).containsExactly(paintId);
+        SoftAssertions.assertSoftly(softAssertions -> {
+            softAssertions.assertThat(redisTemplate.opsForList().size("follow_timeline:1")).isEqualTo(1);
+            softAssertions.assertThat(redisTemplate.opsForList().size("follow_timeline:2")).isEqualTo(1);
+            softAssertions.assertThat(redisTemplate.opsForList().size("follow_timeline:3")).isEqualTo(1);
+        });
     }
 }
