@@ -115,15 +115,12 @@ public class PaintService {
     }
 
     public List<ThreadResponse> getPaintAfterById(Long userId, Long paintId) {
-        // TODO: clean up methods
         List<Paint> paints = distinctPaintsByPid(paintRepository.findAllAfterPaintByPid(paintId));
 
         List<ThreadResponse> threads = new LinkedList<>();
         int threadId = 0;
         for (Paint paint : paints) {
-            if (paint.getQuotePaint() != null) {
-                paint.addQuotePaint(paintRepository.findByPid(paint.getQuotePaint().getPaint().getPid()).get());
-            }
+            checkAndSetQuotePaint(paint);
             List<Paint> subPaints = distinctPaintsByPid(paintRepository.findAllAfterPaintsByPid(paint.getPid()));
             subPaints.add(0, paint);
 
@@ -133,9 +130,16 @@ public class PaintService {
         return threads;
     }
 
+    private void checkAndSetQuotePaint(Paint paint) {
+        if (paint.getQuotePaint() == null) return;
+        Paint quotePaint = paintRepository.findByPid(paint.getQuotePaint().getPaint().getPid())
+                .orElseThrow(() -> new BaseException(ExceptionType.SOCIAL_400_000002));
+        paint.addQuotePaint(quotePaint);
+    }
+
     private List<Paint> distinctPaintsByPid(List<Paint> paints) {
         return paints.stream()
-                .filter(paint -> !isQuotePaint(paint))
+                .filter(paint -> !isQuotePaint(paint))  // because a quotePaint comes with the paint list
                 .collect(Collectors.collectingAndThen(
                         Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(Paint::getPid))),
                         ArrayList::new
