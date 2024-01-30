@@ -14,7 +14,6 @@ import java.util.List;
 
 @Getter
 @Node
-@ToString
 public class Paint {
     @Id
     @GeneratedValue(PaintIdGenerator.class)

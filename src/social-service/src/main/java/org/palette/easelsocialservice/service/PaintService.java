@@ -150,7 +150,7 @@ public class PaintService {
         return paint.getAuthor() == null;
     }
 
-    private PaintResponse convertToPaintResponse (Paint paint) {
+    private PaintResponse convertToPaintResponse(Paint paint) {
         PaintResponse quotePaint = getQuotePaint(paint);
         Entities entities = covertToEntities(paint);
         Includes includes = convertToIncludes(paint);
@@ -164,7 +164,7 @@ public class PaintService {
                 .orElse(null);
     }
 
-    private PaintResponse convertToQuotePaintResponse (Paint paint) {
+    private PaintResponse convertToQuotePaintResponse(Paint paint) {
         Entities entities = covertToEntities(paint);
         Includes includes = convertToIncludes(paint);
 
