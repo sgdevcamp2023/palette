@@ -1,8 +1,10 @@
 package org.palette.easeluserservice.e2e;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.TestInstance;
+import org.palette.aop.EaselAuthenticationContext;
 import org.palette.easeluserservice.persistence.User;
 import org.palette.easeluserservice.persistence.UserJpaRepository;
 import org.palette.easeluserservice.persistence.embed.Password;
@@ -11,6 +13,7 @@ import org.palette.easeluserservice.persistence.embed.Profile;
 import org.palette.easeluserservice.persistence.embed.StaticContentPath;
 import org.palette.easeluserservice.persistence.enums.Role;
 import org.palette.passport.PassportGenerator;
+import org.palette.passport.component.Passport;
 import org.palette.passport.component.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -21,8 +24,11 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
+import java.util.Base64;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -54,7 +60,41 @@ public class AcceptanceTestBase {
     public ResultActions executeGetWithPassport(
             final String url,
             final Object pathVariable
-    ) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+    ) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException, JsonProcessingException {
+        final User user = createMockUser();
+        final String passportPayload = generatePassportPayload(user);
+        setEaselAuthenticationContext(passportPayload);
+
+        try {
+            return mvc.perform(
+                            get(url)
+                                    .header("Authorization", passportPayload)
+                                    .contentType(APPLICATION_JSON)
+                                    .accept(APPLICATION_JSON))
+                    .andDo(print());
+        } catch (Exception e) {
+            throw new BuildResultActionsException(e.getCause());
+        }
+    }
+
+    public ResultActions executePost(
+            final String url,
+            final Object requestDto
+    ) {
+
+        try {
+            return mvc.perform(
+                            post(url)
+                                    .content(objectMapper.writeValueAsString(requestDto))
+                                    .contentType(APPLICATION_JSON)
+                                    .accept(APPLICATION_JSON))
+                    .andDo(print());
+        } catch (Exception e) {
+            throw new BuildResultActionsException(e.getCause());
+        }
+    }
+
+    private User createMockUser() throws NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
         Class<User> userClass = User.class;
         Constructor<User> constructor = userClass.getDeclaredConstructor(
                 Long.class,
@@ -99,7 +139,10 @@ public class AcceptanceTestBase {
         );
 
         userJpaRepository.save(user);
+        return user;
+    }
 
+    private String generatePassportPayload(final User user) {
         final String passportPayload = passportGenerator.generatePassport(
                 new UserInfo(
                         user.getId(),
@@ -112,33 +155,24 @@ public class AcceptanceTestBase {
                         user.getCreatedAt().toString(),
                         null
                 ));
-
-        try {
-            return mvc.perform(
-                            get(url)
-                                    .header("Authorization", passportPayload)
-                                    .contentType(APPLICATION_JSON)
-                                    .accept(APPLICATION_JSON))
-                    .andDo(print());
-        } catch (Exception e) {
-            throw new BuildResultActionsException(e.getCause());
-        }
+        return passportPayload;
     }
 
-    public ResultActions executePost(
-            final String url,
-            final Object requestDto
-    ) {
-
+    private void setEaselAuthenticationContext(final String passportPayload) throws JsonProcessingException {
         try {
-            return mvc.perform(
-                            post(url)
-                                    .content(objectMapper.writeValueAsString(requestDto))
-                                    .contentType(APPLICATION_JSON)
-                                    .accept(APPLICATION_JSON))
-                    .andDo(print());
-        } catch (Exception e) {
-            throw new BuildResultActionsException(e.getCause());
+            final Field field = EaselAuthenticationContext.class.getDeclaredField("CONTEXT");
+            field.setAccessible(true);
+            ThreadLocal<Passport> context = (ThreadLocal<Passport>) field.get(null);
+
+            final byte[] decode = Base64.getDecoder().decode(passportPayload);
+            final String decodedString = new String(decode, StandardCharsets.UTF_8);
+            final Passport passport = objectMapper.readValue(
+                    decodedString,
+                    Passport.class
+            );
+            context.set(passport);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            e.printStackTrace();
         }
     }
 }

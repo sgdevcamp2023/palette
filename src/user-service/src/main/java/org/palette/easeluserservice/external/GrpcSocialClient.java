@@ -6,7 +6,7 @@ import org.palette.easeluserservice.exception.BaseException;
 import org.palette.easeluserservice.exception.ExceptionType;
 import org.palette.easeluserservice.persistence.User;
 import org.palette.grpc.*;
-import org.palette.passport.component.Passport;
+import org.palette.passport.component.UserInfo;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -15,7 +15,7 @@ public class GrpcSocialClient {
     @GrpcClient("social-service")
     private GSocialServiceGrpc.GSocialServiceBlockingStub gSocialServiceBlockingStub;
 
-    public GCreateUserResponse createSocialUser(User user) {
+    public GCreateUserResponse createSocialUser(final User user) {
         try {
             return gSocialServiceBlockingStub.createUser(
                     GCreateUserRequest.newBuilder()
@@ -31,30 +31,34 @@ public class GrpcSocialClient {
     }
 
     public GLoadUserFollowInformationResponse loadUserFollowShipCount(
-            Passport passport,
-            User user
+            final UserInfo userInfo,
+            final User user,
+            final String integrityKey
     ) {
         if (user == null) {
-            return retrieveFollowShipMe(passport);
+            return retrieveFollowShipMe(userInfo, integrityKey);
         }
-        return retrieveFollowShipOther(user, passport);
+        return retrieveFollowShipOther(user, integrityKey);
     }
 
-    private GLoadUserFollowInformationResponse retrieveFollowShipMe(final Passport passport) {
+    private GLoadUserFollowInformationResponse retrieveFollowShipMe(
+            final UserInfo userInfo,
+            final String integrityKey
+    ) {
         try {
-            if (passport.userInfo().deletedAt() == null) {
+            if (userInfo.deletedAt() == null) {
                 return gSocialServiceBlockingStub.loadUserFollowInformation(
                         GLoadUserFollowInformationRequest.newBuilder()
                                 .setPassport(GPassport.newBuilder()
-                                        .setId(passport.userInfo().id())
-                                        .setEmail(passport.userInfo().email())
-                                        .setUsername(passport.userInfo().username())
-                                        .setNickname(passport.userInfo().nickname())
-                                        .setRole(passport.userInfo().role())
-                                        .setAccessedAt(passport.userInfo().isActivated().toString())
-                                        .setCreatedAt(passport.userInfo().createdAt())
+                                        .setId(userInfo.id())
+                                        .setEmail(userInfo.email())
+                                        .setUsername(userInfo.username())
+                                        .setNickname(userInfo.nickname())
+                                        .setRole(userInfo.role())
+                                        .setAccessedAt(userInfo.isActivated().toString())
+                                        .setCreatedAt(userInfo.createdAt())
                                         .setDeletedAt("")
-                                        .setIntegrityKey(passport.integrityKey())
+                                        .setIntegrityKey(integrityKey)
                                         .build()
                                 )
                                 .build()
@@ -63,15 +67,15 @@ public class GrpcSocialClient {
             return gSocialServiceBlockingStub.loadUserFollowInformation(
                     GLoadUserFollowInformationRequest.newBuilder()
                             .setPassport(GPassport.newBuilder()
-                                    .setId(passport.userInfo().id())
-                                    .setEmail(passport.userInfo().email())
-                                    .setUsername(passport.userInfo().username())
-                                    .setNickname(passport.userInfo().nickname())
-                                    .setRole(passport.userInfo().role())
-                                    .setAccessedAt(passport.userInfo().isActivated().toString())
-                                    .setCreatedAt(passport.userInfo().createdAt())
-                                    .setDeletedAt(passport.userInfo().deletedAt())
-                                    .setIntegrityKey(passport.integrityKey())
+                                    .setId(userInfo.id())
+                                    .setEmail(userInfo.email())
+                                    .setUsername(userInfo.username())
+                                    .setNickname(userInfo.nickname())
+                                    .setRole(userInfo.role())
+                                    .setAccessedAt(userInfo.isActivated().toString())
+                                    .setCreatedAt(userInfo.createdAt())
+                                    .setDeletedAt(userInfo.deletedAt())
+                                    .setIntegrityKey(integrityKey)
                                     .build()
                             )
                             .build()
@@ -84,7 +88,7 @@ public class GrpcSocialClient {
 
     private GLoadUserFollowInformationResponse retrieveFollowShipOther(
             final User user,
-            final Passport passport
+            final String integrityKey
     ) {
         try {
             if (user.getDeletedAt() == null) {
@@ -99,7 +103,7 @@ public class GrpcSocialClient {
                                         .setAccessedAt(user.getAccessedAt().toString())
                                         .setCreatedAt(user.getCreatedAt().toString())
                                         .setDeletedAt(user.getDeletedAt().toString())
-                                        .setIntegrityKey(passport.integrityKey())
+                                        .setIntegrityKey(integrityKey)
                                         .build()
                                 )
                                 .build()
@@ -116,7 +120,7 @@ public class GrpcSocialClient {
                                     .setAccessedAt(user.getAccessedAt().toString())
                                     .setCreatedAt(user.getCreatedAt().toString())
                                     .setDeletedAt(user.getDeletedAt().toString())
-                                    .setIntegrityKey(passport.integrityKey())
+                                    .setIntegrityKey(integrityKey)
                                     .build()
                             )
                             .build()
