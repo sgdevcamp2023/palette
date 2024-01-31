@@ -33,16 +33,9 @@ spring:
         - id: USER-SERVICE
           uri: lb://USER-SERVICE
           predicates:
-            - Path=/api/users/
-            - Path=/api/users/verify-email
-            - Path=/api/users/verify-username
-            - Path=/api/users/join
-            - Path=/api/users/web-logout
-            - Path=/api/users/profile
-            - Path=/api/users/{id}
-            - Path=/api/users/me
+            - Path=/api/users/, /api/users/verify-email, /api/users/verify-username, /api/users/join, /api/users/web-logout, /api/users/profile, /api/users/{id}, /api/users/me
           filters:
-            - RewritePath=/api/users/?(?<segment>.*), /$\{segment}
+            - RewritePath=/api/users/(?<segment>/?.*), /$\{segment}
 
         - id: TIMELINE-SERVICE
           uri: lb://TIMELINE-SERVICE
@@ -54,19 +47,7 @@ spring:
         - id: SOCIAL-SERVICE
           uri: lb://SOCIAL-SERVICE
           predicates:
-            - Path=/api/paints/**
-            - Path=/api/users/{id}/following
-            - Path=/api/users/{id}/follower
-            - Path=/api/users/{id}/verified_follower
-            - Path=/api/users/{id}/following
-            - Path=/api/users/{id}/following
-            - Path=/api/users/{id}/paint
-            - Path=/api/users/{id}/reply
-            - Path=/api/users/{id}/media
-            - Path=/api/users/{id}/like
-            - Path=/api/users/{id}/like/{paintId}
-            - Path=/api/users/{id}/repaint
-            - Path=/api/users/{id}/repaint/{sourcePaintId}
+            - Path=/api/paints/**, /api/users/{id}/following, /api/users/{id}/follower, /api/users/{id}/verified_follower, /api/users/{id}/following, /api/users/{id}/following, /api/users/{id}/paint, /api/users/{id}/reply, /api/users/{id}/media, /api/users/{id}/like, /api/users/{id}/like/{paintId}, /api/users/{id}/repaint, /api/users/{id}/repaint/{sourcePaintId}
 
         - id: TRENDS-SERVICE
           uri: lb://TRENDS-SERVICE
@@ -110,5 +91,4 @@ eureka:
     fetch-registry: true
     register-with-eureka: true
     service-url:
-      #      defaultZone: http://host.docker.internal:8761/eureka
-      defaultZone: http://localhost:8761/eureka
+      defaultZone: http://host.docker.internal:8761/eureka

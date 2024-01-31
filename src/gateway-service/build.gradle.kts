@@ -24,13 +24,7 @@ repositories {
 extra["springCloudVersion"] = "2023.0.0"
 
 dependencies {
-
     implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
-
-
-
-    implementation("org.springframework.boot:spring-boot-starter-web")
-
     implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("org.springframework.boot:spring-boot-starter-web")
