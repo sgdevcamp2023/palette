@@ -22,8 +22,8 @@ public class PassportAspect {
     @Around("@annotation(org.palette.aop.InjectEaselAuthentication)")
     public Object setUserInfoByServlet(ProceedingJoinPoint proceedingJoinPoint) {
         final Passport passport = passportExtractor.getPassportFromRequestHeader(httpServletRequest);
+        EaselAuthenticationContext.CONTEXT.set(passport);
 
-        EaselAuthenticationContext.CONTEXT.set(passport.userInfo());
         try {
             return proceedingJoinPoint.proceed(proceedingJoinPoint.getArgs());
         } catch (Throwable e) {
