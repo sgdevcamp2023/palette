@@ -20,12 +20,30 @@ public class CookieAgent {
         );
     }
 
+    public LogoutCookiePair createLogoutCookie() {
+        return new LogoutCookiePair(
+                buildLogoutCookie(ACCESS_TOKEN_COOKIE_KEY, ""),
+                buildLogoutCookie(REFRESH_TOKEN_COOKIE_KEY, "")
+        );
+    }
+
     private Cookie buildCookie(
             String name,
             String value
     ) {
         Cookie cookie = new Cookie(name, value);
         cookie.setMaxAge(COOKIE_EXPIRED_TIME);
+        cookie.setHttpOnly(true);
+        cookie.setPath("/");
+        return cookie;
+    }
+
+    private Cookie buildLogoutCookie(
+            String name,
+            String value
+    ) {
+        Cookie cookie = new Cookie(name, value);
+        cookie.setMaxAge(0);
         cookie.setHttpOnly(true);
         cookie.setPath("/");
         return cookie;
