@@ -63,10 +63,8 @@ public class UserService {
         User targetUser = getUser(targetId);
 
         user.addFollowing(targetUser);
-        targetUser.addFollower(user);
 
         userRepository.save(user);
-        userRepository.save(targetUser);
     }
 
     public int getFollowingCount(Long userId) {

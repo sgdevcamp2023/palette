@@ -28,8 +28,8 @@ public class GrpcServer extends GSocialServiceGrpc.GSocialServiceImplBase {
             final GLoadUserFollowInformationRequest request,
             final StreamObserver<GLoadUserFollowInformationResponse> responseObserver
     ) {
-        final int followingCount = userService.getFollowingCount(request.getPassport().getId());
-        final int followerCount = userService.getFollowerCount(request.getPassport().getId());
+        final long followingCount = userService.getFollowingCount(request.getPassport().getId());
+        final long followerCount = userService.getFollowerCount(request.getPassport().getId());
 
         GLoadUserFollowInformationResponse response = GLoadUserFollowInformationResponse.newBuilder()
                 .setFollowerCount(followingCount)

@@ -1,6 +1,7 @@
 package org.palette.easelsocialservice.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.palette.easelsocialservice.dto.request.FollowUserRequest;
 import org.palette.easelsocialservice.dto.request.LikePaintRequest;
 import org.palette.easelsocialservice.dto.response.ThreadResponse;
 import org.palette.easelsocialservice.usecase.UserUsecase;
@@ -21,6 +22,15 @@ public class UserController {
             @RequestBody LikePaintRequest likePostRequest
     ) {
         userUsecase.likePaint(userId, likePostRequest);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/{userId}/follow")
+    public ResponseEntity<Void> follow(
+            @PathVariable Long userId,
+            @RequestBody FollowUserRequest followUserRequest
+    ) {
+        userUsecase.follow(userId, followUserRequest);
         return ResponseEntity.ok().build();
     }
 }
