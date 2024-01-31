@@ -8,6 +8,7 @@ import org.springframework.data.neo4j.core.schema.Node;
 import org.springframework.data.neo4j.core.schema.Relationship;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -47,6 +48,8 @@ public class Paint {
 
     private String content;
 
+    private boolean hasQuote;
+
     private Integer views;
 
     private LocalDateTime createdAt;
@@ -68,6 +71,7 @@ public class Paint {
     }
 
     public void addQuotePaint(Paint paint) {
+        this.hasQuote = true;
         this.quotePaint = new Quotes(paint);
     }
 

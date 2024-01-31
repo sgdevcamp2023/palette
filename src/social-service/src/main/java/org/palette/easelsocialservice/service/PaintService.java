@@ -126,23 +126,17 @@ public class PaintService {
     }
 
     private void checkAndSetQuotePaint(Paint paint) {
-        if (paint.getQuotePaint() == null) return;
-        Paint quotePaint = paintRepository.findByPid(paint.getQuotePaint().getPaint().getPid())
-                .orElseThrow(() -> new BaseException(ExceptionType.SOCIAL_400_000002));
+        if (!paint.isHasQuote()) return;
+        Paint quotePaint = paintRepository.findQuotePaintByPid(paint.getPid());
         paint.addQuotePaint(quotePaint);
     }
 
     private List<Paint> distinctPaintsByPid(List<Paint> paints) {
         return paints.stream()
-                .filter(paint -> !isQuotePaint(paint))  // because a quotePaint comes with the paint list
                 .collect(Collectors.collectingAndThen(
                         Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(Paint::getPid))),
                         ArrayList::new
                 ));
-    }
-
-    private boolean isQuotePaint(Paint paint) {
-        return paint.getAuthor() == null;
     }
 
     private PaintResponse convertToPaintResponse(Paint paint) {
