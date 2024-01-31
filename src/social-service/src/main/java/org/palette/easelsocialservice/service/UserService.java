@@ -7,8 +7,11 @@ import net.devh.boot.grpc.server.service.GrpcService;
 import org.palette.easelsocialservice.exception.BaseException;
 import org.palette.easelsocialservice.exception.ExceptionType;
 import org.palette.easelsocialservice.persistence.UserRepository;
+import org.palette.easelsocialservice.persistence.domain.Paint;
 import org.palette.easelsocialservice.persistence.domain.User;
-import org.palette.grpc.*;
+import org.palette.grpc.GCreateUserRequest;
+import org.palette.grpc.GCreateUserResponse;
+import org.palette.grpc.GSocialServiceGrpc;
 
 import java.util.HashMap;
 import java.util.List;
@@ -17,7 +20,6 @@ import java.util.Map;
 @GrpcService
 @RequiredArgsConstructor
 public class UserService extends GSocialServiceGrpc.GSocialServiceImplBase {
-
     private final UserRepository userRepository;
 
     @Override
@@ -32,38 +34,17 @@ public class UserService extends GSocialServiceGrpc.GSocialServiceImplBase {
         responseStreamObserver.onCompleted();
     }
 
-    @Override
-    public void loadUserFollowInformation(
-            final GLoadUserFollowInformationRequest request,
-            final StreamObserver<GLoadUserFollowInformationResponse> responseObserver
-    ) {
-        final User user = userRepository.findByUid(request.getPassport().getId()).orElseThrow(() -> {
-            throw new BaseException(ExceptionType.SOCIAL_400_000001);
-        });
-
-        //TODO 유저로 팔로잉 관계 모두 조회
-        //TODO 그 객체로 카운팅해서 넣기
-
-        GLoadUserFollowInformationResponse response = GLoadUserFollowInformationResponse.newBuilder()
-                .setFollowerCount(1L)
-                .setFollowingCount(1L)
-                .build();
-        responseObserver.onNext(response);
-        responseObserver.onCompleted();
-    }
-
-    public User getUser(Long userId) {
+    public User getUser(final Long userId) {
         return userRepository.findByUid(userId)
                 .orElseThrow(() -> new BaseException(ExceptionType.SOCIAL_400_000001));
     }
 
-    public void checkUserExists(List<Long> mentionIds) {
+    public void checkUserExists(final List<Long> mentionIds) {
         if (!userRepository.existsByAllUidsIn(mentionIds)) {
             throw new BaseException(ExceptionType.SOCIAL_400_000001);
         }
     }
-
-    public Map<Long, User> getUserMapByUids(List<Long> uids) {
+    public Map<Long, User> getUserMapByUids(final List<Long> uids) {
         List<User> users = userRepository.findAllByUids(uids);
         Map<Long, User> userMap = new HashMap<>();
         for (User user : users) {
@@ -72,11 +53,17 @@ public class UserService extends GSocialServiceGrpc.GSocialServiceImplBase {
         return userMap;
     }
 
-    public List<User> getUsersByUids(List<Long> uids) {
+    public List<User> getUsersByUids(final List<Long> uids) {
         return userRepository.findAllByUids(uids);
     }
 
-    private User convertToUser(GCreateUserRequest request) {
+    private User convertToUser(final GCreateUserRequest request) {
         return new User(request.getId(), request.getUsername(), request.getNickname(), request.getImagePath(), request.getIsActive());
+    }
+
+    public void likePaint(Long userId, Paint paint) {
+        User user = getUser(userId);
+        user.likePaint(paint);
+        userRepository.save(user);
     }
 }

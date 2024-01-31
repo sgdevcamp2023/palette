@@ -6,6 +6,7 @@ import org.springframework.data.neo4j.repository.query.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public interface PaintRepository extends Neo4jRepository<Paint, Long> {
@@ -16,7 +17,7 @@ public interface PaintRepository extends Neo4jRepository<Paint, Long> {
             "WITH [node in nodes(path) WHERE node:Paint] AS intermediateNodes " +
             "UNWIND intermediateNodes AS intermediateNode " +
             "MATCH (startNode:Paint)<-[r]->(nextNode) " +
-            "WHERE startNode = intermediateNode AND type(r) <> 'REPLIES' AND type(r) <> 'REPAINTS' " +
+            "WHERE startNode = intermediateNode AND type(r) <> 'REPLIES' AND type(r) <> 'REPAINTS' AND type(r) <> 'QUOTES' " +
             "RETURN startNode, r, nextNode")
     List<Paint> findAllBeforePaintByPid(@Param("pid")Long pid);
 
@@ -24,16 +25,20 @@ public interface PaintRepository extends Neo4jRepository<Paint, Long> {
             "WHERE a.pid = $pid " +
             "WITH b " +
             "MATCH (b)<-[r]->(neighbors) " +
-            "WHERE NOT type(r) = 'REPLIES' " +
+            "WHERE type(r) <> 'REPLIES' AND type(r) <> 'QUOTES' " +
             "RETURN b, r, neighbors")
     List<Paint> findAllAfterPaintByPid(@Param("pid")Long pid);
 
-    @Query("MATCH (a:Paint)<-[:REPLIES*]-(b:Paint)" +
+    @Query("MATCH path=(a:Paint)<-[:REPLIES*]-(b:Paint) " +
             "WHERE a.pid = $pid " +
-            "WITH b " +
+            "WITH path " +
+            "ORDER BY b.pid DESC " +
+            "LIMIT 1 " +
+            "UNWIND nodes(path) as b " +
             "MATCH (b)<-[r]->(neighbors) " +
-            "WHERE NOT type(r) = 'REPLIES' " +
+            "WHERE NOT type(r) = 'REPLIES' AND type(r) <> 'REPAINTS' AND type(r) <> 'QUOTES' " +
             "RETURN b, r, neighbors")
     List<Paint> findAllAfterPaintsByPid(@Param("pid")Long pid);
+
 
 }
