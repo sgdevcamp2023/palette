@@ -24,7 +24,7 @@ public class GlobalExceptionHandler {
                 .description(exceptionType.getDescription())
                 .build();
 
-        logException(exceptionResponse);
+        logBaseException(exceptionResponse);
 
         return ResponseEntity
                 .status(exceptionType.getHttpStatus())
@@ -42,7 +42,7 @@ public class GlobalExceptionHandler {
                 .message(exceptionType.getMessage())
                 .build();
 
-        logException(exceptionResponse);
+        logBaseException(exceptionResponse);
 
         return ResponseEntity
                 .status(exceptionType.getHttpStatus())
@@ -50,27 +50,30 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(value = {Exception.class})
-    public ResponseEntity<ExceptionResponse> handleException() {
+    public ResponseEntity<ExceptionResponse> handleException(Exception execption) {
         ExceptionResponse exceptionResponse = ExceptionResponse.builder()
                 .code("GATEWAY_EXCEPTION")
                 .message("INTERNAL_SERVER_ERROR")
                 .description("서버 내부에 오류가 발생했습니다.")
                 .build();
 
-        logException(exceptionResponse);
+        logInternalException(execption);
 
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(exceptionResponse);
     }
 
-
-    private static void logException(ExceptionResponse exceptionResponse) {
+    private static void logBaseException(ExceptionResponse exceptionResponse) {
         log.error(
                 "code : {}, message : {}, description : {}",
                 exceptionResponse.code(),
                 exceptionResponse.description(),
                 exceptionResponse.message()
         );
+    }
+
+    private static void logInternalException(Exception exception) {
+        log.error(exception.getLocalizedMessage());
     }
 }
