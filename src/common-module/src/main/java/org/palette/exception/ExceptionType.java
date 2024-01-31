@@ -106,6 +106,13 @@ public enum ExceptionType {
             HttpStatus.INTERNAL_SERVER_ERROR
     ),
 
+    COMMON_500_000003(
+            "COMMON_500_000003",
+            "INTERNAL SERVER ERROR",
+            "Passport를 등록하는 중 예기치 못한 오류가 발생했습니다.",
+            HttpStatus.INTERNAL_SERVER_ERROR
+    ),
+
     ;
 
     public String getCode() {
