@@ -57,4 +57,23 @@ public class UserService {
         user.likePaint(paint);
         userRepository.save(user);
     }
+
+    public void follow(Long userId, Long targetId) {
+        User user = getUser(userId);
+        User targetUser = getUser(targetId);
+
+        user.addFollowing(targetUser);
+        targetUser.addFollower(user);
+
+        userRepository.save(user);
+        userRepository.save(targetUser);
+    }
+
+    public int getFollowingCount(Long userId) {
+        return userRepository.countFollowings(userId);
+    }
+
+    public int getFollowerCount(Long userId) {
+        return userRepository.countFollowers(userId);
+    }
 }

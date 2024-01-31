@@ -28,14 +28,12 @@ public class GrpcServer extends GSocialServiceGrpc.GSocialServiceImplBase {
             final GLoadUserFollowInformationRequest request,
             final StreamObserver<GLoadUserFollowInformationResponse> responseObserver
     ) {
-        final User user = userService.getUser(request.getPassport().getId());
-
-        //TODO 유저로 팔로잉 관계 모두 조회
-        //TODO 그 객체로 카운팅해서 넣기
+        final int followingCount = userService.getFollowingCount(request.getPassport().getId());
+        final int followerCount = userService.getFollowerCount(request.getPassport().getId());
 
         GLoadUserFollowInformationResponse response = GLoadUserFollowInformationResponse.newBuilder()
-                .setFollowerCount(1L)
-                .setFollowingCount(1L)
+                .setFollowerCount(followingCount)
+                .setFollowingCount(followerCount)
                 .build();
         responseObserver.onNext(response);
         responseObserver.onCompleted();

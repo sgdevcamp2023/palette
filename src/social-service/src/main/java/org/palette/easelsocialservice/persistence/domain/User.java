@@ -33,6 +33,9 @@ public class User {
     @Relationship(type = "FOLLOWS")
     private List<Follows> followings;
 
+    @Relationship(type = "FOLLOWS", direction = Relationship.Direction.INCOMING)
+    private List<Follows> followers;
+
     public User(Long uid, String username, String nickname, String imagePath, Boolean isActive) {
         this.uid = uid;
         this.username = username;
@@ -61,5 +64,12 @@ public class User {
             followings = new LinkedList<>();
         }
         followings.add(new Follows(user));
+    }
+
+    public void addFollower(User user) {
+        if (followers == null) {
+            followers = new LinkedList<>();
+        }
+        followers.add(new Follows(user));
     }
 }
