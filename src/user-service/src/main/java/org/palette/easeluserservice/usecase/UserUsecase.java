@@ -14,7 +14,7 @@ import org.palette.easeluserservice.external.GrpcSocialClient;
 import org.palette.easeluserservice.persistence.User;
 import org.palette.easeluserservice.service.UserService;
 import org.palette.grpc.GLoadUserFollowInformationResponse;
-import org.palette.passport.component.Passport;
+import org.palette.passport.component.UserInfo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -75,31 +75,42 @@ public class UserUsecase {
         gRPCSocialClient.createSocialUser(user);
     }
 
-    public UserRetrieveResponse retrieveOther(Passport passport, Long id) {
-        User user = userService.loadById(id);
+    public UserRetrieveResponse retrieveOther(
+            UserInfo userInfo,
+            String integrityKey,
+            Long retrieveTargetUserId
+    ) {
+        User retrieveTargetUser = userService.loadById(retrieveTargetUserId);
 
         final GLoadUserFollowInformationResponse gResponse = gRPCSocialClient.loadUserFollowShipCount(
-                passport, user
+                userInfo,
+                retrieveTargetUser,
+                integrityKey
         );
 
         return new UserRetrieveResponse(
-                user.getProfile().staticContentPath().backgroundImagePath(),
-                user.getProfile().staticContentPath().profileImagePath(),
-                user.getUsername(),
-                user.getProfile().nickname(),
-                user.getProfile().introduce(),
-                user.getProfile().staticContentPath().websitePath(),
-                user.getCreatedAt(),
+                retrieveTargetUser.getProfile().staticContentPath().backgroundImagePath(),
+                retrieveTargetUser.getProfile().staticContentPath().profileImagePath(),
+                retrieveTargetUser.getUsername(),
+                retrieveTargetUser.getProfile().nickname(),
+                retrieveTargetUser.getProfile().introduce(),
+                retrieveTargetUser.getProfile().staticContentPath().websitePath(),
+                retrieveTargetUser.getCreatedAt(),
                 gResponse.getFollowingCount(),
                 gResponse.getFollowerCount()
         );
     }
 
-    public UserRetrieveResponse retrieveMe(Passport passport) {
-        User user = userService.loadById(passport.userInfo().id());
+    public UserRetrieveResponse retrieveMe(
+            UserInfo userInfo,
+            String integrityKey
+    ) {
+        User user = userService.loadById(userInfo.id());
 
         final GLoadUserFollowInformationResponse gResponse = gRPCSocialClient.loadUserFollowShipCount(
-                passport, null
+                userInfo,
+                null,
+                integrityKey
         );
 
         return new UserRetrieveResponse(
