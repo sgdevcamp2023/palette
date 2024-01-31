@@ -63,7 +63,7 @@ public class Paint {
         this.author = new Creates(user);
     }
 
-    public void addInReplyToPaint(Paint paint) {
+    public void setInReplyToPaint(Paint paint) {
         this.inReplyToPaint = new Replies(paint);
     }
 

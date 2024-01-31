@@ -23,3 +23,7 @@ eureka:
 grpc:
   server:
     port: 11003
+
+passport:
+  key: ${PASSPORT_KEY}
+  algorithm: ${PASSPORT_ALGORITHM}
