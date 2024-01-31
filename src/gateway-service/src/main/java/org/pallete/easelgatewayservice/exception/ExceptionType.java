@@ -60,7 +60,7 @@ public enum ExceptionType {
     GATEWAY_500_000001(
             "GATEWAY_500_000001",
             "INTERNAL_SERVER_ERROR",
-            "서버 내부에 오류가 발생했습니다.",
+            "서버 내부에 예기치 못한 오류가 발생했습니다.",
             HttpStatus.INTERNAL_SERVER_ERROR
     ),
 
