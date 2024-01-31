@@ -3,10 +3,10 @@ package org.palette.easeluserservice.controller;
 import lombok.RequiredArgsConstructor;
 import org.palette.aop.EaselAuthenticationContext;
 import org.palette.aop.InjectEaselAuthentication;
-import org.palette.easeluserservice.dto.request.EmailDuplicationVerifyRequest;
+import org.palette.easeluserservice.dto.request.VerifyEmailDuplicationRequest;
 import org.palette.easeluserservice.dto.request.JoinRequest;
 import org.palette.easeluserservice.dto.request.TemporaryJoinRequest;
-import org.palette.easeluserservice.dto.response.EmailDuplicationVerifyResponse;
+import org.palette.easeluserservice.dto.response.VerifyEmailDuplicationResponse;
 import org.palette.easeluserservice.usecase.UserUsecase;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,12 +19,12 @@ public class UserController {
     private final UserUsecase userUsecase;
 
     @PostMapping("/verify-email")
-    public ResponseEntity<EmailDuplicationVerifyResponse> verifyUsername(
-            @RequestBody EmailDuplicationVerifyRequest emailDuplicationVerifyRequest
+    public ResponseEntity<VerifyEmailDuplicationResponse> verifyUsername(
+            @RequestBody VerifyEmailDuplicationRequest verifyEmailDuplicationRequest
     ) {
         return ResponseEntity.ok(
                 userUsecase.executeNicknameDuplicationVerify(
-                        emailDuplicationVerifyRequest.email()
+                        verifyEmailDuplicationRequest.email()
                 )
         );
     }

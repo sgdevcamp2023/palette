@@ -1,10 +1,11 @@
 package org.palette.easeluserservice.usecase;
 
 import lombok.RequiredArgsConstructor;
+import org.palette.easeluserservice.dto.request.EditProfileRequest;
 import org.palette.easeluserservice.dto.request.JoinRequest;
 import org.palette.easeluserservice.dto.request.TemporaryJoinRequest;
-import org.palette.easeluserservice.dto.response.EmailDuplicationVerifyResponse;
-import org.palette.easeluserservice.dto.response.UserRetrieveResponse;
+import org.palette.easeluserservice.dto.response.RetrieveUserResponse;
+import org.palette.easeluserservice.dto.response.VerifyEmailDuplicationResponse;
 import org.palette.easeluserservice.exception.BaseException;
 import org.palette.easeluserservice.exception.ExceptionType;
 import org.palette.easeluserservice.external.GrpcAuthClient;
@@ -25,11 +26,11 @@ public class UserUsecase {
     private final GrpcSocialClient gRPCSocialClient;
     private final GrpcAuthClient gRPCAuthClient;
 
-    public EmailDuplicationVerifyResponse executeNicknameDuplicationVerify(
+    public VerifyEmailDuplicationResponse executeNicknameDuplicationVerify(
             String email
     ) {
         userService.isEmailAlreadyExists(email);
-        return new EmailDuplicationVerifyResponse(Boolean.FALSE);
+        return new VerifyEmailDuplicationResponse(Boolean.FALSE);
     }
 
     @Transactional
@@ -66,7 +67,7 @@ public class UserUsecase {
         gRPCSocialClient.createSocialUser(user);
     }
 
-    public UserRetrieveResponse retrieveOther(
+    public RetrieveUserResponse retrieveOther(
             UserInfo userInfo,
             String integrityKey,
             Long retrieveTargetUserId
@@ -79,7 +80,7 @@ public class UserUsecase {
                 integrityKey
         );
 
-        return new UserRetrieveResponse(
+        return new RetrieveUserResponse(
                 retrieveTargetUser.getProfile().staticContentPath().backgroundImagePath(),
                 retrieveTargetUser.getProfile().staticContentPath().profileImagePath(),
                 retrieveTargetUser.getUsername(),
@@ -92,7 +93,7 @@ public class UserUsecase {
         );
     }
 
-    public UserRetrieveResponse retrieveMe(
+    public RetrieveUserResponse retrieveMe(
             UserInfo userInfo,
             String integrityKey
     ) {
@@ -104,7 +105,7 @@ public class UserUsecase {
                 integrityKey
         );
 
-        return new UserRetrieveResponse(
+        return new RetrieveUserResponse(
                 user.getProfile().staticContentPath().backgroundImagePath(),
                 user.getProfile().staticContentPath().profileImagePath(),
                 user.getUsername(),
@@ -114,6 +115,20 @@ public class UserUsecase {
                 user.getCreatedAt(),
                 gResponse.getFollowingCount(),
                 gResponse.getFollowerCount()
+        );
+    }
+
+    @Transactional
+    public void editProfile(
+            UserInfo userInfo,
+            EditProfileRequest editProfileRequest
+    ) {
+        userService.loadById(userInfo.id()).editProfile(
+                editProfileRequest.nickname(),
+                editProfileRequest.introduce(),
+                editProfileRequest.profileImagePath(),
+                editProfileRequest.backgroundImagePath(),
+                editProfileRequest.websitePath()
         );
     }
 
