@@ -19,6 +19,8 @@
     "test": "jest"
   },
   "dependencies": {
+    "@cloudinary/react": "^1.11.2",
+    "@cloudinary/url-gen": "^1.16.0",
     "@tanstack/react-query": "^5.17.7",
     "@tanstack/react-router": "^1.4.3",
     "axios": "^1.6.6",
