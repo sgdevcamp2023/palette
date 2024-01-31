@@ -9,29 +9,24 @@ import org.palette.easelsocialservice.exception.ExceptionType;
 import org.palette.easelsocialservice.persistence.UserRepository;
 import org.palette.easelsocialservice.persistence.domain.Paint;
 import org.palette.easelsocialservice.persistence.domain.User;
-import org.palette.grpc.GCreateUserRequest;
-import org.palette.grpc.GCreateUserResponse;
-import org.palette.grpc.GSocialServiceGrpc;
+import org.palette.grpc.*;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@GrpcService
+@Service
 @RequiredArgsConstructor
-public class UserService extends GSocialServiceGrpc.GSocialServiceImplBase {
+public class UserService {
     private final UserRepository userRepository;
 
-    @Override
-    public void createUser(GCreateUserRequest request, StreamObserver<GCreateUserResponse> responseStreamObserver) {
-        if (userRepository.existsByUid(request.getId())) {
+    public void createUser(User user) {
+        if (userRepository.existsByUid(user.getUid())) {
             throw new BaseException(ExceptionType.SOCIAL_400_000003);
         }
 
-        userRepository.save(convertToUser(request));
-        GCreateUserResponse response = GCreateUserResponse.newBuilder().setIsSuccess(true).build();
-        responseStreamObserver.onNext(response);
-        responseStreamObserver.onCompleted();
+        userRepository.save(user);
     }
 
     public User getUser(final Long userId) {
@@ -57,13 +52,26 @@ public class UserService extends GSocialServiceGrpc.GSocialServiceImplBase {
         return userRepository.findAllByUids(uids);
     }
 
-    private User convertToUser(final GCreateUserRequest request) {
-        return new User(request.getId(), request.getUsername(), request.getNickname(), request.getImagePath(), request.getIsActive());
-    }
-
     public void likePaint(Long userId, Paint paint) {
         User user = getUser(userId);
         user.likePaint(paint);
         userRepository.save(user);
+    }
+
+    public void follow(Long userId, Long targetId) {
+        User user = getUser(userId);
+        User targetUser = getUser(targetId);
+
+        user.addFollowing(targetUser);
+
+        userRepository.save(user);
+    }
+
+    public int getFollowingCount(Long userId) {
+        return userRepository.countFollowings(userId);
+    }
+
+    public int getFollowerCount(Long userId) {
+        return userRepository.countFollowers(userId);
     }
 }

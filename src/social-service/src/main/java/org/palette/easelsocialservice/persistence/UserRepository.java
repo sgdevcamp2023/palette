@@ -18,4 +18,10 @@ public interface UserRepository extends Neo4jRepository<User, Long> {
     List<User> findAllByUids(List<Long> uids);
 
     boolean existsByUid(Long uid);
+
+    @Query("MATCH (:User { uid: $uid })-[r:FOLLOWS]->() RETURN count(r)")
+    int countFollowings(@Param("uid") Long uid);
+
+    @Query("MATCH (:User { uid: $uid })<-[r:FOLLOWS]-() RETURN count(r)")
+    int countFollowers(@Param("uid") Long uid);
 }
