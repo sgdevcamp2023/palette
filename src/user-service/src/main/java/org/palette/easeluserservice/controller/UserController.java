@@ -60,7 +60,6 @@ public class UserController {
     }
 
     @InjectEaselAuthentication
-    @ResponseStatus(HttpStatus.CREATED)
     @GetMapping("/{id}")
     public void retrieveOther(@PathVariable Long id) {
         userUsecase.retrieveOther(
@@ -70,7 +69,7 @@ public class UserController {
         );
     }
 
-    @ResponseStatus(HttpStatus.CREATED)
+    @InjectEaselAuthentication
     @GetMapping("/me")
     public void retrieveMe() {
         userUsecase.retrieveMe(
