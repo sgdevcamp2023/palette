@@ -1,13 +1,15 @@
 package org.palette.easelsocialservice.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.palette.aop.EaselAuthenticationContext;
+import org.palette.aop.InjectEaselAuthentication;
 import org.palette.easelsocialservice.dto.request.PaintCreateRequest;
 import org.palette.easelsocialservice.dto.request.RepaintRequest;
 import org.palette.easelsocialservice.dto.response.PaintCreateResponse;
 import org.palette.easelsocialservice.dto.response.PaintResponse;
 import org.palette.easelsocialservice.dto.response.ThreadResponse;
-import org.palette.easelsocialservice.persistence.domain.Paint;
 import org.palette.easelsocialservice.usecase.PaintUsecase;
+import org.palette.passport.component.UserInfo;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

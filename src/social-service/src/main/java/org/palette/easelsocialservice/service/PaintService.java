@@ -99,6 +99,11 @@ public class PaintService {
         return convertToPaintResponse(paint);
     }
 
+    public Paint getPaintById(Long paintId) {
+        return paintRepository.findByPid(paintId)
+                .orElseThrow(() -> new BaseException(ExceptionType.SOCIAL_400_000002));
+    }
+
     public List<PaintResponse> getPaintBeforeById(Long userId, Long paintId) {
         List<Paint> paints = distinctPaintsByPid(paintRepository.findAllBeforePaintByPid(paintId));
 
@@ -113,7 +118,6 @@ public class PaintService {
         for (Paint paint : paints) {
             checkAndSetQuotePaint(paint);
             List<Paint> subPaints = distinctPaintsByPid(paintRepository.findAllAfterPaintsByPid(paint.getPid()));
-            subPaints.add(0, paint);
 
             threads.add(new ThreadResponse(threadId++, convertToPaintResponse(subPaints)));
         }
