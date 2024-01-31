@@ -31,7 +31,7 @@ function HomePage() {
           {
             label: '추천',
             content: (
-              <ContentLayout className="mt-0 pl-[12px] pr-[4px] pb-[50px] h-full max-h-[calc(100%-94px)]">
+              <ContentLayout className="mt-0 pl-[12px] pr-[4px] pb-[50px] h-full max-h-[calc(100%-144px)]">
                 <AsyncBoundary
                   pendingFallback={<TimelineItemListSkeleton />}
                   rejectedFallback={(props) => <ErrorWithResetBox {...props} />}
@@ -44,7 +44,7 @@ function HomePage() {
           {
             label: '팔로우 중',
             content: (
-              <ContentLayout className="mt-0 pl-[12px] pr-[4px] pb-[50px] h-full max-h-[calc(100%-94px)]">
+              <ContentLayout className="mt-0 pl-[12px] pr-[4px] pb-[50px] h-full max-h-[calc(100%-144px)]">
                 <AsyncBoundary
                   pendingFallback={<TimelineItemListSkeleton />}
                   rejectedFallback={(props) => <ErrorWithResetBox {...props} />}

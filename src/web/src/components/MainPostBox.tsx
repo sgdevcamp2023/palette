@@ -7,7 +7,7 @@ import { Button } from './common';
 import type { PaintAction } from '@/hooks';
 import { postDetailRoute } from '@/routes';
 import Typography from './common/Typography';
-import { cn, fetchMainPost } from '@/utils';
+import { cn, fetchMainPost, forCloudinaryImage } from '@/utils';
 import TimelineItemMenu from './TimelineItemMenu';
 import AccessibleIconButton from './AccessibleIconButton';
 
@@ -41,7 +41,7 @@ const MainPostBox = forwardRef<HTMLDivElement, MainPostBoxProps>(
             }
           >
             <img
-              src={post.authorImagePath}
+              src={forCloudinaryImage(post.authorImagePath)}
               alt={`${post.authorNickname}`}
               className="rounded-full w-[44px] h-[44px] min-w-[44px]"
             />
@@ -95,9 +95,11 @@ const MainPostBox = forwardRef<HTMLDivElement, MainPostBoxProps>(
 
         {hasMedia && (
           <img
-            src={post.includes.medias[0].path}
+            src={forCloudinaryImage(post.includes.medias[0].path, {
+              resize: false,
+            })}
             alt="user-upload-asset"
-            className="w-full max-h-[300px] rounded-[12px] mb-[24px]"
+            className="w-full rounded-[12px] mb-[24px]"
           />
         )}
 

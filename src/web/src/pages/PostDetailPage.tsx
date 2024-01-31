@@ -11,7 +11,7 @@ import {
   MainPostBox,
   Typography,
 } from '@/components';
-import { DUMMY_USER } from '@/utils';
+import { DUMMY_USER, forCloudinaryImage } from '@/utils';
 import {
   ReplyBottomSheet,
   ShareBottomSheet,
@@ -82,7 +82,7 @@ function PostDetailPage() {
         }
       >
         <img
-          src={me.profileImagePath}
+          src={forCloudinaryImage(me.profileImagePath)}
           alt="your profile"
           className="w-[36px] h-[36px] rounded-full"
         />

@@ -15,8 +15,7 @@ const DUMMY_ITEM: TimelineItem = {
   authorId: '1',
   authorUsername: '@sangmin',
   authorNickname: '이상민',
-  authorImagePath:
-    'https://pbs.twimg.com/profile_images/1734036193585893376/BkzwxOn2_400x400.png',
+  authorImagePath: 'profile/k3cvomo4mknrzsub83n7',
   authorStatus: 'public',
   createdAt: new Date(),
   text: `안녕하세요, @2023 개발캠프 여러분!\n지난 주에 이어서 오늘은 리사이클 팀의 현우 님(React-Query), 규민 님(상태관리)의 세미나가 진행됩니다.\n점심 식사하시고 1시 30분에 미팅룸 6번에서 만나요`,
@@ -35,7 +34,7 @@ const DUMMY_ITEM: TimelineItem = {
     medias: [
       {
         type: 'image',
-        path: 'https://pbs.twimg.com/media/GEFlR__bMAAr2MA?format=jpg&name=small',
+        path: 'posts/ie8fjbk8ejmvxcihxo1e',
       },
     ],
     paint: null,
@@ -61,11 +60,11 @@ export const createDummyTimelineItem = (length: number): TimelineItem[] =>
       index % 5
     ],
     authorImagePath: [
-      'https://avatars.githubusercontent.com/u/51396905?s=96&v=4',
-      'https://avatars.githubusercontent.com/u/60564431?s=96&v=4',
-      'https://avatars.githubusercontent.com/u/80496838?s=96&v=4',
-      'https://avatars.githubusercontent.com/u/43488305?s=40&v=4',
-      'https://avatars.githubusercontent.com/u/74983448?s=96&v=4',
+      'profile/t1dyeoponhi213q45ilc',
+      'profile/ydep7rd33mmmpu99c2wc',
+      'profile/qxbdyyqmtubjuadeb6is',
+      'profile/s76oz6lo7bdpwvkdymmz',
+      'profile/lnminict8arehfeqwfd7',
     ][index % 5],
     replyCount: Math.floor(Math.random() * 1000),
     repaintCount: Math.floor(Math.random() * 1000),
@@ -96,31 +95,31 @@ export const createDummyTimelineItem = (length: number): TimelineItem[] =>
               [
                 {
                   type: 'image',
-                  path: 'https://pbs.twimg.com/media/GEFlR__bMAAr2MA?format=jpg&name=small',
+                  path: 'posts/ysswlagsxsahhxphe1kn',
                 },
               ] as TimelineItem['includes']['medias'],
               [
                 {
                   type: 'image',
-                  path: 'https://pbs.twimg.com/media/GBCjAhlbQAALcOl?format=jpg&name=small',
+                  path: 'posts/uak4thmr0si4ep5uxn0z"',
                 },
               ] as TimelineItem['includes']['medias'],
               [
                 {
                   type: 'image',
-                  path: 'https://pbs.twimg.com/media/GDEGSwna4AAm-gj?format=jpg&name=small',
+                  path: 'posts/ukd1z89ccqqpynfc4r0w',
                 },
               ] as TimelineItem['includes']['medias'],
               [
                 {
                   type: 'image',
-                  path: 'https://pbs.twimg.com/media/GDDX4BjbAAAR1qX?format=jpg&name=small',
+                  path: 'posts/do2wvwps5alg7teihwly',
                 },
               ] as TimelineItem['includes']['medias'],
               [
                 {
                   type: 'image',
-                  path: 'https://pbs.twimg.com/media/GC-e1lPb0AAGro0?format=jpg&name=small',
+                  path: 'posts/zooatvuplafl2bmjyzbo',
                 },
               ] as TimelineItem['includes']['medias'],
             ][index % 5]

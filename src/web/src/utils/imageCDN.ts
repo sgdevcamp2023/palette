@@ -20,12 +20,20 @@ class ImageNotFoundError extends Error {
 
 export const forCloudinaryImage = (
   id: string,
-  options: ImageSize = { width: 400, height: 400 },
+  options:
+    | { resize: true; width: ImageSize['width']; height: ImageSize['height'] }
+    | { resize: false } = {
+    resize: true,
+    width: 400,
+    height: 400,
+  },
 ): string => {
   const image = cld.image(id);
   if (!image) {
     throw new ImageNotFoundError();
   }
-  image.resize(Resize.scale().width(options.width).height(options.height));
+  if (options.resize) {
+    image.resize(Resize.scale().width(options.width).height(options.height));
+  }
   return image.toURL();
 };
