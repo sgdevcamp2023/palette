@@ -1,6 +1,7 @@
+import { env } from '@/constants';
+import { createApiWrappers } from './handler';
 import type { LoginInfo, User } from '@/@types';
 import { cdnAPIClient, createApiClient } from './apiFactory';
-import { createApiWrappers } from './handler';
 
 const client = {
   public: createApiClient({ auth: false }),
@@ -40,8 +41,8 @@ const images = createApiWrappers({
     options: { folder?: string } = {},
   ) => {
     const formData = new FormData();
-    formData.append('api_key', import.meta.env.VITE_CLD_API_KEY);
-    formData.append('upload_preset', import.meta.env.VITE_CLD_PRESET_NAME);
+    formData.append('api_key', env.VITE_CLD_API_KEY);
+    formData.append('upload_preset', env.VITE_CLD_PRESET_NAME);
     formData.append('file', image);
     formData.append('timestamp', String(Math.round(timestamp / 1000)));
     if (options.folder) {

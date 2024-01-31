@@ -1,9 +1,11 @@
 import axios from 'axios';
+
+import { env } from '@/constants';
 import { authTokenStorage } from './AuthTokenStorage';
 
 export const createApiClient = ({ auth }: { auth: boolean }) => {
   const client = axios.create({
-    baseURL: `${import.meta.env.VITE_BASE_SERVER_URL}/v1`,
+    baseURL: `${env.VITE_BASE_SERVER_URL}/v1`,
   });
 
   if (auth) {
@@ -19,9 +21,7 @@ export const createApiClient = ({ auth }: { auth: boolean }) => {
 
 export const cdnAPIClient = () => {
   const client = axios.create({
-    baseURL: `${import.meta.env.VITE_CDN_BASE_URL}/${
-      import.meta.env.VITE_CLOUD_NAME
-    }/`,
+    baseURL: `${env.VITE_CDN_BASE_URL}/${env.VITE_CLOUD_NAME}/`,
   });
 
   return client;

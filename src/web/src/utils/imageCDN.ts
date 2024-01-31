@@ -1,11 +1,12 @@
 import { Cloudinary } from '@cloudinary/url-gen';
-import { Resize } from '@cloudinary/url-gen/actions/resize';
+import { Resize } from '@cloudinary/url-gen/actions';
 
+import { env } from '@/constants';
 import type { ImageSize } from '@/@types';
 
 export const cld = new Cloudinary({
   cloud: {
-    cloudName: import.meta.env.VITE_CLOUD_NAME,
+    cloudName: env.VITE_CLOUD_NAME,
   },
   url: {
     secure: true,
@@ -21,7 +22,11 @@ class ImageNotFoundError extends Error {
 export const forCloudinaryImage = (
   id: string,
   options:
-    | { resize: true; width: ImageSize['width']; height: ImageSize['height'] }
+    | {
+        resize: true;
+        width: ImageSize['width'];
+        height: ImageSize['height'];
+      }
     | { resize: false } = {
     resize: true,
     width: 400,
@@ -32,6 +37,7 @@ export const forCloudinaryImage = (
   if (!image) {
     throw new ImageNotFoundError();
   }
+  image.quality('auto');
   if (options.resize) {
     image.resize(Resize.scale().width(options.width).height(options.height));
   }

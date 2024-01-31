@@ -23,7 +23,7 @@ const BeforeTimelineList = forwardRef<HTMLDivElement, BeforeTimelineListProps>(
   ) => {
     const navigate = useNavigate();
     const params = postDetailRoute.useParams();
-    const { data: posts } = useSuspenseQuery({
+    const { data: posts, isSuccess } = useSuspenseQuery({
       queryKey: ['post', params.postId, 'before'],
       queryFn: fetchBeforePost,
     });
@@ -31,7 +31,6 @@ const BeforeTimelineList = forwardRef<HTMLDivElement, BeforeTimelineListProps>(
     if (Array.isArray(posts) && posts.length === 0) {
       return <div ref={ref} id="-1" />;
     }
-
     useEffect(() => {
       const $mainPost = mainPostRef.current;
       const $parent = parentRef.current;
@@ -41,7 +40,7 @@ const BeforeTimelineList = forwardRef<HTMLDivElement, BeforeTimelineListProps>(
         $mainPost.scrollIntoView();
         $parent.scrollBy(0, -headerOffset);
       }
-    }, [mainPostRef.current?.id]);
+    }, [mainPostRef.current?.id, isSuccess]);
 
     return (
       <div
