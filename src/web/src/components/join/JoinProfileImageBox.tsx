@@ -1,52 +1,72 @@
+import type { ChangeEvent } from 'react';
 import { memo, useState } from 'react';
 import { toast } from 'react-toastify';
-import type { ChangeEvent } from 'react';
+import { useMutation } from '@tanstack/react-query';
 
+import { apis } from '@/api';
+import { FullScreenSpinner } from '../skeleton';
 import { Button, Icon, Typography } from '../common';
 import { AccessibleIconButton, StepTitle } from '..';
 import type { NavigationEvent } from './joinReducer';
+import { forCloudinaryImage } from '@/utils';
 
 interface JoinProfileImageBoxProps extends NavigationEvent {
   disabled: boolean;
+  imageSrc?: string;
   onChangeImage: (path: string) => void;
   onJoin: VoidFunction;
 }
 
 function JoinProfileImageBox({
   disabled,
+  imageSrc,
   onNextStep,
   onChangeImage,
   onJoin,
 }: JoinProfileImageBoxProps) {
-  const [imageSrc, setImageSrc] = useState<string>('');
+  const [imageCDNInfo, setImageCDNInfo] = useState<{
+    publicId: string;
+    signature: string;
+    timestamp: number;
+  }>({ publicId: '', signature: '', timestamp: Math.round(Date.now() / 1000) });
 
-  const encodeFileToBase64 = (file: File) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
+  const uploadMutation = useMutation({
+    mutationKey: ['image-upload', imageSrc],
+    mutationFn: (image: File) =>
+      apis.images.uploadImage(image, imageCDNInfo.timestamp, {
+        folder: 'profile',
+      }),
+    onSuccess: (res) => {
+      onChangeImage(res.public_id);
+      setImageCDNInfo((prev) => ({
+        ...prev,
+        publicId: res.public_id,
+        signature: res.signature,
+      }));
+    },
+    onError: () => {
+      toast.error('업로드에 실패했습니다.');
+      setImageCDNInfo((prev) => ({
+        ...prev,
+        timeStamp: Math.round(Date.now() / 1000),
+      }));
+    },
+  });
 
-    reader.onloadend = async () => {
-      setImageSrc(reader.result as string);
-      // FIXME: 추후 upload api 연동 후 삭제
-      onChangeImage(reader.result as string);
-    };
+  const handleClickDeleteImage = () => {
+    onChangeImage('');
+    setImageCDNInfo({
+      timestamp: Math.round(Date.now() / 1000),
+      publicId: '',
+      signature: '',
+    });
   };
 
-  const handleUploadImage = async (e: ChangeEvent<HTMLInputElement>) => {
+  const handleUploadImage = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
 
-    if (file) {
-      encodeFileToBase64(file);
-    }
-  };
-
-  const handleClickNextButton = async () => {
-    try {
-      // TODO: image upload, optimize
-      onNextStep();
-      onChangeImage(imageSrc);
-    } catch (err) {
-      toast.error('업로드에 실패했습니다.');
-    }
+    if (!file) return;
+    uploadMutation.mutate(file);
   };
 
   const handleClickSkipButton = async () => {
@@ -69,7 +89,7 @@ function JoinProfileImageBox({
         {imageSrc ? (
           <div className="relative w-[200px] h-[200px]">
             <img
-              src={imageSrc}
+              src={forCloudinaryImage(imageSrc)}
               alt="preview"
               className="rounded-full w-full h-full"
             />
@@ -80,7 +100,7 @@ function JoinProfileImageBox({
                 label="이미지 업로드 취소"
                 width={32}
                 height={32}
-                onClick={() => setImageSrc('')}
+                onClick={handleClickDeleteImage}
               />
             </div>
           </div>
@@ -110,7 +130,7 @@ function JoinProfileImageBox({
           aria-label="기재해준 이메일을 통해 인증 후, 비밀번호 설정 페이지로 이동합니다."
           disabled={disabled}
           aria-disabled={disabled}
-          onClick={handleClickNextButton}
+          onClick={onNextStep}
         >
           <Typography size="body-2" color="white">
             다음
@@ -126,6 +146,7 @@ function JoinProfileImageBox({
           지금은 넘어가기
         </Typography>
       </div>
+      {uploadMutation.isPending && <FullScreenSpinner />}
     </>
   );
 }
