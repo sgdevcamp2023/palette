@@ -17,7 +17,7 @@ public interface PaintRepository extends Neo4jRepository<Paint, Long> {
             "WITH [node in nodes(path) WHERE node:Paint] AS intermediateNodes " +
             "UNWIND intermediateNodes AS intermediateNode " +
             "MATCH (startNode:Paint)<-[r]->(nextNode) " +
-            "WHERE startNode = intermediateNode AND type(r) <> 'REPLIES' AND type(r) <> 'REPAINTS' AND type(r) <> 'QUOTES'" +
+            "WHERE startNode = intermediateNode AND type(r) <> 'REPLIES' AND type(r) <> 'REPAINTS' AND type(r) <> 'QUOTES' " +
             "RETURN startNode, r, nextNode")
     List<Paint> findAllBeforePaintByPid(@Param("pid")Long pid);
 
@@ -25,7 +25,7 @@ public interface PaintRepository extends Neo4jRepository<Paint, Long> {
             "WHERE a.pid = $pid " +
             "WITH b " +
             "MATCH (b)<-[r]->(neighbors) " +
-            "WHERE type(r) <> 'REPLIES' AND type(r) <> 'QUOTES'" +
+            "WHERE type(r) <> 'REPLIES' AND type(r) <> 'QUOTES' " +
             "RETURN b, r, neighbors")
     List<Paint> findAllAfterPaintByPid(@Param("pid")Long pid);
 
@@ -36,7 +36,7 @@ public interface PaintRepository extends Neo4jRepository<Paint, Long> {
             "LIMIT 1 " +
             "UNWIND nodes(path) as b " +
             "MATCH (b)<-[r]->(neighbors) " +
-            "WHERE NOT type(r) = 'REPLIES' AND type(r) <> 'REPAINTS' AND type(r) <> 'QUOTES'" +
+            "WHERE NOT type(r) = 'REPLIES' AND type(r) <> 'REPAINTS' AND type(r) <> 'QUOTES' " +
             "RETURN b, r, neighbors")
     List<Paint> findAllAfterPaintsByPid(@Param("pid")Long pid);
 
