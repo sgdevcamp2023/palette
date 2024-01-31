@@ -297,9 +297,7 @@ class ProfileFragment : Fragment() {
         val tabLayout = binding.tabLayout
 
         val currentTab = tabLayout.selectedTabPosition
-        if (currentTab > 0) {
-            tabLayout.getTabAt(currentTab - 1)?.select()
-        }
+        tabLayout.getTabAt((currentTab - 1).coerceAtLeast(0))?.select()
     }
 
     companion object {
