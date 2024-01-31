@@ -39,4 +39,5 @@ message GUpdateUserAuthStatusResponse {
 
 message GCheckEmailAndPasswordResponse {
   bool isSuccess = 1;
+  int64 userId = 2;
 }
