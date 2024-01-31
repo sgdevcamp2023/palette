@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import { type ChangeEvent } from 'react';
 
 import { StepTitle } from '..';
@@ -83,4 +83,6 @@ function LoginPasswordBox({
   );
 }
 
-export default LoginPasswordBox;
+const MemoizedLoginPasswordBox = memo(LoginPasswordBox);
+
+export default MemoizedLoginPasswordBox;

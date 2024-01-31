@@ -1,14 +1,13 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import { toast } from 'react-toastify';
-import { motion } from 'framer-motion';
 import { useNavigate } from '@tanstack/react-router';
 
 import { useLongPress } from '@/hooks';
 import { cn, iconOpacity } from '@/utils';
 import type { ScrollDirectionProps } from '@/@types';
-import AccessibleIconButton from './AccessibleIconButton';
-
-const FramerIconButton = motion(AccessibleIconButton);
+import AccessibleIconButton, {
+  FramerAccessibleIconButton,
+} from './AccessibleIconButton';
 
 function FloatingButton({ direction }: ScrollDirectionProps) {
   const navigate = useNavigate();
@@ -34,7 +33,7 @@ function FloatingButton({ direction }: ScrollDirectionProps) {
           onClick={() => setIsShowMenu(false)}
         />
       ) : (
-        <FramerIconButton
+        <FramerAccessibleIconButton
           iconType="addText"
           width={24}
           height={24}
@@ -55,7 +54,7 @@ function FloatingButton({ direction }: ScrollDirectionProps) {
             className="bg-grey-200 opacity-60 w-full h-full absolute top-0 left-0 z-[10]"
             onClick={() => setIsShowMenu(false)}
           />
-          <FramerIconButton
+          <FramerAccessibleIconButton
             initial={{
               right: 10,
               bottom: 60,
@@ -72,7 +71,7 @@ function FloatingButton({ direction }: ScrollDirectionProps) {
             label="이미지 첨부"
             onClick={() => navigate({ to: '/post/edit' })}
           />
-          <FramerIconButton
+          <FramerAccessibleIconButton
             initial={{
               right: 10,
               bottom: 60,
@@ -89,7 +88,7 @@ function FloatingButton({ direction }: ScrollDirectionProps) {
             label="GIF 첨부"
             onClick={() => toast('지원하지 않는 기능입니다.')}
           />
-          <FramerIconButton
+          <FramerAccessibleIconButton
             initial={{
               right: 10,
               bottom: 60,
@@ -111,4 +110,6 @@ function FloatingButton({ direction }: ScrollDirectionProps) {
   );
 }
 
-export default FloatingButton;
+const MemoizedFloatingButton = memo(FloatingButton);
+
+export default MemoizedFloatingButton;

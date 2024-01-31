@@ -1,10 +1,10 @@
-import { motion } from 'framer-motion';
+import { memo } from 'react';
 import { cva } from 'class-variance-authority';
 import { useNavigate, useMatchRoute } from '@tanstack/react-router';
 
 import { iconOpacity } from '@/utils';
 import type { ScrollDirectionProps } from '@/@types';
-import AccessibleIconButton from './AccessibleIconButton';
+import { FramerAccessibleIconButton } from './AccessibleIconButton';
 
 const BottomNavigationVariants = cva<{
   direction: Record<'up' | 'down' | 'stop', string>;
@@ -23,8 +23,6 @@ const BottomNavigationVariants = cva<{
     },
   },
 );
-
-const FramerAccessibleIconButton = motion(AccessibleIconButton);
 
 function BottomNavigation({ direction }: ScrollDirectionProps) {
   const navigate = useNavigate();
@@ -91,4 +89,6 @@ function BottomNavigation({ direction }: ScrollDirectionProps) {
   );
 }
 
-export default BottomNavigation;
+const MemoizedBottomNavigation = memo(BottomNavigation);
+
+export default MemoizedBottomNavigation;

@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { toast } from 'react-toastify';
 
 import { cn } from '@/utils';
@@ -31,4 +32,6 @@ function NotSupportText({
   );
 }
 
-export default NotSupportText;
+const MemoizedNotSupportText = memo(NotSupportText);
+
+export default MemoizedNotSupportText;

@@ -1,4 +1,4 @@
-import { forwardRef } from 'react';
+import { forwardRef, memo } from 'react';
 import type { ComponentProps, HTMLAttributes, ReactNode } from 'react';
 
 import Button from './Button';
@@ -46,4 +46,6 @@ function BottomSheetModal({
   );
 }
 
-export default BottomSheetModal;
+const MemoizedBottomSheetModal = memo(BottomSheetModal);
+
+export default MemoizedBottomSheetModal;

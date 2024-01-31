@@ -1,4 +1,4 @@
-import type { ElementType, HTMLAttributes } from 'react';
+import { memo, type ElementType, type HTMLAttributes } from 'react';
 import { cva } from 'class-variance-authority';
 
 import type { ColorType, FontKeyType } from '@/@types';
@@ -86,4 +86,6 @@ function Typography({
   );
 }
 
-export default Typography;
+const MemoizedTypography = memo(Typography);
+
+export default MemoizedTypography;

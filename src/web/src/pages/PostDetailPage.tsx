@@ -76,7 +76,7 @@ function PostDetailPage() {
       {/* 게시글 작성 */}
       <button
         type="button"
-        className="fixed bottom-[50px] px-[10px] w-full h-[50px] items-center bg-white flex gap-[6px] pt-[6px] border-t border-t-blueGrey400 text-left"
+        className="fixed bottom-[50px] px-[10px] w-full max-w-[420px] h-[50px] items-center bg-white flex gap-[6px] pt-[6px] border-t border-t-blueGrey400 text-left"
         onClick={() =>
           navigate({ to: '/post/edit', search: { postId: params.postId } })
         }

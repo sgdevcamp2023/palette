@@ -1,4 +1,5 @@
-import { forwardRef } from 'react';
+import { motion } from 'framer-motion';
+import { forwardRef, memo } from 'react';
 import type { ButtonHTMLAttributes, Ref } from 'react';
 
 import type { IconKeyType } from './common/Icon';
@@ -47,4 +48,7 @@ const AccessibleIconButton = forwardRef(
   ),
 );
 
-export default AccessibleIconButton;
+const MemoizedAccessibleIconButton = memo(AccessibleIconButton);
+export const FramerAccessibleIconButton = memo(motion(AccessibleIconButton));
+
+export default MemoizedAccessibleIconButton;

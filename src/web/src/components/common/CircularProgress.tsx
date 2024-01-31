@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 
 import { cn } from '@/utils';
@@ -96,4 +97,6 @@ function CircularProgress({
   );
 }
 
-export default CircularProgress;
+const MemoizedCircularProgress = memo(CircularProgress);
+
+export default MemoizedCircularProgress;

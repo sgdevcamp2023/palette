@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { toast } from 'react-toastify';
 import { motion } from 'framer-motion';
 
@@ -84,4 +85,6 @@ function TimelineItemMenu({ username, userId }: TimelineItemMenuProps) {
   );
 }
 
-export default TimelineItemMenu;
+const MemoizedTimelineItemMenu = memo(TimelineItemMenu);
+
+export default MemoizedTimelineItemMenu;

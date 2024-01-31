@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { useEffect, useRef, useState } from 'react';
+import { memo, useEffect, useRef, useState } from 'react';
 
 import { cn } from '@/utils';
 import { Typography } from '@/components';
@@ -77,4 +77,6 @@ function Tabs({ tabs, className, menuClassName }: TabProps) {
   );
 }
 
-export default Tabs;
+const MemoizedTabs = memo(Tabs);
+
+export default MemoizedTabs;
