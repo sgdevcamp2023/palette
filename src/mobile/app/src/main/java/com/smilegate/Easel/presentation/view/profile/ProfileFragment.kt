@@ -316,7 +316,7 @@ class ProfileFragment : Fragment() {
         val absDeltaX = abs(deltaX)
         val absDeltaY = abs(deltaY)
 
-        if (absDeltaX > absDeltaY && absDeltaX > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
+        if (absDeltaX > absDeltaY && absDeltaX > SWIPE_THRESHOLD && abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
             if (deltaX > 0) {
                 // 오른쪽으로 스와이프한 경우
                 navigateToPreviousTab()
