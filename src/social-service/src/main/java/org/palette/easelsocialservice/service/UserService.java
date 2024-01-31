@@ -61,6 +61,9 @@ public class UserService extends GSocialServiceGrpc.GSocialServiceImplBase {
         return new User(request.getId(), request.getUsername(), request.getNickname(), request.getImagePath(), request.getIsActive());
     }
 
-    public void likePaint(Long userId, Paint likePaintRequest) {
+    public void likePaint(Long userId, Paint paint) {
+        User user = getUser(userId);
+        user.likePaint(paint);
+        userRepository.save(user);
     }
 }
