@@ -1,6 +1,7 @@
 package com.smilegate.Easel.data
 
 import com.smilegate.Easel.R
+import com.smilegate.Easel.domain.model.HighlightItem
 import com.smilegate.Easel.domain.model.TimelineItem
 
 class ProfileTapRvDataHelper {
@@ -72,13 +73,11 @@ fun generateDummyReplyData(): List<TimelineItem> {
     val profileImgId = R.drawable.sample_profile_img5
     val profileImgId1 = R.drawable.sample_profile_img1
     val profileImgId2 = R.drawable.sample_profile_img2
-    val profileImgId3 = R.drawable.sample_profile_img3
     val profileImgId4 = R.drawable.sample_profile_img4
 
     val contentImgId = R.drawable.sample_content_img1
     val contentImgId1 = R.drawable.sample_content_img2
     val contentImgId2 = R.drawable.sample_content_img3
-    val contentImgId3 = R.drawable.sample_content_img4
 
     val timelineList = listOf(
 
@@ -106,15 +105,21 @@ fun generateDummyReplyData(): List<TimelineItem> {
     return timelineList.shuffled()
 }
 
+fun generateDummyHighlightData(): List<HighlightItem> {
+
+    val highlightItem = listOf(
+        HighlightItem("프로필에 하이라이트 추가", "프로필에 게시물을 하이라이트하려면 Premium을 구독해\n야 합니다.", "Premium 구독하기"),
+    )
+
+    return highlightItem.shuffled()
+}
+
 fun generateDummyMediaData(): List<TimelineItem> {
     val profileImgId = R.drawable.sample_profile_img5
-    val profileImgId1 = R.drawable.sample_profile_img1
     val profileImgId2 = R.drawable.sample_profile_img2
     val profileImgId3 = R.drawable.sample_profile_img3
-    val profileImgId4 = R.drawable.sample_profile_img4
 
     val contentImgId = R.drawable.sample_content_img1
-    val contentImgId1 = R.drawable.sample_content_img2
     val contentImgId2 = R.drawable.sample_content_img3
     val contentImgId3 = R.drawable.sample_content_img4
 
@@ -156,7 +161,6 @@ fun generateDummyLikedData(): List<TimelineItem> {
     val profileImgId3 = R.drawable.sample_profile_img3
     val profileImgId4 = R.drawable.sample_profile_img4
 
-    val contentImgId = R.drawable.sample_content_img1
     val contentImgId1 = R.drawable.sample_content_img2
     val contentImgId2 = R.drawable.sample_content_img3
     val contentImgId3 = R.drawable.sample_content_img4
