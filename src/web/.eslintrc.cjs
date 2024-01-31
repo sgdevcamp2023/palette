@@ -47,6 +47,7 @@ module.exports = {
         "allowAsProps":  true,
         "customValidators": [] /* optional array of validators used for propTypes validation */
       }
-    ]// error-boundary에서 fallback을 받기위해 사용합니다.
+    ],// error-boundary에서 fallback을 받기위해 사용합니다.
+    "no-restricted-syntax": "off" // for ... of의 문법을 사용합니다.
   },
 };
