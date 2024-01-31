@@ -2,21 +2,16 @@ package com.smilegate.Easel.presentation.view.profile
 
 import android.content.Context
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.view.KeyEvent
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.smilegate.Easel.MainActivity
 import com.smilegate.Easel.R
-import com.smilegate.Easel.databinding.FragmentFollowingBinding
 import com.smilegate.Easel.databinding.FragmentMyPostBinding
 import com.smilegate.Easel.domain.model.TimelineItem
 import com.smilegate.Easel.presentation.adapter.TimelineRecyclerViewAdapter
@@ -66,17 +61,17 @@ class MyPostFragment : Fragment() {
         val myPostList = generateDummyTimelineData()
 
         val adapter = TimelineRecyclerViewAdapter(requireContext(), myPostList)
-        binding.rvTimeline.adapter = adapter
-        binding.rvTimeline.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvMyPost.adapter = adapter
+        binding.rvMyPost.layoutManager = LinearLayoutManager(requireContext())
 
         // 스크롤 리스너를 이용하여 스크롤 위치 저장
-        binding.ScrollView.setOnScrollChangeListener { _, _, scrollY, _, _ ->
+        binding.rvMyPost.setOnScrollChangeListener { _, _, scrollY, _, _ ->
             savedScrollPosition = scrollY
         }
 
         // 저장된 스크롤 위치 복원
-        binding.ScrollView.post {
-            binding.ScrollView.scrollTo(0, savedScrollPosition)
+        binding.rvMyPost.post {
+            binding.rvMyPost.scrollTo(0, savedScrollPosition)
         }
     }
 
@@ -131,6 +126,6 @@ class MyPostFragment : Fragment() {
 
     override fun onPause() {
         super.onPause()
-        savedScrollPosition = binding.ScrollView.scrollY
+        savedScrollPosition = binding.rvMyPost.scrollY
     }
 }

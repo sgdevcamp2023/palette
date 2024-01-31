@@ -3,17 +3,13 @@ package com.smilegate.Easel.presentation.view.join
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.KeyEvent
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
-import android.widget.Button
-import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.smilegate.Easel.R
@@ -136,7 +132,7 @@ class NeedPasswordFragment : Fragment() {
 
         if (password.length < maxPasswordLength) {
             // 비밀번호가 8자 미만인 경우
-            val pwColorResourceId = ContextCompat.getColor(requireContext(), R.color.Red_200)
+            val pwColorResourceId = ContextCompat.getColor(requireContext(), R.color.Pink_200)
             binding.needPasswordFragmentPwField.setTextColor(pwColorResourceId)
             // 토스트 메시지 표시
             Toast.makeText(requireContext(), "비밀번호는 8자 이상이어야 합니다.", Toast.LENGTH_SHORT).show()

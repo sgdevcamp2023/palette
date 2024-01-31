@@ -2,17 +2,11 @@ package com.smilegate.Easel.presentation.view.myPage
 
 import android.content.Context
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.util.TypedValue
-import android.view.KeyEvent
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.TextView
-import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,7 +14,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.smilegate.Easel.MainActivity
 import com.smilegate.Easel.R
 import com.smilegate.Easel.databinding.FragmentBookMarkBinding
-import com.smilegate.Easel.databinding.FragmentFollowingBinding
 import com.smilegate.Easel.domain.model.TimelineItem
 import com.smilegate.Easel.presentation.adapter.TimelineRecyclerViewAdapter
 
@@ -46,7 +39,7 @@ class BookMarkFragment : Fragment() {
         backButton.setImageResource(R.drawable.ic_left_stick_arrow)
         backButton.visibility = View.VISIBLE
         backButton.setOnClickListener {
-            findNavController().navigateUp()
+            findNavController().navigate(R.id.timelineFragment)
         }
 
         val settingButton = toolbar.findViewById<ImageView>(R.id.else_btn)
@@ -81,17 +74,17 @@ class BookMarkFragment : Fragment() {
         val bookMarkList = generateDummyTimelineData()
 
         val adapter = TimelineRecyclerViewAdapter(requireContext(), bookMarkList)
-        binding.rvTimeline.adapter = adapter
-        binding.rvTimeline.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvBookMark.adapter = adapter
+        binding.rvBookMark.layoutManager = LinearLayoutManager(requireContext())
 
         // 스크롤 리스너를 이용하여 스크롤 위치 저장
-        binding.ScrollView.setOnScrollChangeListener { _, _, scrollY, _, _ ->
+        binding.rvBookMark.setOnScrollChangeListener { _, _, scrollY, _, _ ->
             savedScrollPosition = scrollY
         }
 
         // 저장된 스크롤 위치 복원
-        binding.ScrollView.post {
-            binding.ScrollView.scrollTo(0, savedScrollPosition)
+        binding.rvBookMark.post {
+            binding.rvBookMark.scrollTo(0, savedScrollPosition)
         }
     }
 
@@ -146,6 +139,6 @@ class BookMarkFragment : Fragment() {
 
     override fun onPause() {
         super.onPause()
-        savedScrollPosition = binding.ScrollView.scrollY
+        savedScrollPosition = binding.rvBookMark.scrollY
     }
 }

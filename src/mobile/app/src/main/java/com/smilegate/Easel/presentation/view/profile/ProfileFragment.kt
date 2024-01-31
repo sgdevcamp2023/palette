@@ -4,46 +4,46 @@ import android.animation.ObjectAnimator
 import android.content.Context
 import android.graphics.PorterDuff
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.os.Vibrator
+import android.util.Log
 import android.view.GestureDetector
-import androidx.fragment.app.Fragment
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
 import android.widget.Toast
-import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import androidx.viewpager.widget.ViewPager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.clans.fab.FloatingActionButton
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.tabs.TabLayout
 import com.smilegate.Easel.R
+import com.smilegate.Easel.data.ProfileTapRvDataHelper
+import com.smilegate.Easel.data.refreshTimelineData
 import com.smilegate.Easel.databinding.FragmentProfileBinding
-import com.smilegate.Easel.databinding.FragmentProfileImageBinding
-import com.smilegate.Easel.databinding.FragmentStartBinding
-import com.smilegate.Easel.presentation.adapter.TimelineAdapter
-import com.smilegate.Easel.presentation.view.timeline.FollowingFragment
-import com.smilegate.Easel.presentation.view.timeline.ForYouFragment
+import com.smilegate.Easel.presentation.adapter.TimelineRecyclerViewAdapter
+import kotlin.math.abs
 
 class ProfileFragment : Fragment() {
 
     private lateinit var binding: FragmentProfileBinding
+    private lateinit var recyclerViewAdapter: TimelineRecyclerViewAdapter
 
     private lateinit var navController: NavController
 
     private var isFabOpen = false
     private lateinit var gestureDetector: GestureDetector
+    private lateinit var gestureDetectorTab: GestureDetector
 
     private lateinit var vibrator: Vibrator
 
     private var isAnimationRunning = false
+
+    private val tabTitles = listOf("게시물", "답글", "하이라이트", "미디어", "마음에 들어요")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,14 +63,6 @@ class ProfileFragment : Fragment() {
         val bottomNavigation = activity?.findViewById<BottomNavigationView>(R.id.nav_view)
         bottomNavigation?.visibility = View.VISIBLE
 
-        val viewPager: ViewPager = binding.root.findViewById(R.id.profile_view_pager)
-        setupViewPager(viewPager)
-
-        val tabLayout: TabLayout = binding.root.findViewById(R.id.tabLayout)
-        tabLayout.setupWithViewPager(viewPager)
-        tabLayout.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.white))
-        tabLayout.setSelectedTabIndicatorColor(ContextCompat.getColor(requireContext(), R.color.Blue_500))
-
         return binding.root
     }
 
@@ -79,25 +71,99 @@ class ProfileFragment : Fragment() {
 
         navController = findNavController()
 
-        val backButton = activity?.findViewById<ImageView>(R.id.iv_back_btn)
-        backButton?.setOnClickListener {
-            findNavController().navigate(R.id.action_profileFragment_to_timeLineFragment)
+        val backBtnList = listOf(
+            binding.icBack,
+            binding.ivBackBtn,
+        )
+
+        for (view in backBtnList) {
+            view.setOnClickListener {
+                navController.navigate(R.id.action_profileFragment_to_timeLineFragment)
+            }
         }
+
+        val tabLayout = binding.tabLayout
+
+        tabLayout.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.white))
+        tabLayout.setSelectedTabIndicatorColor(ContextCompat.getColor(requireContext(), R.color.Blue_500))
+
+        for (i in tabTitles.indices) {
+            tabLayout.addTab(tabLayout.newTab().setText(tabTitles[i]))
+        }
+
+        tabLayout.getTabAt(0)?.select()
+
+        val recyclerView = binding.rvProfile
+
+        val currentTabPosition = tabLayout.selectedTabPosition
+        val timelineList = ProfileTapRvDataHelper.getDataForTab(currentTabPosition)
+        Log.d("TimelineData", timelineList.toString())
+
+        recyclerViewAdapter = TimelineRecyclerViewAdapter(requireContext(), timelineList)
+
+        recyclerView.adapter = recyclerViewAdapter
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        recyclerViewAdapter.notifyDataSetChanged()
+
+        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                // 선택된 탭에 따라 다른 데이터를 가져와서 리사이클러뷰를 업데이트하거나 로딩
+                updateRecyclerViewDataForTab(tab?.position ?: 0)
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {}
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {}
+        })
+
+        updateRecyclerViewDataForTab(0)
+
+        view.isFocusableInTouchMode = true
+        view.requestFocus()
+        view.setOnKeyListener { _, keyCode, _ ->
+            if (keyCode == KeyEvent.KEYCODE_BACK) {
+                if(isFabOpen) {
+                    toggleFab()
+                } else {
+                    findNavController().navigate(R.id.action_profileFragment_to_timeLineFragment)
+                }
+                return@setOnKeyListener true
+            }
+            false
+        }
+
 
         vibrator = requireContext().getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
 
         setFABClickEvent()
 
+        val swipeRefreshLayout = binding.swipeRefreshLayout
+        swipeRefreshLayout.setOnRefreshListener {
+            refreshTimelineData()
+        }
+
+        gestureDetectorTab = GestureDetector(requireContext(), object : GestureDetector.SimpleOnGestureListener() {
+            override fun onFling(
+                e1: MotionEvent?,
+                e2: MotionEvent,
+                velocityX: Float,
+                velocityY: Float
+            ): Boolean {
+                return handleSwipe(e1, e2, velocityX)
+            }
+        })
+
+        // RecyclerView에 터치 리스너 설정
+        recyclerView.setOnTouchListener { _, event ->
+            gestureDetectorTab.onTouchEvent(event)
+            false
+        }
+
     }
 
-    private fun setupViewPager(viewPager: ViewPager) {
-        val adapter = TimelineAdapter(childFragmentManager)
-        adapter.addFragment(MyPostFragment(), "게시물")
-        adapter.addFragment(ReplyFragment(), "답글")
-        adapter.addFragment(HighlightFragment(), "하이라이트")
-        adapter.addFragment(MediaFragment(), "미디어")
-        adapter.addFragment(LikedFragment(), "마음에 들어요")
-        viewPager.adapter = adapter
+    private fun updateRecyclerViewDataForTab(tabPosition: Int) {
+        val dataForTab = ProfileTapRvDataHelper.getDataForTab(tabPosition)
+        recyclerViewAdapter.updateData(dataForTab)
     }
 
     private fun setFABClickEvent() {
@@ -157,12 +223,12 @@ class ProfileFragment : Fragment() {
 
         binding.fabMain.setOnClickListener {
             if(!isFabOpen) {
-                findNavController().navigate(R.id.action_timelineFragment_to_postFragment)
+                findNavController().navigate(R.id.action_profileFragment_to_postFragment)
             }
         }
 
         binding.fabImage.setOnClickListener {
-            findNavController().navigate(R.id.action_timelineFragment_to_postFragment)
+            findNavController().navigate(R.id.action_profileFragment_to_postFragment)
         }
 
         binding.fabGif.setOnClickListener {
@@ -170,7 +236,7 @@ class ProfileFragment : Fragment() {
         }
 
         binding.fabWrite.setOnClickListener {
-            findNavController().navigate(R.id.action_timelineFragment_to_postFragment)
+            findNavController().navigate(R.id.action_profileFragment_to_postFragment)
         }
     }
 
@@ -217,4 +283,50 @@ class ProfileFragment : Fragment() {
     private fun setElevationCompat(fab: FloatingActionButton, elevation: Float) {
         fab.setElevationCompat(elevation)
     }
+    // 탭 전환 메서드
+    private fun navigateToNextTab() {
+        val tabLayout = binding.tabLayout
+
+        val currentTab = tabLayout.selectedTabPosition
+        tabLayout.getTabAt((currentTab + 1).coerceAtMost(tabTitles.size - 1))?.select()
+    }
+
+    private fun navigateToPreviousTab() {
+        val tabLayout = binding.tabLayout
+
+        val currentTab = tabLayout.selectedTabPosition
+        tabLayout.getTabAt((currentTab - 1).coerceAtLeast(0))?.select()
+    }
+
+    companion object {
+        private const val SWIPE_THRESHOLD = 100
+        private const val SWIPE_VELOCITY_THRESHOLD = 100
+    }
+
+    fun handleSwipe(e1: MotionEvent?, e2: MotionEvent?, velocityX: Float): Boolean {
+        if (e1 != null && e2 != null) {
+            val deltaX = e2.x - e1.x
+            val deltaY = e2.y - e1.y
+            return handleHorizontalSwipe(deltaX, deltaY, velocityX)
+        }
+        return false
+    }
+
+    private fun handleHorizontalSwipe(deltaX: Float, deltaY: Float, velocityX: Float): Boolean {
+        val absDeltaX = abs(deltaX)
+        val absDeltaY = abs(deltaY)
+
+        if (absDeltaX > absDeltaY && absDeltaX > SWIPE_THRESHOLD && abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
+            if (deltaX > 0) {
+                // 오른쪽으로 스와이프한 경우
+                navigateToPreviousTab()
+            } else {
+                // 왼쪽으로 스와이프한 경우
+                navigateToNextTab()
+            }
+            return true
+        }
+        return false
+    }
+
 }

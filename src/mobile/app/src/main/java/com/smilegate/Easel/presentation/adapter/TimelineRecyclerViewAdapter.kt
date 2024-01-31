@@ -24,7 +24,12 @@ class TimelineRecyclerViewAdapter(private val context: Context, private val time
     RecyclerView.Adapter<TimelineRecyclerViewAdapter.TimelineViewHolder>() {
 
     private val popupManager = TimelinePopupManager(context)
-    private val bottomSheetDialog = RetweetBottomSheetDialog()
+    private var timelineListItem: MutableList<TimelineItem> = mutableListOf()
+
+    fun updateData(newList: List<TimelineItem>) {
+        timelineListItem = newList.toMutableList()
+        notifyDataSetChanged()
+    }
     @RequiresApi(Build.VERSION_CODES.S)
     inner class TimelineViewHolder(private val binding: ItemTimelineBinding) :
         RecyclerView.ViewHolder(binding.root) {
