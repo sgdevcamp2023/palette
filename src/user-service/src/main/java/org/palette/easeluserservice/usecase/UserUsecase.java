@@ -3,7 +3,9 @@ package org.palette.easeluserservice.usecase;
 import lombok.RequiredArgsConstructor;
 import org.palette.easeluserservice.dto.request.JoinRequest;
 import org.palette.easeluserservice.dto.request.TemporaryJoinRequest;
+import org.palette.easeluserservice.dto.request.UsernameDuplicationVerifyRequest;
 import org.palette.easeluserservice.dto.response.EmailDuplicationVerifyResponse;
+import org.palette.easeluserservice.dto.response.UsernameDuplicationVerifyResponse;
 import org.palette.easeluserservice.exception.BaseException;
 import org.palette.easeluserservice.exception.ExceptionType;
 import org.palette.easeluserservice.external.GrpcAuthClient;
@@ -22,11 +24,18 @@ public class UserUsecase {
     private final GrpcSocialClient gRPCSocialClient;
     private final GrpcAuthClient gRPCAuthClient;
 
-    public EmailDuplicationVerifyResponse executeNicknameDuplicationVerify(
+    public EmailDuplicationVerifyResponse executeEmailDuplicationVerify(
             String email
     ) {
         userService.isEmailAlreadyExists(email);
         return new EmailDuplicationVerifyResponse(Boolean.FALSE);
+    }
+
+    public UsernameDuplicationVerifyResponse executeUsernameDuplicationVerify(
+            String username
+    ) {
+        userService.isUsernameAlreadyExists(username);
+        return new UsernameDuplicationVerifyResponse(Boolean.FALSE);
     }
 
     @Transactional
