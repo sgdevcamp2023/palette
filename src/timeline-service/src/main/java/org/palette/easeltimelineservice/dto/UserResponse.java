@@ -1,4 +1,4 @@
-package org.palette.easeltimelineservice;
+package org.palette.easeltimelineservice.dto;
 
 public record UserResponse(
         Long id,

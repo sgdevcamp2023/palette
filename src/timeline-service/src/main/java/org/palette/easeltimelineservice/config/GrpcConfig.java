@@ -1,4 +1,4 @@
-package org.palette.easeltimelineservice;
+package org.palette.easeltimelineservice.config;
 
 import jakarta.annotation.PostConstruct;
 import net.devh.boot.grpc.common.util.GrpcUtils;

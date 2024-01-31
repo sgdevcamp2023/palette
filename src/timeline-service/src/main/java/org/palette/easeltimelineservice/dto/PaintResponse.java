@@ -1,8 +1,8 @@
-package org.palette.easeltimelineservice;
+package org.palette.easeltimelineservice.dto;
 
 import java.time.LocalDateTime;
 
-public record Paint(
+public record PaintResponse(
         Long id,
         Boolean isReply,
         Long authorId,

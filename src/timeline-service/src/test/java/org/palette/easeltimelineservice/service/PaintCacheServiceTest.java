@@ -1,7 +1,9 @@
-package org.palette.easeltimelineservice;
+package org.palette.easeltimelineservice.service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.palette.easeltimelineservice.dto.PaintResponse;
+import org.palette.easeltimelineservice.service.PaintCacheService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -39,7 +41,7 @@ class PaintCacheServiceTest {
     void cachePaint() {
         // given
         final Long paintId = 1L;
-        final Paint paint = new Paint(
+        final PaintResponse paintResponse = new PaintResponse(
                 1L,
                 false,
                 1L,
@@ -60,10 +62,10 @@ class PaintCacheServiceTest {
                 null
         );
         // when
-        paintCacheService.cachePaint(paintId, paint);
+        paintCacheService.cachePaint(paintId, paintResponse);
 
         // then
-        final Paint cachedPaint = (Paint) redisTemplate.opsForValue().get("paint:" + paintId);
-        assertEquals(paint, cachedPaint);
+        final PaintResponse cachedPaintResponse = (PaintResponse) redisTemplate.opsForValue().get("paint:" + paintId);
+        assertEquals(paintResponse, cachedPaintResponse);
     }
 }

@@ -1,4 +1,4 @@
-package org.palette.easeltimelineservice;
+package org.palette.easeltimelineservice.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;

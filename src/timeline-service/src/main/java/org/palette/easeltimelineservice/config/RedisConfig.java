@@ -1,4 +1,4 @@
-package org.palette.easeltimelineservice;
+package org.palette.easeltimelineservice.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

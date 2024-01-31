@@ -1,6 +1,8 @@
-package org.palette.easeltimelineservice;
+package org.palette.easeltimelineservice.external.kafka;
 
 import lombok.RequiredArgsConstructor;
+import org.palette.easeltimelineservice.dto.PaintCreatedEvent;
+import org.palette.easeltimelineservice.usecase.TimelineUsecase;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 

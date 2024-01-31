@@ -1,8 +1,12 @@
-package org.palette.easeltimelineservice;
+package org.palette.easeltimelineservice.external;
 
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.palette.easeltimelineservice.dto.PaintResponse;
+import org.palette.easeltimelineservice.dto.PaintCreatedEvent;
+import org.palette.easeltimelineservice.external.kafka.EventConsumer;
+import org.palette.easeltimelineservice.external.grpc.GrpcSocialClient;
 import org.palette.grpc.GFollowerIdsResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -49,12 +53,12 @@ class EventConsumerTest {
             softAssertions.assertThat(redisTemplate.opsForList().size("follow_timeline:2")).isEqualTo(1);
             softAssertions.assertThat(redisTemplate.opsForList().size("follow_timeline:3")).isEqualTo(1);
         });
-        assertThat(redisTemplate.opsForValue().get("paint:1")).isEqualTo(paintCreatedEvent.paint());
+        assertThat(redisTemplate.opsForValue().get("paint:1")).isEqualTo(paintCreatedEvent.paintResponse());
     }
 
     private static PaintCreatedEvent generatePaintCreatedEvent(final Long userId) {
         final Long paintId = 1L;
-        final Paint paint = new Paint(
+        final PaintResponse paintResponse = new PaintResponse(
                 1L,
                 false,
                 1L,
@@ -74,6 +78,6 @@ class EventConsumerTest {
                 null,
                 null
         );
-        return new PaintCreatedEvent(userId, paintId, paint);
+        return new PaintCreatedEvent(userId, paintId, paintResponse);
     }
 }

@@ -1,4 +1,4 @@
-package org.palette.easeltimelineservice;
+package org.palette.easeltimelineservice.external.grpc;
 
 import io.grpc.StatusRuntimeException;
 import lombok.RequiredArgsConstructor;

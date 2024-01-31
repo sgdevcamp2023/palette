@@ -1,9 +1,9 @@
-package org.palette.easeltimelineservice;
+package org.palette.easeltimelineservice.dto;
 
 
 public record PaintCreatedEvent(
         Long userId,
         Long paintId,
-        Paint paint
+        PaintResponse paintResponse
 ) {
 }
