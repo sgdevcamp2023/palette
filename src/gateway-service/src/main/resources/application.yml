@@ -26,58 +26,75 @@ spring:
         - id: AUTH-SERVICE
           uri: lb://AUTH-SERVICE
           predicates:
-            - Path=/auth/**
+            - Path=/api/auth/**
           filters:
-            - RewritePath=/auth/?(?<segment>.*), /$\{segment}
+            - RewritePath=/api/auth/?(?<segment>.*), /$\{segment}
 
         - id: USER-SERVICE
           uri: lb://USER-SERVICE
           predicates:
-            - Path=/users/**
+            - Path=/api/users/
+            - Path=/api/users/verify-email
+            - Path=/api/users/verify-username
+            - Path=/api/users/join
+            - Path=/api/users/web-logout
+            - Path=/api/users/profile
+            - Path=/api/users/{id}
+            - Path=/api/users/me
           filters:
-            - RewritePath=/users/?(?<segment>.*), /$\{segment}
+            - RewritePath=/api/users/?(?<segment>.*), /$\{segment}
 
         - id: TIMELINE-SERVICE
           uri: lb://TIMELINE-SERVICE
           predicates:
-            - Path=/timeline/**
+            - Path=/api/timeline/**
           filters:
-            - RewritePath=/timeline/?(?<segment>.*), /$\{segment}
+            - RewritePath=/api/timeline/?(?<segment>.*), /$\{segment}
 
         - id: SOCIAL-SERVICE
           uri: lb://SOCIAL-SERVICE
           predicates:
-            - Path=/social/**
-          filters:
-            - RewritePath=/social/?(?<segment>.*), /$\{segment}
+            - Path=/api/paints/**
+            - Path=/api/users/{id}/following
+            - Path=/api/users/{id}/follower
+            - Path=/api/users/{id}/verified_follower
+            - Path=/api/users/{id}/following
+            - Path=/api/users/{id}/following
+            - Path=/api/users/{id}/paint
+            - Path=/api/users/{id}/reply
+            - Path=/api/users/{id}/media
+            - Path=/api/users/{id}/like
+            - Path=/api/users/{id}/like/{paintId}
+            - Path=/api/users/{id}/repaint
+            - Path=/api/users/{id}/repaint/{sourcePaintId}
 
         - id: TRENDS-SERVICE
           uri: lb://TRENDS-SERVICE
           predicates:
-            - Path=/trends/**
+            - Path=/api/trends/**
           filters:
-            - RewritePath=/trends/?(?<segment>.*), /$\{segment}
+            - RewritePath=/api/trends/?(?<segment>.*), /$\{segment}
 
         - id: SEARCH-SERVICE
           uri: lb://SEARCH-SERVICE
           predicates:
-            - Path=/search/**
+            - Path=/api/search/**
           filters:
-            - RewritePath=/search/?(?<segment>.*), /$\{segment}
+            - RewritePath=/api/search/?(?<segment>.*), /$\{segment}
 
         - id: DM-SERVICE
           uri: lb://DM-SERVICE
           predicates:
-            - Path=/dm/**
+            - Path=/api/dm/**
           filters:
-            - RewritePath=/dm/?(?<segment>.*), /$\{segment}
+            - RewritePath=/api/dm/?(?<segment>.*), /$\{segment}
 
         - id: NOTIFICATION-SERVICE
           uri: lb://NOTIFICATION-SERVICE
           predicates:
-            - Path=/notification/**
+            - Path=/api/notification/**
           filters:
-            - RewritePath=/notification/?(?<segment>.*), /$\{segment}
+            - RewritePath=/api/notification/?(?<segment>.*), /$\{segment}
 
       default-filters:
         - name: AuthorizationFilter
@@ -93,4 +110,5 @@ eureka:
     fetch-registry: true
     register-with-eureka: true
     service-url:
-      defaultZone: http://host.docker.internal:8761/eureka
+      #      defaultZone: http://host.docker.internal:8761/eureka
+      defaultZone: http://localhost:8761/eureka
