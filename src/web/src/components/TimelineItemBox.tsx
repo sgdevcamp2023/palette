@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { useNavigate } from '@tanstack/react-router';
 
-import { cn, getDiffDateText } from '@/utils';
+import { cn, forCloudinaryImage, getDiffDateText } from '@/utils';
 import type { TimelineItem } from '@/@types';
 import Typography from './common/Typography';
 import TimelineItemMenu from './TimelineItemMenu';
@@ -46,7 +46,7 @@ function TimelineItemBox({
         }
       >
         <img
-          src={item.authorImagePath}
+          src={forCloudinaryImage(item.authorImagePath)}
           alt={`${item.authorNickname}`}
           className="rounded-full w-[44px] h-[44px] min-w-[44px]"
         />
@@ -102,9 +102,11 @@ function TimelineItemBox({
 
         {hasMedia && (
           <img
-            src={item.includes.medias[0].path}
+            src={forCloudinaryImage(item.includes.medias[0].path, {
+              resize: false,
+            })}
             alt="user-upload-asset"
-            className="w-full max-h-[300px] rounded-[10px] min-h-[300px] mt-[8px] mb-[12px]"
+            className="w-full rounded-[10px] mt-[8px] mb-[12px]"
           />
         )}
 

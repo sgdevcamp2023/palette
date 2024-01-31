@@ -5,8 +5,8 @@ import { useNavigate } from '@tanstack/react-router';
 
 import type { User } from '@/@types';
 import { Icon, Typography } from './common';
+import { cn, forCloudinaryImage } from '@/utils';
 import AccessibleIconButton from './AccessibleIconButton';
-import { cn } from '@/utils';
 
 interface MenuModalProps {
   user: User;
@@ -34,7 +34,7 @@ function MenuModal({ user, onClose }: MenuModalProps) {
     >
       <div className="flex justify-between items-center mt-[24px]">
         <img
-          src={user.profileImagePath}
+          src={forCloudinaryImage(user.profileImagePath)}
           alt="user profile"
           className="w-[40px] min-w[40px] h-[40px] min-h-[40px] rounded-full"
         />

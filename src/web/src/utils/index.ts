@@ -5,5 +5,6 @@ export * from './dummyTimelineItem';
 export * from './helperDate';
 export * from './helperIcon';
 export * from './helperPost';
+export * from './imageCDN';
 export * from './isValidEmail';
 export * from './storage';

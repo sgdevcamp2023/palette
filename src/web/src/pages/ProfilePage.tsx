@@ -4,7 +4,11 @@ import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useRouter } from '@tanstack/react-router';
 
 import type { TimelineItem } from '@/@types';
-import { DUMMY_USER, createDummyTimelineItem } from '@/utils';
+import {
+  DUMMY_USER,
+  createDummyTimelineItem,
+  forCloudinaryImage,
+} from '@/utils';
 import {
   AccessibleIconButton,
   AsyncBoundary,
@@ -81,7 +85,7 @@ function ProfilePage() {
         />
       </header>
       <img
-        src={user.backgroundImagePath}
+        src={forCloudinaryImage(user.backgroundImagePath)}
         alt="user-background"
         className="w-full top-0 transition-all"
         style={{
@@ -91,7 +95,7 @@ function ProfilePage() {
       {isExpandImage ? (
         <div className="flex justify-end relative items-center mt-[10px] pl-3 pr-2">
           <img
-            src={user.profileImagePath}
+            src={forCloudinaryImage(user.profileImagePath)}
             alt="user"
             className="w-[70px] h-[70px] rounded-full border-2 border-white absolute left-3 top-[-35px]"
           />

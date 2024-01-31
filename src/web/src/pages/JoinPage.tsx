@@ -18,7 +18,7 @@ const DUMMY_VERIFIED = 'abc123';
 
 function JoinPage() {
   const [state, dispatch] = useReducer(joinStepReducer, JoinStep.INFORMATION);
-  const [JoinInfo, setJoinInfo] = useState<JoinInfo>({
+  const [joinInfo, setJoinInfo] = useState<JoinInfo>({
     nickname: '',
     username: '',
     email: '',
@@ -31,7 +31,7 @@ function JoinPage() {
   const handleJoin = async () => {
     try {
       // TODO: api 연동
-      toast(`${JoinInfo.username}님 회원가입이 완료되었습니다.`);
+      toast(`${joinInfo.username}님 회원가입이 완료되었습니다.`);
       navigate({ to: '/' });
     } catch (err) {
       toast.error('서버에 잠시 문제가 생겼습니다.');
@@ -59,9 +59,9 @@ function JoinPage() {
       case JoinStep.INFORMATION:
         return (
           <JoinEmailBox
-            disabled={JoinInfo.email === '' || JoinInfo.nickname === ''}
-            email={JoinInfo.email}
-            nickname={JoinInfo.nickname}
+            disabled={joinInfo.email === '' || joinInfo.nickname === ''}
+            email={joinInfo.email}
+            nickname={joinInfo.nickname}
             onNextStep={onNextPage}
             onChangeInput={handleChangeInput}
           />
@@ -69,9 +69,9 @@ function JoinPage() {
       case JoinStep.EMAIL_VERIFY:
         return (
           <JoinEmailVerifyBox
-            email={JoinInfo.email}
-            emailVerifyCode={JoinInfo.emailVerifyCode}
-            disabled={JoinInfo.emailVerifyCode !== DUMMY_VERIFIED}
+            email={joinInfo.email}
+            emailVerifyCode={joinInfo.emailVerifyCode}
+            disabled={joinInfo.emailVerifyCode !== DUMMY_VERIFIED}
             onNextStep={onNextPage}
             onChangeInput={handleChangeInput}
           />
@@ -79,8 +79,8 @@ function JoinPage() {
       case JoinStep.PASSWORD:
         return (
           <JoinPasswordBox
-            password={JoinInfo.password}
-            disabled={JoinInfo.password.length < 8}
+            password={joinInfo.password}
+            disabled={joinInfo.password.length < 8}
             onNextStep={onNextPage}
             onChangeInput={handleChangeInput}
           />
@@ -88,7 +88,8 @@ function JoinPage() {
       case JoinStep.PROFILE_IMAGE:
         return (
           <JoinProfileImageBox
-            disabled={JoinInfo.profilePath === ''}
+            disabled={joinInfo.profilePath === ''}
+            imageSrc={joinInfo.profilePath}
             onNextStep={onNextPage}
             onChangeImage={(path: string) =>
               setJoinInfo((prev) => ({ ...prev, profilePath: path }))
@@ -99,8 +100,8 @@ function JoinPage() {
       case JoinStep.NAME:
         return (
           <JoinNameBox
-            username={JoinInfo.username}
-            disabled={JoinInfo.username === ''}
+            username={joinInfo.username}
+            disabled={joinInfo.username === ''}
             onJoin={handleJoin}
             onChangeInput={handleChangeInput}
           />
@@ -108,8 +109,8 @@ function JoinPage() {
       default:
         return (
           <JoinEmailBox
-            email={JoinInfo.email}
-            nickname={JoinInfo.nickname}
+            email={joinInfo.email}
+            nickname={joinInfo.nickname}
             onNextStep={onNextPage}
             onChangeInput={handleChangeInput}
           />

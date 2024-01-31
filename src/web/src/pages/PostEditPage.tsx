@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { toast } from 'react-toastify';
 import type { ChangeEvent } from 'react';
 import { useRouter } from '@tanstack/react-router';
+import { useMutation } from '@tanstack/react-query';
 
 import type { EditPaint } from '@/@types';
 import { useAutoHeightTextArea } from '@/hooks';
@@ -10,6 +11,7 @@ import {
   DUMMY_USER,
   convertToMedia,
   countByte,
+  forCloudinaryImage,
   forEditPaint,
   generateLocalStorage,
 } from '@/utils';
@@ -23,6 +25,8 @@ import {
   Typography,
 } from '@/components';
 import { editPostRoute } from '@/routes';
+import { apis } from '@/api';
+import { FullScreenSpinner } from '@/components/skeleton';
 
 const EMPTY_LENGTH = 0;
 const MAX_BYTE = 280;
@@ -58,20 +62,21 @@ function PostEditPage() {
     () => tempSavedStorage.get() ?? [],
   );
 
-  const encodeFileToBase64 = (file: File) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-
-    reader.onloadend = async () => {
-      setImage(reader.result as string);
-    };
-  };
+  const uploadMutation = useMutation({
+    mutationKey: ['image-upload'],
+    mutationFn: (imageFile: File) =>
+      apis.images.uploadImage(imageFile, Math.round(Date.now() / 1000), {
+        folder: 'posts',
+      }),
+    onSuccess: (res) => setImage(res.public_id),
+    onError: () => toast.error('업로드에 실패했습니다.'),
+  });
 
   const handleUploadImage = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
 
     if (file) {
-      encodeFileToBase64(file);
+      uploadMutation.mutate(file);
     }
   };
 
@@ -112,8 +117,8 @@ function PostEditPage() {
         left={{
           type: 'leftStickArrow',
           label: '뒤로가기',
-          width: 24,
-          height: 24,
+          width: 20,
+          height: 20,
           onClick: handleClickBackButton,
         }}
         right={{
@@ -158,7 +163,7 @@ function PostEditPage() {
       <main className="pt-[64px] pb-[40px] max-h-screen overflow-y-scroll">
         <div className="px-[10px] flex gap-[8px]">
           <img
-            src={user.profileImagePath}
+            src={forCloudinaryImage(user.profileImagePath)}
             alt="user"
             className="w-[34px] h-[34px] rounded-full"
           />
@@ -184,7 +189,7 @@ function PostEditPage() {
             {image && (
               <div className="relative">
                 <img
-                  src={image}
+                  src={forCloudinaryImage(image)}
                   alt="user-uploaded"
                   className="w-full rounded-[12px] mb-4 overflow-clip"
                 />
@@ -319,6 +324,8 @@ function PostEditPage() {
           setEditPostInfo={setEditPostInfo}
         />
       )}
+
+      {uploadMutation.isPending && <FullScreenSpinner />}
     </>
   );
 }
