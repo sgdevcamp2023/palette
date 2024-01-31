@@ -3,9 +3,10 @@ import VisuallyHidden from '../common/VisuallyHidden';
 
 interface SpinnerProps {
   className?: string;
+  spinnerClassName?: string;
 }
 
-function Spinner({ className }: SpinnerProps) {
+function Spinner({ className, spinnerClassName }: SpinnerProps) {
   return (
     <div
       role="status"
@@ -17,7 +18,10 @@ function Spinner({ className }: SpinnerProps) {
       <VisuallyHidden>Loading...</VisuallyHidden>
       <svg
         aria-hidden="true"
-        className="w-5 h-5 text-blueGrey-200 animate-spin dark:text-blueGrey-600 fill-blue-500"
+        className={cn(
+          'w-5 h-5 text-blueGrey-200 animate-spin dark:text-blueGrey-600 fill-blue-500',
+          spinnerClassName,
+        )}
         viewBox="0 0 100 101"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
