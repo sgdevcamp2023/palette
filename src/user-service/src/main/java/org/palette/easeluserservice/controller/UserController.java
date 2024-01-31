@@ -1,11 +1,13 @@
 package org.palette.easeluserservice.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.palette.easeluserservice.dto.request.EmailDuplicationVerifyRequest;
 import org.palette.easeluserservice.dto.request.JoinRequest;
 import org.palette.easeluserservice.dto.request.TemporaryJoinRequest;
 import org.palette.easeluserservice.dto.response.EmailDuplicationVerifyResponse;
 import org.palette.easeluserservice.usecase.UserUsecase;
+import org.palette.passport.PassportExtractor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class UserController {
 
+    private final PassportExtractor passportExtractor;
     private final UserUsecase userUsecase;
 
     @PostMapping("/verify-email")
@@ -41,5 +44,25 @@ public class UserController {
             @RequestBody JoinRequest joinRequest
     ) {
         userUsecase.executeJoin(joinRequest);
+    }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @GetMapping("/{id}")
+    public void retrieveOther(
+            @PathVariable Long id,
+            HttpServletRequest httpServletRequest
+    ) {
+        userUsecase.retrieveOther(
+                passportExtractor.getPassportFromRequestHeader(httpServletRequest),
+                id
+        );
+    }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @GetMapping("/me")
+    public void retrieveMe(HttpServletRequest httpServletRequest) {
+        userUsecase.retrieveMe(
+                passportExtractor.getPassportFromRequestHeader(httpServletRequest)
+        );
     }
 }
