@@ -2,7 +2,7 @@ package org.palette.easeluserservice.dto.response;
 
 import java.time.LocalDateTime;
 
-public record UserRetrieveResponse(
+public record RetrieveUserResponse(
         String backgroundImagePath,
         String profileImagePath,
         String nickname,

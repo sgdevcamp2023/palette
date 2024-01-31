@@ -2,7 +2,7 @@ package org.palette.easeluserservice.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 
-public record EmailDuplicationVerifyRequest(
+public record VerifyEmailDuplicationRequest(
         @NotBlank
         String email
 ) {
