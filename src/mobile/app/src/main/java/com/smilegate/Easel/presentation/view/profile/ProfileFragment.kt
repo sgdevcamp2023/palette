@@ -288,9 +288,7 @@ class ProfileFragment : Fragment() {
         val tabLayout = binding.tabLayout
 
         val currentTab = tabLayout.selectedTabPosition
-        if (currentTab < tabTitles.size - 1) {
-            tabLayout.getTabAt(currentTab + 1)?.select()
-        }
+        tabLayout.getTabAt((currentTab + 1).coerceAtMost(tabTitles.size - 1))?.select()
     }
 
     private fun navigateToPreviousTab() {
