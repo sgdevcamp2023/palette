@@ -2,35 +2,53 @@ package org.palette.passport;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.palette.exception.BaseException;
 import org.palette.exception.ExceptionType;
+import org.palette.passport.component.Passport;
 import org.palette.passport.component.UserInfo;
+import org.springframework.stereotype.Component;
 
 import java.util.Base64;
 
+@Component
 @RequiredArgsConstructor
 public class PassportExtractor {
 
     private static final String USER_INFO = "userInfo";
+    private static final String AUTHORIZATION_HEADER_NAME = "Authorization";
     private final ObjectMapper objectMapper;
+    private final PassportValidator passportValidator;
 
-    public UserInfo getUserInfo(String requestedPassport) {
-        UserInfo userInfo;
+    public Passport getPassportFromRequestHeader(HttpServletRequest httpServletRequest) {
         try {
-            String passportStr = new String(
-                    Base64.getDecoder().decode(requestedPassport)
+            return objectMapper.readValue(
+                    httpServletRequest.getHeader(AUTHORIZATION_HEADER_NAME),
+                    Passport.class
             );
-            String userInfoString = objectMapper.readTree(passportStr)
+        } catch (JsonProcessingException e) {
+            throw new BaseException(ExceptionType.COMMON_500_000002);
+        }
+    }
+
+    public UserInfo getUserInfoByPassport(Passport passport) {
+        try {
+            String passportString = new String(
+                    Base64.getDecoder().decode(passport.toString())
+            );
+
+            passportValidator.validatePassport(passportString);
+
+            String userInfoString = objectMapper.readTree(passportString)
                     .get(USER_INFO)
                     .toString();
-            userInfo = objectMapper.readValue(
+            return objectMapper.readValue(
                     userInfoString,
                     UserInfo.class
             );
         } catch (JsonProcessingException e) {
             throw new BaseException(ExceptionType.COMMON_500_000002);
         }
-        return userInfo;
     }
 }

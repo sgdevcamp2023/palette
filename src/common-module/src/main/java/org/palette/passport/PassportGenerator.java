@@ -7,13 +7,14 @@ import org.palette.exception.BaseException;
 import org.palette.exception.ExceptionType;
 import org.palette.passport.component.Passport;
 import org.palette.passport.component.UserInfo;
+import org.springframework.stereotype.Component;
 
 import java.util.Base64;
 
+@Component
 @RequiredArgsConstructor
 public class PassportGenerator {
-    private static final String USER_INFO = "userInfo";
-    private static final String INTEGRITY_KEY = "integrityKey";
+
     private final ObjectMapper objectMapper;
     private final HMACEncoder hmacEncoder;
 

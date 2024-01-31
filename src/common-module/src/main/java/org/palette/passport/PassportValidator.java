@@ -4,9 +4,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.palette.exception.BaseException;
 import org.palette.exception.ExceptionType;
+import org.springframework.stereotype.Component;
 
 import java.util.Base64;
 
+@Component
 @RequiredArgsConstructor
 public class PassportValidator {
 
@@ -15,7 +17,7 @@ public class PassportValidator {
     private final ObjectMapper objectMapper;
     private final HMACEncoder hmacEncoder;
 
-    public boolean validatePassport(String requestedPassport) {
+    public void validatePassport(String requestedPassport) {
         String encodedUserInfo;
         String integrityKey;
 
@@ -36,7 +38,6 @@ public class PassportValidator {
             throw new BaseException(ExceptionType.COMMON_500_000002);
         }
 
-        return true;
     }
 
     private void isEqualByRequestedPassport(

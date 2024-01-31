@@ -15,9 +15,9 @@ public class JwtGenerator {
 
     private final JwtProperties jwtProperties;
 
-public JwtPair execute(String email) {
+    public JwtPair execute(Long id) {
         return new JwtPair(
-                buildJwtToken(buildClaims(email), ACCESS_TOKEN_EXPIRE_TIME), 
+                buildJwtToken(buildClaims(id), ACCESS_TOKEN_EXPIRE_TIME),
                 buildJwtToken(Jwts.claims(), REFRESH_TOKEN_EXPIRE_TIME)
         );
     }
@@ -31,9 +31,9 @@ public JwtPair execute(String email) {
                 .compact();
     }
 
-    private Claims buildClaims(String email) {
+    private Claims buildClaims(Long id) {
         Claims claims = Jwts.claims();
-        claims.put(JWT_CLAIMS_EMAIL_COMPONENT, email);
+        claims.put(JWT_CLAIMS_ID_COMPONENT, id);
         return claims;
     }
 

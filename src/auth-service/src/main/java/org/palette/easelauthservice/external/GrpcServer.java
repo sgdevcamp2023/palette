@@ -12,7 +12,7 @@ import org.palette.grpc.GSendEmailAuthResponse;
 
 @GrpcService
 @RequiredArgsConstructor
-public class GrpcServerByUserService extends GAuthServiceGrpc.GAuthServiceImplBase {
+public class GrpcServer extends GAuthServiceGrpc.GAuthServiceImplBase {
 
     private final RedisEmailAuthService redisEmailAuthService;
     private final EmailAuthMailSender emailAuthMailSender;
@@ -37,7 +37,7 @@ public class GrpcServerByUserService extends GAuthServiceGrpc.GAuthServiceImplBa
         );
 
         GSendEmailAuthResponse response = GSendEmailAuthResponse.newBuilder()
-                .setMessage(true)
+                .setIsSuccess(true)
                 .build();
         responseObserver.onNext(response);
         responseObserver.onCompleted();
