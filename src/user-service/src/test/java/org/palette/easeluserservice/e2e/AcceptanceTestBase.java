@@ -94,7 +94,7 @@ public class AcceptanceTestBase {
         }
     }
 
-    private User createMockUser() throws NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+    protected User createMockUser() throws NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
         Class<User> userClass = User.class;
         Constructor<User> constructor = userClass.getDeclaredConstructor(
                 Long.class,
