@@ -146,7 +146,9 @@ function JoinProfileImageBox({
           지금은 넘어가기
         </Typography>
       </div>
-      {uploadMutation.isPending && <FullScreenSpinner />}
+      {uploadMutation.isPending && (
+        <FullScreenSpinner className="left-1/2 -translate-x-1/2" />
+      )}
     </>
   );
 }
