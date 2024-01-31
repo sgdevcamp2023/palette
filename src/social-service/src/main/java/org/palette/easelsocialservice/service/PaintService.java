@@ -118,7 +118,6 @@ public class PaintService {
         for (Paint paint : paints) {
             checkAndSetQuotePaint(paint);
             List<Paint> subPaints = distinctPaintsByPid(paintRepository.findAllAfterPaintsByPid(paint.getPid()));
-            subPaints.add(0, paint);
 
             threads.add(new ThreadResponse(threadId++, convertToPaintResponse(subPaints)));
         }
