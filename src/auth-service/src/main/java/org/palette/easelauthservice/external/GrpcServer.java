@@ -16,7 +16,6 @@ public class GrpcServer extends GAuthServiceGrpc.GAuthServiceImplBase {
 
     private final RedisEmailAuthService redisEmailAuthService;
     private final EmailAuthMailSender emailAuthMailSender;
-    private final AuthPayloadGenerator authPayloadGenerator;
 
     @Override
     public void sendEmailAuth(
@@ -24,7 +23,7 @@ public class GrpcServer extends GAuthServiceGrpc.GAuthServiceImplBase {
             StreamObserver<GSendEmailAuthResponse> responseObserver
     ) {
 
-        String authPayload = authPayloadGenerator.execute();
+        String authPayload = AuthPayloadGenerator.execute();
 
         emailAuthMailSender.send(
                 request.getEmail(),
