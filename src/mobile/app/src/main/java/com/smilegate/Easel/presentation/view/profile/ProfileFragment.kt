@@ -26,6 +26,7 @@ import com.smilegate.Easel.data.ProfileTapRvDataHelper
 import com.smilegate.Easel.data.refreshTimelineData
 import com.smilegate.Easel.databinding.FragmentProfileBinding
 import com.smilegate.Easel.presentation.adapter.TimelineRecyclerViewAdapter
+import kotlin.math.abs
 
 class ProfileFragment : Fragment() {
 
@@ -148,25 +149,7 @@ class ProfileFragment : Fragment() {
                 velocityX: Float,
                 velocityY: Float
             ): Boolean {
-                // 스와이프 동작 감지
-                if (e1 != null && e2 != null) {
-                    val deltaX = e2.x - e1.x
-                    val deltaY = e2.y - e1.y
-                    if (Math.abs(deltaX) > Math.abs(deltaY)) {
-                        // 가로로 스와이프된 경우
-                        if (Math.abs(deltaX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
-                            if (deltaX > 0) {
-                                // 오른쪽으로 스와이프한 경우
-                                navigateToPreviousTab()
-                            } else {
-                                // 왼쪽으로 스와이프한 경우
-                                navigateToNextTab()
-                            }
-                            return true
-                        }
-                    }
-                }
-                return false
+                return handleSwipe(e1, e2, velocityX)
             }
         })
 
@@ -314,13 +297,38 @@ class ProfileFragment : Fragment() {
         val tabLayout = binding.tabLayout
 
         val currentTab = tabLayout.selectedTabPosition
-        if (currentTab > 0) {
-            tabLayout.getTabAt(currentTab - 1)?.select()
-        }
+        tabLayout.getTabAt((currentTab - 1).coerceAtLeast(0))?.select()
     }
 
     companion object {
         private const val SWIPE_THRESHOLD = 100
         private const val SWIPE_VELOCITY_THRESHOLD = 100
     }
+
+    fun handleSwipe(e1: MotionEvent?, e2: MotionEvent?, velocityX: Float): Boolean {
+        if (e1 != null && e2 != null) {
+            val deltaX = e2.x - e1.x
+            val deltaY = e2.y - e1.y
+            return handleHorizontalSwipe(deltaX, deltaY, velocityX)
+        }
+        return false
+    }
+
+    private fun handleHorizontalSwipe(deltaX: Float, deltaY: Float, velocityX: Float): Boolean {
+        val absDeltaX = abs(deltaX)
+        val absDeltaY = abs(deltaY)
+
+        if (absDeltaX > absDeltaY && absDeltaX > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
+            if (deltaX > 0) {
+                // 오른쪽으로 스와이프한 경우
+                navigateToPreviousTab()
+            } else {
+                // 왼쪽으로 스와이프한 경우
+                navigateToNextTab()
+            }
+            return true
+        }
+        return false
+    }
+
 }

@@ -40,8 +40,6 @@ android {
 }
 
 dependencies {
-    //easy to see JSON
-    implementation ("com.jakewharton.timber:timber:4.7.1")
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
@@ -54,8 +52,6 @@ dependencies {
     implementation("com.github.bumptech.glide:glide:4.14.1")
     annotationProcessor("com.github.bumptech.glide:compiler:4.14.1")
     implementation ("com.github.bumptech.glide:annotations:4.14.1")
-//    kapt 'com.github.bumptech.glide:compiler:4.14.1'
-    implementation ("de.hdodenhof:circleimageview:3.1.0") //Circle ImageView
     implementation ("com.caverock:androidsvg:1.2.1")
 
     // Navigation
