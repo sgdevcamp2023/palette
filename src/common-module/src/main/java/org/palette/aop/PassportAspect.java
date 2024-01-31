@@ -19,7 +19,7 @@ public class PassportAspect {
     private final HttpServletRequest httpServletRequest;
     private final PassportExtractor passportExtractor;
 
-    @Around("@annotation(EaselAuthenticationPrincipal)")
+    @Around("@annotation(org.palette.aop.InjectEaselAuthentication)")
     public Object setUserInfoByServlet(ProceedingJoinPoint proceedingJoinPoint) {
         final Passport passport = passportExtractor.getPassportFromRequestHeader(httpServletRequest);
 
