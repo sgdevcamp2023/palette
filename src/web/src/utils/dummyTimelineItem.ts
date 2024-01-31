@@ -101,7 +101,7 @@ export const createDummyTimelineItem = (length: number): TimelineItem[] =>
               [
                 {
                   type: 'image',
-                  path: 'posts/uak4thmr0si4ep5uxn0z"',
+                  path: 'posts/uak4thmr0si4ep5uxn0z',
                 },
               ] as TimelineItem['includes']['medias'],
               [
