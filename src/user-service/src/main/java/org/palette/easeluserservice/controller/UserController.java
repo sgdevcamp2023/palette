@@ -11,13 +11,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/users")
 @RequiredArgsConstructor
 public class UserController {
 
     private final UserUsecase userUsecase;
 
-    @PostMapping("verify-email")
+    @PostMapping("/verify-email")
     public ResponseEntity<EmailDuplicationVerifyResponse> verifyUsername(
             @RequestBody EmailDuplicationVerifyRequest emailDuplicationVerifyRequest
     ) {
@@ -29,7 +28,7 @@ public class UserController {
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("temporary-join")
+    @PostMapping("/temporary-join")
     public void temporaryJoin(
             @RequestBody TemporaryJoinRequest temporaryJoinRequest
     ) {
@@ -37,7 +36,7 @@ public class UserController {
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("join")
+    @PostMapping("/join")
     public void join(
             @RequestBody JoinRequest joinRequest
     ) {
