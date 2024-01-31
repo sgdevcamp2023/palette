@@ -3,9 +3,10 @@ package org.palette.easeluserservice.controller;
 import lombok.RequiredArgsConstructor;
 import org.palette.aop.EaselAuthenticationContext;
 import org.palette.aop.InjectEaselAuthentication;
-import org.palette.easeluserservice.dto.request.VerifyEmailDuplicationRequest;
+import org.palette.easeluserservice.dto.request.EditProfileRequest;
 import org.palette.easeluserservice.dto.request.JoinRequest;
 import org.palette.easeluserservice.dto.request.TemporaryJoinRequest;
+import org.palette.easeluserservice.dto.request.VerifyEmailDuplicationRequest;
 import org.palette.easeluserservice.dto.request.UsernameDuplicationVerifyRequest;
 import org.palette.easeluserservice.dto.response.EmailDuplicationVerifyResponse;
 import org.palette.easeluserservice.dto.response.UsernameDuplicationVerifyResponse;
@@ -75,6 +76,17 @@ public class UserController {
         userUsecase.retrieveMe(
                 EaselAuthenticationContext.getUserInfo(),
                 EaselAuthenticationContext.getIntegrityKey()
+        );
+    }
+
+    @InjectEaselAuthentication
+    @PutMapping("/profile")
+    public void editProfile(
+            @RequestBody EditProfileRequest editProfileRequest
+    ) {
+        userUsecase.editProfile(
+                EaselAuthenticationContext.getUserInfo(),
+                editProfileRequest
         );
     }
 }
