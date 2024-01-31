@@ -117,4 +117,39 @@ describe('forEditPaint', () => {
       medias: [{ type: 'image', id: 'https://www.naver.com' }],
     });
   });
+
+  it('should index shift in with long-link', () => {
+    expect(
+      forEditPaint({
+        text: 'hello world https://www.naver.com/12345678901 should @sangmin1 return #opt zozo https://www.naver.com/98765432101 @sangmin2 #opt',
+        medias: [convertToMedia('https://www.naver.com', 'image')],
+      }),
+    ).toStrictEqual({
+      text: 'hello world https://www.naver.com/12345678901 should @sangmin1 return #opt zozo https://www.naver.com/98765432101 @sangmin2 #opt',
+      taggedUserIds: [],
+      quotePaintId: '',
+      inReplyToPaintId: '',
+      hashtags: [
+        { tag: 'opt', start: 60, end: 63 },
+        { tag: 'opt', start: 104, end: 107 },
+      ],
+      mentions: [
+        { mention: 'sangmin1', start: 43, end: 51, userId: '' },
+        { mention: 'sangmin2', start: 94, end: 102, userId: '' },
+      ],
+      links: [
+        {
+          link: 'https://www.naver.com/12345678901',
+          start: 12,
+          end: 35,
+        },
+        {
+          link: 'https://www.naver.com/98765432101',
+          start: 70,
+          end: 93,
+        },
+      ],
+      medias: [{ type: 'image', id: 'https://www.naver.com' }],
+    });
+  });
 });
