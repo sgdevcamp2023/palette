@@ -25,7 +25,7 @@ public class KafkaConsumerConfig {
     private String groupId;
 
     @Bean
-    public ConsumerFactory<String, PaintCreatedEvent> consumerFactory() {
+    public <T> ConsumerFactory<String, T> consumerFactory(Class<T> type) {
         Map<String, Object> config = new HashMap<>();
         config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         config.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
@@ -33,13 +33,23 @@ public class KafkaConsumerConfig {
         config.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
 
         return new DefaultKafkaConsumerFactory<>(config, new StringDeserializer(),
-                new JsonDeserializer<>(PaintCreatedEvent.class));
+                new JsonDeserializer<>(type));
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, PaintCreatedEvent> kafkaListenerContainerFactory() {
-        ConcurrentKafkaListenerContainerFactory<String, PaintCreatedEvent> factory = new ConcurrentKafkaListenerContainerFactory<>();
-        factory.setConsumerFactory(consumerFactory());
+    public <T> ConcurrentKafkaListenerContainerFactory<String, T> kafkaListenerContainerFactory(Class<T> type) {
+        ConcurrentKafkaListenerContainerFactory<String, T> factory = new ConcurrentKafkaListenerContainerFactory<>();
+        factory.setConsumerFactory(consumerFactory(type));
         return factory;
+    }
+
+    @Bean
+    public ConsumerFactory<String, PaintCreatedEvent> paintCreatedEventConsumerFactory() {
+        return consumerFactory(PaintCreatedEvent.class);
+    }
+
+    @Bean
+    public ConcurrentKafkaListenerContainerFactory<String, PaintCreatedEvent> paintCreatedEventKafkaListenerContainerFactory() {
+        return kafkaListenerContainerFactory(PaintCreatedEvent.class);
     }
 }
