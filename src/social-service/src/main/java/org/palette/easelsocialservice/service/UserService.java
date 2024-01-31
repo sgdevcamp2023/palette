@@ -8,9 +8,7 @@ import org.palette.easelsocialservice.exception.BaseException;
 import org.palette.easelsocialservice.exception.ExceptionType;
 import org.palette.easelsocialservice.persistence.UserRepository;
 import org.palette.easelsocialservice.persistence.domain.User;
-import org.palette.grpc.GCreateUserRequest;
-import org.palette.grpc.GCreateUserResponse;
-import org.palette.grpc.GSocialServiceGrpc;
+import org.palette.grpc.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -19,6 +17,7 @@ import java.util.Map;
 @GrpcService
 @RequiredArgsConstructor
 public class UserService extends GSocialServiceGrpc.GSocialServiceImplBase {
+
     private final UserRepository userRepository;
 
     @Override
@@ -31,6 +30,26 @@ public class UserService extends GSocialServiceGrpc.GSocialServiceImplBase {
         GCreateUserResponse response = GCreateUserResponse.newBuilder().setIsSuccess(true).build();
         responseStreamObserver.onNext(response);
         responseStreamObserver.onCompleted();
+    }
+
+    @Override
+    public void loadUserFollowInformation(
+            final GLoadUserFollowInformationRequest request,
+            final StreamObserver<GLoadUserFollowInformationResponse> responseObserver
+    ) {
+        final User user = userRepository.findByUid(request.getPassport().getId()).orElseThrow(() -> {
+            throw new BaseException(ExceptionType.SOCIAL_400_000001);
+        });
+
+        //TODO 유저로 팔로잉 관계 모두 조회
+        //TODO 그 객체로 카운팅해서 넣기
+
+        GLoadUserFollowInformationResponse response = GLoadUserFollowInformationResponse.newBuilder()
+                .setFollowerCount(1L)
+                .setFollowingCount(1L)
+                .build();
+        responseObserver.onNext(response);
+        responseObserver.onCompleted();
     }
 
     public User getUser(Long userId) {
