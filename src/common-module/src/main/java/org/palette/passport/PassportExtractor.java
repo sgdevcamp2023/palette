@@ -10,6 +10,7 @@ import org.palette.passport.component.Passport;
 import org.palette.passport.component.UserInfo;
 import org.springframework.stereotype.Component;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
 @Component
@@ -24,7 +25,10 @@ public class PassportExtractor {
     public Passport getPassportFromRequestHeader(HttpServletRequest httpServletRequest) {
         try {
             return objectMapper.readValue(
-                    httpServletRequest.getHeader(AUTHORIZATION_HEADER_NAME),
+                    new String(
+                            Base64.getDecoder().decode(httpServletRequest.getHeader(AUTHORIZATION_HEADER_NAME)),
+                            StandardCharsets.UTF_8
+                    ),
                     Passport.class
             );
         } catch (JsonProcessingException e) {
