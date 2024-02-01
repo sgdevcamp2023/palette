@@ -6,10 +6,11 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 import { Button } from './common';
 import type { PaintAction } from '@/hooks';
 import { postDetailRoute } from '@/routes';
+import QuotePostBox from './QuotePostBox';
 import Typography from './common/Typography';
-import { cn, fetchMainPost, forCloudinaryImage } from '@/utils';
 import TimelineItemMenu from './TimelineItemMenu';
 import AccessibleIconButton from './AccessibleIconButton';
+import { cn, fetchMainPost, forCloudinaryImage } from '@/utils';
 
 interface MainPostBoxProps {
   className?: string;
@@ -101,6 +102,11 @@ const MainPostBox = forwardRef<HTMLDivElement, MainPostBoxProps>(
             alt="user-upload-asset"
             className="w-full rounded-[12px] mb-[24px]"
           />
+        )}
+
+        {/* Quote */}
+        {post.includes.paint && (
+          <QuotePostBox post={post.includes.paint} className="my-[24px]" />
         )}
 
         <div className="flex flex-col gap-[16px] divide-y divide-y-blueGrey400">
