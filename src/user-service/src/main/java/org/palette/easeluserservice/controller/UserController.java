@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.palette.aop.EaselAuthenticationContext;
 import org.palette.aop.InjectEaselAuthentication;
 import org.palette.easeluserservice.dto.request.*;
+import org.palette.easeluserservice.dto.response.RetrieveUserResponse;
 import org.palette.easeluserservice.dto.response.UsernameDuplicationVerifyResponse;
 import org.palette.easeluserservice.dto.response.VerifyEmailDuplicationResponse;
 import org.palette.easeluserservice.usecase.UserUsecase;
@@ -57,21 +58,26 @@ public class UserController {
 
     @InjectEaselAuthentication
     @GetMapping("/{id}")
-    public void retrieveOther(@PathVariable Long id) {
-        userUsecase.retrieveOther(
-                EaselAuthenticationContext.getUserInfo(),
-                EaselAuthenticationContext.getIntegrityKey(),
-                id
-        );
+    public ResponseEntity<RetrieveUserResponse> retrieveOther(@PathVariable Long id) {
+        return ResponseEntity
+                .ok()
+                .body(userUsecase.retrieveOther(
+                        EaselAuthenticationContext.getUserInfo(),
+                        EaselAuthenticationContext.getIntegrityKey(),
+                        id)
+                );
     }
 
     @InjectEaselAuthentication
     @GetMapping("/me")
-    public void retrieveMe() {
-        userUsecase.retrieveMe(
-                EaselAuthenticationContext.getUserInfo(),
-                EaselAuthenticationContext.getIntegrityKey()
-        );
+    public ResponseEntity<RetrieveUserResponse> retrieveMe() {
+        return ResponseEntity
+                .ok()
+                .body(userUsecase.retrieveMe(
+                                EaselAuthenticationContext.getUserInfo(),
+                                EaselAuthenticationContext.getIntegrityKey()
+                        )
+                );
     }
 
     @InjectEaselAuthentication
