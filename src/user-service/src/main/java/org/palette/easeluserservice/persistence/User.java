@@ -78,6 +78,11 @@ public class User {
         this.accessedAt = LocalDateTime.now();
     }
 
+    public String getStringDeletedAt() {
+        if (deletedAt == null) return "";
+        return deletedAt.toString();
+    }
+
     public static User preJoin(
             String email,
             String nickname,
