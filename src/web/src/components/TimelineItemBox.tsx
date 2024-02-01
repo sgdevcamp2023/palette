@@ -1,11 +1,12 @@
 import { memo } from 'react';
 import { useNavigate } from '@tanstack/react-router';
 
-import { cn, forCloudinaryImage, getDiffDateText } from '@/utils';
+import QuotePostBox from './QuotePostBox';
 import type { TimelineItem } from '@/@types';
 import Typography from './common/Typography';
 import TimelineItemMenu from './TimelineItemMenu';
 import AccessibleIconButton from './AccessibleIconButton';
+import { cn, forCloudinaryImage, getDiffDateText } from '@/utils';
 
 interface TimelineItemBoxProps {
   item: TimelineItem;
@@ -64,7 +65,7 @@ function TimelineItemBox({
       >
         {/* 헤더 */}
         <div className="w-full flex justify-between relative">
-          <div className="flex gap-[4px] items-center items-center">
+          <div className="flex gap-[4px] items-center">
             <Typography size="headline-8" color="grey-600">
               {item.authorNickname}
             </Typography>
@@ -107,6 +108,19 @@ function TimelineItemBox({
             })}
             alt="user-upload-asset"
             className="w-full rounded-[10px] mt-[8px] mb-[12px]"
+          />
+        )}
+
+        {/* Quote */}
+        {item.includes.paint && (
+          <QuotePostBox
+            post={item.includes.paint}
+            className="my-[8px]"
+            direction={
+              hasMedia && item.includes.paint.includes.medias.length > 0
+                ? 'horizontal'
+                : 'vertical'
+            }
           />
         )}
 
