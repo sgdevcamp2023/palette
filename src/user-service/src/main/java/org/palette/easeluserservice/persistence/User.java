@@ -113,6 +113,9 @@ public class User {
                 .accessedAt(null)
                 .authed(false)
                 .isActivated(true)
+                .createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now())
+                .accessedAt(LocalDateTime.now())
                 .build();
     }
 
@@ -130,5 +133,26 @@ public class User {
 
     public boolean isNotDeleted() {
         return this.deletedAt == null;
+    }
+
+    public User editProfile(
+            String nickname,
+            String introduce,
+            String profileImagePath,
+            String backgroundImagePath,
+            String websitePath
+    ) {
+
+        StaticContentPath staticContentPath = new StaticContentPath(
+                profileImagePath,
+                backgroundImagePath,
+                websitePath
+        );
+
+        this.profile = this.profile.updateNickname(nickname);
+        this.profile = this.profile.updateIntroduce(introduce);
+        this.profile = this.profile.updateStaticContentPath(staticContentPath);
+
+        return this;
     }
 }

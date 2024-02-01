@@ -44,6 +44,8 @@ public class GrpcServer extends GUserServiceGrpc.GUserServiceImplBase {
                 request.getPassword()
         );
 
+        user.stampAccessedAt();
+
         GCheckEmailAndPasswordResponse response = GCheckEmailAndPasswordResponse.newBuilder()
                 .setIsSuccess(true)
                 .setUserId(user.getId())

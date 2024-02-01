@@ -31,12 +31,6 @@ dependencies {
     implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 
-    implementation("io.hypersistence:hypersistence-utils-hibernate-60:3.7.0")
-    implementation("com.vladmihalcea:hibernate-types-52:2.10.4")
-    implementation("io.hypersistence:hypersistence-utils-hibernate-5:3.1.1")
-
-    implementation("com.fasterxml.jackson.module:jackson-module-jakarta-xmlbind-annotations")
-
     runtimeOnly("com.mysql:mysql-connector-j")
     implementation("org.springframework.boot:spring-boot-starter-validation")
 

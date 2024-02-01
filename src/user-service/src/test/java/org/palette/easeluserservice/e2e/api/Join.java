@@ -34,52 +34,7 @@ class Join extends AcceptanceTestBase {
             InvocationTargetException,
             InstantiationException,
             IllegalAccessException {
-
-        if (userJpaRepository.existsByEmail("diger@gmail.com")) return;
-
-        Class<User> userClass = User.class;
-        Constructor<User> constructor = userClass.getDeclaredConstructor(
-                Long.class,
-                String.class,
-                String.class,
-                Password.class,
-                Profile.class,
-                Pin.class,
-                Role.class,
-                Boolean.class,
-                Boolean.class,
-                LocalDateTime.class,
-                LocalDateTime.class,
-                LocalDateTime.class,
-                LocalDateTime.class
-        );
-
-        constructor.setAccessible(true);
-
-        User user = constructor.newInstance(
-                1L,
-                "diger@gmail.com",
-                "",
-                new Password("", passwordEncoder),
-                new Profile(
-                        "digerDisplayName1",
-                        "",
-                        new StaticContentPath(
-                                "",
-                                "",
-                                ""
-                        )
-                ),
-                new Pin("", ""),
-                Role.NORMAL,
-                true,
-                true,
-                null,
-                null,
-                null,
-                null
-        );
-
+        final User user = createMockUser();
         userJpaRepository.save(user);
     }
 
