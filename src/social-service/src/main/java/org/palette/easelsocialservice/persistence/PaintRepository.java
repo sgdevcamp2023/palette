@@ -1,6 +1,7 @@
 package org.palette.easelsocialservice.persistence;
 
 import org.palette.easelsocialservice.persistence.domain.Paint;
+import org.palette.easelsocialservice.persistence.domain.PaintMetrics;
 import org.springframework.data.neo4j.repository.Neo4jRepository;
 import org.springframework.data.neo4j.repository.query.Query;
 import org.springframework.data.repository.query.Param;
@@ -45,5 +46,13 @@ public interface PaintRepository extends Neo4jRepository<Paint, Long> {
             "RETURN b, r2, c")
     Paint findQuotePaintByPid(@Param("pid") Long pid);
 
+    @Query("MATCH (p:Paint {pid: $pid}) " +
+            "OPTIONAL MATCH (p)<-[r:REPLIES]-(reply) " +
+            "OPTIONAL MATCH (p)<-[l:LIKES]-(like) " +
+            "OPTIONAL MATCH (p)<-[rep:REPAINTS]-(repaint) " +
+            "OPTIONAL MATCH (u:User {uid: $uid}) " +
+            "RETURN count(reply) AS replyCount, count(like) AS likeCount, count(repaint) AS repaintCount, " +
+            "exists((p)<-[:LIKES]-(u)) AS like, exists((p)<-[:REPAINTS]-(u)) AS repainted, exists((p)<-[:REPAINTS]-(u)) AS marked")
+    PaintMetrics findMetricsByPidAndUid(@Param("pid") Long pid, @Param("uid") Long uid);
 
 }
