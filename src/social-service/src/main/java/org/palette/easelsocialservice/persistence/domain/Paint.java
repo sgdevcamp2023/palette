@@ -101,4 +101,8 @@ public class Paint {
     public void addAllMedia(List<Uses> medias) {
         this.medias = medias;
     }
+
+    public void updateView() {
+        this.views++;
+    }
 }

@@ -95,6 +95,8 @@ public class PaintService {
     public PaintResponse getPaintById(Long userId, Long paintId) {
         Paint paint = paintRepository.findByPid(paintId)
                 .orElseThrow(() -> new BaseException(ExceptionType.SOCIAL_400_000002));
+        paint.updateView();
+        paintRepository.save(paint);
 
         return convertToPaintResponse(paint);
     }
