@@ -13,10 +13,7 @@ import org.palette.easelsocialservice.persistence.domain.Link;
 import org.palette.easelsocialservice.persistence.domain.Media;
 import org.palette.easelsocialservice.persistence.domain.Paint;
 import org.palette.easelsocialservice.persistence.domain.User;
-import org.palette.easelsocialservice.service.LinkService;
-import org.palette.easelsocialservice.service.MediaService;
-import org.palette.easelsocialservice.service.PaintService;
-import org.palette.easelsocialservice.service.UserService;
+import org.palette.easelsocialservice.service.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -36,42 +33,48 @@ public class PaintUsecase {
         Paint paint = new Paint(paintCreateRequest.text());
 
         User user = userService.getUser(userId);
-        paintService.bindUserWithPaint(user, paint);
+        PaintEntityBinder.bindUserWithPaint(user, paint);
 
         Optional.ofNullable(paintCreateRequest.quotePaintId())
-                .ifPresent(quotePaintId -> paintService.bindQuotePaint(paint, quotePaintId));
+                .ifPresent(quotePaintId -> {
+                    Paint quotePaint = paintService.getPaintById(quotePaintId);
+                    PaintEntityBinder.bindQuotePaint(paint, quotePaint);
+                });
 
         Optional.ofNullable(paintCreateRequest.inReplyToPaintId())
-                .ifPresent(inReplyToPaintId -> paintService.bindReplyPaint(paint, inReplyToPaintId));
+                .ifPresent(inReplyToPaintId -> {
+                    Paint inReplyToPaint = paintService.getPaintById(inReplyToPaintId);
+                    PaintEntityBinder.bindReplyPaint(paint, inReplyToPaint);
+                });
 
         Optional.ofNullable(paintCreateRequest.mentions())
                 .ifPresent(mentions -> {
                     List<Long> uids = mentions.stream().map(MentionRequest::userId).distinct().toList();
                     userService.checkUserExists(uids);
                     Map<Long, User> users = userService.getUserMapByUids(uids);
-                    paintService.bindMentions(paint, mentions, users);
+                    PaintEntityBinder.bindMentions(paint, mentions, users);
                 });
 
         Optional.ofNullable(paintCreateRequest.taggedUserIds())
                 .ifPresent(taggedUserIds -> {
                     userService.checkUserExists(taggedUserIds);
                     List<User> users = userService.getUsersByUids(taggedUserIds);
-                    paintService.bindTaggedUsers(paint, users);
+                    PaintEntityBinder.bindTaggedUsers(paint, users);
                 });
 
         Optional.ofNullable(paintCreateRequest.hashtags())
-                .ifPresent(hashtags -> paintService.bindHashtagsWithPaint(paint, hashtags));
+                .ifPresent(hashtags -> PaintEntityBinder.bindHashtagsWithPaint(paint, hashtags));
 
         Optional.ofNullable(paintCreateRequest.links())
                 .ifPresent(links -> {
                     List<Link> createdLinks = linkService.createLinks(links);
-                    paintService.bindLinksWithPaint(paint, links, createdLinks);
+                    PaintEntityBinder.bindLinksWithPaint(paint, links, createdLinks);
                 });
 
         Optional.ofNullable(paintCreateRequest.medias())
                 .ifPresent(medias -> {
                     List<Media> createdMedias = mediaService.createMedias(medias);
-                    paintService.bindMediaWithPaint(paint, createdMedias);
+                    PaintEntityBinder.bindMediaWithPaint(paint, createdMedias);
                 });
 
         paintService.createPaint(paint);
@@ -81,16 +84,16 @@ public class PaintUsecase {
 
     public void repaint(Long userId, RepaintRequest repaintRequest) {
         User user = userService.getUser(userId);
-        paintService.bindRepaintWithPaint(user, repaintRequest);
+        paintService.repaintWithPaint(user, repaintRequest);
     }
 
     public PaintResponse getSinglePaint(Long userId, Long paintId) {
-        // TODO: compare userId for like, repaint, mark
-        return paintService.getPaintById(userId, paintId);
+        PaintResponse paintResponse = paintService.getPaintById(userId, paintId);
+        paintService.viewSinglePaint(paintId);
+        return paintResponse;
     }
 
     public List<PaintResponse> getSingleBefore(Long userId, Long paintId) {
-        // TODO: compasre userId for like, repaint, mark
         return paintService.getPaintBeforeById(userId, paintId);
     }
 

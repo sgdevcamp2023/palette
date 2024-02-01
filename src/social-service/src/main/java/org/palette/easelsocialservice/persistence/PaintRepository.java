@@ -13,6 +13,9 @@ import java.util.Optional;
 public interface PaintRepository extends Neo4jRepository<Paint, Long> {
     Optional<Paint> findByPid(Long pid);
 
+    @Query("MATCH (p:Paint {pid: $pid}) SET p.views = p.views + 1")
+    void updatePaintView(@Param("pid") Long pid);
+
     @Query("MATCH path = (a:Paint)-[:REPLIES*]->(b:Paint) " +
             "WHERE a.pid = $pid " +
             "WITH [node in nodes(path) WHERE node:Paint] AS intermediateNodes " +
