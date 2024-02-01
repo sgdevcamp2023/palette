@@ -30,7 +30,7 @@ public class PaintService {
         paint.setAuthor(user);
     }
 
-    public void createMentions(Paint paint, List<MentionRequest> mentions, Map<Long, User> users) {
+    public void bindMentions(Paint paint, List<MentionRequest> mentions, Map<Long, User> users) {
         List<Mentions> mentionRelations = new LinkedList<>();
         for (MentionRequest mention : mentions) {
             mentionRelations.add(new Mentions(users.get(mention.userId()), mention.start(), mention.end()));
@@ -38,7 +38,7 @@ public class PaintService {
         paint.addAllMentions(mentionRelations);
     }
 
-    public void createTaggedUsers(Paint paint, List<User> users) {
+    public void bindTaggedUsers(Paint paint, List<User> users) {
         List<TagsUser> tagsUsers = new LinkedList<>();
         for (User user : users) {
             tagsUsers.add(new TagsUser(user));

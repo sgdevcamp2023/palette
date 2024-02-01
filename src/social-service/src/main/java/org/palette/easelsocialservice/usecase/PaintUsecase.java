@@ -3,11 +3,9 @@ package org.palette.easelsocialservice.usecase;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.palette.easelsocialservice.dto.request.LinkRequest;
 import org.palette.easelsocialservice.dto.request.MentionRequest;
 import org.palette.easelsocialservice.dto.request.PaintCreateRequest;
 import org.palette.easelsocialservice.dto.request.RepaintRequest;
-import org.palette.easelsocialservice.dto.response.LinkResponse;
 import org.palette.easelsocialservice.dto.response.PaintCreateResponse;
 import org.palette.easelsocialservice.dto.response.PaintResponse;
 import org.palette.easelsocialservice.dto.response.ThreadResponse;
@@ -51,14 +49,14 @@ public class PaintUsecase {
                     List<Long> uids = mentions.stream().map(MentionRequest::userId).distinct().toList();
                     userService.checkUserExists(uids);
                     Map<Long, User> users = userService.getUserMapByUids(uids);
-                    paintService.createMentions(paint, mentions, users);
+                    paintService.bindMentions(paint, mentions, users);
                 });
 
         Optional.ofNullable(paintCreateRequest.taggedUserIds())
                 .ifPresent(taggedUserIds -> {
                     userService.checkUserExists(taggedUserIds);
                     List<User> users = userService.getUsersByUids(taggedUserIds);
-                    paintService.createTaggedUsers(paint, users);
+                    paintService.bindTaggedUsers(paint, users);
                 });
 
         Optional.ofNullable(paintCreateRequest.hashtags())
