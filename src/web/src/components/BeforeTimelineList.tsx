@@ -50,7 +50,7 @@ const BeforeTimelineList = forwardRef<HTMLDivElement, BeforeTimelineListProps>(
         {posts.map((post) => (
           <TimelineItemBox
             key={post.id}
-            item={post}
+            post={post}
             className="pt-[12px]"
             isShowMenu={
               paintAction.isShowMoreMenu.id === post.id &&

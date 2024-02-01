@@ -9,7 +9,7 @@ import AccessibleIconButton from './AccessibleIconButton';
 import { cn, forCloudinaryImage, getDiffDateText } from '@/utils';
 
 interface TimelineItemBoxProps {
-  item: TimelineItem;
+  post: TimelineItem;
   isShowMenu: boolean;
   className?: string;
   onClickReply: VoidFunction;
@@ -21,7 +21,7 @@ interface TimelineItemBoxProps {
 }
 
 function TimelineItemBox({
-  item,
+  post,
   isShowMenu,
   className,
   onClickReply,
@@ -32,7 +32,7 @@ function TimelineItemBox({
   onClickMore,
 }: TimelineItemBoxProps) {
   const navigate = useNavigate();
-  const hasMedia = item.includes.medias.length > 0;
+  const hasMedia = post.includes.medias.length > 0;
 
   return (
     <div className={cn('w-full flex gap-[8px]', className)}>
@@ -42,13 +42,13 @@ function TimelineItemBox({
         onClick={() =>
           navigate({
             to: '/profile/$userId',
-            params: { userId: item.authorId },
+            params: { userId: post.authorId },
           })
         }
       >
         <img
-          src={forCloudinaryImage(item.authorImagePath)}
-          alt={`${item.authorNickname}`}
+          src={forCloudinaryImage(post.authorImagePath)}
+          alt={`${post.authorNickname}`}
           className="rounded-full w-[44px] h-[44px] min-w-[44px]"
         />
       </button>
@@ -59,7 +59,7 @@ function TimelineItemBox({
         onClick={() => {
           navigate({
             to: '/post/$postId',
-            params: { postId: item.id },
+            params: { postId: post.id },
           });
         }}
       >
@@ -67,11 +67,11 @@ function TimelineItemBox({
         <div className="w-full flex justify-between relative">
           <div className="flex gap-[4px] items-center">
             <Typography size="headline-8" color="grey-600">
-              {item.authorNickname}
+              {post.authorNickname}
             </Typography>
             <Typography size="body-1" color="blueGrey-800">
-              {item.authorUsername} ·{' '}
-              {getDiffDateText(item.createdAt, new Date())}
+              {post.authorUsername} ·{' '}
+              {getDiffDateText(post.createdAt, new Date())}
             </Typography>
           </div>
           <AccessibleIconButton
@@ -85,25 +85,25 @@ function TimelineItemBox({
           />
           {isShowMenu && (
             <TimelineItemMenu
-              userId={item.authorId}
-              username={item.authorUsername}
+              userId={post.authorId}
+              username={post.authorUsername}
             />
           )}
         </div>
 
-        {item.text && (
+        {post.text && (
           <Typography
             size="body-2"
             color="grey-600"
             className="whitespace-pre-line"
           >
-            {item.text}
+            {post.text}
           </Typography>
         )}
 
         {hasMedia && (
           <img
-            src={forCloudinaryImage(item.includes.medias[0].path, {
+            src={forCloudinaryImage(post.includes.medias[0].path, {
               resize: false,
             })}
             alt="user-upload-asset"
@@ -112,12 +112,12 @@ function TimelineItemBox({
         )}
 
         {/* Quote */}
-        {item.includes.paint && (
+        {post.includes.paint && (
           <QuotePostBox
-            post={item.includes.paint}
+            post={post.includes.paint}
             className="my-[8px]"
             direction={
-              hasMedia && item.includes.paint.includes.medias.length > 0
+              hasMedia && post.includes.paint.includes.medias.length > 0
                 ? 'horizontal'
                 : 'vertical'
             }
@@ -139,33 +139,33 @@ function TimelineItemBox({
               width={16}
               height={16}
               iconType="retweet"
-              stroke={item.repainted ? 'green-200' : undefined}
-              fill={item.repainted ? 'green-200' : undefined}
+              stroke={post.repainted ? 'green-200' : undefined}
+              fill={post.repainted ? 'green-200' : undefined}
               label="인용 혹은 재게시 하기"
               className="transition-colors hover:bg-grey-200 rounded-full p-1"
               onClick={onClickRetweet}
             />
             <Typography
               size="body-3"
-              color={item.repainted ? 'green-200' : 'blueGrey-800'}
+              color={post.repainted ? 'green-200' : 'blueGrey-800'}
             >
-              {item.repaintCount}
+              {post.repaintCount}
             </Typography>
           </div>
           <div className="flex gap-[4px] items-center">
             <AccessibleIconButton
               width={16}
               height={16}
-              iconType={item.like ? 'solidHeart' : 'heart'}
+              iconType={post.like ? 'solidHeart' : 'heart'}
               label="마음에 들어요 누르기"
               className="transition-colors hover:bg-grey-200 rounded-full p-1"
               onClick={onClickHeart}
             />
             <Typography
               size="body-3"
-              color={item.like ? 'pink-100' : 'blueGrey-800'}
+              color={post.like ? 'pink-100' : 'blueGrey-800'}
             >
-              {item.likeCount}
+              {post.likeCount}
             </Typography>
           </div>
           <div className="flex gap-[4px] items-center">
@@ -178,7 +178,7 @@ function TimelineItemBox({
               onClick={onClickViews}
             />
             <Typography size="body-3" color="blueGrey-800">
-              {item.views}
+              {post.views}
             </Typography>
           </div>
           <AccessibleIconButton

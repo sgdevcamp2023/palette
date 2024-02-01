@@ -62,7 +62,7 @@ function TimelineItemList({ type }: TimelineItemListProps) {
         {paints.map((paint) => (
           <TimelineItemBox
             key={paint.id}
-            item={paint}
+            post={paint}
             className="pt-[10px]"
             isShowMenu={
               paintAction.isShowMoreMenu.id === paint.id &&
