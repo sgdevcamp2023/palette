@@ -10,8 +10,8 @@ services:
   gateway:
     image: palette1203/gateway-service:latest
     ports:
-      - "8080:8080"
-      - "18080:18080"
+      - "8000:8000"
+      - "18000:18000"
     restart: always
     depends_on:
       - discovery
@@ -19,19 +19,63 @@ services:
   auth:
     image: palette1203/auth-service:latest
     ports:
-      - "10001:10001"
-      - "11001:11001"
+      - "10002:10002"
+      - "11002:11002"
     restart: always
     depends_on:
+      - discovery
+      - gateway
+  redis:
+    container_name: auth-service_redis
+    image: redis:latest
+    ports:
+      - "63792:63792"
+
+  social:
+    image: palette1203/social-service:latest
+    ports:
+      - "10003:10003"
+      - "11003:11003"
+    restart: always
+    depends_on:
+      - discovery
       - gateway
 
   user:
     image: palette1203/user-service:latest
     ports:
-      - "10002:10002"
-      - "11002:11002"
+      - "10004:10004"
+      - "11004:11004"
     restart: always
     depends_on:
+      - discovery
+      - gateway
+  database:
+    container_name: user-service_mysql_db
+    image: mysql/mysql-server:latest
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: user-service
+      MYSQL_ROOT_HOST: ${USER_DB_USERNAME}
+      MYSQL_ROOT_PASSWORD: ${USER_DB_PASSWORD}
+      TZ: 'Asia/Seoul'
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql/conf.d:/etc/mysql/conf.d
+    command:
+      - "mysqld"
+      - "--character-set-server=utf8mb4"
+      - "--collation-server=utf8mb4_unicode_ci"
+
+  timeline:
+    image: palette1203/timeline-service:latest
+    ports:
+      - "10005:10005"
+      - "11005:11005"
+    restart: always
+    depends_on:
+      - discovery
       - gateway
 
   dm:
@@ -41,15 +85,7 @@ services:
       - "11007:11007"
     restart: always
     depends_on:
-      - gateway
-
-  timeline:
-    image: palette1203/timeline-service:latest
-    ports:
-      - "10005:10005"
-      - "11005:11005"
-    restart: always
-    depends_on:
+      - discovery
       - gateway
 
   notification:
@@ -59,14 +95,5 @@ services:
       - "11009:11009"
     restart: always
     depends_on:
+      - discovery
       - gateway
-
-  social:
-    image: palette1203/social-service:latest
-    ports:
-      - "10003:10003"
-      - "11003:11003"
-    restart: always
-    depends_on:
-      - gateway
-
