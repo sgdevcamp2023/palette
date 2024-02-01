@@ -7,7 +7,6 @@ import org.springframework.data.neo4j.repository.query.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 public interface PaintRepository extends Neo4jRepository<Paint, Long> {
