@@ -90,15 +90,14 @@ public class PaintService {
         paint.addRepaint(user);
     }
 
-    // TODO: replyCount, likeCount, myLike, myRepaint, myMarked functions
-    // first depth's getId()== relationship's id
     public PaintResponse getPaintById(Long userId, Long paintId) {
         Paint paint = paintRepository.findByPid(paintId)
                 .orElseThrow(() -> new BaseException(ExceptionType.SOCIAL_400_000002));
+        PaintMetrics metrics = paintRepository.findMetricsByPidAndUid(userId, paintId);
         paint.updateView();
         paintRepository.save(paint);
 
-        return convertToPaintResponse(paint);
+        return convertToPaintResponse(paint, metrics);
     }
 
     public Paint getPaintById(Long paintId) {
@@ -109,7 +108,7 @@ public class PaintService {
     public List<PaintResponse> getPaintBeforeById(Long userId, Long paintId) {
         List<Paint> paints = distinctPaintsByPid(paintRepository.findAllBeforePaintByPid(paintId));
 
-        return convertToPaintResponse(paints);
+        return convertToPaintResponse(userId, paints);
     }
 
     public List<ThreadResponse> getPaintAfterById(Long userId, Long paintId) {
@@ -121,7 +120,7 @@ public class PaintService {
             checkAndSetQuotePaint(paint);
             List<Paint> subPaints = distinctPaintsByPid(paintRepository.findAllAfterPaintsByPid(paint.getPid()));
 
-            threads.add(new ThreadResponse(threadId++, convertToPaintResponse(subPaints)));
+            threads.add(new ThreadResponse(threadId++, convertToPaintResponse(userId, subPaints)));
         }
 
         return threads;
@@ -141,12 +140,12 @@ public class PaintService {
                 ));
     }
 
-    private PaintResponse convertToPaintResponse(Paint paint) {
+    private PaintResponse convertToPaintResponse(Paint paint, PaintMetrics paintMetrics) {
         PaintResponse quotePaint = getQuotePaint(paint);
         Entities entities = covertToEntities(paint);
         Includes includes = convertToIncludes(paint);
 
-        return PaintResponse.buildByPaint(paint, quotePaint, entities, includes);
+        return PaintResponse.buildByPaint(paint, quotePaint, entities, includes, paintMetrics);
     }
 
     private PaintResponse getQuotePaint(Paint paint) {
@@ -162,9 +161,12 @@ public class PaintService {
         return PaintResponse.buildByPaint(paint, entities, includes);
     }
 
-    private List<PaintResponse> convertToPaintResponse(List<Paint> paints) {
+    private List<PaintResponse> convertToPaintResponse(Long userId, List<Paint> paints) {
         return paints.stream()
-                .map(this::convertToPaintResponse)
+                .map(paint -> {
+                    PaintMetrics metrics = paintRepository.findMetricsByPidAndUid(userId, paint.getPid());
+                    return convertToPaintResponse(paint, metrics);
+                })
                 .toList();
     }
 

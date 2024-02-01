@@ -53,6 +53,6 @@ public interface PaintRepository extends Neo4jRepository<Paint, Long> {
             "OPTIONAL MATCH (u:User {uid: $uid}) " +
             "RETURN count(reply) AS replyCount, count(like) AS likeCount, count(repaint) AS repaintCount, " +
             "exists((p)<-[:LIKES]-(u)) AS like, exists((p)<-[:REPAINTS]-(u)) AS repainted, exists((p)<-[:REPAINTS]-(u)) AS marked")
-    PaintMetrics findMetricsByPidAndUid(@Param("pid") Long pid, @Param("uid") Long uid);
+    PaintMetrics findMetricsByPidAndUid(@Param("uid") Long uid, @Param("pid") Long pid);
 
 }

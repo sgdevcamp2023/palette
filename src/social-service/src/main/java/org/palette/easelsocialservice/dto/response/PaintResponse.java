@@ -1,6 +1,7 @@
 package org.palette.easelsocialservice.dto.response;
 
 import org.palette.easelsocialservice.persistence.domain.Paint;
+import org.palette.easelsocialservice.persistence.domain.PaintMetrics;
 import org.palette.easelsocialservice.persistence.domain.User;
 
 import java.time.LocalDateTime;
@@ -26,7 +27,8 @@ public record PaintResponse(
         Entities entities,
         Includes includes
 ) {
-    public static PaintResponse buildByPaint(Paint paint, PaintResponse quotePaint, Entities entities, Includes includes) {
+    public static PaintResponse buildByPaint(Paint paint, PaintResponse quotePaint,
+                                             Entities entities, Includes includes, PaintMetrics metrics) {
         User author = paint.getAuthor().getUser();
         return new PaintResponse(
                 paint.getPid(),
@@ -39,12 +41,12 @@ public record PaintResponse(
                 quotePaint,
                 paint.getCreatedAt(),
                 paint.getContent(),
-                0,
-                paint.getRepaints().size(),
-                0,
-                false,
-                false,
-                false,
+                metrics.getReplyCount(),
+                metrics.getRepaintCount(),
+                metrics.getLikeCount(),
+                metrics.isLike(),
+                metrics.isRepainted(),
+                metrics.isMarked(),
                 paint.getViews(),
                 entities,
                 includes
