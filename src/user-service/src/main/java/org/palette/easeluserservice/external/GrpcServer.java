@@ -85,7 +85,7 @@ public class GrpcServer extends GUserServiceGrpc.GUserServiceImplBase {
                 .setIsActivated(user.getIsActivated())
                 .setAccessedAt(user.getAccessedAt().toString())
                 .setCreatedAt(user.getCreatedAt().toString())
-                .setDeletedAt(user.getDeletedAt().toString())
+                .setDeletedAt(user.getStringDeletedAt().toString())
                 .build()
         );
         responseObserver.onCompleted();
