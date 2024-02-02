@@ -18,9 +18,9 @@ public class Likes {
     private Long id;
 
     @TargetNode
-    private Paint paint;
+    private final Paint paint;
 
-    private LocalDateTime createdAt;
+    private final LocalDateTime createdAt;
 
     public Likes(final Paint paint) {
         this.paint = paint;

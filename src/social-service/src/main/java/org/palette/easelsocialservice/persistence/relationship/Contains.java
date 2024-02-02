@@ -13,11 +13,11 @@ public class Contains {
     private Long id;
 
     @TargetNode
-    private Link link;
+    private final Link link;
 
-    private Integer start;
+    private final Integer start;
 
-    private Integer end;
+    private final Integer end;
 
     public Contains(Link link, Integer start, Integer end) {
         this.link = link;

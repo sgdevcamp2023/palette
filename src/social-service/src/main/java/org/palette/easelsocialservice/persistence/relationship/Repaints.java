@@ -13,7 +13,7 @@ public class Repaints {
     private Long id;
 
     @TargetNode
-    private User user;
+    private final User user;
 
     public Repaints(User user) {
         this.user = user;

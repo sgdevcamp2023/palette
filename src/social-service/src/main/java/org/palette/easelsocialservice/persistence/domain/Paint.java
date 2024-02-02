@@ -45,13 +45,13 @@ public class Paint {
     @Relationship(type = "USES")
     private List<Uses> medias;
 
-    private String content;
+    private final String content;
 
     private boolean hasQuote;
 
     private Integer views;
 
-    private LocalDateTime createdAt;
+    private final LocalDateTime createdAt;
 
     private LocalDateTime deletedAt;
 
