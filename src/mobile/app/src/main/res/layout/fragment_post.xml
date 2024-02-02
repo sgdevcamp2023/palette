@@ -62,34 +62,29 @@
         <EditText
             android:id="@+id/et_post_content"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="6dp"
             android:layout_marginTop="26dp"
             android:layout_marginEnd="14dp"
-            android:gravity="start|top"
             android:background="@null"
-            android:inputType="text"
             android:focusable="true"
+            android:gravity="start|top"
             android:hint="@string/post_fragment_sample_text"
             android:textAlignment="viewStart"
             android:textColorHint="@color/BlueGrey_800"
             android:textFontWeight="400"
-            app:layout_constraintBottom_toTopOf="@+id/iv_camera"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/iv_post_profile"
-            app:layout_constraintTop_toBottomOf="@+id/tv_temp_storage"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_temp_storage" />
 
         <ImageView
             android:id="@+id/iv_space"
             android:layout_width="76dp"
             android:layout_height="76dp"
             android:layout_marginStart="14dp"
-            android:layout_marginTop="230dp"
             android:background="@drawable/bg_post_icon"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iv_post_profile" />
+            app:layout_constraintTop_toTopOf="@+id/iv_camera" />
 
         <ImageView
             android:id="@+id/ic_space_icon"
@@ -107,10 +102,9 @@
             android:layout_width="76dp"
             android:layout_height="76dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="230dp"
             android:background="@drawable/bg_post_icon"
             app:layout_constraintStart_toEndOf="@+id/iv_space"
-            app:layout_constraintTop_toBottomOf="@+id/iv_post_profile" />
+            app:layout_constraintTop_toBottomOf="@+id/et_post_content" />
 
         <ImageView
             android:id="@+id/ic_camera_icon"
@@ -131,7 +125,7 @@
             android:background="@color/Grey_200"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iv_camera" />
+            app:layout_constraintTop_toBottomOf="@+id/iv_space" />
 
         <ImageView
             android:id="@+id/ic_earth"
