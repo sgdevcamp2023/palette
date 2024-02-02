@@ -67,6 +67,12 @@ public class UserService {
         userRepository.save(user);
     }
 
+    public void markPaint(Long userId, Paint paint) {
+        User user = getUser(userId);
+        user.marksPaint(paint);
+        userRepository.save(user);
+    }
+
     public int getFollowingCount(Long userId) {
         return userRepository.countFollowings(userId);
     }
