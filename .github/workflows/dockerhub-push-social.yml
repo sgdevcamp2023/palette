@@ -1,4 +1,4 @@
-name: Docker Hub Push
+name: Social Service Docker Hub Push
 
 on:
   push:
