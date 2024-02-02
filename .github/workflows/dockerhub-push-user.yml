@@ -37,13 +37,12 @@ jobs:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 
+          PASSPORT_KEY: ${{ secrets.PASSPORT_KEY }}
+          PASSPORT_ALGORITHM: ${{ secrets.PASSPORT_ALGORITHM }}
+          
           USER_DB_URI: ${{ secrets.USER_DB_URI }}
           USER_DB_USERNAME: ${{ secrets.USER_DB_USERNAME }}
           USER_DB_PASSWORD: ${{ secrets.USER_DB_PASSWORD }}
-
-          PASSPORT_KEY: ${{ secrets.PASSPORT_KEY }}
-          PASSPORT_ALGORITHM: ${{ secrets.PASSPORT_ALGORITHM }}
-        
         run: |
           cd src/user-service
           ./gradlew clean build -x test
