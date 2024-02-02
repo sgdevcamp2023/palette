@@ -5,8 +5,6 @@ import lombok.RequiredArgsConstructor;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.palette.exception.BaseException;
-import org.palette.exception.ExceptionType;
 import org.palette.passport.PassportExtractor;
 import org.palette.passport.component.Passport;
 import org.springframework.stereotype.Component;
@@ -20,14 +18,10 @@ public class PassportAspect {
     private final PassportExtractor passportExtractor;
 
     @Around("@annotation(org.palette.aop.InjectEaselAuthentication)")
-    public Object setUserInfoByServlet(ProceedingJoinPoint proceedingJoinPoint) {
+    public Object setUserInfoByServlet(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         final Passport passport = passportExtractor.getPassportFromRequestHeader(httpServletRequest);
         EaselAuthenticationContext.CONTEXT.set(passport);
 
-        try {
-            return proceedingJoinPoint.proceed(proceedingJoinPoint.getArgs());
-        } catch (Throwable e) {
-            throw new BaseException(ExceptionType.COMMON_500_000003);
-        }
+        return proceedingJoinPoint.proceed(proceedingJoinPoint.getArgs());
     }
 }
