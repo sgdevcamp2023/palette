@@ -225,6 +225,16 @@
             app:layout_constraintTop_toBottomOf="@+id/v_line2"
             app:tint="@color/Blue_200" />
 
+        <ImageView
+            android:id="@+id/ic_photo_plus"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="14dp"
+            android:layout_marginBottom="16dp"
+            android:src="@drawable/ic_circle_plus"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </RelativeLayout>

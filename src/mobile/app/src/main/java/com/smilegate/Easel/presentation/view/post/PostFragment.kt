@@ -2,11 +2,14 @@ package com.smilegate.Easel.presentation.view.post
 
 import android.content.Context
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
@@ -19,7 +22,7 @@ class PostFragment : Fragment() {
 
     private lateinit var navController: NavController
 
-    private var isSettingExpanded = false
+    private var isViewVisible: Boolean = true
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,6 +36,32 @@ class PostFragment : Fragment() {
 
         val bottomNavigation = activity?.findViewById<BottomNavigationView>(R.id.nav_view)
         bottomNavigation?.visibility = View.GONE
+
+        binding.etPostContent.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if (s.isNullOrEmpty() && !isViewVisible) {
+                    binding.ivSpace.visibility = TextView.VISIBLE
+                    binding.icSpaceIcon.visibility = TextView.VISIBLE
+                    binding.ivCamera.visibility = TextView.VISIBLE
+                    binding.icCameraIcon.visibility = TextView.VISIBLE
+                    binding.tvTempStorage.visibility = TextView.VISIBLE
+                    isViewVisible = true
+                } else if (!s.isNullOrEmpty() && isViewVisible) {
+                    binding.ivSpace.visibility = TextView.INVISIBLE
+                    binding.icSpaceIcon.visibility = TextView.INVISIBLE
+                    binding.ivCamera.visibility = TextView.INVISIBLE
+                    binding.icCameraIcon.visibility = TextView.INVISIBLE
+                    binding.tvTempStorage.visibility = TextView.INVISIBLE
+                    isViewVisible = false
+                }
+            }
+        })
 
         return binding.root
     }
