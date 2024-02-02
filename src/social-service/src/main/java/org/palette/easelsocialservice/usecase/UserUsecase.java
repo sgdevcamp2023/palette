@@ -33,4 +33,8 @@ public class UserUsecase {
     public void deleteMarkPaint(Long userId, Long paintId) {
         userService.deleteMarkPaint(userId, paintId);
     }
+
+    public void unlikePaint(final Long userId, final Long paintId) {
+        userService.unlike(userId, paintId);
+    }
 }

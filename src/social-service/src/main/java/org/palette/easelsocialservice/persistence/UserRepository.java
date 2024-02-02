@@ -19,6 +19,9 @@ public interface UserRepository extends Neo4jRepository<User, Long> {
 
     boolean existsByUid(Long uid);
 
+    @Query("MATCH (:User { uid: $uid }) - [r:LIKES] -> (:Paint { pid: $pid }) DELETE r")
+    void deleteLikeById(@Param("uid") Long uid, @Param("pid") Long pid);
+
     @Query("MATCH (:User { uid: $uid })-[r:FOLLOWS]->() RETURN count(r)")
     int countFollowings(@Param("uid") Long uid);
 

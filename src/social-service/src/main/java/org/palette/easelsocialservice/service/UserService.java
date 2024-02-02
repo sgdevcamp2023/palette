@@ -57,6 +57,10 @@ public class UserService {
         userRepository.save(user);
     }
 
+    public void unlike(final Long userId, final Long paintId) {
+        userRepository.deleteLikeById(userId, paintId);
+    }
+
     public void follow(Long userId, Long targetId) {
         User user = getUser(userId);
         User targetUser = getUser(targetId);
