@@ -23,4 +23,8 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
+  build: {
+    cssMinify: true,
+    sourcemap: true,
+  },
 });
