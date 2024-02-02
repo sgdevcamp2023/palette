@@ -13,7 +13,7 @@ public class Follows {
     private Long id;
 
     @TargetNode
-    private User user;
+    private final User user;
 
     public Follows(final User user) {
         this.user = user;

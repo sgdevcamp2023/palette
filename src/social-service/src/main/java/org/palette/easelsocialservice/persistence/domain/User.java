@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import org.palette.easelsocialservice.persistence.relationship.Contains;
 import org.palette.easelsocialservice.persistence.relationship.Follows;
 import org.palette.easelsocialservice.persistence.relationship.Likes;
+import org.palette.easelsocialservice.persistence.relationship.Marks;
 import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.Node;
 import org.springframework.data.neo4j.core.schema.Relationship;
@@ -32,6 +33,9 @@ public class User {
     @Relationship(type = "LIKES")
     private List<Likes> likes;
 
+    @Relationship(type = "MARKS")
+    private List<Marks> marks;
+
     @Relationship(type = "FOLLOWS")
     private List<Follows> followings;
 
@@ -56,6 +60,13 @@ public class User {
             likes = new LinkedList<>();
         }
         likes.add(new Likes(paint));
+    }
+
+    public void marksPaint(Paint paint) {
+        if (marks == null) {
+            marks = new LinkedList<>();
+        }
+        marks.add(new Marks(paint));
     }
 
     public void addFollowing(User user) {

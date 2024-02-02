@@ -8,9 +8,9 @@ import org.springframework.data.neo4j.core.schema.Node;
 @Node
 public class Media {
     @Id
-    private String path;
+    private final String path;
 
-    private String type;
+    private final String type;
 
     public Media(String path, String type) {
         this.path = path;

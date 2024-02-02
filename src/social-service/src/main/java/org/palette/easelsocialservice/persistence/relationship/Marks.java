@@ -1,27 +1,26 @@
 package org.palette.easelsocialservice.persistence.relationship;
 
 import lombok.Getter;
-import org.palette.easelsocialservice.persistence.domain.Hashtag;
+import org.palette.easelsocialservice.persistence.domain.Paint;
 import org.springframework.data.neo4j.core.schema.RelationshipId;
 import org.springframework.data.neo4j.core.schema.RelationshipProperties;
 import org.springframework.data.neo4j.core.schema.TargetNode;
 
+import java.time.LocalDateTime;
+
 @Getter
 @RelationshipProperties
-public class Tags {
+public class Marks {
     @RelationshipId
     private Long id;
 
     @TargetNode
-    private final Hashtag hashtag;
+    private final Paint paint;
 
-    private final Integer start;
+    private final LocalDateTime createdAt;
 
-    private final Integer end;
-
-    public Tags(Hashtag hashtag, Integer start, Integer end) {
-        this.hashtag = hashtag;
-        this.start = start;
-        this.end = end;
+    public Marks(final Paint paint) {
+        this.paint = paint;
+        this.createdAt = LocalDateTime.now();
     }
 }

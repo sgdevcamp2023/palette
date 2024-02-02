@@ -3,12 +3,10 @@ package org.palette.easelsocialservice.controller;
 import lombok.RequiredArgsConstructor;
 import org.palette.easelsocialservice.dto.request.FollowUserRequest;
 import org.palette.easelsocialservice.dto.request.LikePaintRequest;
-import org.palette.easelsocialservice.dto.response.ThreadResponse;
+import org.palette.easelsocialservice.dto.request.MarkPaintRequest;
 import org.palette.easelsocialservice.usecase.UserUsecase;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/users")
@@ -31,6 +29,26 @@ public class UserController {
             @RequestBody FollowUserRequest followUserRequest
     ) {
         userUsecase.follow(userId, followUserRequest);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/{userId}/mark")
+    public ResponseEntity<Void> markPost(
+            @PathVariable Long userId,
+            @RequestBody MarkPaintRequest markPaintRequest
+    ) {
+        userUsecase.markPaint(userId, markPaintRequest);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/{userId}/mark/{paintId}")
+    public ResponseEntity<Void> markPost(
+            @PathVariable Long userId,
+            @PathVariable Long paintId
+    ) {
+        System.out.println("userId = " + userId);
+        System.out.println("paintId = " + paintId);
+        userUsecase.deleteMarkPaint(userId, paintId);
         return ResponseEntity.ok().build();
     }
 }
