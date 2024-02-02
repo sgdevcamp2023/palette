@@ -1,6 +1,7 @@
 import { memo } from 'react';
 import { useNavigate } from '@tanstack/react-router';
 
+import { LazyImage } from './common';
 import QuotePostBox from './QuotePostBox';
 import type { TimelineItem } from '@/@types';
 import Typography from './common/Typography';
@@ -11,6 +12,7 @@ import { cn, forCloudinaryImage, getDiffDateText } from '@/utils';
 interface TimelineItemBoxProps {
   post: TimelineItem;
   isShowMenu: boolean;
+  isLazyImage?: boolean;
   className?: string;
   onClickReply: VoidFunction;
   onClickRetweet: VoidFunction;
@@ -23,6 +25,7 @@ interface TimelineItemBoxProps {
 function TimelineItemBox({
   post,
   isShowMenu,
+  isLazyImage = true,
   className,
   onClickReply,
   onClickRetweet,
@@ -46,7 +49,7 @@ function TimelineItemBox({
           })
         }
       >
-        <img
+        <LazyImage
           src={forCloudinaryImage(post.authorImagePath)}
           alt={`${post.authorNickname}`}
           className="rounded-full w-[44px] h-[44px] min-w-[44px]"
@@ -101,15 +104,24 @@ function TimelineItemBox({
           </Typography>
         )}
 
-        {hasMedia && (
-          <img
-            src={forCloudinaryImage(post.includes.medias[0].path, {
-              resize: false,
-            })}
-            alt="user-upload-asset"
-            className="w-full rounded-[10px] mt-[8px] mb-[12px]"
-          />
-        )}
+        {hasMedia &&
+          (isLazyImage ? (
+            <LazyImage
+              src={forCloudinaryImage(post.includes.medias[0].path, {
+                resize: false,
+              })}
+              alt="user-upload-asset"
+              className="w-full rounded-[10px] mt-[8px] mb-[12px]"
+            />
+          ) : (
+            <img
+              src={forCloudinaryImage(post.includes.medias[0].path, {
+                resize: false,
+              })}
+              alt="user-upload-asset"
+              className="w-full rounded-[10px] mt-[8px] mb-[12px]"
+            />
+          ))}
 
         {/* Quote */}
         {post.includes.paint && (

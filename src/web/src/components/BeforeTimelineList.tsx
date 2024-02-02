@@ -56,6 +56,7 @@ const BeforeTimelineList = forwardRef<HTMLDivElement, BeforeTimelineListProps>(
               paintAction.isShowMoreMenu.id === post.id &&
               paintAction.isShowMoreMenu.show
             }
+            isLazyImage={false}
             onClickReply={() =>
               navigate({
                 to: '/post/edit',
