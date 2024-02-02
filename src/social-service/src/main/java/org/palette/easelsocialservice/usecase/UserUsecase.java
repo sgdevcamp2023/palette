@@ -25,8 +25,12 @@ public class UserUsecase {
         userService.follow(userId, followUserRequest.targetId());
     }
 
-    public void markPaint(Long userId, MarkPaintRequest likePaintRequest) {
-        Paint paint = paintService.getPaintById(likePaintRequest.paintId());
-        userService.likePaint(userId, paint);
+    public void markPaint(Long userId, MarkPaintRequest markPaintRequest) {
+        Paint paint = paintService.getPaintById(markPaintRequest.paintId());
+        userService.markPaint(userId, paint);
+    }
+
+    public void deleteMarkPaint(Long userId, Long paintId) {
+        userService.deleteMarkPaint(userId, paintId);
     }
 }

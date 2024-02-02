@@ -1,15 +1,12 @@
 package org.palette.easelsocialservice.service;
 
 
-import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
-import net.devh.boot.grpc.server.service.GrpcService;
 import org.palette.easelsocialservice.exception.BaseException;
 import org.palette.easelsocialservice.exception.ExceptionType;
 import org.palette.easelsocialservice.persistence.UserRepository;
 import org.palette.easelsocialservice.persistence.domain.Paint;
 import org.palette.easelsocialservice.persistence.domain.User;
-import org.palette.grpc.*;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -39,6 +36,7 @@ public class UserService {
             throw new BaseException(ExceptionType.SOCIAL_400_000001);
         }
     }
+
     public Map<Long, User> getUserMapByUids(final List<Long> uids) {
         List<User> users = userRepository.findAllByUids(uids);
         Map<Long, User> userMap = new HashMap<>();
@@ -71,6 +69,10 @@ public class UserService {
         User user = getUser(userId);
         user.marksPaint(paint);
         userRepository.save(user);
+    }
+
+    public void deleteMarkPaint(Long userId, Long paintId) {
+        userRepository.deleteMarkById(userId, paintId);
     }
 
     public int getFollowingCount(Long userId) {
