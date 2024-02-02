@@ -1,11 +1,9 @@
-name: Docker Hub Push
+name: User Service Docker Hub Push
 
 on:
   push:
     branches:
-      - '**/dev'
-      - '!web/dev'
-      - '!android/dev'
+      - 'user/dev'
 
 jobs:
   build-and-push:
@@ -39,23 +37,6 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x src/${{ env.BRANCH_NAME }}-service/gradlew
 
-      - name: Build with Gradle
-        env:
-          USER_DB_URI: ${{ secrets.USER_DB_URI }}
-          USER_DB_USERNAME: ${{ secrets.USER_DB_USERNAME }}
-          USER_DB_PASSWORD: ${{ secrets.USER_DB_PASSWORD }}
-
-          SOCIAL_DB_USERNAME: ${{ secrets.SOCIAL_DB_USERNAME }}
-          SOCIAL_DB_PASSWORD: ${{ secrets.SOCIAL_DB_PASSWORD }}
-          SOCIAL_DB_URI: ${{ secrets.SOCIAL_DB_URI }}
-
-          PASSPORT_KEY: ${{ secrets.PASSPORT_KEY }}
-          PASSPORT_ALGORITHM: ${{ secrets.PASSPORT_ALGORITHM }}
-        
-        run: |
-          cd src/${{ env.BRANCH_NAME }}-service
-          ./gradlew clean build -x test
-
       - name: Build and Push Docker Image
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
@@ -74,6 +55,9 @@ jobs:
           PASSPORT_ALGORITHM: ${{ secrets.PASSPORT_ALGORITHM }}
         
         run: |
+          cd src/${{ env.BRANCH_NAME }}-service
+          ./gradlew clean build -x test
+          
           if [ -n "$BRANCH_NAME" ]; then
             DOCKERFILE_DIR="src/$BRANCH_NAME-service"
           else
