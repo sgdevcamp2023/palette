@@ -42,7 +42,11 @@ const MainPostBox = forwardRef<HTMLDivElement, MainPostBoxProps>(
             }
           >
             <img
-              src={forCloudinaryImage(post.authorImagePath)}
+              src={forCloudinaryImage(post.authorImagePath, {
+                resize: true,
+                width: 100,
+                height: 100,
+              })}
               alt={`${post.authorNickname}`}
               className="rounded-full w-[44px] h-[44px] min-w-[44px]"
             />
