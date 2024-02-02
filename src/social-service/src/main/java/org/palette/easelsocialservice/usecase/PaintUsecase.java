@@ -84,7 +84,7 @@ public class PaintUsecase {
 
     public void repaint(Long userId, RepaintRequest repaintRequest) {
         User user = userService.getUser(userId);
-        paintService.repaintWithPaint(user, repaintRequest);
+        paintService.repaint(user, repaintRequest);
     }
 
     public PaintResponse getSinglePaint(Long userId, Long paintId) {
