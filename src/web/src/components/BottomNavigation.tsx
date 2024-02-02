@@ -31,7 +31,6 @@ function BottomNavigation({ direction }: ScrollDirectionProps) {
   return (
     <nav className={BottomNavigationVariants({ direction })}>
       <FramerAccessibleIconButton
-        role="navigation"
         iconType="home"
         width={22}
         label="홈 화면으로 이동"
@@ -45,7 +44,6 @@ function BottomNavigation({ direction }: ScrollDirectionProps) {
         whileTap={{ scale: 0.8 }}
       />
       <FramerAccessibleIconButton
-        role="navigation"
         iconType="search"
         width={20}
         label="통합 검색 화면으로 이동"
@@ -59,7 +57,6 @@ function BottomNavigation({ direction }: ScrollDirectionProps) {
         whileTap={{ scale: 0.8 }}
       />
       <FramerAccessibleIconButton
-        role="navigation"
         iconType={matchRoute({ to: '/notification' }) ? 'solidBell' : 'bell'}
         width={20}
         label="알림 화면으로 이동"
@@ -73,7 +70,6 @@ function BottomNavigation({ direction }: ScrollDirectionProps) {
         whileTap={{ scale: 0.8 }}
       />
       <FramerAccessibleIconButton
-        role="navigation"
         iconType={matchRoute({ to: '/chat' }) ? 'solidMail' : 'mail'}
         width={20}
         label="채팅 화면으로 이동"
