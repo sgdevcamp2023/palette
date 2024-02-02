@@ -43,6 +43,7 @@ const AccessibleIconButton = forwardRef(
         stroke={stroke}
         width={width}
         height={height}
+        aria-hidden
       />
     </button>
   ),
