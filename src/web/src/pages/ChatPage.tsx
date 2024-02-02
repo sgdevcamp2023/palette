@@ -1,14 +1,16 @@
-import { Helmet } from 'react-helmet';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 
 import { ContentLayout, Header } from '@/components';
 
 function ChatPage() {
   return (
     <>
-      <Helmet>
-        <title>Easel | 채팅</title>
-        <meta name="description" content="채팅 페이지" />
-      </Helmet>
+      <HelmetProvider>
+        <Helmet>
+          <title>Easel | 채팅</title>
+          <meta name="description" content="채팅 페이지" />
+        </Helmet>
+      </HelmetProvider>
       <Header
         left={{
           type: 'circlePerson',

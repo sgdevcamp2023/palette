@@ -1,4 +1,4 @@
-import { Helmet } from 'react-helmet';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 
 import {
   Tabs,
@@ -13,10 +13,12 @@ import { TimelineItemListSkeleton } from '@/components/skeleton';
 function HomePage() {
   return (
     <>
-      <Helmet>
-        <title>Easel | 메인</title>
-        <meta name="description" content="메인 페이지" />
-      </Helmet>
+      <HelmetProvider>
+        <Helmet>
+          <title>Easel | 메인</title>
+          <meta name="description" content="메인 페이지" />
+        </Helmet>
+      </HelmetProvider>
       <Header
         left={{
           type: 'circlePerson',

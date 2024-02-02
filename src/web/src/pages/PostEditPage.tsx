@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { toast } from 'react-toastify';
-import { Helmet } from 'react-helmet';
 import type { ChangeEvent } from 'react';
 import { useRouter } from '@tanstack/react-router';
 import { useMutation } from '@tanstack/react-query';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 
 import type { EditPaint } from '@/@types';
 import { useAutoHeightTextArea } from '@/hooks';
@@ -114,10 +114,12 @@ function PostEditPage() {
 
   return (
     <>
-      <Helmet>
-        <title>Easel | 게시글 작성</title>
-        <meta name="description" content="게시글 작성 페이지" />
-      </Helmet>
+      <HelmetProvider>
+        <Helmet>
+          <title>Easel | 게시글 작성</title>
+          <meta name="description" content="게시글 작성 페이지" />
+        </Helmet>
+      </HelmetProvider>
       <Header
         left={{
           type: 'leftStickArrow',

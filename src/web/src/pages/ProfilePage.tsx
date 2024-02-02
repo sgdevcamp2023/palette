@@ -1,7 +1,7 @@
 import type { UIEvent } from 'react';
-import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { useNavigate, useRouter } from '@tanstack/react-router';
 
 import type { TimelineItem } from '@/@types';
@@ -51,10 +51,12 @@ function ProfilePage() {
 
   return (
     <>
-      <Helmet>
-        <title>Easel | 프로필</title>
-        <meta name="description" content="프로필 페이지" />
-      </Helmet>
+      <HelmetProvider>
+        <Helmet>
+          <title>Easel | 프로필</title>
+          <meta name="description" content="프로필 페이지" />
+        </Helmet>
+      </HelmetProvider>
       <main className="relative">
         <header className="absolute top-0 flex justify-between items-center px-[14px] w-[420px] max-w-full h-[44px] z-[100]">
           <AccessibleIconButton

@@ -1,7 +1,7 @@
 import Lottie from 'react-lottie';
-import { Helmet } from 'react-helmet';
 import { toast } from 'react-toastify';
 import { useNavigate } from '@tanstack/react-router';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 
 import earthLottie from '@/components/common/lottie/earth.json';
 import { Button, Typography, ContentLayout } from '@/components';
@@ -11,10 +11,12 @@ function MembershipEntryPage() {
 
   return (
     <>
-      <Helmet>
-        <title>Easel | 홈</title>
-        <meta name="description" content="홈 페이지" />
-      </Helmet>
+      <HelmetProvider>
+        <Helmet>
+          <title>Easel | 홈</title>
+          <meta name="description" content="홈 페이지" />
+        </Helmet>
+      </HelmetProvider>
       <ContentLayout
         isShowBottomNavigation={false}
         className="h-full"

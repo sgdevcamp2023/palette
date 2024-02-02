@@ -1,4 +1,4 @@
-import { Helmet } from 'react-helmet';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 import type { FallbackProps } from 'react-error-boundary';
 
 import { Button, Typography } from '@/components';
@@ -6,10 +6,12 @@ import { Button, Typography } from '@/components';
 function ErrorFallbackPage({ error }: FallbackProps) {
   return (
     <>
-      <Helmet>
-        <title>Easel | 오류</title>
-        <meta name="description" content="오륲 페이지" />
-      </Helmet>
+      <HelmetProvider>
+        <Helmet>
+          <title>Easel | 오류</title>
+          <meta name="description" content="오륲 페이지" />
+        </Helmet>
+      </HelmetProvider>
       <div className="flex flex-col h-full justify-evenly items-center px-4">
         <div className="flex items-center justify-center w-[200px] h-[200px] rounded-full bg-yellow-100">
           <Typography size="headline-1" className="text-[100px]">

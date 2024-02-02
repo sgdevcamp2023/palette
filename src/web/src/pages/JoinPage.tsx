@@ -1,8 +1,8 @@
-import { Helmet } from 'react-helmet';
 import { toast } from 'react-toastify';
 import type { ChangeEvent } from 'react';
 import { useReducer, useState } from 'react';
 import { useNavigate } from '@tanstack/react-router';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 
 import { Header, ContentLayout } from '@/components';
 import type { JoinInfo } from '@/components/join/joinReducer';
@@ -123,10 +123,12 @@ function JoinPage() {
 
   return (
     <>
-      <Helmet>
-        <title>Easel | 회원가입</title>
-        <meta name="description" content="회원가입 페이지" />
-      </Helmet>
+      <HelmetProvider>
+        <Helmet>
+          <title>Easel | 회원가입</title>
+          <meta name="description" content="회원가입 페이지" />
+        </Helmet>
+      </HelmetProvider>
       <Header
         left={{
           type: state === JoinStep.INFORMATION ? 'text' : 'leftStickArrow',
