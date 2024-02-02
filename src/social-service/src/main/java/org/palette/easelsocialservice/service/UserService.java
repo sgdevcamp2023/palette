@@ -52,6 +52,9 @@ public class UserService {
     }
 
     public void likePaint(Long userId, Paint paint) {
+        if (userRepository.existsLikesByUidAndPid(userId, paint.getPid())) {
+            throw new BaseException(ExceptionType.SOCIAL_400_000005);
+        }
         User user = getUser(userId);
         user.likePaint(paint);
         userRepository.save(user);
@@ -71,6 +74,9 @@ public class UserService {
     }
 
     public void markPaint(Long userId, Paint paint) {
+        if (userRepository.existsLikesByUidAndPid(userId, paint.getPid())) {
+            throw new BaseException(ExceptionType.SOCIAL_400_000006);
+        }
         User user = getUser(userId);
         user.marksPaint(paint);
         userRepository.save(user);
