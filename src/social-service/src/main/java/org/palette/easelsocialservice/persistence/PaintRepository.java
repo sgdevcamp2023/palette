@@ -15,14 +15,24 @@ public interface PaintRepository extends Neo4jRepository<Paint, Long> {
     @Query("MATCH (p:Paint {pid: $pid}) SET p.views = p.views + 1")
     void updatePaintView(@Param("pid") Long pid);
 
-    @Query("MATCH path = (a:Paint)-[:REPLIES*]->(b:Paint) " +
+    @Query(
+            "MATCH path = (u:User {uid: $uid})-[:CREATES|QUOTES|REPLIES]->(p:Paint) " +
+                    "WITH [node in nodes(path) WHERE node:Paint] AS intermediateNodes " +
+                    "UNWIND intermediateNodes AS intermediateNode " +
+                    "MATCH (startNode:Paint)<-[r]->(nextNode) " +
+                    "WHERE startNode = intermediateNode AND type(r) <> 'REPLIES' AND type(r) <> 'REPAINTS' AND type(r) <> 'QUOTES' " +
+                    "RETURN startNode, r, nextNode"
+    )
+    List<Paint> findAllCreatesQuotesRepliesByUid(@Param("uid") Long uid);
+
+    @Query("MATCH path = (a:Paint)<-[:CREATES]-(b:User) " +
             "WHERE a.pid = $pid " +
             "WITH [node in nodes(path) WHERE node:Paint] AS intermediateNodes " +
             "UNWIND intermediateNodes AS intermediateNode " +
             "MATCH (startNode:Paint)<-[r]->(nextNode) " +
             "WHERE startNode = intermediateNode AND type(r) <> 'REPLIES' AND type(r) <> 'REPAINTS' AND type(r) <> 'QUOTES' " +
             "RETURN startNode, r, nextNode")
-    List<Paint> findAllBeforePaintByPid(@Param("pid")Long pid);
+    List<Paint> findAllBeforePaintByPid(@Param("pid") Long pid);
 
     @Query("MATCH (a:Paint)<-[:REPLIES]-(b:Paint)" +
             "WHERE a.pid = $pid " +

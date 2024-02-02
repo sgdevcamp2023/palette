@@ -1,12 +1,16 @@
 package org.palette.easelsocialservice.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.palette.aop.InjectEaselAuthentication;
 import org.palette.easelsocialservice.dto.request.FollowUserRequest;
 import org.palette.easelsocialservice.dto.request.LikePaintRequest;
 import org.palette.easelsocialservice.dto.request.MarkPaintRequest;
+import org.palette.easelsocialservice.dto.response.PaintResponse;
 import org.palette.easelsocialservice.usecase.UserUsecase;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/users")
@@ -57,5 +61,15 @@ public class UserController {
     ) {
         userUsecase.deleteMarkPaint(userId, paintId);
         return ResponseEntity.ok().build();
+    }
+
+    @InjectEaselAuthentication
+    @GetMapping("/{userId}/paint")
+    public ResponseEntity<List<PaintResponse>> getMyPaints(
+            @PathVariable Long userId
+    ) {
+        return ResponseEntity
+                .ok()
+                .body(userUsecase.getAllPaintsInMyPage(userId));
     }
 }
