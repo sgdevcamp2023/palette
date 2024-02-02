@@ -1,11 +1,9 @@
-name: Docker Hub Push
+name: Gateway Service Docker Hub Push
 
 on:
   push:
     branches:
-      - '**/dev'
-      - '!web/dev'
-      - '!android/dev'
+      - 'gateway/dev'
 
 jobs:
   build-and-push:
@@ -15,11 +13,6 @@ jobs:
     - name: Checkout Repository
       uses: actions/checkout@v2
 
-    - name: Set Environment Variables
-      run: |
-        BRANCH_NAME=$(echo $GITHUB_REF | awk -F'/' '{print $3}')
-        echo "BRANCH_NAME=$BRANCH_NAME" >> $GITHUB_ENV
-    
     - name: Cache Gradle dependencies
       uses: actions/cache@v2
       with:
@@ -37,28 +30,17 @@ jobs:
         distribution: 'temurin'
 
     - name: Grant execute permission for gradlew
-      run: chmod +x src/${{ env.BRANCH_NAME }}-service/gradlew
-
-    - name: Build with Gradle
-      run: |
-        cd src/${{ env.BRANCH_NAME }}-service
-        ./gradlew clean build
+      run: chmod +x src/gateway-service/gradlew
 
     - name: Build and Push Docker Image
       env:
         DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-        BRANCH_NAME: ${{ env.BRANCH_NAME }}
       run: |
-        if [ -n "$BRANCH_NAME" ]; then
-          DOCKERFILE_DIR="src/$BRANCH_NAME-service"
-        else
-          echo "Failed to extract branch name from GITHUB_REF."
-          exit 1
-        fi
-
-        cd $DOCKERFILE_DIR
+        cd src/gateway-service
+        ./gradlew clean build
+        
         docker run --privileged --rm tonistiigi/binfmt --install all
         docker buildx create --use
         docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-        docker buildx build --platform=linux/amd64,linux/arm64 -t $DOCKER_USERNAME/$BRANCH_NAME-service:latest . --push
+        docker buildx build --platform=linux/amd64,linux/arm64 -t $DOCKER_USERNAME/gateway-service:latest . --push
