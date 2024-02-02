@@ -51,7 +51,7 @@ public class Paint {
 
     private Integer views;
 
-    private final LocalDateTime createdAt;
+    private LocalDateTime createdAt;
 
     private LocalDateTime deletedAt;
 

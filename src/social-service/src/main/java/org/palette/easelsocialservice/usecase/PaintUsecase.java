@@ -9,6 +9,7 @@ import org.palette.easelsocialservice.dto.request.RepaintRequest;
 import org.palette.easelsocialservice.dto.response.PaintCreateResponse;
 import org.palette.easelsocialservice.dto.response.PaintResponse;
 import org.palette.easelsocialservice.dto.response.ThreadResponse;
+import org.palette.easelsocialservice.dto.response.UserResponse;
 import org.palette.easelsocialservice.persistence.domain.Link;
 import org.palette.easelsocialservice.persistence.domain.Media;
 import org.palette.easelsocialservice.persistence.domain.Paint;
@@ -103,5 +104,9 @@ public class PaintUsecase {
 
     public List<PaintResponse> getQuotePaints(final Long userId, final Long paintId) {
         return paintService.getQuotePaintsById(userId, paintId);
+    }
+
+    public List<UserResponse> getLikedUsers(final Long paintId) {
+        return userService.getLikedUsers(paintId);
     }
 }
