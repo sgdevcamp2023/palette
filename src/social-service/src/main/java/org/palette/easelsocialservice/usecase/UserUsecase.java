@@ -23,4 +23,24 @@ public class UserUsecase {
     public void follow(Long userId, FollowUserRequest followUserRequest) {
         userService.follow(userId, followUserRequest.targetId());
     }
+
+    public void createBookmark(
+            Long userId,
+            Long paintId
+    ) {
+        userService.createBookmark(
+                userId,
+                paintService.getPaintById(paintId)
+        );
+    }
+
+    public void deleteBookmark(
+            Long userId,
+            Long paintId
+    ) {
+        userService.deleteBookmark(
+                userId,
+                paintService.getPaintById(paintId)
+        );
+    }
 }

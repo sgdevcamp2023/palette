@@ -1,14 +1,13 @@
 package org.palette.easelsocialservice.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.palette.aop.EaselAuthenticationContext;
+import org.palette.aop.InjectEaselAuthentication;
 import org.palette.easelsocialservice.dto.request.FollowUserRequest;
 import org.palette.easelsocialservice.dto.request.LikePaintRequest;
-import org.palette.easelsocialservice.dto.response.ThreadResponse;
 import org.palette.easelsocialservice.usecase.UserUsecase;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/users")
@@ -32,5 +31,32 @@ public class UserController {
     ) {
         userUsecase.follow(userId, followUserRequest);
         return ResponseEntity.ok().build();
+    }
+
+    @InjectEaselAuthentication
+    @PostMapping("/mark/{paintId}")
+    public ResponseEntity<Void> createBookmark(
+            @PathVariable Long paintId
+    ) {
+        userUsecase.createBookmark(
+                EaselAuthenticationContext.getUserInfo().id(),
+                paintId
+        );
+        return ResponseEntity
+                .ok()
+                .build();
+    }
+
+    @DeleteMapping("/mark/{paintId}")
+    public ResponseEntity<Void> deleteBookmark(
+            @PathVariable Long paintId
+    ) {
+        userUsecase.deleteBookmark(
+                EaselAuthenticationContext.getUserInfo().id(),
+                paintId
+        );
+        return ResponseEntity
+                .ok()
+                .build();
     }
 }

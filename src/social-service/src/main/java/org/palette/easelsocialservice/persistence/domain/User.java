@@ -2,17 +2,15 @@ package org.palette.easelsocialservice.persistence.domain;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.palette.easelsocialservice.persistence.relationship.Contains;
+import org.palette.easelsocialservice.persistence.relationship.Bookmarks;
 import org.palette.easelsocialservice.persistence.relationship.Follows;
 import org.palette.easelsocialservice.persistence.relationship.Likes;
 import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.Node;
 import org.springframework.data.neo4j.core.schema.Relationship;
 
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 @Node
 @Getter
@@ -34,6 +32,9 @@ public class User {
 
     @Relationship(type = "FOLLOWS")
     private List<Follows> followings;
+
+    @Relationship(type = "BOOKMARKS")
+    private List<Bookmarks> bookmarks;
 
     public User(Long uid, String username, String nickname, String imagePath, Boolean isActive) {
         this.uid = uid;
@@ -63,5 +64,19 @@ public class User {
             followings = new LinkedList<>();
         }
         followings.add(new Follows(user));
+    }
+
+    public void addBookmark(User user, Paint paint) {
+        if (bookmarks == null) {
+            bookmarks = new LinkedList<>();
+        }
+        bookmarks.add(new Bookmarks(user, paint));
+    }
+
+    public void deleteBookmark(User user, Paint paint) {
+        if (bookmarks == null) {
+            bookmarks = new LinkedList<>();
+        }
+        bookmarks.remove(new Bookmarks(user, paint));
     }
 }
