@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     private final UserUsecase userUsecase;
 
+    @InjectEaselAuthentication
     @PostMapping("/{userId}/like")
     public ResponseEntity<Void> likePost(
             @PathVariable Long userId,
@@ -24,6 +25,7 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
+    @InjectEaselAuthentication
     @PostMapping("/{userId}/follow")
     public ResponseEntity<Void> follow(
             @PathVariable Long userId,
@@ -47,6 +49,7 @@ public class UserController {
                 .build();
     }
 
+    @InjectEaselAuthentication
     @DeleteMapping("/mark/{paintId}")
     public ResponseEntity<Void> deleteBookmark(
             @PathVariable Long paintId

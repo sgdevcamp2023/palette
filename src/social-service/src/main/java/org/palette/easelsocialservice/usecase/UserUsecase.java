@@ -28,9 +28,11 @@ public class UserUsecase {
             Long userId,
             Long paintId
     ) {
+        final Paint paintById = paintService.getPaintById(paintId);
+        System.out.println("paintById = " + paintById.getContent());
         userService.createBookmark(
                 userId,
-                paintService.getPaintById(paintId)
+                paintById
         );
     }
 
@@ -40,7 +42,7 @@ public class UserUsecase {
     ) {
         userService.deleteBookmark(
                 userId,
-                paintService.getPaintById(paintId)
+                paintId
         );
     }
 }

@@ -30,10 +30,10 @@ public class AcceptanceTestBase {
             final String url,
             final Object requestDto
     ) {
-
         try {
             return mvc.perform(
                             post(url)
+                                    .header("Authorization", "eyJ1c2VySW5mbyI6eyJpZCI6MTAwLCJlbWFpbCI6ImNvdXJ0bmV5QHRlc3QuY29tIiwibmlja25hbWUiOiLsvZTtirjri4giLCJ1c2VybmFtZSI6ImNvdXJ0bmV5Iiwicm9sZSI6Ik5PUk1BTCIsImlzQWN0aXZhdGVkIjp0cnVlLCJhY2Nlc3NlZEF0IjoiMjAyNC0wMi0wMlQxMToyNDo1Ny41MzU3NTgiLCJjcmVhdGVkQXQiOiIyMDI0LTAyLTAyVDExOjI0OjU3LjUzNTk4NyIsImRlbGV0ZWRBdCI6bnVsbH0sImludGVncml0eUtleSI6InhVbXFGU09MVzRTVGRpVjBtVk43ZXVvT2RxTjZwOXhEbWo3NVdUSTZ3a2c9In0=")
                                     .content(objectMapper.writeValueAsString(requestDto))
                                     .contentType(APPLICATION_JSON)
                                     .accept(APPLICATION_JSON))

@@ -2,6 +2,7 @@ package org.palette.easelsocialservice.service;
 
 
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 import org.palette.easelsocialservice.exception.BaseException;
 import org.palette.easelsocialservice.exception.ExceptionType;
 import org.palette.easelsocialservice.persistence.UserRepository;
@@ -13,6 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@ToString
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -70,19 +72,15 @@ public class UserService {
             Paint paint
     ) {
         User user = getUser(userId);
-        user.addBookmark(user, paint);
-
+        user.addBookmark(paint);
         userRepository.save(user);
     }
 
     public void deleteBookmark(
             Long userId,
-            Paint paint
+            Long bookmarkId
     ) {
-        User user = getUser(userId);
-        user.deleteBookmark(user, paint);
-
-        userRepository.save(user);
+        userRepository.deleteBookmarkById(userId, bookmarkId);
     }
 
     public int getFollowingCount(Long userId) {

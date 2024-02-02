@@ -66,17 +66,17 @@ public class User {
         followings.add(new Follows(user));
     }
 
-    public void addBookmark(User user, Paint paint) {
+    public void addBookmark(Paint paint) {
         if (bookmarks == null) {
             bookmarks = new LinkedList<>();
         }
-        bookmarks.add(new Bookmarks(user, paint));
+        bookmarks.add(new Bookmarks(paint));
     }
 
-    public void deleteBookmark(User user, Paint paint) {
+    public void deleteBookmark(Paint paint) {
         if (bookmarks == null) {
             bookmarks = new LinkedList<>();
         }
-        bookmarks.remove(new Bookmarks(user, paint));
+        bookmarks.remove(new Bookmarks(paint));
     }
 }

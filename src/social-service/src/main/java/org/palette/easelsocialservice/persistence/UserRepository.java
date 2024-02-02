@@ -24,4 +24,7 @@ public interface UserRepository extends Neo4jRepository<User, Long> {
 
     @Query("MATCH (:User { uid: $uid })<-[r:FOLLOWS]-() RETURN count(r)")
     int countFollowers(@Param("uid") Long uid);
+
+    @Query("MATCH (:User { uid: $uid }) - [r:BOOKMARKS] -> (:Paint { pid: $pid }) DELETE r")
+    void deleteBookmarkById(@Param("uid") Long uid, @Param("pid") Long pid);
 }
