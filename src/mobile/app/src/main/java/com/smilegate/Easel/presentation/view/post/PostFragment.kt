@@ -1,9 +1,12 @@
 package com.smilegate.Easel.presentation.view.post
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
@@ -39,6 +42,10 @@ class PostFragment : Fragment() {
 
         navController = findNavController()
 
+        val editText = view.findViewById<EditText>(R.id.et_post_content)
+        editText.requestFocus()
 
+        val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT)
     }
 }
