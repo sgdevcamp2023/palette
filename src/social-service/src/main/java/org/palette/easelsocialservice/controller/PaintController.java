@@ -8,6 +8,7 @@ import org.palette.easelsocialservice.dto.request.RepaintRequest;
 import org.palette.easelsocialservice.dto.response.PaintCreateResponse;
 import org.palette.easelsocialservice.dto.response.PaintResponse;
 import org.palette.easelsocialservice.dto.response.ThreadResponse;
+import org.palette.easelsocialservice.dto.response.UserResponse;
 import org.palette.easelsocialservice.usecase.PaintUsecase;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -103,6 +104,19 @@ public class PaintController {
                 .body(
                         paintUsecase.getQuotePaints(
                                 EaselAuthenticationContext.getUserInfo().id(),
+                                paintId
+                        ));
+    }
+
+    @InjectEaselAuthentication
+    @GetMapping("/{paintId}/like-paints")
+    public ResponseEntity<List<UserResponse>> getLikedUsers(
+            @PathVariable Long paintId
+    ) {
+        return ResponseEntity
+                .ok()
+                .body(
+                        paintUsecase.getLikedUsers(
                                 paintId
                         ));
     }

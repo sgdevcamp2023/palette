@@ -2,6 +2,7 @@ package org.palette.easelsocialservice.service;
 
 
 import lombok.RequiredArgsConstructor;
+import org.palette.easelsocialservice.dto.response.UserResponse;
 import org.palette.easelsocialservice.exception.BaseException;
 import org.palette.easelsocialservice.exception.ExceptionType;
 import org.palette.easelsocialservice.persistence.UserRepository;
@@ -51,9 +52,16 @@ public class UserService {
     }
 
     public void likePaint(Long userId, Paint paint) {
+        if (userRepository.existsLikesByUidAndPid(userId, paint.getPid())) {
+            throw new BaseException(ExceptionType.SOCIAL_400_000005);
+        }
         User user = getUser(userId);
         user.likePaint(paint);
         userRepository.save(user);
+    }
+
+    public void unlike(final Long userId, final Long paintId) {
+        userRepository.deleteLikeById(userId, paintId);
     }
 
     public void follow(Long userId, Long targetId) {
@@ -66,6 +74,9 @@ public class UserService {
     }
 
     public void markPaint(Long userId, Paint paint) {
+        if (userRepository.existsLikesByUidAndPid(userId, paint.getPid())) {
+            throw new BaseException(ExceptionType.SOCIAL_400_000006);
+        }
         User user = getUser(userId);
         user.marksPaint(paint);
         userRepository.save(user);
@@ -81,5 +92,16 @@ public class UserService {
 
     public int getFollowerCount(Long userId) {
         return userRepository.countFollowers(userId);
+    }
+
+    public List<UserResponse> getLikedUsers(final Long paintId) {
+        return convertToUserResponse(userRepository.findLikedByPaintId(paintId));
+    }
+
+    private List<UserResponse> convertToUserResponse(final List<User> users) {
+        return users
+                .stream()
+                .map(UserResponse::from)
+                .toList();
     }
 }

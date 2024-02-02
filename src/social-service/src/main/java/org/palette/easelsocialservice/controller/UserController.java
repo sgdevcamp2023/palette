@@ -23,6 +23,15 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
+    @DeleteMapping("/{userId}/like/{paintId}")
+    public ResponseEntity<Void> unlikePost(
+            @PathVariable Long userId,
+            @PathVariable Long paintId
+    ) {
+        userUsecase.unlikePaint(userId,  paintId);
+        return ResponseEntity.ok().build();
+    }
+
     @PostMapping("/{userId}/follow")
     public ResponseEntity<Void> follow(
             @PathVariable Long userId,
@@ -46,8 +55,6 @@ public class UserController {
             @PathVariable Long userId,
             @PathVariable Long paintId
     ) {
-        System.out.println("userId = " + userId);
-        System.out.println("paintId = " + paintId);
         userUsecase.deleteMarkPaint(userId, paintId);
         return ResponseEntity.ok().build();
     }
