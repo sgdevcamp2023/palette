@@ -23,7 +23,7 @@ public class PaintService {
         paintRepository.save(paint);
     }
 
-    public void repaintWithPaint(User user, RepaintRequest repaintRequest) {
+    public void repaint(User user, RepaintRequest repaintRequest) {
         Paint paint = paintRepository.findById(repaintRequest.originPaintId())
                 .orElseThrow(() -> new BaseException(ExceptionType.SOCIAL_400_000002));
         paint.addRepaint(user);
