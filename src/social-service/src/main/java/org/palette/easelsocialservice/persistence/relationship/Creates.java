@@ -13,7 +13,7 @@ public class Creates {
     private Long id;
 
     @TargetNode
-    private User user;
+    private final User user;
 
     public Creates(User user) {
         this.user = user;

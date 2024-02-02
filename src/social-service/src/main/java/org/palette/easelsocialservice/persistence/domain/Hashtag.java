@@ -8,7 +8,7 @@ import org.springframework.data.neo4j.core.schema.Node;
 @Getter
 public class Hashtag {
     @Id
-    private String tag;
+    private final String tag;
 
     public Hashtag(String tag) {
         this.tag = tag;

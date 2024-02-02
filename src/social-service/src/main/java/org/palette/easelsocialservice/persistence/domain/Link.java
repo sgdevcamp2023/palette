@@ -8,11 +8,11 @@ import org.springframework.data.neo4j.core.schema.Node;
 @Node
 public class Link {
     @Id
-    private Long lid;
+    private final Long lid;
 
-    private String shortLink;
+    private final String shortLink;
 
-    private String originalLink;
+    private final String originalLink;
 
     public Link(Long lid, String shortLink, String originalLink) {
         this.lid = lid;

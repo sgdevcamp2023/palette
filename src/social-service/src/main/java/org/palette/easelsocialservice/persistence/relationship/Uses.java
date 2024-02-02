@@ -13,7 +13,7 @@ public class Uses {
     private Long id;
 
     @TargetNode
-    private Media media;
+    private final Media media;
 
     public Uses(Media media) {
         this.media = media;
