@@ -44,7 +44,7 @@ public interface PaintRepository extends Neo4jRepository<Paint, Long> {
     List<Paint> findAllAfterPaintsByPid(@Param("pid") Long pid);
 
     @Query("MATCH (a:Paint)-[r:QUOTES]->(b:Paint)<-[r2]->(c) " +
-            "WHERE a.pid = 14 AND type(r2) <> 'REPLIES' AND type(r2) <> 'QUOTES' " +
+            "WHERE a.pid = $pid AND type(r2) <> 'REPLIES' AND type(r2) <> 'QUOTES' " +
             "RETURN b, r2, c")
     Paint findQuotePaintByPid(@Param("pid") Long pid);
 
@@ -57,4 +57,13 @@ public interface PaintRepository extends Neo4jRepository<Paint, Long> {
             "exists((p)<-[:LIKES]-(u)) AS like, exists((p)<-[:REPAINTS]-(u)) AS repainted, exists((p)<-[:REPAINTS]-(u)) AS marked")
     PaintMetrics findMetricsByPidAndUid(@Param("uid") Long uid, @Param("pid") Long pid);
 
+
+    @Query("MATCH quotings = (a:Paint)<-[:QUOTES]-(b:Paint) " +
+            "WHERE a.pid = $pid " +
+            "WITH [node in nodes(quotings) WHERE node:Paint] AS intermediateNodes " +
+            "UNWIND intermediateNodes AS intermediateNode " +
+            "MATCH (startNode:Paint)<-[r]->(nextNode) " +
+            "WHERE startNode.pid <> $pid AND startNode = intermediateNode AND type(r) <> 'REPLIES' AND type(r) <> 'REPAINTS' AND type(r) <> 'QUOTES' " +
+            "RETURN startNode, r, nextNode")
+    List<Paint> findAllQuotePaintByPid(@Param("pid") Long pid);
 }

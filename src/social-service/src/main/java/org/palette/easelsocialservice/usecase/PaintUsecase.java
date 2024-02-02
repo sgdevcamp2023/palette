@@ -84,7 +84,7 @@ public class PaintUsecase {
 
     public void repaint(Long userId, RepaintRequest repaintRequest) {
         User user = userService.getUser(userId);
-        paintService.repaintWithPaint(user, repaintRequest);
+        paintService.repaint(user, repaintRequest);
     }
 
     public PaintResponse getSinglePaint(Long userId, Long paintId) {
@@ -99,5 +99,9 @@ public class PaintUsecase {
 
     public List<ThreadResponse> getSingleAfter(Long userId, Long paintId) {
         return paintService.getPaintAfterById(userId, paintId);
+    }
+
+    public List<PaintResponse> getQuotePaints(final Long userId, final Long paintId) {
+        return paintService.getQuotePaintsById(userId, paintId);
     }
 }

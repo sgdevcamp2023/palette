@@ -92,4 +92,18 @@ public class PaintController {
                                 paintId
                         ));
     }
+
+    @InjectEaselAuthentication
+    @GetMapping("/{paintId}/quote-paints")
+    public ResponseEntity<List<PaintResponse>> getQuotePaints(
+            @PathVariable Long paintId
+    ) {
+        return ResponseEntity
+                .ok()
+                .body(
+                        paintUsecase.getQuotePaints(
+                                EaselAuthenticationContext.getUserInfo().id(),
+                                paintId
+                        ));
+    }
 }
