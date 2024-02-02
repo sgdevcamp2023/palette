@@ -100,4 +100,8 @@ public class PaintUsecase {
     public List<ThreadResponse> getSingleAfter(Long userId, Long paintId) {
         return paintService.getPaintAfterById(userId, paintId);
     }
+
+    public List<PaintResponse> getQuotePaints(final Long userId, final Long paintId) {
+        return paintService.getQuotePaintsById(userId, paintId);
+    }
 }

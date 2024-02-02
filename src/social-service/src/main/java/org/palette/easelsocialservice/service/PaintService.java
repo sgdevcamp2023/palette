@@ -65,6 +65,12 @@ public class PaintService {
         paintRepository.updatePaintView(paintId);
     }
 
+    public List<PaintResponse> getQuotePaintsById(final Long userId, final Long paintId) {
+        List<Paint> paints = distinctPaintsByPid(paintRepository.findAllQuotePaintByPid(paintId));
+
+        return paintEntityConverter.convertToPaintResponse(userId, paints);
+    }
+
     private ThreadResponse getThreadGroup(Integer threadId, Long userId, Paint paint) {
         checkAndSetQuotePaint(paint);
         List<Paint> subPaints = distinctPaintsByPid(paintRepository.findAllAfterPaintsByPid(paint.getPid()));
