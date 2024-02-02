@@ -47,10 +47,6 @@ jobs:
           USER_DB_USERNAME: ${{ secrets.USER_DB_USERNAME }}
           USER_DB_PASSWORD: ${{ secrets.USER_DB_PASSWORD }}
 
-          SOCIAL_DB_USERNAME: ${{ secrets.SOCIAL_DB_USERNAME }}
-          SOCIAL_DB_PASSWORD: ${{ secrets.SOCIAL_DB_PASSWORD }}
-          SOCIAL_DB_URI: ${{ secrets.SOCIAL_DB_URI }}
-
           PASSPORT_KEY: ${{ secrets.PASSPORT_KEY }}
           PASSPORT_ALGORITHM: ${{ secrets.PASSPORT_ALGORITHM }}
         
