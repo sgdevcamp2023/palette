@@ -19,16 +19,30 @@ class ImageNotFoundError extends Error {
   }
 }
 
+type ImageQuality =
+  | 'auto'
+  | 'auto:best'
+  | 'auto:eco'
+  | 'auto:good'
+  | 'auto:low'
+  | 'jpegmini'
+  | 'jpegmini:best'
+  | 'jpegmini:high'
+  | 'jpegmini:medium';
 export const forCloudinaryImage = (
   id: string,
   options:
     | {
         resize: true;
+        quality?: ImageQuality;
+        ratio?: '16:9' | '3:4' | '1:1' | false;
         width: ImageSize['width'];
         height: ImageSize['height'];
       }
-    | { resize: false } = {
+    | { resize: false; quality?: ImageQuality } = {
     resize: true,
+    quality: 'auto',
+    ratio: '1:1',
     width: 400,
     height: 400,
   },
@@ -37,8 +51,16 @@ export const forCloudinaryImage = (
   if (!image) {
     throw new ImageNotFoundError();
   }
-  image.quality('auto');
-  if (options.resize) {
+
+  if (options.quality) {
+    image.quality(options.quality);
+  }
+
+  if (options.resize && options.ratio) {
+    image.resize(
+      Resize.scale().width(options.width).aspectRatio(options.ratio),
+    );
+  } else if (options.resize && !options.ratio) {
     image.resize(Resize.scale().width(options.width).height(options.height));
   }
   return image.toURL();

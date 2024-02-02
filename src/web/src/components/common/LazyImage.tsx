@@ -31,7 +31,7 @@ function LazyImage({
 
   if (isLoading) {
     return (
-      <div className="w-full animate-pulse">
+      <div className="animate-pulse">
         <div
           className={cn(
             'w-full h-full bg-blueGrey-100 dark:bg-blueGrey-300',
