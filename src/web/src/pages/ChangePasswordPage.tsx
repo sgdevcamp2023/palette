@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { toast } from 'react-toastify';
+import { Helmet } from 'react-helmet';
 import { useNavigate } from '@tanstack/react-router';
 
 import {
@@ -22,6 +23,10 @@ function ChangePasswordPage() {
 
   return (
     <>
+      <Helmet>
+        <title>Easel | 비밀번호 변경</title>
+        <meta name="description" content="비밀번호 변경 페이지" />
+      </Helmet>
       <Header
         left={{
           type: 'text',

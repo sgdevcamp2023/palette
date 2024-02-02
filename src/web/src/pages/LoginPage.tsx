@@ -1,3 +1,4 @@
+import { Helmet } from 'react-helmet';
 import { toast } from 'react-toastify';
 import type { ChangeEvent } from 'react';
 import { useReducer, useState } from 'react';
@@ -82,6 +83,10 @@ function LoginPage() {
 
   return (
     <>
+      <Helmet>
+        <title>Easel | 로그인</title>
+        <meta name="description" content="로그인 페이지" />
+      </Helmet>
       <Header
         left={{
           type: state === LoginStep.EMAIL ? 'text' : 'leftStickArrow',

@@ -1,3 +1,4 @@
+import { Helmet } from 'react-helmet';
 import { toast } from 'react-toastify';
 import type { ChangeEvent } from 'react';
 import { useReducer, useState } from 'react';
@@ -122,6 +123,10 @@ function JoinPage() {
 
   return (
     <>
+      <Helmet>
+        <title>Easel | 회원가입</title>
+        <meta name="description" content="회원가입 페이지" />
+      </Helmet>
       <Header
         left={{
           type: state === JoinStep.INFORMATION ? 'text' : 'leftStickArrow',

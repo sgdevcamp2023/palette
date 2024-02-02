@@ -1,3 +1,5 @@
+import { Helmet } from 'react-helmet';
+
 import {
   Tabs,
   Header,
@@ -11,6 +13,10 @@ import { TimelineItemListSkeleton } from '@/components/skeleton';
 function HomePage() {
   return (
     <>
+      <Helmet>
+        <title>Easel | 메인</title>
+        <meta name="description" content="메인 페이지" />
+      </Helmet>
       <Header
         left={{
           type: 'circlePerson',

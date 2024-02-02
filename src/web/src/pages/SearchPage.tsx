@@ -1,8 +1,14 @@
+import { Helmet } from 'react-helmet';
+
 import { ContentLayout, Header } from '@/components';
 
 function SearchPage() {
   return (
     <>
+      <Helmet>
+        <title>Easel | 검색</title>
+        <meta name="description" content="검색 페이지" />
+      </Helmet>
       <Header
         left={{
           type: 'circlePerson',

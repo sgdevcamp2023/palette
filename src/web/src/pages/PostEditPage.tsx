@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { toast } from 'react-toastify';
+import { Helmet } from 'react-helmet';
 import type { ChangeEvent } from 'react';
 import { useRouter } from '@tanstack/react-router';
 import { useMutation } from '@tanstack/react-query';
@@ -113,6 +114,10 @@ function PostEditPage() {
 
   return (
     <>
+      <Helmet>
+        <title>Easel | 게시글 작성</title>
+        <meta name="description" content="게시글 작성 페이지" />
+      </Helmet>
       <Header
         left={{
           type: 'leftStickArrow',
