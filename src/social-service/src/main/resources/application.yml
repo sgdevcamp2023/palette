@@ -11,6 +11,14 @@ spring:
       password: ${SOCIAL_DB_PASSWORD}
     uri: ${SOCIAL_DB_URI}
 
+  kafka:
+    bootstrap-servers: ${KAFKA_SERVERS}
+    consumer:
+      group-id: timeline-consumer-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+
 eureka:
   instance:
     hostname: localhost
