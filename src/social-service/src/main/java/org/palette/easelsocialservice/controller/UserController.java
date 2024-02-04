@@ -32,7 +32,7 @@ public class UserController {
             @PathVariable Long userId,
             @PathVariable Long paintId
     ) {
-        userUsecase.unlikePaint(userId,  paintId);
+        userUsecase.unlikePaint(userId, paintId);
         return ResponseEntity.ok().build();
     }
 
@@ -91,5 +91,15 @@ public class UserController {
         return ResponseEntity
                 .ok()
                 .body(userUsecase.getAllPaintsContainingMedia(userId));
+    }
+
+    @InjectEaselAuthentication
+    @GetMapping("/{userId}/like")
+    public ResponseEntity<List<PaintResponse>> getAllLikingPaints(
+            @PathVariable Long userId
+    ) {
+        return ResponseEntity
+                .ok()
+                .body(userUsecase.getAllLikingPaintsByUserId(userId));
     }
 }
