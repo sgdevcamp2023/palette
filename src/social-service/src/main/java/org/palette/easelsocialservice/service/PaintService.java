@@ -72,7 +72,14 @@ public class PaintService {
     public List<PaintResponse> getAllPaintsByUserId(Long userId) {
         return paintEntityConverter.convertToPaintResponse(
                 userId,
-                paintRepository.findAllCreatesQuotesRepliesByUid(userId)
+                distinctPaintsByPid(paintRepository.findAllCreatesQuotesRepliesByUid(userId))
+        );
+    }
+
+    public List<PaintResponse> getAllRepliesByUserId(Long userId) {
+        return paintEntityConverter.convertToPaintResponse(
+                userId,
+                distinctPaintsByPid(paintRepository.findAllCreatesQuotesRepliesByUid(userId))
         );
     }
 

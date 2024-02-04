@@ -72,4 +72,14 @@ public class UserController {
                 .ok()
                 .body(userUsecase.getAllPaintsInMyPage(userId));
     }
+
+    @InjectEaselAuthentication
+    @GetMapping("/{userId}/reply")
+    public ResponseEntity<List<PaintResponse>> getMyReplies(
+            @PathVariable Long userId
+    ) {
+        return ResponseEntity
+                .ok()
+                .body(userUsecase.getAllRepliesByUserId(userId));
+    }
 }
