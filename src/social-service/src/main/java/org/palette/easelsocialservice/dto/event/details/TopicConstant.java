@@ -1,4 +1,4 @@
-package org.palette.easelsocialservice.dto.event;
+package org.palette.easelsocialservice.dto.event.details;
 
 import lombok.AllArgsConstructor;
 

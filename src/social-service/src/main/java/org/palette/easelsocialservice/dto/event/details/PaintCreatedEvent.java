@@ -1,7 +1,8 @@
-package org.palette.easelsocialservice.dto.event;
+package org.palette.easelsocialservice.dto.event.details;
 
 import lombok.AccessLevel;
 import lombok.Builder;
+import org.palette.easelsocialservice.dto.event.EaselEvent;
 import org.palette.easelsocialservice.persistence.domain.Paint;
 
 @Builder(access = AccessLevel.PRIVATE)
