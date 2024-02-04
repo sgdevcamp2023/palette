@@ -82,4 +82,14 @@ public class UserController {
                 .ok()
                 .body(userUsecase.getAllRepliesByUserId(userId));
     }
+
+    @InjectEaselAuthentication
+    @GetMapping("/{userId}/media")
+    public ResponseEntity<List<PaintResponse>> getAllPaintContainingMedia(
+            @PathVariable Long userId
+    ) {
+        return ResponseEntity
+                .ok()
+                .body(userUsecase.getAllPaintsContainingMedia(userId));
+    }
 }
