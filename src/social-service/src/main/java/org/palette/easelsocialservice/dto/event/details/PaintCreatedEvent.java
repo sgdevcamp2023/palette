@@ -20,7 +20,7 @@ public record PaintCreatedEvent(
                 .writerId(userId)
                 .paintId(paint.getPid())
                 .paintContent(paint.getContent())
-                .paintHashtag(paint.getHashtags().toString())
+                .paintHashtag(String.valueOf(paint.getHashtags()))
                 .build();
     }
 
