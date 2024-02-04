@@ -25,6 +25,16 @@ public interface PaintRepository extends Neo4jRepository<Paint, Long> {
     )
     List<Paint> findAllCreatesQuotesRepliesByUid(@Param("uid") Long uid);
 
+    @Query(
+            "MATCH path = (u:User {uid: 100})-[r:MARKS]->(p:Paint) " +
+                    "WITH [node in nodes(path) WHERE node:Paint] AS intermediateNodes " +
+                    "UNWIND intermediateNodes AS intermediateNode " +
+                    "MATCH (startNode:Paint)<-[r]->(nextNode) " +
+                    "WHERE startNode = intermediateNode AND type(r) <> 'REPLIES' AND type(r) <> 'REPAINTS' AND type(r) <> 'QUOTES' " +
+                    "RETURN startNode, r, nextNode"
+    )
+    List<Paint> findAllMarksByUid(@Param("uid") Long uid);
+
     @Query("MATCH path = (u:User {uid: $uid})-[r:CREATES]->(p:Paint)-[us:USES]->(n) RETURN path")
     List<Paint> findAllContainingMediaByUid(@Param("uid") Long uid);
 

@@ -83,6 +83,13 @@ public class PaintService {
         );
     }
 
+    public List<PaintResponse> getAllMarksPaintsByUserId(Long userId) {
+        return paintEntityConverter.convertToPaintResponse(
+                userId,
+                distinctPaintsByPid(paintRepository.findAllMarksByUid(userId))
+        );
+    }
+
     public List<PaintResponse> getAllLikingPaintsByUserId(Long userId) {
         return paintEntityConverter.convertToPaintResponse(
                 userId,
