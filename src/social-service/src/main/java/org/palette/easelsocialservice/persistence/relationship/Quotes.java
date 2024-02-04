@@ -13,7 +13,7 @@ public class Quotes {
     private Long id;
 
     @TargetNode
-    private final Paint paint;
+    private Paint paint;
 
     public Quotes(Paint paint) {
         this.paint = paint;

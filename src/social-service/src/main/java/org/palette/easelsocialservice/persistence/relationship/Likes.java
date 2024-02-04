@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @Getter
 @RelationshipProperties
 public class Likes {
+
     @RelationshipId
     private Long id;
 
