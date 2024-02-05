@@ -109,4 +109,8 @@ public class PaintUsecase {
     public List<UserResponse> getLikedUsers(final Long paintId) {
         return userService.getLikedUsers(paintId);
     }
+
+    public List<UserResponse> getRepaintedUsers(final Long paintId) {
+        return userService.getRepaintedUsers(paintId);
+    }
 }

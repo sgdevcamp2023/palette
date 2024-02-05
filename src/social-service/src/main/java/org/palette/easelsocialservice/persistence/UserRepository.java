@@ -37,7 +37,6 @@ public interface UserRepository extends Neo4jRepository<User, Long> {
     @Query("RETURN EXISTS((:User {uid: $uid}) -[:LIKES]-> (:Paint {pid: $pid}))")
     boolean existsLikesByUidAndPid(@Param("uid") Long uid, @Param("pid") Long pid);
 
-    @Query("RETURN EXISTS((:User {uid: $uid}) -[:MARKS]-> (:Paint {pid: $pid}))")
-    boolean existsMarksByUidAndPid(@Param("uid") Long uid, @Param("pid") Long pid);
-
+    @Query("MATCH (u:User) -[:REPAINTS]-> (:Paint { pid: $pid }) RETURN u")
+    List<User> findRepaintedByPaintId(@Param("pid") Long pid);
 }

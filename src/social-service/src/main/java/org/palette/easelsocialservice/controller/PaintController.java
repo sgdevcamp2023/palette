@@ -121,4 +121,17 @@ public class PaintController {
                         ));
     }
 
+    @InjectEaselAuthentication
+    @GetMapping("/{paintId}/repaints")
+    public ResponseEntity<List<UserResponse>> getRepaintedUsers(
+            @PathVariable Long paintId
+    ) {
+        return ResponseEntity
+                .ok()
+                .body(
+                        paintUsecase.getRepaintedUsers(
+                                paintId
+                        ));
+    }
+
 }
