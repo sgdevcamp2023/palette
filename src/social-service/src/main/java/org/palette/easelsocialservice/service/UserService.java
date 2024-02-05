@@ -98,6 +98,10 @@ public class UserService {
         return convertToUserResponse(userRepository.findLikedByPaintId(paintId));
     }
 
+    public List<UserResponse> getRepaintedUsers(final Long paintId) {
+        return convertToUserResponse(userRepository.findRepaintedByPaintId(paintId));
+    }
+
     private List<UserResponse> convertToUserResponse(final List<User> users) {
         return users
                 .stream()
