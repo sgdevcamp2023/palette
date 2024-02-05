@@ -84,6 +84,16 @@ public class UserController {
     }
 
     @InjectEaselAuthentication
+    @GetMapping("/{userId}/mark")
+    public ResponseEntity<List<PaintResponse>> getMarksPaints(
+            @PathVariable Long userId
+    ) {
+        return ResponseEntity
+                .ok()
+                .body(userUsecase.getAllMarksPaintsByUserId(userId));
+    }
+
+    @InjectEaselAuthentication
     @GetMapping("/{userId}/media")
     public ResponseEntity<List<PaintResponse>> getAllPaintContainingMedia(
             @PathVariable Long userId
