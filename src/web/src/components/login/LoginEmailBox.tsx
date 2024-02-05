@@ -1,6 +1,7 @@
 import { memo, type ChangeEvent } from 'react';
 
 import { StepTitle } from '..';
+import { isValidEmail } from '@/utils';
 import type { LoginInfo } from '@/@types';
 import { Button, Input, Typography } from '../common';
 import type { NavigationEvent } from './loginReducer';
@@ -31,8 +32,13 @@ function LoginEmailBox({
       <div className="h-full mt-[54px] flex flex-col gap-[40px]">
         <Input
           value={email}
-          label="이메일 주소 또는 사용자 아이디"
+          label="이메일 주소"
           onChange={(e) => onChangeInput(e, 'email')}
+          onKeyUp={(e) => {
+            if (e.key === 'Enter' && isValidEmail(email)) {
+              onNextStep();
+            }
+          }}
         />
       </div>
 

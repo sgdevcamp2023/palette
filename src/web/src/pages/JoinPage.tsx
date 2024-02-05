@@ -2,6 +2,7 @@ import { toast } from 'react-toastify';
 import type { ChangeEvent } from 'react';
 import { useReducer, useState } from 'react';
 import { useNavigate } from '@tanstack/react-router';
+import { useMutation } from '@tanstack/react-query';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 
 import { Header, ContentLayout } from '@/components';
@@ -14,10 +15,10 @@ import {
   JoinPasswordBox,
   JoinProfileImageBox,
 } from '@/components/join';
-
-const DUMMY_VERIFIED = 'abc123';
+import { apis } from '@/api';
 
 function JoinPage() {
+  const [isVerifyEmail, setIsVerifyEmail] = useState<boolean>(false);
   const [state, dispatch] = useReducer(joinStepReducer, JoinStep.INFORMATION);
   const [joinInfo, setJoinInfo] = useState<JoinInfo>({
     nickname: '',
@@ -25,19 +26,25 @@ function JoinPage() {
     email: '',
     emailVerifyCode: '',
     password: '',
-    profilePath: '',
+    profileImagePath: '',
   });
   const navigate = useNavigate();
 
-  const handleJoin = async () => {
-    try {
-      // TODO: api 연동
+  const registerMutate = useMutation({
+    mutationKey: ['register', joinInfo.username],
+    mutationFn: () =>
+      apis.users.join({
+        email: joinInfo.email,
+        password: joinInfo.password,
+        username: joinInfo.username,
+        profileImagePath: joinInfo.profileImagePath,
+      }),
+    onSuccess: () => {
       toast(`${joinInfo.username}님 회원가입이 완료되었습니다.`);
       navigate({ to: '/' });
-    } catch (err) {
-      toast.error('서버에 잠시 문제가 생겼습니다.');
-    }
-  };
+    },
+    onError: () => toast('회원가입에 문제가 생겼습니다.'),
+  });
 
   const onNextPage = () => dispatch({ direction: 'next' });
   const onPrevPage = () => {
@@ -55,6 +62,34 @@ function JoinPage() {
     setJoinInfo((prev) => ({ ...prev, [type]: e.target.value }));
   };
 
+  const tempRegisterMutate = useMutation({
+    mutationKey: ['temp-register', joinInfo.username],
+    mutationFn: () =>
+      apis.users.temporaryJoin({
+        email: joinInfo.email,
+        nickname: joinInfo.nickname,
+      }),
+    onError: () => toast('서버에 문제가 생겼습니다.'),
+    onSuccess: () => {
+      setIsVerifyEmail(true);
+      onNextPage();
+    },
+  });
+
+  const verifyEmailCodeMutate = useMutation({
+    mutationKey: ['verify-email', joinInfo.username],
+    mutationFn: () =>
+      apis.auth.verifyEmailCode({
+        email: joinInfo.email,
+        payload: joinInfo.emailVerifyCode,
+      }),
+    onError: () => toast('인증코드가 다릅니다.'),
+    onSuccess: () => {
+      setIsVerifyEmail(true);
+      onNextPage();
+    },
+  });
+
   const getJoinBox = (step: JoinStep): JSX.Element => {
     switch (step) {
       case JoinStep.INFORMATION:
@@ -63,7 +98,7 @@ function JoinPage() {
             disabled={joinInfo.email === '' || joinInfo.nickname === ''}
             email={joinInfo.email}
             nickname={joinInfo.nickname}
-            onNextStep={onNextPage}
+            onNextStep={() => tempRegisterMutate.mutate()}
             onChangeInput={handleChangeInput}
           />
         );
@@ -72,8 +107,10 @@ function JoinPage() {
           <JoinEmailVerifyBox
             email={joinInfo.email}
             emailVerifyCode={joinInfo.emailVerifyCode}
-            disabled={joinInfo.emailVerifyCode !== DUMMY_VERIFIED}
-            onNextStep={onNextPage}
+            disabled={isVerifyEmail || joinInfo.emailVerifyCode === ''}
+            onNextStep={() => {
+              verifyEmailCodeMutate.mutate();
+            }}
             onChangeInput={handleChangeInput}
           />
         );
@@ -89,13 +126,13 @@ function JoinPage() {
       case JoinStep.PROFILE_IMAGE:
         return (
           <JoinProfileImageBox
-            disabled={joinInfo.profilePath === ''}
-            imageSrc={joinInfo.profilePath}
+            disabled={joinInfo.profileImagePath === ''}
+            imageSrc={joinInfo.profileImagePath}
             onNextStep={onNextPage}
             onChangeImage={(path: string) =>
               setJoinInfo((prev) => ({ ...prev, profilePath: path }))
             }
-            onJoin={handleJoin}
+            onJoin={() => registerMutate.mutate()}
           />
         );
       case JoinStep.NAME:
@@ -103,7 +140,7 @@ function JoinPage() {
           <JoinNameBox
             username={joinInfo.username}
             disabled={joinInfo.username === ''}
-            onJoin={handleJoin}
+            onJoin={() => registerMutate.mutate()}
             onChangeInput={handleChangeInput}
           />
         );
