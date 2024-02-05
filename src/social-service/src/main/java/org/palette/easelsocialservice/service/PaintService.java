@@ -83,6 +83,13 @@ public class PaintService {
         );
     }
 
+    public List<PaintResponse> getAllContainingMediaByUserId(Long userId) {
+        return paintEntityConverter.convertToPaintResponse(
+                userId,
+                distinctPaintsByPid(paintRepository.findAllContainingMediaByUid(userId))
+        );
+    }
+
     public void viewSinglePaint(Long paintId) {
         paintRepository.updatePaintView(paintId);
     }
