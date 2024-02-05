@@ -21,7 +21,7 @@ function NotSupportText({
   return (
     <Typography
       as="span"
-      role="alertdialog"
+      role="button"
       size={size}
       color={color}
       className={cn('mx-1 cursor-pointer', className)}
