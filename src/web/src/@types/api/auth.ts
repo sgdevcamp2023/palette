@@ -1,5 +1,6 @@
-export interface Passport {
-  passport: string;
+export interface Token {
+  accessToken: string;
+  refreshToken: string;
 }
 
 export interface User {
@@ -13,11 +14,23 @@ export interface User {
   nickname: string;
   introduce: string;
   websitePath: string;
-  createdAt: Date;
-  followers: number;
-  followings: number;
+  joinedAt: Date;
+  followerCount: number;
+  followingCount: number;
 }
 
+export type UserProfile = Pick<
+  User,
+  | 'backgroundImagePath'
+  | 'profileImagePath'
+  | 'nickname'
+  | 'username'
+  | 'introduce'
+  | 'websitePath'
+  | 'joinedAt'
+  | 'followerCount'
+  | 'followingCount'
+>;
 export type LoginInfo = Pick<User, 'email' | 'password'>;
 export type JoinInfo = Pick<User, 'email' | 'nickname'> &
   Partial<Pick<User, 'password' | 'username' | 'profileImagePath'>>;

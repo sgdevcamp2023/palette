@@ -163,14 +163,14 @@ function ProfilePage() {
             <div className="flex gap-[4px] mt-[12px] items-center">
               <Icon type="calendar" width={12} height={12} />
               <Typography size="body-2" color="blueGrey-800">
-                {user.createdAt.toDateString()}
+                {user.joinedAt.toDateString()}
               </Typography>
             </div>
 
             <div className="flex gap-[10px] mt-[14px]">
               <div role="button" tabIndex={0} className="flex gap-[4px]">
                 <Typography as="span" size="headline-8" color="grey-600">
-                  {user.followings}
+                  {user.followingCount}
                 </Typography>
                 <Typography as="span" size="body-2" color="blueGrey-800">
                   팔로잉
@@ -178,7 +178,7 @@ function ProfilePage() {
               </div>
               <div className="flex gap-[4px]">
                 <Typography as="span" size="headline-8" color="grey-600">
-                  {user.followers}
+                  {user.followerCount}
                 </Typography>
                 <Typography as="span" size="body-2" color="blueGrey-800">
                   팔로워
