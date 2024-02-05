@@ -79,7 +79,6 @@ function JoinEmailBox({
         variant="filled"
         disabled={disabled || isInValidEmail}
         aria-disabled={disabled || isInValidEmail}
-        aria-label="이름, 이메일을 채웠으면 이메일 인증 페이지로 이동합니다."
         onClick={onNextStep}
       >
         <Typography size="sub-headline-3" color="white">

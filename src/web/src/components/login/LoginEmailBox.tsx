@@ -40,7 +40,8 @@ function LoginEmailBox({
         <Typography
           size="body-1"
           color="grey-600"
-          role="navigation"
+          role="button"
+          tabIndex={0}
           aria-label="비밀번호를 잊으셨나요?"
           className="cursor-pointer hover:text-blue-500 transition-colors"
           onClick={onClickForgetPassword}
@@ -49,7 +50,6 @@ function LoginEmailBox({
         </Typography>
         <Button
           variant="filled"
-          aria-label="패스워드 입력 창으로 이동합니다."
           className="w-[55px] py-[6px]"
           disabled={disabled}
           aria-disabled={disabled}

@@ -41,8 +41,8 @@ function MembershipEntryPage() {
             />
           </div>
           <Button
-            role="navigation"
             variant="filled"
+            aria-label="계정 만들기"
             onClick={() => navigate({ to: '/join' })}
           >
             <Typography size="sub-headline-2" color="white">
@@ -59,7 +59,7 @@ function MembershipEntryPage() {
               가입하면 이젤의
               <Typography
                 as="span"
-                role="alertdialog"
+                tabIndex={0}
                 size="body-3"
                 color="blue-500"
                 className="mx-1 cursor-pointer"
@@ -73,8 +73,9 @@ function MembershipEntryPage() {
             <Typography as="span" size="body-2" color="blueGrey-800">
               이미 계정이 있으세요?
               <Typography
-                as="button"
-                role="navigation"
+                as="span"
+                role="button"
+                tabIndex={0}
                 size="body-2"
                 color="blue-500"
                 className="mx-1"

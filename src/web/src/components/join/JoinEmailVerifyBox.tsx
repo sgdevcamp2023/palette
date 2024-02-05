@@ -60,7 +60,6 @@ function JoinEmailVerifyBox({
         <Button
           color="blue"
           variant="filled"
-          aria-label="기재해준 이메일을 통해 인증 후, 비밀번호 설정 페이지로 이동합니다."
           disabled={disabled}
           aria-disabled={disabled}
           onClick={onNextStep}

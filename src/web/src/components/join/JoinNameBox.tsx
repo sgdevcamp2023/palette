@@ -39,7 +39,6 @@ function JoinNameBox({
       <Button
         color="black"
         variant="filled"
-        aria-label="회원가입을 진행합니다."
         disabled={disabled}
         aria-disabled={disabled}
         onClick={onJoin}
