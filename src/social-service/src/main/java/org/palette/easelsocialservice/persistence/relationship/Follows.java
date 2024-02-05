@@ -9,11 +9,12 @@ import org.springframework.data.neo4j.core.schema.TargetNode;
 @Getter
 @RelationshipProperties
 public class Follows {
+
     @RelationshipId
     private Long id;
 
     @TargetNode
-    private final User user;
+    private User user;
 
     public Follows(final User user) {
         this.user = user;

@@ -11,6 +11,12 @@ spring:
       password: ${SOCIAL_DB_PASSWORD}
     uri: ${SOCIAL_DB_URI}
 
+  kafka:
+    bootstrap-servers: ${KAFKA_SERVERS}
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
 eureka:
   instance:
     hostname: localhost

@@ -13,11 +13,11 @@ public class Tags {
     private Long id;
 
     @TargetNode
-    private final Hashtag hashtag;
+    private Hashtag hashtag;
 
-    private final Integer start;
+    private Integer start;
 
-    private final Integer end;
+    private Integer end;
 
     public Tags(Hashtag hashtag, Integer start, Integer end) {
         this.hashtag = hashtag;

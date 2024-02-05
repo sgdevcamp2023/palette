@@ -13,7 +13,7 @@ public class TagsUser {
     private Long id;
 
     @TargetNode
-    private final User user;
+    private User user;
 
     public TagsUser(User user) {
         this.user = user;

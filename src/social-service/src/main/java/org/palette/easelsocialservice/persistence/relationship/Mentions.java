@@ -13,11 +13,11 @@ public class Mentions {
     private Long id;
 
     @TargetNode
-    private final User user;
+    private User user;
 
-    private final Integer start;
+    private Integer start;
 
-    private final Integer end;
+    private Integer end;
 
     public Mentions(User user, int start, int end) {
         this.user = user;

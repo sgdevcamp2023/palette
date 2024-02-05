@@ -3,6 +3,7 @@ package org.palette.easelsocialservice.usecase;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.palette.easelsocialservice.dto.event.details.PaintCreatedEvent;
 import org.palette.easelsocialservice.dto.request.MentionRequest;
 import org.palette.easelsocialservice.dto.request.PaintCreateRequest;
 import org.palette.easelsocialservice.dto.request.RepaintRequest;
@@ -10,6 +11,7 @@ import org.palette.easelsocialservice.dto.response.PaintCreateResponse;
 import org.palette.easelsocialservice.dto.response.PaintResponse;
 import org.palette.easelsocialservice.dto.response.ThreadResponse;
 import org.palette.easelsocialservice.dto.response.UserResponse;
+import org.palette.easelsocialservice.external.KafkaProducer;
 import org.palette.easelsocialservice.persistence.domain.Link;
 import org.palette.easelsocialservice.persistence.domain.Media;
 import org.palette.easelsocialservice.persistence.domain.Paint;
@@ -24,6 +26,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Service
 public class PaintUsecase {
+
+    private final KafkaProducer kafkaProducer;
     private final PaintService paintService;
     private final UserService userService;
     private final LinkService linkService;
@@ -79,6 +83,7 @@ public class PaintUsecase {
                 });
 
         paintService.createPaint(paint);
+        kafkaProducer.execute(PaintCreatedEvent.build(userId, paint));
 
         return new PaintCreateResponse(paint.getPid());
     }

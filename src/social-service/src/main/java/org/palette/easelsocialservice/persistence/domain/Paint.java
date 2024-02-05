@@ -45,7 +45,7 @@ public class Paint {
     @Relationship(type = "USES")
     private List<Uses> medias;
 
-    private final String content;
+    private String content;
 
     private boolean hasQuote;
 

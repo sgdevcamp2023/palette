@@ -12,7 +12,7 @@ public class Replies {
     private Long id;
 
     @TargetNode
-    private final Paint paint;
+    private Paint paint;
 
     public Replies(Paint paint) {
         this.paint = paint;

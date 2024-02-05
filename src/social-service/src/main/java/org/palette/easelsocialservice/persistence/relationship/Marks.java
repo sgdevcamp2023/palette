@@ -15,9 +15,9 @@ public class Marks {
     private Long id;
 
     @TargetNode
-    private final Paint paint;
+    private Paint paint;
 
-    private final LocalDateTime createdAt;
+    private LocalDateTime createdAt;
 
     public Marks(final Paint paint) {
         this.paint = paint;
