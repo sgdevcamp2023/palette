@@ -21,12 +21,12 @@ spring:
 
 eureka:
   instance:
-    hostname: localhost
+    hostname: host.docker.internal
   client:
     fetch-registry: true
     register-with-eureka: true
     service-url:
-      defaultZone: http://host.docker.internal:8761/eureka
+      defaultZone: http://discovery:8761/eureka
 
 grpc:
   server:

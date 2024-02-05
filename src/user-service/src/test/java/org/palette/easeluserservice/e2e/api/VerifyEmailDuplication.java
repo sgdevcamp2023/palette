@@ -3,8 +3,8 @@ package org.palette.easeluserservice.e2e.api;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.palette.easeluserservice.dto.request.EmailDuplicationVerifyRequest;
-import org.palette.easeluserservice.dto.response.EmailDuplicationVerifyResponse;
+import org.palette.easeluserservice.dto.request.VerifyEmailDuplicationRequest;
+import org.palette.easeluserservice.dto.response.VerifyEmailDuplicationResponse;
 import org.palette.easeluserservice.e2e.AcceptanceTestBase;
 import org.palette.easeluserservice.persistence.User;
 import org.palette.easeluserservice.persistence.UserJpaRepository;
@@ -85,7 +85,7 @@ class VerifyEmailDuplication extends AcceptanceTestBase {
     @Test
     @DisplayName("이메일 중복")
     void executePassCase() throws Exception {
-        EmailDuplicationVerifyRequest request = new EmailDuplicationVerifyRequest(
+        VerifyEmailDuplicationRequest request = new VerifyEmailDuplicationRequest(
                 "diger@gmail.com"
         );
 
@@ -98,11 +98,11 @@ class VerifyEmailDuplication extends AcceptanceTestBase {
     @Test
     @DisplayName("이메일 중복 아닐 시")
     void executePassCase2() throws Exception {
-        EmailDuplicationVerifyRequest request = new EmailDuplicationVerifyRequest(
+        VerifyEmailDuplicationRequest request = new VerifyEmailDuplicationRequest(
                 "diger1@gmail.com"
         );
 
-        EmailDuplicationVerifyResponse response = new EmailDuplicationVerifyResponse(
+        VerifyEmailDuplicationResponse response = new VerifyEmailDuplicationResponse(
                 false
         );
 

@@ -22,24 +22,30 @@ services:
       - "10002:10002"
       - "11002:11002"
     restart: always
+    environment:
+      PASSPORT_KEY: coldbrewjwtchocolatedumpling
+      PASSPORT_ALGORITHM: HmacSHA256
+      AUTH_MAIL_HOST: smtp.naver.com
+      AUTH_MAIL_HOST_ADDRESS: palette1203@naver.com
+      AUTH_MAIL_USERNAME: palette1203@naver.com
+      AUTH_MAIL_PASSWORD: palette**
+      AUTH_MAIL_PORT: 465
+      AUTH_REDIS_HOST: localhost
+      AUTH_REDIS_PORT: 63792
+      AUTH_JWT_SECRET_KEY: sakdfljsdklfjsadklfjdslkfjdasklfjalsdkfjalksdjflksdajfkldscxlkvjcxzlkj
+    
     depends_on:
       - discovery
       - gateway
+      - redis
+
   redis:
     container_name: auth-service_redis
     image: redis:latest
     ports:
       - "63792:63792"
-
-  social:
-    image: palette1203/social-service:latest
-    ports:
-      - "10003:10003"
-      - "11003:11003"
-    restart: always
-    depends_on:
-      - discovery
-      - gateway
+    environment:
+      AUTH_REDIS_HOST: localhost
 
   user:
     image: palette1203/user-service:latest
@@ -48,35 +54,25 @@ services:
       - "11004:11004"
     restart: always
     depends_on:
-      - discovery
       - gateway
-  database:
-    container_name: user-service_mysql_db
-    image: mysql/mysql-server:latest
+      - user_mysql
+    environment:
+      PASSPORT_KEY: coldbrewjwtchocolatedumpling
+      PASSPORT_ALGORITHM: HmacSHA256
+      USER_DB_URI: jdbc:mysql://user_mysql:3306/user-service
+      USER_DB_USERNAME: root
+      USER_DB_PASSWORD: 112233
+
+  user_mysql:
+    image: mysql:latest
     restart: unless-stopped
     environment:
       MYSQL_DATABASE: user-service
-      MYSQL_ROOT_HOST: ${USER_DB_USERNAME}
-      MYSQL_ROOT_PASSWORD: ${USER_DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: 112233
       TZ: 'Asia/Seoul'
     ports:
       - "3306:3306"
-    volumes:
-      - ./mysql/conf.d:/etc/mysql/conf.d
-    command:
-      - "mysqld"
-      - "--character-set-server=utf8mb4"
-      - "--collation-server=utf8mb4_unicode_ci"
-
-  timeline:
-    image: palette1203/timeline-service:latest
-    ports:
-      - "10005:10005"
-      - "11005:11005"
-    restart: always
-    depends_on:
-      - discovery
-      - gateway
+    command: --default-authentication-plugin=mysql_native_password
 
   dm:
     image: palette1203/dm-service:latest
@@ -85,7 +81,15 @@ services:
       - "11007:11007"
     restart: always
     depends_on:
-      - discovery
+      - gateway
+
+  timeline:
+    image: palette1203/timeline-service:latest
+    ports:
+      - "10005:10005"
+      - "11005:11005"
+    restart: always
+    depends_on:
       - gateway
 
   notification:
@@ -95,5 +99,35 @@ services:
       - "11009:11009"
     restart: always
     depends_on:
-      - discovery
       - gateway
+
+  social:
+    image: palette1203/social-service:latest
+    ports:
+      - "10003:10003"
+      - "11003:11003"
+    restart: always
+    depends_on:
+      - gateway
+      - testneo4j
+    environment:
+      PASSPORT_KEY: coldbrewjwtchocolatedumpling
+      PASSPORT_ALGORITHM: HmacSHA256
+      SOCIAL_DB_USERNAME: neo4j
+      SOCIAL_DB_PASSWORD: palette1203
+      SOCIAL_DB_URI: neo4j://testneo4j:7687
+      KAFKA_SERVERS: localhost:9094
+
+  testneo4j:
+    image: neo4j:latest
+    restart: always
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    volumes:
+      - $HOME/neo4j/data:/data
+      - $HOME/neo4j/logs:/logs
+      - $HOME/neo4j/import:/var/lib/neo4j/import
+      - $HOME/neo4j/plugins:/plugins
+    environment:
+      NEO4J_AUTH: neo4j/palette1203

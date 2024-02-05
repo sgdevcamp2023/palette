@@ -3,9 +3,8 @@ package org.palette.easeluserservice.e2e.api;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.palette.easeluserservice.dto.request.EmailDuplicationVerifyRequest;
 import org.palette.easeluserservice.dto.request.UsernameDuplicationVerifyRequest;
-import org.palette.easeluserservice.dto.response.EmailDuplicationVerifyResponse;
+import org.palette.easeluserservice.dto.response.VerifyEmailDuplicationResponse;
 import org.palette.easeluserservice.e2e.AcceptanceTestBase;
 import org.palette.easeluserservice.persistence.User;
 import org.palette.easeluserservice.persistence.UserJpaRepository;
@@ -103,7 +102,7 @@ class VerifyUsernameDuplication extends AcceptanceTestBase {
                 "digerUsername"
         );
 
-        EmailDuplicationVerifyResponse response = new EmailDuplicationVerifyResponse(
+        VerifyEmailDuplicationResponse response = new VerifyEmailDuplicationResponse(
                 false
         );
 
