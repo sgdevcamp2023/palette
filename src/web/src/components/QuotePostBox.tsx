@@ -4,7 +4,7 @@ import { useNavigate } from '@tanstack/react-router';
 
 import type { TimelineItem } from '@/@types';
 import { cn, forCloudinaryImage, getDiffDateText } from '@/utils';
-import { Typography } from './common';
+import { LazyImage, Typography } from './common';
 
 interface QuotePostBoxProps {
   post: TimelineItem;
@@ -36,10 +36,16 @@ function QuotePostBox({
     >
       <button type="button" className="text-left" onClick={handleClickQuoteBox}>
         <div className="flex gap-[4px] items-center px-[12px] pt-[12px]">
-          <img
-            src={forCloudinaryImage(post.authorImagePath)}
+          <LazyImage
+            src={forCloudinaryImage(post.authorImagePath, {
+              resize: true,
+              width: 100,
+              height: 100,
+              ratio: false,
+              quality: 'auto:low',
+            })}
             alt={`${post.authorNickname}`}
-            className="rounded-full w-[20px] h-[20px] min-w-[20px] max-w-[20px]"
+            className="rounded-full w-[20px] h-[20px] min-w-[20px] max-w-[20px] aspect-video"
           />
           <Typography size="headline-8" color="grey-600">
             {post.authorNickname}
@@ -72,13 +78,16 @@ function QuotePostBox({
           )}
 
           {hasMedia && (
-            <img
+            <LazyImage
               src={forCloudinaryImage(post.includes.medias[0].path, {
-                resize: false,
+                resize: true,
+                width: direction === 'vertical' ? 420 : 100,
+                height: direction === 'vertical' ? 420 : 100,
+                ratio: direction === 'vertical' ? '16:9' : '1:1',
               })}
               alt="user-upload-asset"
               className={cn(
-                'mt-[8px]',
+                'mt-[8px] aspect-video',
                 direction === 'horizontal'
                   ? 'w-[80px] h-[80px] rounded-[12px]'
                   : 'w-full rounded-b-[10px]',

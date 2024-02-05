@@ -1,4 +1,5 @@
 import { useRef } from 'react';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { useNavigate, useRouter } from '@tanstack/react-router';
 
 import { usePaintAction } from '@/hooks';
@@ -32,6 +33,12 @@ function PostDetailPage() {
 
   return (
     <>
+      <HelmetProvider>
+        <Helmet>
+          <title>Easel | 게시물</title>
+          <meta name="description" content="게시물 페이지" />
+        </Helmet>
+      </HelmetProvider>
       <Header
         left={{
           type: 'leftStickArrow',

@@ -2,6 +2,7 @@ import { toast } from 'react-toastify';
 import type { ChangeEvent } from 'react';
 import { useReducer, useState } from 'react';
 import { useNavigate } from '@tanstack/react-router';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 
 import type { LoginInfo } from '@/@types';
 import { ContentLayout, Header } from '@/components';
@@ -82,6 +83,12 @@ function LoginPage() {
 
   return (
     <>
+      <HelmetProvider>
+        <Helmet>
+          <title>Easel | 로그인</title>
+          <meta name="description" content="로그인 페이지" />
+        </Helmet>
+      </HelmetProvider>
       <Header
         left={{
           type: state === LoginStep.EMAIL ? 'text' : 'leftStickArrow',

@@ -1,8 +1,16 @@
+import { Helmet, HelmetProvider } from 'react-helmet-async';
+
 import { ContentLayout, Header } from '@/components';
 
 function SearchPage() {
   return (
     <>
+      <HelmetProvider>
+        <Helmet>
+          <title>Easel | 검색</title>
+          <meta name="description" content="검색 페이지" />
+        </Helmet>
+      </HelmetProvider>
       <Header
         left={{
           type: 'circlePerson',

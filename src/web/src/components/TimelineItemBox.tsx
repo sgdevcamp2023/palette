@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { useNavigate } from '@tanstack/react-router';
+import { Link, useNavigate } from '@tanstack/react-router';
 
 import { LazyImage } from './common';
 import QuotePostBox from './QuotePostBox';
@@ -39,22 +39,23 @@ function TimelineItemBox({
 
   return (
     <div className={cn('w-full flex gap-[8px]', className)}>
-      <button
-        type="button"
-        className="flex"
-        onClick={() =>
-          navigate({
-            to: '/profile/$userId',
-            params: { userId: post.authorId },
-          })
-        }
+      <Link
+        to="/profile/$userId"
+        params={{ userId: post.authorId }}
+        className="flex h-min"
       >
         <LazyImage
-          src={forCloudinaryImage(post.authorImagePath)}
+          src={forCloudinaryImage(post.authorImagePath, {
+            resize: true,
+            quality: 'auto:low',
+            ratio: false,
+            width: 100,
+            height: 100,
+          })}
           alt={`${post.authorNickname}`}
           className="rounded-full w-[44px] h-[44px] min-w-[44px]"
         />
-      </button>
+      </Link>
       <div
         role="button"
         tabIndex={0}
@@ -84,7 +85,10 @@ function TimelineItemBox({
             height={20}
             stroke="blueGrey-500"
             className="relative transition-colors hover:bg-grey-200 rounded-full p-1"
-            onClick={onClickMore}
+            onClick={(e) => {
+              e.stopPropagation();
+              onClickMore();
+            }}
           />
           {isShowMenu && (
             <TimelineItemMenu
@@ -108,18 +112,24 @@ function TimelineItemBox({
           (isLazyImage ? (
             <LazyImage
               src={forCloudinaryImage(post.includes.medias[0].path, {
-                resize: false,
+                resize: true,
+                width: 420,
+                height: 420,
+                ratio: '16:9',
               })}
               alt="user-upload-asset"
-              className="w-full rounded-[10px] mt-[8px] mb-[12px]"
+              className="w-full rounded-[10px] mt-[8px] mb-[12px] aspect-video object-cover"
             />
           ) : (
             <img
               src={forCloudinaryImage(post.includes.medias[0].path, {
-                resize: false,
+                resize: true,
+                width: 420,
+                height: 420,
+                ratio: '16:9',
               })}
               alt="user-upload-asset"
-              className="w-full rounded-[10px] mt-[8px] mb-[12px]"
+              className="w-full rounded-[10px] mt-[8px] mb-[12px] aspect-video object-cover"
             />
           ))}
 
@@ -144,7 +154,10 @@ function TimelineItemBox({
             iconType="comment"
             label="답글 달기"
             className="transition-colors hover:bg-grey-200 rounded-full p-1"
-            onClick={onClickReply}
+            onClick={(e) => {
+              e.stopPropagation();
+              onClickReply();
+            }}
           />
           <div className="flex gap-[4px] items-center">
             <AccessibleIconButton
@@ -155,7 +168,10 @@ function TimelineItemBox({
               fill={post.repainted ? 'green-200' : undefined}
               label="인용 혹은 재게시 하기"
               className="transition-colors hover:bg-grey-200 rounded-full p-1"
-              onClick={onClickRetweet}
+              onClick={(e) => {
+                e.stopPropagation();
+                onClickRetweet();
+              }}
             />
             <Typography
               size="body-3"
@@ -171,7 +187,10 @@ function TimelineItemBox({
               iconType={post.like ? 'solidHeart' : 'heart'}
               label="마음에 들어요 누르기"
               className="transition-colors hover:bg-grey-200 rounded-full p-1"
-              onClick={onClickHeart}
+              onClick={(e) => {
+                e.stopPropagation();
+                onClickHeart();
+              }}
             />
             <Typography
               size="body-3"
@@ -187,7 +206,10 @@ function TimelineItemBox({
               iconType="barChart"
               label="조회수 보기"
               className="transition-colors hover:bg-grey-200 rounded-full p-1"
-              onClick={onClickViews}
+              onClick={(e) => {
+                e.stopPropagation();
+                onClickViews();
+              }}
             />
             <Typography size="body-3" color="blueGrey-800">
               {post.views}
@@ -199,7 +221,10 @@ function TimelineItemBox({
             iconType="share"
             label="공유하기"
             className="transition-colors hover:bg-grey-200 rounded-full p-1"
-            onClick={onClickShare}
+            onClick={(e) => {
+              e.stopPropagation();
+              onClickShare();
+            }}
           />
         </div>
       </div>

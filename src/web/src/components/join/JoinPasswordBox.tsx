@@ -48,7 +48,6 @@ function JoinPasswordBox({
       <Button
         color="blue"
         variant="filled"
-        aria-label="프로필 이미지 선택 페이지로 이동합니다."
         disabled={disabled}
         aria-disabled={disabled}
         onClick={onNextStep}

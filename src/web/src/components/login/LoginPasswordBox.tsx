@@ -58,7 +58,6 @@ function LoginPasswordBox({
         <div className="flex flex-col gap-[28px] items-center">
           <Button
             variant="filled"
-            aria-label="패스워드 입력 창으로 이동합니다."
             disabled={disabled}
             aria-disabled={disabled}
             onClick={onLogin}

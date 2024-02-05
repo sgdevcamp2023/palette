@@ -10,8 +10,7 @@
     url(https://abs.twimg.com/responsive-web/client-web/Chirp-Regular.60b215ba.woff)
       format('woff');
   font-weight: 400;
-  font-style: 'normal';
-  font-display: 'swap';
+  font-display: swap;
 }
 
 @font-face {
@@ -22,8 +21,7 @@
     url(https://abs.twimg.com/responsive-web/client-web/Chirp-Medium.20fc288a.woff)
       format('woff');
   font-weight: 500;
-  font-style: 'normal';
-  font-display: 'swap';
+  font-display: swap;
 }
 
 @font-face {
@@ -34,8 +32,7 @@
     url(https://abs.twimg.com/responsive-web/client-web/Chirp-Bold.a573679a.woff)
       format('woff');
   font-weight: 700;
-  font-style: 'normal';
-  font-display: 'swap';
+  font-display: swap;
 }
 
 @layer base {
