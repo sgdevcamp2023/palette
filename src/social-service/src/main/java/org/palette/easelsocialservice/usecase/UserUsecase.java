@@ -45,6 +45,10 @@ public class UserUsecase {
         return paintService.getAllRepliesByUserId(userId);
     }
 
+    public List<PaintResponse> getAllLikingPaintsByUserId(Long userId) {
+        return paintService.getAllLikingPaintsByUserId(userId);
+    }
+
     public List<PaintResponse> getAllPaintsContainingMedia(Long userId) {
         return paintService.getAllContainingMediaByUserId(userId);
     }

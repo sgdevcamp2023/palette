@@ -37,6 +37,9 @@ public interface PaintRepository extends Neo4jRepository<Paint, Long> {
             "RETURN startNode, r, nextNode")
     List<Paint> findAllBeforePaintByPid(@Param("pid") Long pid);
 
+    @Query("MATCH path = (u:User {uid: $uid})-[r:LIKES]->(p:Paint) RETURN path")
+    List<Paint> findAllLikingByUid(@Param("uid") Long uid);
+
     @Query("MATCH (a:Paint)<-[:REPLIES]-(b:Paint)" +
             "WHERE a.pid = $pid " +
             "WITH b " +
