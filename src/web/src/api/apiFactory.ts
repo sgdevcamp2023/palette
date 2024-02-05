@@ -5,7 +5,7 @@ import { authTokenStorage } from './AuthTokenStorage';
 
 export const createApiClient = ({ auth }: { auth: boolean }) => {
   const client = axios.create({
-    baseURL: `${env.VITE_BASE_SERVER_URL}/v1`,
+    baseURL: `${env.VITE_BASE_SERVER_URL}`,
   });
 
   if (auth) {
