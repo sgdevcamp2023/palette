@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { cva } from 'class-variance-authority';
-import { useNavigate, useMatchRoute } from '@tanstack/react-router';
+import { useNavigate } from '@tanstack/react-router';
 
 import { iconOpacity } from '@/utils';
 import type { ScrollDirectionProps } from '@/@types';
@@ -26,7 +26,7 @@ const BottomNavigationVariants = cva<{
 
 function BottomNavigation({ direction }: ScrollDirectionProps) {
   const navigate = useNavigate();
-  const matchRoute = useMatchRoute();
+  const pathname = window?.location.pathname ?? '/home';
 
   return (
     <nav className={BottomNavigationVariants({ direction })}>
@@ -34,10 +34,10 @@ function BottomNavigation({ direction }: ScrollDirectionProps) {
         iconType="home"
         width={22}
         label="홈 화면으로 이동"
-        disabled={!!matchRoute({ to: '/home' })}
+        disabled={pathname.startsWith('/home')}
         onClick={() => navigate({ to: '/home' })}
         className={iconOpacity(direction)}
-        fill={matchRoute({ to: '/home' }) ? 'black' : undefined}
+        fill={pathname.startsWith('/home') ? 'black' : undefined}
         whileHover={{
           scale: 1.1,
         }}
@@ -47,9 +47,9 @@ function BottomNavigation({ direction }: ScrollDirectionProps) {
         iconType="search"
         width={20}
         label="통합 검색 화면으로 이동"
-        disabled={!!matchRoute({ to: '/search' })}
+        disabled={pathname.startsWith('/search')}
         onClick={() => navigate({ to: '/search' })}
-        stroke={matchRoute({ to: '/search' }) ? 'black' : undefined}
+        stroke={pathname.startsWith('/search') ? 'black' : undefined}
         className={iconOpacity(direction)}
         whileHover={{
           scale: 1.1,
@@ -57,12 +57,12 @@ function BottomNavigation({ direction }: ScrollDirectionProps) {
         whileTap={{ scale: 0.8 }}
       />
       <FramerAccessibleIconButton
-        iconType={matchRoute({ to: '/notification' }) ? 'solidBell' : 'bell'}
+        iconType={pathname.startsWith('/notification') ? 'solidBell' : 'bell'}
         width={20}
         label="알림 화면으로 이동"
-        disabled={!!matchRoute({ to: '/notification' })}
+        disabled={pathname.startsWith('/notification')}
         onClick={() => navigate({ to: '/notification' })}
-        fill={matchRoute({ to: '/notification' }) ? 'black' : undefined}
+        fill={pathname.startsWith('/notification') ? 'black' : undefined}
         className={iconOpacity(direction)}
         whileHover={{
           scale: 1.1,
@@ -70,10 +70,10 @@ function BottomNavigation({ direction }: ScrollDirectionProps) {
         whileTap={{ scale: 0.8 }}
       />
       <FramerAccessibleIconButton
-        iconType={matchRoute({ to: '/chat' }) ? 'solidMail' : 'mail'}
+        iconType={pathname.startsWith('/chat') ? 'solidMail' : 'mail'}
         width={20}
         label="채팅 화면으로 이동"
-        disabled={!!matchRoute({ to: '/chat' })}
+        disabled={pathname.startsWith('/chat')}
         onClick={() => navigate({ to: '/chat' })}
         className={iconOpacity(direction)}
         whileHover={{
