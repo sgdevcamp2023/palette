@@ -16,7 +16,7 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginStart="14dp"
-            android:layout_marginTop="36dp"
+            android:layout_marginTop="32dp"
             android:src="@drawable/ic_left_stick_arrow"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -64,7 +64,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="6dp"
-            android:layout_marginTop="26dp"
+            android:layout_marginTop="24dp"
             android:layout_marginEnd="14dp"
             android:background="@null"
             android:focusable="true"
@@ -73,6 +73,7 @@
             android:textAlignment="viewStart"
             android:textColorHint="@color/BlueGrey_800"
             android:textFontWeight="400"
+            android:maxLength="280"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/iv_post_profile"
             app:layout_constraintTop_toBottomOf="@+id/tv_temp_storage" />
@@ -234,6 +235,23 @@
             android:src="@drawable/ic_circle_plus"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
+
+        <com.mikhaellopez.circularprogressbar.CircularProgressBar
+            android:id="@+id/et_progressbar"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerInParent="false"
+            android:layout_marginEnd="32dp"
+            android:layout_marginBottom="16dp"
+            app:cpb_background_progressbar_color="@color/BlueGrey_400"
+            app:cpb_progress="0"
+            app:cpb_progress_max="280"
+            app:cpb_progressbar_color="@color/Blue_500"
+            app:cpb_round_border="true"
+            app:cpb_background_progressbar_width="2dp"
+            app:cpb_progressbar_width="2dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/ic_photo_plus" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

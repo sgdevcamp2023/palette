@@ -6,10 +6,11 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
@@ -24,6 +25,8 @@ class PostFragment : Fragment() {
 
     private var isViewVisible: Boolean = true
 
+    private val MAX_CHARACTERS = 280
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -37,6 +40,14 @@ class PostFragment : Fragment() {
         val bottomNavigation = activity?.findViewById<BottomNavigationView>(R.id.nav_view)
         bottomNavigation?.visibility = View.GONE
 
+        val editPageIcom = listOf(
+            binding.ivSpace,
+            binding.icSpaceIcon,
+            binding.ivCamera,
+            binding.icCameraIcon,
+            binding.tvTempStorage,
+        )
+
         binding.etPostContent.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
@@ -46,19 +57,26 @@ class PostFragment : Fragment() {
 
             override fun afterTextChanged(s: Editable?) {
                 if (s.isNullOrEmpty() && !isViewVisible) {
-                    binding.ivSpace.visibility = TextView.VISIBLE
-                    binding.icSpaceIcon.visibility = TextView.VISIBLE
-                    binding.ivCamera.visibility = TextView.VISIBLE
-                    binding.icCameraIcon.visibility = TextView.VISIBLE
-                    binding.tvTempStorage.visibility = TextView.VISIBLE
+
+                    for (view in editPageIcom) {
+                       view.visibility = VISIBLE
+                    }
+
                     isViewVisible = true
+
                 } else if (!s.isNullOrEmpty() && isViewVisible) {
-                    binding.ivSpace.visibility = TextView.INVISIBLE
-                    binding.icSpaceIcon.visibility = TextView.INVISIBLE
-                    binding.ivCamera.visibility = TextView.INVISIBLE
-                    binding.icCameraIcon.visibility = TextView.INVISIBLE
-                    binding.tvTempStorage.visibility = TextView.INVISIBLE
+
+                    for (view in editPageIcom) {
+                        view.visibility = INVISIBLE
+                    }
+
                     isViewVisible = false
+                }
+
+                s?.let {
+                    val currentLength = it.length
+                    val progress = (currentLength.toFloat() / MAX_CHARACTERS.toFloat()) * 100
+                    binding.etProgressbar.setProgressWithAnimation(progress.coerceAtMost(100f))
                 }
             }
         })
