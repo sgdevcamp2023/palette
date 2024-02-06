@@ -1,7 +1,10 @@
 package com.smilegate.Easel.presentation.view.post
 
+import android.Manifest
 import android.content.Context
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
@@ -11,11 +14,11 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.smilegate.Easel.R
 import com.smilegate.Easel.databinding.FragmentPostBinding
@@ -29,7 +32,8 @@ class PostFragment : Fragment() {
 
     private var isViewVisible: Boolean = true
 
-    private val MAX_CHARACTERS = 280
+    private val PERMISSION_REQUEST_CODE = 100
+    private val imageList = mutableListOf<String>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -108,15 +112,45 @@ class PostFragment : Fragment() {
             R.drawable.sample_content_img4
         )
 
-        val adapter = PostImgAdapter(itemList)
-        binding.rvPostImg.adapter = adapter
-        binding.rvPostImg.setLayoutManager(
-            LinearLayoutManager(
-                requireContext(),
-                RecyclerView.HORIZONTAL,
-                false
-            )
-        ) // 가로
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_MEDIA_IMAGES)
+            != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(arrayOf(Manifest.permission.READ_MEDIA_IMAGES), PERMISSION_REQUEST_CODE)
+        } else {
+            loadImagesFromGallery()
+        }
 
+    }
+
+    private fun loadImagesFromGallery() {
+        // 갤러리에서 이미지 URI 가져오기
+        val cursor = requireActivity().contentResolver.query(
+            MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+            arrayOf(MediaStore.Images.Media._ID),
+            null,
+            null,
+            MediaStore.Images.Media.DATE_ADDED + " DESC"
+        )
+
+        cursor?.use { cursor ->
+            val idColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media._ID)
+            while (cursor.moveToNext()) {
+                val id = cursor.getLong(idColumn)
+                val contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI.buildUpon().appendPath(id.toString()).build().toString()
+                imageList.add(contentUri)
+            }
+        }
+
+        // RecyclerView 설정
+        binding.rvPostImg.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.rvPostImg.adapter = PostImgAdapter(imageList)
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == PERMISSION_REQUEST_CODE) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                loadImagesFromGallery()
+            }
+        }
     }
 }

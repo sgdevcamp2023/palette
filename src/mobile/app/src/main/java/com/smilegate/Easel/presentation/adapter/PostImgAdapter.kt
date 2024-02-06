@@ -5,9 +5,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.smilegate.Easel.R
 
-class PostImgAdapter(private val itemList: List<Int>) : RecyclerView.Adapter<PostImgAdapter.MyViewHolder>() {
+class PostImgAdapter(private val itemList: List<String>) : RecyclerView.Adapter<PostImgAdapter.MyViewHolder>() {
 
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val imageView: ImageView = itemView.findViewById(R.id.iv_post_img)
@@ -20,8 +21,9 @@ class PostImgAdapter(private val itemList: List<Int>) : RecyclerView.Adapter<Pos
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val item = itemList[position]
-
-        holder.imageView.setImageResource(item)
+        Glide.with(holder.itemView.context)
+            .load(item)
+            .into(holder.imageView)
     }
 
     override fun getItemCount(): Int {
