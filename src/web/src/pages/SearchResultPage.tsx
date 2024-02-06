@@ -21,7 +21,6 @@ function SearchResultPage() {
   const navigate = useNavigate();
   const search = searchResultRoute.useSearch();
   const [keyword, setKeyword] = useState<string>(() => search.keyword ?? '');
-  console.log(keyword);
 
   return (
     <>
