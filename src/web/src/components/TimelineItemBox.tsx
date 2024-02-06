@@ -134,12 +134,12 @@ function TimelineItemBox({
           ))}
 
         {/* Quote */}
-        {post.includes.paint && (
+        {post.quotePaint && (
           <QuotePostBox
-            post={post.includes.paint}
+            post={post.quotePaint}
             className="my-[8px]"
             direction={
-              hasMedia && post.includes.paint.includes.medias.length > 0
+              hasMedia && post.quotePaint.includes.medias.length > 0
                 ? 'horizontal'
                 : 'vertical'
             }

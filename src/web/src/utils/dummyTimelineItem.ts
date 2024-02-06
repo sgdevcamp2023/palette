@@ -26,6 +26,7 @@ const DUMMY_ITEM: TimelineItem = {
   like: true,
   marked: true,
   repainted: true,
+  quotePaint: null,
   entities: {
     hashtags: [{ start: 0, end: 2, tag: 'tag' }],
     mentions: [{ start: 5, end: 7, mention: 'lee', userId: '12' }],
@@ -37,14 +38,16 @@ const DUMMY_ITEM: TimelineItem = {
         path: 'posts/ie8fjbk8ejmvxcihxo1e',
       },
     ],
-    paint: null,
     users: [
       {
         id: '123',
         nickname: '상민',
         username: '@sangmin',
+        status: 'public',
+        imagePath: 'profile/k3cvomo4mknrzsub83n7',
       },
     ],
+    links: [],
   },
 };
 

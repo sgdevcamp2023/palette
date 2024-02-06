@@ -13,18 +13,26 @@ export interface TimelineItem {
   replyCount: number;
   repaintCount: number;
   likeCount: number;
-  views: number;
   like: boolean;
   repainted: boolean;
   marked: boolean;
+  views: number;
+  quotePaint: TimelineItem | null;
   entities: {
     hashtags: { start: number; end: number; tag: string }[];
     mentions: { start: number; end: number; mention: string; userId: string }[];
   };
   includes: {
     medias: { type: 'image' | 'video'; path: string }[];
-    paint: TimelineItem | null;
-    users: Pick<User, 'id' | 'nickname' | 'username'>[];
+    users: (Pick<User, 'id' | 'nickname' | 'username' | 'status'> & {
+      imagePath: User['profileImagePath'];
+    })[];
+    links: {
+      start: number;
+      end: number;
+      shortLink: string;
+      originalLink: string;
+    }[];
   };
 }
 
