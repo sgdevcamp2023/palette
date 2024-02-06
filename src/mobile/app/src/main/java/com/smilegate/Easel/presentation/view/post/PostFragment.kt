@@ -50,6 +50,7 @@ class PostFragment : Fragment() {
             binding.ivCamera,
             binding.icCameraIcon,
             binding.tvTempStorage,
+            binding.rvPostImg,
         )
 
         binding.etPostContent.addTextChangedListener(object : TextWatcher {

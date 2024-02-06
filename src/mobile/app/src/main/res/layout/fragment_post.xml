@@ -88,54 +88,72 @@
 
         </ScrollView>
 
-        <ImageView
-            android:id="@+id/iv_space"
-            android:layout_width="76dp"
-            android:layout_height="76dp"
-            android:layout_marginStart="14dp"
-            android:background="@drawable/bg_post_icon"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
-
-        <ImageView
-            android:id="@+id/ic_space_icon"
-            android:layout_width="29dp"
-            android:layout_height="30dp"
-            android:src="@drawable/ic_bar_chart"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_space"
-            app:layout_constraintEnd_toEndOf="@+id/iv_space"
-            app:layout_constraintStart_toStartOf="@+id/iv_space"
-            app:layout_constraintTop_toTopOf="@+id/iv_space"
-            app:tint="@color/Purple_100" />
-
-        <ImageView
-            android:id="@+id/iv_camera"
-            android:layout_width="76dp"
-            android:layout_height="76dp"
-            android:layout_marginStart="8dp"
-            android:background="@drawable/bg_post_icon"
-            app:layout_constraintStart_toEndOf="@+id/iv_space"
-            app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
-
-        <ImageView
-            android:id="@+id/ic_camera_icon"
-            android:layout_width="26dp"
-            android:layout_height="24dp"
-            android:src="@drawable/ic_camera"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_camera"
-            app:layout_constraintEnd_toEndOf="@+id/iv_camera"
-            app:layout_constraintStart_toStartOf="@+id/iv_camera"
-            app:layout_constraintTop_toTopOf="@+id/iv_camera"
-            app:tint="@color/Blue_500" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvPostImg"
+        <HorizontalScrollView
+            android:id="@+id/horizontalScrollView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            tools:listitem="@layout/item_post_img"
-            app:layout_constraintStart_toEndOf="@+id/iv_camera"
-            app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/scrollView2">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="14dp">
+
+                <ImageView
+                    android:id="@+id/iv_space"
+                    android:layout_width="76dp"
+                    android:layout_height="76dp"
+                    android:layout_marginStart="14dp"
+                    android:background="@drawable/bg_post_icon"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
+
+                <ImageView
+                    android:id="@+id/ic_space_icon"
+                    android:layout_width="34dp"
+                    android:layout_height="38dp"
+                    android:src="@drawable/ic_bar_chart"
+                    app:layout_constraintBottom_toBottomOf="@+id/iv_space"
+                    app:layout_constraintEnd_toEndOf="@+id/iv_space"
+                    app:layout_constraintStart_toStartOf="@+id/iv_space"
+                    app:layout_constraintTop_toTopOf="@+id/iv_space"
+                    app:tint="@color/Purple_100" />
+
+                <ImageView
+                    android:id="@+id/iv_camera"
+                    android:layout_width="76dp"
+                    android:layout_height="76dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/bg_post_icon"
+                    app:layout_constraintStart_toEndOf="@+id/iv_space"
+                    app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
+
+                <ImageView
+                    android:id="@+id/ic_camera_icon"
+                    android:layout_width="26dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_camera"
+                    app:layout_constraintBottom_toBottomOf="@+id/iv_camera"
+                    app:layout_constraintEnd_toEndOf="@+id/iv_camera"
+                    app:layout_constraintStart_toStartOf="@+id/iv_camera"
+                    app:layout_constraintTop_toTopOf="@+id/iv_camera"
+                    app:tint="@color/Blue_500" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvPostImg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    tools:listitem="@layout/item_post_img"
+                    app:layout_constraintStart_toEndOf="@+id/iv_camera"
+                    app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </HorizontalScrollView>
 
         <View
             android:id="@+id/v_line1"
@@ -145,7 +163,7 @@
             android:background="@color/Grey_200"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iv_space" />
+            app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView" />
 
         <ImageView
             android:id="@+id/ic_earth"
