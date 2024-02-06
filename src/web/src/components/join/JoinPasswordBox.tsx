@@ -43,6 +43,11 @@ function JoinPasswordBox({
           onFocus={() => setIsDirty(true)}
           onBlur={() => setIsDirty(false)}
           onChange={(e) => onChangeInput(e, 'password')}
+          onKeyUp={(e) => {
+            if (e.key === 'Enter') {
+              onNextStep();
+            }
+          }}
         />
       </div>
       <Button

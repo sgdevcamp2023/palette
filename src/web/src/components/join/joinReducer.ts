@@ -36,5 +36,5 @@ export interface JoinInfo {
   email: string;
   emailVerifyCode: string;
   password: string;
-  profilePath: string;
+  profileImagePath: string;
 }

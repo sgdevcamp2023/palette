@@ -57,6 +57,11 @@ function JoinEmailBox({
           label="이메일"
           status={emailStatus}
           onChange={(e) => onChangeInput(e, 'email')}
+          onKeyUp={(e) => {
+            if (e.key === 'Enter' && isValidEmail(email) && nickname !== '') {
+              onNextStep();
+            }
+          }}
           onFocus={handleFocusOnEmail}
           onBlur={handleBlurOnEmail}
         />

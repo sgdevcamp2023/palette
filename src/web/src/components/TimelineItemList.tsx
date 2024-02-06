@@ -28,7 +28,7 @@ function getQueryFnByType(
 ): Promise<TimelineItem[]> {
   switch (type) {
     case 'follow':
-      return apis.users.logout() as unknown as Promise<TimelineItem[]>;
+      return apis.auth.logout() as unknown as Promise<TimelineItem[]>;
     case 'recommend':
       return delay(1250);
     case 'my-post':

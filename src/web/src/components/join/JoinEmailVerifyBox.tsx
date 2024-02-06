@@ -45,6 +45,11 @@ function JoinEmailVerifyBox({
           onFocus={() => setIsDirty(true)}
           onBlur={() => setIsDirty(false)}
           onChange={(e) => onChangeInput(e, 'emailVerifyCode')}
+          onKeyUp={(e) => {
+            if (e.key === 'Enter') {
+              onNextStep();
+            }
+          }}
         />
       </div>
       <div className="flex flex-col gap-[18px]">

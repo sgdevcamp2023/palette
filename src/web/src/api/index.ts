@@ -1,6 +1,6 @@
 import { env } from '@/constants';
 import { createApiWrappers } from './handler';
-import type { LoginInfo, User } from '@/@types';
+import type { JoinInfo, LoginInfo, User, UserProfile } from '@/@types';
 import { cdnAPIClient, createApiClient } from './apiFactory';
 
 const client = {
@@ -10,28 +10,57 @@ const client = {
 } as const;
 
 const auth = createApiWrappers({
-  passport: () => client.private.post('/auth/passport'),
-  login: ({ email, password }: LoginInfo) =>
-    client.public.post('/auth/web', {
-      email,
-      password,
-    }),
+  verifyEmailCode: (request: { email: User['email']; payload: string }) =>
+    client.public.post('/auth', request),
+  login: (request: LoginInfo) => client.public.post('/auth/web', request),
+  logout: () => client.private.post('/auth/web-logout'),
 });
 
 const users = createApiWrappers({
-  verifyEmail: ({ email }: { email: User['email'] }) =>
+  checkDuplicateEmail: ({ email }: { email: User['email'] }) =>
     client.public.post<{ isDuplicated: boolean }>('/users/verify-email', {
       email,
     }),
-  verifyUsername: ({ username }: { username: User['username'] }) =>
+  checkDuplicateUsername: ({ username }: { username: User['username'] }) =>
     client.public.post<{ isDuplicated: boolean }>('/users/verify-username', {
       username,
     }),
-  join: ({ username }: { username: User['username'] }) =>
-    client.public.post<{ isDuplicated: boolean }>('/users/verify-username', {
-      username,
+  join: (
+    request: Pick<User, 'email' | 'password' | 'username' | 'profileImagePath'>,
+  ) =>
+    client.public.post('/users/join', {
+      ...request,
+      introduce: null,
+      backgroundPath: null,
+      websitePath: null,
     }),
-  logout: () => client.private.post('/users/web-logout'),
+  temporaryJoin: (request: Pick<JoinInfo, 'email' | 'nickname'>) =>
+    client.public.post('/users/temporary-join', request),
+  getUserProfile: (userId: User['id']) =>
+    client.private.get<UserProfile>(`/users/${userId}`),
+  getMyProfile: () => client.private.get<UserProfile>(`/users/me`),
+  updateProfile: (
+    request: Pick<
+      User,
+      | 'nickname'
+      | 'introduce'
+      | 'profileImagePath'
+      | 'backgroundImagePath'
+      | 'websitePath'
+    >,
+  ) =>
+    client.public.put<
+      Pick<
+        User,
+        | 'email'
+        | 'profileImagePath'
+        | 'backgroundImagePath'
+        | 'username'
+        | 'nickname'
+        | 'introduce'
+        | 'websitePath'
+      > & { userId: User['id'] }
+    >('/users/profile', request),
 });
 
 const images = createApiWrappers({

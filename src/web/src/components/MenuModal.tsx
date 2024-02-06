@@ -63,7 +63,7 @@ function MenuModal({ user, onClose }: MenuModalProps) {
           }
         >
           <Typography as="span" size="headline-8" color="grey-600">
-            {user.followings}
+            {user.followingCount}
           </Typography>
           <Typography as="span" size="body-2" color="blueGrey-800">
             팔로잉
@@ -71,7 +71,7 @@ function MenuModal({ user, onClose }: MenuModalProps) {
         </div>
         <div className="flex gap-[4px]">
           <Typography as="span" size="headline-8" color="grey-600">
-            {user.followers}
+            {user.followerCount}
           </Typography>
           <Typography as="span" size="body-2" color="blueGrey-800">
             팔로워

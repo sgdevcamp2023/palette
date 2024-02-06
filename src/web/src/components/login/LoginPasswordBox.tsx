@@ -52,6 +52,11 @@ function LoginPasswordBox({
               stroke: 'blueGrey-400',
               onClick: () => setIsHidden((prev) => !prev),
             }}
+            onKeyUp={(e) => {
+              if (e.key === 'Enter' && password !== '') {
+                onLogin();
+              }
+            }}
           />
         </div>
 

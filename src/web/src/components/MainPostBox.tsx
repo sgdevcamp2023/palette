@@ -109,8 +109,8 @@ const MainPostBox = forwardRef<HTMLDivElement, MainPostBoxProps>(
         )}
 
         {/* Quote */}
-        {post.includes.paint && (
-          <QuotePostBox post={post.includes.paint} className="my-[24px]" />
+        {post.quotePaint && (
+          <QuotePostBox post={post.quotePaint} className="my-[24px]" />
         )}
 
         <div className="flex flex-col gap-[16px] divide-y divide-y-blueGrey400">
