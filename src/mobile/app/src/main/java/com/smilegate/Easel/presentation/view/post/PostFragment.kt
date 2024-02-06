@@ -42,7 +42,8 @@ class PostFragment : Fragment() {
 
         binding = FragmentPostBinding.inflate(inflater, container, false)
 
-        val toolbar = requireActivity().findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar_container)
+        val toolbar =
+            requireActivity().findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar_container)
         toolbar.visibility = View.GONE
 
         val bottomNavigation = activity?.findViewById<BottomNavigationView>(R.id.nav_view)
@@ -68,7 +69,7 @@ class PostFragment : Fragment() {
                 if (s.isNullOrEmpty() && !isViewVisible) {
 
                     for (view in editPageIcon) {
-                       view.visibility = VISIBLE
+                        view.visibility = VISIBLE
                     }
 
                     isViewVisible = true
@@ -101,12 +102,28 @@ class PostFragment : Fragment() {
         val editText = view.findViewById<EditText>(R.id.et_post_content)
         editText.requestFocus()
 
-        val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        binding.ivBackBtn.setOnClickListener {
+            editText.clearFocus()
+            val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(editText.windowToken, 0)
+
+            navController.navigate(R.id.action_postFragment_to_timelineFragment)
+        }
+
+        val imm =
+            requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT)
 
-        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_MEDIA_IMAGES)
-            != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(arrayOf(Manifest.permission.READ_MEDIA_IMAGES), PERMISSION_REQUEST_CODE)
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.READ_MEDIA_IMAGES
+            )
+            != PackageManager.PERMISSION_GRANTED
+        ) {
+            requestPermissions(
+                arrayOf(Manifest.permission.READ_MEDIA_IMAGES),
+                PERMISSION_REQUEST_CODE
+            )
         } else {
             loadImagesFromGallery()
         }
@@ -127,17 +144,23 @@ class PostFragment : Fragment() {
             val idColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media._ID)
             while (cursor.moveToNext() && imageList.size <= 20) {
                 val id = cursor.getLong(idColumn)
-                val contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI.buildUpon().appendPath(id.toString()).build().toString()
+                val contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI.buildUpon()
+                    .appendPath(id.toString()).build().toString()
                 imageList.add(contentUri)
             }
         }
 
         // RecyclerView 설정
-        binding.rvPostImg.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.rvPostImg.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.rvPostImg.adapter = PostImgAdapter(imageList)
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == PERMISSION_REQUEST_CODE) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
