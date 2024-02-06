@@ -59,24 +59,34 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/iv_back_btn" />
 
-        <EditText
-            android:id="@+id/et_post_content"
+        <ScrollView
+            android:id="@+id/scrollView2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="6dp"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="14dp"
-            android:background="@null"
-            android:focusable="true"
-            android:gravity="start|top"
-            android:hint="@string/post_fragment_sample_text"
-            android:textAlignment="viewStart"
-            android:textColorHint="@color/BlueGrey_800"
-            android:textFontWeight="400"
-            android:maxLength="280"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/iv_post_profile"
-            app:layout_constraintTop_toBottomOf="@+id/tv_temp_storage" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_temp_storage">
+
+            <EditText
+                android:id="@+id/et_post_content"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:background="@null"
+                android:focusable="true"
+                android:gravity="start|top"
+                android:hint="@string/post_fragment_sample_text"
+                android:maxLength="280"
+                android:textAlignment="viewStart"
+                android:textColorHint="@color/BlueGrey_800"
+                android:textFontWeight="400"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/iv_post_profile"
+                app:layout_constraintTop_toBottomOf="@+id/tv_temp_storage" />
+
+        </ScrollView>
 
         <ImageView
             android:id="@+id/iv_space"
@@ -85,7 +95,7 @@
             android:layout_marginStart="14dp"
             android:background="@drawable/bg_post_icon"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/iv_camera" />
+            app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
 
         <ImageView
             android:id="@+id/ic_space_icon"
@@ -105,7 +115,7 @@
             android:layout_marginStart="8dp"
             android:background="@drawable/bg_post_icon"
             app:layout_constraintStart_toEndOf="@+id/iv_space"
-            app:layout_constraintTop_toBottomOf="@+id/et_post_content" />
+            app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
 
         <ImageView
             android:id="@+id/ic_camera_icon"
