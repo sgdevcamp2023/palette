@@ -48,7 +48,7 @@ class PostFragment : Fragment() {
         val bottomNavigation = activity?.findViewById<BottomNavigationView>(R.id.nav_view)
         bottomNavigation?.visibility = View.GONE
 
-        val editPageIcom = listOf(
+        val editPageIcon = listOf(
             binding.ivSpace,
             binding.icSpaceIcon,
             binding.ivCamera,
@@ -67,7 +67,7 @@ class PostFragment : Fragment() {
             override fun afterTextChanged(s: Editable?) {
                 if (s.isNullOrEmpty() && !isViewVisible) {
 
-                    for (view in editPageIcom) {
+                    for (view in editPageIcon) {
                        view.visibility = VISIBLE
                     }
 
@@ -75,7 +75,7 @@ class PostFragment : Fragment() {
 
                 } else if (!s.isNullOrEmpty() && isViewVisible) {
 
-                    for (view in editPageIcom) {
+                    for (view in editPageIcon) {
                         view.visibility = INVISIBLE
                     }
 
@@ -104,14 +104,6 @@ class PostFragment : Fragment() {
         val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT)
 
-        val itemList: List<Int> = listOf(
-            R.drawable.sample_profile_img1,
-            R.drawable.sample_content_img1,
-            R.drawable.sample_content_img2,
-            R.drawable.sample_content_img3,
-            R.drawable.sample_content_img4
-        )
-
         if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_MEDIA_IMAGES)
             != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(arrayOf(Manifest.permission.READ_MEDIA_IMAGES), PERMISSION_REQUEST_CODE)
@@ -133,7 +125,7 @@ class PostFragment : Fragment() {
 
         cursor?.use { cursor ->
             val idColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media._ID)
-            while (cursor.moveToNext()) {
+            while (cursor.moveToNext() && imageList.size <= 20) {
                 val id = cursor.getLong(idColumn)
                 val contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI.buildUpon().appendPath(id.toString()).build().toString()
                 imageList.add(contentUri)

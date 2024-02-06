@@ -113,9 +113,9 @@
 
                 <ImageView
                     android:id="@+id/ic_space_icon"
-                    android:layout_width="34dp"
-                    android:layout_height="38dp"
-                    android:src="@drawable/ic_bar_chart"
+                    android:layout_width="28dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/ic_record"
                     app:layout_constraintBottom_toBottomOf="@+id/iv_space"
                     app:layout_constraintEnd_toEndOf="@+id/iv_space"
                     app:layout_constraintStart_toStartOf="@+id/iv_space"
