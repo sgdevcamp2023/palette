@@ -43,7 +43,6 @@ const DUMMY_ITEM: TimelineItem = {
         id: '123',
         nickname: '상민',
         username: '@sangmin',
-        createdAt: new Date(),
       },
     ],
   },

@@ -24,7 +24,7 @@ export interface TimelineItem {
   includes: {
     medias: { type: 'image' | 'video'; path: string }[];
     paint: TimelineItem | null;
-    users: Pick<User, 'id' | 'nickname' | 'username' | 'createdAt'>[];
+    users: Pick<User, 'id' | 'nickname' | 'username'>[];
   };
 }
 
