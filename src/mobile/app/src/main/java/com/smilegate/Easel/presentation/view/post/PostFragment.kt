@@ -75,8 +75,8 @@ class PostFragment : Fragment() {
 
                 s?.let {
                     val currentLength = it.length
-                    val progress = (currentLength.toFloat() / MAX_CHARACTERS.toFloat()) * 100
-                    binding.etProgressbar.setProgressWithAnimation(progress.coerceAtMost(100f))
+                    val progress = currentLength.toFloat()
+                    binding.etProgressbar.setProgressWithAnimation(progress)
                 }
             }
         })
