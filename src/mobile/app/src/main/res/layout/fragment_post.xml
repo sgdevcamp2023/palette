@@ -101,7 +101,7 @@
             android:id="@+id/ic_space_icon"
             android:layout_width="29dp"
             android:layout_height="30dp"
-            android:src="@drawable/ic_mic"
+            android:src="@drawable/ic_bar_chart"
             app:layout_constraintBottom_toBottomOf="@+id/iv_space"
             app:layout_constraintEnd_toEndOf="@+id/iv_space"
             app:layout_constraintStart_toStartOf="@+id/iv_space"
@@ -127,6 +127,15 @@
             app:layout_constraintStart_toStartOf="@+id/iv_camera"
             app:layout_constraintTop_toTopOf="@+id/iv_camera"
             app:tint="@color/Blue_500" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvPostImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            tools:listitem="@layout/item_post_img"
+            app:layout_constraintStart_toEndOf="@+id/iv_camera"
+            app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
 
         <View
             android:id="@+id/v_line1"
@@ -253,7 +262,7 @@
             android:layout_centerInParent="false"
             android:layout_marginEnd="32dp"
             android:layout_marginBottom="16dp"
-            app:cpb_background_progressbar_color="@color/BlueGrey_400"
+            app:cpb_background_progressbar_color="@color/BlueGrey_300"
             app:cpb_progress="0"
             app:cpb_progress_max="280"
             app:cpb_progressbar_color="@color/Blue_500"

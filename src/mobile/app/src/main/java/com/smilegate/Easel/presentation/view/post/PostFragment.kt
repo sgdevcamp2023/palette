@@ -14,9 +14,13 @@ import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.smilegate.Easel.R
 import com.smilegate.Easel.databinding.FragmentPostBinding
+import com.smilegate.Easel.presentation.adapter.PostImgAdapter
+
 
 class PostFragment : Fragment() {
     private lateinit var binding: FragmentPostBinding
@@ -94,5 +98,24 @@ class PostFragment : Fragment() {
 
         val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT)
+
+        val itemList: List<Int> = listOf(
+            R.drawable.sample_profile_img1,
+            R.drawable.sample_content_img1,
+            R.drawable.sample_content_img2,
+            R.drawable.sample_content_img3,
+            R.drawable.sample_content_img4
+        )
+
+        val adapter = PostImgAdapter(itemList)
+        binding.rvPostImg.adapter = adapter
+        binding.rvPostImg.setLayoutManager(
+            LinearLayoutManager(
+                requireContext(),
+                RecyclerView.HORIZONTAL,
+                false
+            )
+        ) // 가로
+
     }
 }
