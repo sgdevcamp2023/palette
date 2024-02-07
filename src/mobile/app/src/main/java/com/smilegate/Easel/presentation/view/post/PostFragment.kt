@@ -81,6 +81,13 @@ class PostFragment : Fragment() {
 
                     isViewVisible = true
 
+                    binding.btnPost.isEnabled = false
+                    //binding.btnPost.resources.getResourceName(R.drawable.btn_post_fragment)
+
+                    val textColorResourceId = R.color.Blue_200
+                    val textColor = ContextCompat.getColor(requireContext(), textColorResourceId)
+                    binding.btnPost.setTextColor(textColor)
+
                 } else if (!s.isNullOrEmpty() && isViewVisible) {
 
                     for (view in editPageIcon) {
@@ -88,6 +95,13 @@ class PostFragment : Fragment() {
                     }
 
                     isViewVisible = false
+
+                    binding.btnPost.isEnabled = true
+                    //binding.btnPost.resources.getResourceName(R.drawable.btn_post_fragment_enabled)
+
+                    val textColorResourceId = R.color.white
+                    val textColor = ContextCompat.getColor(requireContext(), textColorResourceId)
+                    binding.btnPost.setTextColor(textColor)
                 }
 
                 s?.let {
@@ -205,6 +219,8 @@ class PostFragment : Fragment() {
                 binding.horizontalScrollView.visibility = GONE
 
                 binding.icDeleteImg.visibility = VISIBLE
+                binding.icDeleteImg.bringToFront()
+
                 binding.icDeleteImg.setOnClickListener {
                     // 이미지 삭제 처리
                     selectedImageUri = null
@@ -213,6 +229,7 @@ class PostFragment : Fragment() {
 
                     binding.etPostContent.requestFocus()
                     binding.etPostContent.hint = "무슨 일이 일어나고 있나요?"
+
                 }
             }
 

@@ -42,9 +42,10 @@
             android:layout_height="32dp"
             android:layout_marginTop="28dp"
             android:layout_marginEnd="14dp"
-            android:background="@drawable/btn_post_fragment"
+            android:background="@drawable/btn_post_fragment_selector"
             android:elevation="0dp"
             android:text="@string/post_fragment_post"
+            android:enabled="false"
             android:textColor="@color/Blue_200"
             android:textFontWeight="700"
             app:layout_constraintEnd_toEndOf="parent"
@@ -75,6 +76,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
+                <ImageView
+                    android:id="@+id/ic_delete_img"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:src="@drawable/ic_black_circle_x"
+                    android:clickable="true"
+                    android:visibility="gone"
+                    android:layout_above="@id/cardView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/cardView" />
+
                 <EditText
                     android:id="@+id/et_post_content"
                     android:layout_width="match_parent"
@@ -91,18 +105,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageView
-                    android:id="@+id/ic_delete_img"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:src="@drawable/ic_black_circle_x"
-                    android:clickable="true"
-                    android:visibility="gone"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/cardView" />
-
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardView"
                     android:layout_width="match_parent"
@@ -110,7 +112,6 @@
                     android:layout_marginTop="16dp"
                     app:cardCornerRadius="10dp"
                     app:strokeColor="@null"
-                    app:cardElevation="0dp"
                     android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
