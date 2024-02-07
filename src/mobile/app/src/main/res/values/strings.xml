@@ -87,7 +87,7 @@
     <!--PostFragment-->
     <string name="post_fragment_temp_storage">임시 보관함</string>
     <string name="post_fragment_post">게시하기</string>
-    <string name="post_fragment_sample_text">무슨 일이 일어나고 있나요?\n\n\n\n\n\n\n</string>
+    <string name="post_fragment_sample_text">무슨 일이 일어나고 있나요?</string>
     <string name="post_fragment_reply_approve">모든 사람이 답글을 달 수 있습니다</string>
 
 </resources>

@@ -197,7 +197,7 @@ class PostFragment : Fragment() {
             selectedImageUri?.let {
                 binding.ivPostImg.setImageURI(it)
                 binding.ivPostImg.scaleType = ImageView.ScaleType.CENTER_CROP
-                binding.ivPostImg.visibility = VISIBLE
+                binding.cardView.visibility = VISIBLE
 
                 binding.etPostContent.clearFocus()
                 binding.etPostContent.hint = "내용 추가..."
@@ -210,6 +210,9 @@ class PostFragment : Fragment() {
                     selectedImageUri = null
                     binding.icDeleteImg.visibility = GONE
                     binding.ivPostImg.visibility = GONE
+
+                    binding.etPostContent.requestFocus()
+                    binding.etPostContent.hint = "무슨 일이 일어나고 있나요?"
                 }
             }
 
