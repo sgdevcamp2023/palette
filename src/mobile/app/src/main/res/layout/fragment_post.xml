@@ -4,12 +4,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".presentation.view.post.PostFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <ImageView
             android:id="@+id/iv_back_btn"
@@ -70,21 +71,49 @@
             app:layout_constraintStart_toEndOf="@+id/iv_post_profile"
             app:layout_constraintTop_toBottomOf="@+id/tv_temp_storage">
 
-            <EditText
-                android:id="@+id/et_post_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:background="@null"
-                android:focusable="true"
-                android:gravity="start|top"
-                android:hint="@string/post_fragment_sample_text"
-                android:maxLength="280"
-                android:textAlignment="viewStart"
-                android:textColorHint="@color/BlueGrey_800"
-                android:textFontWeight="400"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/iv_post_profile"
-                app:layout_constraintTop_toBottomOf="@+id/tv_temp_storage" />
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/et_post_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:background="@null"
+                    android:focusable="true"
+                    android:gravity="start|top"
+                    android:hint="@string/post_fragment_sample_text"
+                    android:maxLength="280"
+                    android:textAlignment="viewStart"
+                    android:textColorHint="@color/BlueGrey_800"
+                    android:textFontWeight="400"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/iv_post_img"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:layout_marginTop="32dp"
+                    android:scaleType="centerCrop"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/ic_delete_img"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:src="@drawable/ic_black_circle_x"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/iv_post_img"
+                    android:visibility="gone"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </ScrollView>
 
@@ -92,7 +121,9 @@
             android:id="@+id/horizontalScrollView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
             android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="@id/v_line1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/scrollView2">
@@ -147,9 +178,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    tools:listitem="@layout/item_post_img"
                     app:layout_constraintStart_toEndOf="@+id/iv_camera"
-                    app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
+                    app:layout_constraintTop_toBottomOf="@+id/scrollView2"
+                    tools:listitem="@layout/item_post_img" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -159,32 +190,39 @@
             android:id="@+id/v_line1"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginBottom="16dp"
             android:background="@color/Grey_200"
+            app:layout_constraintBottom_toTopOf="@+id/tv_reply_approve"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView" />
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <View
+            android:id="@+id/view_background"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            app:layout_constraintTop_toBottomOf="@id/v_line1"/>
 
         <ImageView
             android:id="@+id/ic_earth"
             android:layout_width="16dp"
             android:layout_height="16dp"
             android:layout_marginStart="14dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
             android:src="@drawable/ic_earth"
+            app:layout_constraintBottom_toTopOf="@+id/v_line2"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/v_line1"
             app:tint="@color/Blue_500" />
 
         <View
             android:id="@+id/v_line2"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
             android:background="@color/Grey_200"
+            app:layout_constraintBottom_toTopOf="@+id/ic_space"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ic_earth" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/tv_reply_approve"
@@ -192,23 +230,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
             android:text="@string/post_fragment_reply_approve"
             android:textColor="@color/Blue_500"
-            app:layout_constraintStart_toEndOf="@+id/ic_earth"
-            app:layout_constraintTop_toBottomOf="@+id/v_line1" />
+            app:layout_constraintBottom_toTopOf="@+id/v_line2"
+            app:layout_constraintStart_toEndOf="@+id/ic_earth" />
 
         <ImageView
             android:id="@+id/ic_space"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginStart="14dp"
-            android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
             android:src="@drawable/ic_record"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/v_line2"
             app:tint="@color/Blue_500" />
 
         <ImageView
@@ -216,12 +252,11 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginStart="26dp"
-            android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
+            android:clickable="true"
             android:src="@drawable/ic_image"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/ic_space"
-            app:layout_constraintTop_toBottomOf="@+id/v_line2"
             app:tint="@color/Blue_500" />
 
         <ImageView
@@ -229,12 +264,10 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginStart="26dp"
-            android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
             android:src="@drawable/ic_gif"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/ic_gallery"
-            app:layout_constraintTop_toBottomOf="@+id/v_line2"
             app:tint="@color/Blue_500" />
 
         <ImageView
@@ -242,12 +275,10 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginStart="26dp"
-            android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
             android:src="@drawable/ic_vote"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/ic_gif"
-            app:layout_constraintTop_toBottomOf="@+id/v_line2"
             app:tint="@color/Blue_500" />
 
         <ImageView
@@ -255,12 +286,10 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginStart="26dp"
-            android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
             android:src="@drawable/ic_location"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/ic_vote"
-            app:layout_constraintTop_toBottomOf="@+id/v_line2"
             app:tint="@color/Blue_200" />
 
         <ImageView

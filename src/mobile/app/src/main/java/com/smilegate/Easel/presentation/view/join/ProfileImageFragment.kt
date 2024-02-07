@@ -5,28 +5,24 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.EditText
 import android.widget.ImageView
-import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.smilegate.Easel.R
 import com.smilegate.Easel.databinding.FragmentProfileImageBinding
-import com.smilegate.Easel.databinding.FragmentStartBinding
-import de.hdodenhof.circleimageview.CircleImageView
 
 class ProfileImageFragment : Fragment() {
     private lateinit var _binding: FragmentProfileImageBinding
     private val binding get() = _binding!!
 
     // 이미지 선택 요청 코드
-    private val PICK_IMAGE_REQUEST = 1
+    private val pickImageRequest = 1
     private var selectedImageUri: Uri? = null
 
     private lateinit var navController: NavController
@@ -54,7 +50,7 @@ class ProfileImageFragment : Fragment() {
 
         binding.profileImageFragmentDeleteBtn.setOnClickListener {
             selectedImageUri = null
-            binding?.profileImageFragmentCameraBtn?.visibility = View.VISIBLE
+            binding.profileImageFragmentCameraBtn.visibility = View.VISIBLE
         }
 
         return binding.root
@@ -63,27 +59,27 @@ class ProfileImageFragment : Fragment() {
     private fun openGallery() {
         // 갤러리에서 이미지를 선택하는 Intent 생성
         val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        startActivityForResult(galleryIntent, PICK_IMAGE_REQUEST)
+        startActivityForResult(galleryIntent, pickImageRequest)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK) {
+        if (requestCode == pickImageRequest && resultCode == Activity.RESULT_OK) {
             // 이미지가 성공적으로 선택되었을 때
             var selectedImageUri: Uri? = data?.data
             val nextButton = binding?.root?.findViewById<Button>(R.id.profile_image_fragment_next_btn)
 
             // 선택한 이미지를 ImageView에 설정
             selectedImageUri?.let {
-                binding?.profileImage?.setImageURI(it)
-                binding?.profileImage?.scaleType = ImageView.ScaleType.CENTER_CROP
-                binding?.deleteCardView?.visibility = View.VISIBLE
+                binding.profileImage.setImageURI(it)
+                binding.profileImage.scaleType = ImageView.ScaleType.CENTER_CROP
+                binding.deleteCardView.visibility = View.VISIBLE
                 binding.profileImageFragmentDeleteBtn.setOnClickListener {
                     // 이미지 삭제 처리
                     selectedImageUri = null
-                    binding?.profileImageFragmentCameraBtn?.visibility = View.VISIBLE
-                    binding?.deleteCardView?.visibility = View.GONE
+                    binding.profileImageFragmentCameraBtn.visibility = View.VISIBLE
+                    binding.deleteCardView.visibility = View.GONE
                     val drawable = ContextCompat.getDrawable(requireContext(), R.drawable.bg_profile_image_picker)
                     binding.profileImage.setImageDrawable(drawable)
                 }
@@ -99,7 +95,7 @@ class ProfileImageFragment : Fragment() {
             }
 
             //Camera Button 숨기기
-            binding?.profileImageFragmentCameraBtn?.visibility = View.GONE
+            binding.profileImageFragmentCameraBtn.visibility = View.GONE
         }
     }
 

@@ -1,19 +1,24 @@
 package com.smilegate.Easel.presentation.view.post
 
 import android.Manifest
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
@@ -32,7 +37,9 @@ class PostFragment : Fragment() {
 
     private var isViewVisible: Boolean = true
 
-    private val PERMISSION_REQUEST_CODE = 100
+    private val permissionRequestCode = 100
+    private val pickImageRequest = 1
+
     private val imageList = mutableListOf<String>()
 
     override fun onCreateView(
@@ -44,10 +51,10 @@ class PostFragment : Fragment() {
 
         val toolbar =
             requireActivity().findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar_container)
-        toolbar.visibility = View.GONE
+        toolbar.visibility = GONE
 
         val bottomNavigation = activity?.findViewById<BottomNavigationView>(R.id.nav_view)
-        bottomNavigation?.visibility = View.GONE
+        bottomNavigation?.visibility = GONE
 
         val editPageIcon = listOf(
             binding.ivSpace,
@@ -91,6 +98,10 @@ class PostFragment : Fragment() {
             }
         })
 
+        binding.icGallery.setOnClickListener {
+            openGallery()
+        }
+
         return binding.root
     }
 
@@ -122,7 +133,7 @@ class PostFragment : Fragment() {
         ) {
             requestPermissions(
                 arrayOf(Manifest.permission.READ_MEDIA_IMAGES),
-                PERMISSION_REQUEST_CODE
+                permissionRequestCode
             )
         } else {
             loadImagesFromGallery()
@@ -142,7 +153,7 @@ class PostFragment : Fragment() {
 
         cursor?.use { cursor ->
             val idColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media._ID)
-            while (cursor.moveToNext() && imageList.size <= 20) {
+            while (cursor.moveToNext()) {
                 val id = cursor.getLong(idColumn)
                 val contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI.buildUpon()
                     .appendPath(id.toString()).build().toString()
@@ -162,10 +173,48 @@ class PostFragment : Fragment() {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == PERMISSION_REQUEST_CODE) {
+        if (requestCode == permissionRequestCode) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 loadImagesFromGallery()
             }
+        }
+    }
+
+    private fun openGallery() {
+        // 갤러리에서 이미지를 선택하는 Intent 생성
+        val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        startActivityForResult(galleryIntent, pickImageRequest)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == pickImageRequest && resultCode == Activity.RESULT_OK) {
+            // 이미지가 성공적으로 선택되었을 때
+            var selectedImageUri: Uri? = data?.data
+
+            // 선택한 이미지를 ImageView에 설정
+            selectedImageUri?.let {
+                binding.ivPostImg.setImageURI(it)
+                binding.ivPostImg.scaleType = ImageView.ScaleType.CENTER_CROP
+                binding.ivPostImg.visibility = VISIBLE
+
+                binding.etPostContent.clearFocus()
+                binding.etPostContent.hint = "내용 추가..."
+
+                binding.horizontalScrollView.visibility = GONE
+
+                binding.icDeleteImg.visibility = VISIBLE
+                binding.icDeleteImg.setOnClickListener {
+                    // 이미지 삭제 처리
+                    selectedImageUri = null
+                    binding.icDeleteImg.visibility = GONE
+                    binding.ivPostImg.visibility = GONE
+                }
+            }
+
+            //delete Button 숨기기
+            binding.icDeleteImg.visibility = GONE
         }
     }
 }
