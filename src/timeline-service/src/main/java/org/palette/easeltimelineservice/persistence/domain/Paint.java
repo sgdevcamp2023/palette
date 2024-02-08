@@ -8,6 +8,7 @@ import org.palette.dto.event.detail.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -39,7 +40,7 @@ public class Paint {
                 paintCreatedEvent.authorNickname(),
                 paintCreatedEvent.authorImagePath(),
                 paintCreatedEvent.authorStatus(),
-                paintCreatedEvent.quotePaint() == null ? null : Paint.from(paintCreatedEvent.quotePaint()),
+                Optional.ofNullable(paintCreatedEvent.quotePaint()).map(Paint::from).orElse(null),
                 paintCreatedEvent.createdAt(),
                 paintCreatedEvent.text(),
                 paintCreatedEvent.hashtagRecords(),

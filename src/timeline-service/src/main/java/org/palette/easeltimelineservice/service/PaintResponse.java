@@ -3,6 +3,7 @@ package org.palette.easeltimelineservice.service;
 import org.palette.easeltimelineservice.persistence.domain.Paint;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 public record PaintResponse(
         Long id,
@@ -34,7 +35,7 @@ public record PaintResponse(
                 paint.getAuthorNickname(),
                 paint.getAuthorImagePath(),
                 paint.getAuthorStatus(),
-                paint.getQuotePaint() == null ? null : PaintResponse.from(paint.getQuotePaint()),
+                Optional.ofNullable(paint.getQuotePaint()).map(PaintResponse::from).orElse(null),
                 paint.getCreatedAt(),
                 paint.getText(),
                 0,
