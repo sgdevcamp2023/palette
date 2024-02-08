@@ -7,7 +7,9 @@ import org.palette.dto.event.detail.HashtagRecord;
 import org.palette.dto.event.detail.LinkRecord;
 import org.palette.dto.event.detail.MediaRecord;
 import org.palette.dto.event.detail.UserRecord;
+import src.main.java.org.palette.dto.event.detail.MentionRecord;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Builder(access = AccessLevel.PRIVATE)
@@ -23,8 +25,8 @@ public record PaintCreatedEvent(
         LocalDateTime createdAt,
         String text,
         List<HashtagRecord> hashtagRecords,
-        List<MentionRecord> mentionRecords
-        List<UserRecord> taggedUserRecords
+        List<MentionRecord> mentionRecords,
+        List<UserRecord> taggedUserRecords,
         List<MediaRecord> mediaRecords,
         List<LinkRecord> linkRecords
 
