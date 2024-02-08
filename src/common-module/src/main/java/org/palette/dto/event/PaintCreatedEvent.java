@@ -3,11 +3,7 @@ package org.palette.dto.event;
 import lombok.AccessLevel;
 import lombok.Builder;
 import org.palette.dto.EaselEvent;
-import org.palette.dto.event.detail.HashtagRecord;
-import org.palette.dto.event.detail.LinkRecord;
-import org.palette.dto.event.detail.MediaRecord;
-import org.palette.dto.event.detail.UserRecord;
-import src.main.java.org.palette.dto.event.detail.MentionRecord;
+import org.palette.dto.event.detail.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
