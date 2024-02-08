@@ -58,12 +58,12 @@ public class GlobalExceptionHandler {
                 .build();
 
         logException(exceptionResponse);
+        logInternalException(e);
 
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(exceptionResponse);
     }
-
 
     private static void logException(ExceptionResponse exceptionResponse) {
         log.error(
@@ -73,4 +73,9 @@ public class GlobalExceptionHandler {
                 exceptionResponse.message()
         );
     }
+
+    private static void logInternalException(Exception e) {
+        log.error(e.getLocalizedMessage());
+    }
+
 }
