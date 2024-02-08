@@ -3,7 +3,7 @@ package org.palette.easelsocialservice.usecase;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.palette.easelsocialservice.dto.event.details.PaintCreatedEvent;
+import org.palette.dto.event.PaintCreatedEvent;
 import org.palette.easelsocialservice.dto.request.MentionRequest;
 import org.palette.easelsocialservice.dto.request.PaintCreateRequest;
 import org.palette.easelsocialservice.dto.request.RepaintRequest;
@@ -82,10 +82,21 @@ public class PaintUsecase {
                     PaintEntityBinder.bindMediaWithPaint(paint, createdMedias);
                 });
 
-        paintService.createPaint(paint);
-        kafkaProducer.execute(PaintCreatedEvent.build(userId, paint));
+        Paint persistencePaint = paintService.createPaint(paint);
 
-        return new PaintCreateResponse(paint.getPid());
+        kafkaProducer.execute(
+                new PaintCreatedEvent(
+                        userId,
+                        persistencePaint.getPid(),
+                        persistencePaint.getContent(),
+                        persistencePaint.buildHashtagRecords(),
+                        persistencePaint.buildMediaRecords(),
+                        persistencePaint.buildLinksRecords(),
+                        persistencePaint.buildTaggedUserRecords()
+                )
+        );
+
+        return new PaintCreateResponse(persistencePaint.getPid());
     }
 
     public void repaint(Long userId, RepaintRequest repaintRequest) {

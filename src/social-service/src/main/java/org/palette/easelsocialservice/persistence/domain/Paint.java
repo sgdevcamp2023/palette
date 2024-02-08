@@ -1,6 +1,10 @@
 package org.palette.easelsocialservice.persistence.domain;
 
 import lombok.Getter;
+import org.palette.dto.event.detail.HashtagRecord;
+import org.palette.dto.event.detail.LinkRecord;
+import org.palette.dto.event.detail.MediaRecord;
+import org.palette.dto.event.detail.UserRecord;
 import org.palette.easelsocialservice.persistence.relationship.*;
 import org.springframework.data.neo4j.core.schema.GeneratedValue;
 import org.springframework.data.neo4j.core.schema.Id;
@@ -10,6 +14,7 @@ import org.springframework.data.neo4j.core.schema.Relationship;
 import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Node
@@ -59,6 +64,46 @@ public class Paint {
         this.content = content;
         this.views = 0;
         this.createdAt = LocalDateTime.now();
+    }
+
+    public List<HashtagRecord> buildHashtagRecords() {
+        return this.getHashtags().stream()
+                .map(tags -> new HashtagRecord(
+                        tags.getStart(),
+                        tags.getEnd(),
+                        tags.getHashtag().getTag())
+                ).collect(Collectors.toList());
+    }
+
+    public List<MediaRecord> buildMediaRecords() {
+        return this.getMedias().stream()
+                .map(media -> new MediaRecord(
+                        media.getMedia().getType(),
+                        media.getMedia().getPath())
+                ).collect(Collectors.toList());
+    }
+
+    public List<LinkRecord> buildLinksRecords() {
+        return this.getLinks().stream()
+                .map(media -> new LinkRecord(
+                                media.getStart(),
+                                media.getEnd(),
+                                media.getLink().getShortLink(),
+                                media.getLink().getOriginalLink()
+                        )
+                ).collect(Collectors.toList());
+    }
+
+    public List<UserRecord> buildTaggedUserRecords() {
+        return this.getTaggedUsers().stream()
+                .map(taggedUser -> new UserRecord(
+                                taggedUser.getUser().getUid(),
+                                taggedUser.getUser().getUsername(),
+                                taggedUser.getUser().getNickname(),
+                                taggedUser.getUser().getImagePath(),
+                                taggedUser.getUser().getActiveString()
+                        )
+                ).collect(Collectors.toList());
     }
 
     public void setAuthor(User user) {
