@@ -1,6 +1,6 @@
-package org.palette.easeltimelineservice.dto;
+package org.palette.dto.event.detail;
 
-public record MentionResponse(
+public record MentionRecord(
         Integer start,
         Integer end,
         Long userId,

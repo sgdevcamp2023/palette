@@ -1,6 +1,6 @@
-package org.palette.easeltimelineservice.dto;
+package org.palette.dto.event.detail;
 
-public record LinkResponse(
+public record LinkRecord(
         Integer start,
         Integer end,
         String shortLink,
