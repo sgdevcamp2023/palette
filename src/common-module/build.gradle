@@ -22,11 +22,22 @@ repositories {
 }
 
 dependencies {
+
+    // gRPC
     implementation "io.grpc:grpc-protobuf:${grpcVersion}"
     implementation "io.grpc:grpc-stub:${grpcVersion}"
 
-    implementation 'com.fasterxml.jackson.core:jackson-databind'
+    // Web
     implementation "org.springframework.boot:spring-boot-starter-web"
+
+    // AOP
+    implementation "org.springframework.boot:spring-boot-starter-aop"
+
+    // RabbitMQ
+    implementation "org.springframework.boot:spring-boot-starter-amqp"
+
+    // Kafka
+    implementation "org.springframework.kafka:spring-kafka"
 
     compileOnly("org.projectlombok:lombok")
     annotationProcessor("org.projectlombok:lombok")
