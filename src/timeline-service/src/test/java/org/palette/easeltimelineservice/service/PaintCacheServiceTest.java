@@ -50,8 +50,8 @@ class PaintCacheServiceTest {
         paintCacheService.cachePaint(paintId, paint);
 
         // then
-        PaintResponse cachedPaintResponse = PaintResponse.from((Paint) redistemplate.opsForValue()
-                .get(RedisKeyUtil.constructKey(RedisKeyConstants.PAINT_PREFIX.getKey(), paintId)));
+        PaintResponse cachedPaintResponse = PaintResponse.from((Paint) Objects.requireNonNull(redistemplate.opsForValue()
+                .get(RedisKeyUtil.constructKey(RedisKeyConstants.PAINT_PREFIX.getKey(), paintId))));
         assertThat(cachedPaintResponse).isNotNull();
     }
 }
