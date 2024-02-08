@@ -12,7 +12,9 @@ public enum TopicConstant {
     FOLLOWED("followed"),
 
     ;
-
-
     final String value;
+
+    public String value() {
+        return value;
+    }
 }
