@@ -1,4 +1,4 @@
-package src.main.java.org.palette.dto.event.detail;
+package org.palette.dto.event.detail;
 
 public record MentionRecord(
         Integer start,
