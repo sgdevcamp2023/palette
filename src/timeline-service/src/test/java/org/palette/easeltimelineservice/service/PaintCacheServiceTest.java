@@ -2,28 +2,16 @@ package org.palette.easeltimelineservice.service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.palette.easeltimelineservice.dto.PaintResponse;
-import org.palette.easeltimelineservice.service.PaintCacheService;
+import org.palette.easeltimelineservice.persistence.domain.Paint;
+import org.palette.easeltimelineservice.util.RedisKeyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.RedisTemplate;
 
 import java.util.Objects;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
-/*
-@Service
-@RequiredArgsConstructor
-public class PaintCacheService {
-
-    private final RedisTemplate<String, Object> redisTemplate;
-
-    public void cachePaint(Long paintId, Paint paint) {
-        redisTemplate.opsForValue().set("paint:" + paintId, paint);
-    }
-}
- */
 @SpringBootTest
 class PaintCacheServiceTest {
 
@@ -31,41 +19,39 @@ class PaintCacheServiceTest {
     private PaintCacheService paintCacheService;
 
     @Autowired
-    private RedisTemplate<String, Object> redisTemplate;
+    private RedisTemplate<String, Object> redistemplate;
 
     @BeforeEach
     void setUp() {
-        Objects.requireNonNull(redisTemplate.keys("*")).forEach(key -> redisTemplate.delete(key));
+        Objects.requireNonNull(redistemplate.keys("*")).forEach(key -> redistemplate.delete(key));
     }
+
     @Test
     void cachePaint() {
         // given
         final Long paintId = 1L;
-        final PaintResponse paintResponse = new PaintResponse(
+        final Paint paint = new Paint(
                 1L,
                 false,
                 1L,
-                "test",
-                "test",
-                "test",
-                "test",
+                "authorUsername",
+                "authorNickname",
+                "authorImagePath",
+                "authorStatus",
                 null,
-                "test",
-                0,
-                0,
-                0,
-                false,
-                false,
-                false,
-                0,
                 null,
-                null
-        );
+                "text",
+                null,
+                null,
+                null,
+                null,
+                null);
         // when
-        paintCacheService.cachePaint(paintId, paintResponse);
+        paintCacheService.cachePaint(paintId, paint);
 
         // then
-        final PaintResponse cachedPaintResponse = (PaintResponse) redisTemplate.opsForValue().get("paint:" + paintId);
-        assertEquals(paintResponse, cachedPaintResponse);
+        PaintResponse cachedPaintResponse = PaintResponse.from((Paint) redistemplate.opsForValue()
+                .get(RedisKeyUtil.constructKey(RedisKeyConstants.PAINT_PREFIX.getKey(), paintId)));
+        assertThat(cachedPaintResponse).isNotNull();
     }
 }
