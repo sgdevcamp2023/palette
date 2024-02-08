@@ -12,6 +12,15 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
+    private static void logException(ExceptionResponse exceptionResponse) {
+        log.error(
+                "code : {}, message : {}, description : {}",
+                exceptionResponse.code(),
+                exceptionResponse.description(),
+                exceptionResponse.message()
+        );
+    }
+
     @ExceptionHandler(value = {
             MethodArgumentNotValidException.class,
             MethodArgumentTypeMismatchException.class,
@@ -62,15 +71,5 @@ public class GlobalExceptionHandler {
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(exceptionResponse);
-    }
-
-
-    private static void logException(ExceptionResponse exceptionResponse) {
-        log.error(
-                "code : {}, message : {}, description : {}",
-                exceptionResponse.code(),
-                exceptionResponse.description(),
-                exceptionResponse.message()
-        );
     }
 }
