@@ -66,46 +66,6 @@ public class Paint {
         this.createdAt = LocalDateTime.now();
     }
 
-    public List<HashtagRecord> buildHashtagRecords() {
-        return this.getHashtags().stream()
-                .map(tags -> new HashtagRecord(
-                        tags.getStart(),
-                        tags.getEnd(),
-                        tags.getHashtag().getTag())
-                ).collect(Collectors.toList());
-    }
-
-    public List<MediaRecord> buildMediaRecords() {
-        return this.getMedias().stream()
-                .map(media -> new MediaRecord(
-                        media.getMedia().getType(),
-                        media.getMedia().getPath())
-                ).collect(Collectors.toList());
-    }
-
-    public List<LinkRecord> buildLinksRecords() {
-        return this.getLinks().stream()
-                .map(media -> new LinkRecord(
-                                media.getStart(),
-                                media.getEnd(),
-                                media.getLink().getShortLink(),
-                                media.getLink().getOriginalLink()
-                        )
-                ).collect(Collectors.toList());
-    }
-
-    public List<UserRecord> buildTaggedUserRecords() {
-        return this.getTaggedUsers().stream()
-                .map(taggedUser -> new UserRecord(
-                                taggedUser.getUser().getUid(),
-                                taggedUser.getUser().getUsername(),
-                                taggedUser.getUser().getNickname(),
-                                taggedUser.getUser().getImagePath(),
-                                taggedUser.getUser().getActiveString()
-                        )
-                ).collect(Collectors.toList());
-    }
-
     public void setAuthor(User user) {
         this.author = new Creates(user);
     }

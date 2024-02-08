@@ -84,17 +84,7 @@ public class PaintUsecase {
 
         Paint persistencePaint = paintService.createPaint(paint);
 
-        kafkaProducer.execute(
-                new PaintCreatedEvent(
-                        userId,
-                        persistencePaint.getPid(),
-                        persistencePaint.getContent(),
-                        persistencePaint.buildHashtagRecords(),
-                        persistencePaint.buildMediaRecords(),
-                        persistencePaint.buildLinksRecords(),
-                        persistencePaint.buildTaggedUserRecords()
-                )
-        );
+        kafkaProducer.execute(PaintEntityConverter.convertToPainCreatedEvent(persistencePaint, false));
 
         return new PaintCreateResponse(persistencePaint.getPid());
     }
