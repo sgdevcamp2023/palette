@@ -7,6 +7,7 @@ export { default as LoginPage } from './LoginPage';
 export { default as MembershipEntryPage } from './MembershipEntryPage';
 export { default as NotificationPage } from './NotificationPage';
 export { default as SearchPage } from './SearchPage';
+export { default as SearchResultPage } from './SearchResultPage';
 export { default as PostDetailPage } from './PostDetailPage';
 export { default as PostEditPage } from './PostEditPage';
 export { default as ProfilePage } from './ProfilePage';

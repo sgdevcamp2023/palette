@@ -6,13 +6,24 @@ import { apis } from '@/api';
 import { usePaintAction } from '@/hooks';
 import type { TimelineItem } from '@/@types';
 import TimelineItemBox from './TimelineItemBox';
-import { createDummyTimelineItem } from '@/utils';
+import { cn, createDummyTimelineItem } from '@/utils';
 import ReplyBottomSheet from './bottomSheet/ReplyBottomSheet';
 import ShareBottomSheet from './bottomSheet/ShareBottomSheet';
 import ViewsBottomSheet from './bottomSheet/ViewsBottomSheet';
 
 interface TimelineItemListProps {
-  type: 'follow' | 'recommend' | 'my-post' | 'my-reply' | 'media' | 'heart';
+  type:
+    | 'follow'
+    | 'recommend'
+    | 'my-post'
+    | 'my-reply'
+    | 'media'
+    | 'heart'
+    | 'search-recommend'
+    | 'search-recent'
+    | 'search-user'
+    | 'search-media';
+  className?: string;
 }
 
 function delay(ms: number): Promise<TimelineItem[]> {
@@ -39,12 +50,20 @@ function getQueryFnByType(
       return delay(1250);
     case 'heart':
       return delay(1250);
+    case 'search-recommend':
+      return delay(1250);
+    case 'search-recent':
+      return delay(1250);
+    case 'search-media':
+      return delay(1250);
+    case 'search-user':
+      return delay(1250);
     default:
       return delay(1250);
   }
 }
 
-function TimelineItemList({ type }: TimelineItemListProps) {
+function TimelineItemList({ type, className }: TimelineItemListProps) {
   const { data: paints } = useSuspenseQuery({
     queryKey: ['paint', type],
     queryFn: () => getQueryFnByType(type),
@@ -57,7 +76,10 @@ function TimelineItemList({ type }: TimelineItemListProps) {
     <>
       <div
         onScroll={paintAction.onScrollLayout}
-        className="flex flex-col gap-[12px] w-full h-full divide-y divide-blueGrey-400"
+        className={cn(
+          'flex flex-col gap-[12px] w-full h-full divide-y divide-blueGrey-400',
+          className,
+        )}
       >
         {paints.map((paint) => (
           <TimelineItemBox
