@@ -98,7 +98,7 @@ spring:
             - RewritePath=/api/notification/?(?<segment>.*), /$\{segment}
 
       default-filters:
-        - name: AuthorizationFilter
+        - name: AuthorizationGatewayFilterFactory
           args:
             baseMessage: Gateway Authorization Filter
             preLogger: true
