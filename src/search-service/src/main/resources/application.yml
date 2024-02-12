@@ -1,0 +1,23 @@
+server:
+  port: 10011
+
+spring:
+  application:
+    name: search-service
+
+grpc:
+  server:
+    port: 11011
+
+passport:
+  key: ${PASSPORT_KEY}
+  algorithm: ${PASSPORT_ALGORITHM}
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
