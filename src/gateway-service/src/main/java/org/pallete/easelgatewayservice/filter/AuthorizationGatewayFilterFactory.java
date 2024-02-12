@@ -9,12 +9,12 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 
 @Component
-public class AuthorizationFilter extends AbstractGatewayFilterFactory<AuthorizationFilter.Config> {
+public class AuthorizationGatewayFilterFactory extends AbstractGatewayFilterFactory<AuthorizationGatewayFilterFactory.Config> {
 
     private static final String AUTHORIZATION_HEADER_NAME = "Authorization";
     private final FeignAuthClient feignAuthClient;
 
-    public AuthorizationFilter(@Lazy FeignAuthClient feignAuthClient) {
+    public AuthorizationGatewayFilterFactory(@Lazy FeignAuthClient feignAuthClient) {
         super(Config.class);
         this.feignAuthClient = feignAuthClient;
     }
