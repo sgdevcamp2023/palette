@@ -1,6 +1,6 @@
 plugins {
 	java
-	id("org.springframework.boot") version "3.2.2"
+	id("org.springframework.boot") version "3.2.1"
 	id("io.spring.dependency-management") version "1.1.4"
 }
 
@@ -22,6 +22,9 @@ repositories {
 }
 
 dependencies {
+	implementation (project(":common-module"))
+	implementation ("net.devh:grpc-spring-boot-starter:2.15.0.RELEASE")
+
 	implementation ("org.springframework.boot:spring-boot-starter-data-elasticsearch")
 
 	implementation("org.springframework.boot:spring-boot-starter-web")

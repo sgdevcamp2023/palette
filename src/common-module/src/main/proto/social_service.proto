@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "org.palette.grpc";
+import "passport.proto";
+
+service GSocialService {
+  rpc CreateUser (GCreateUserRequest) returns (GCreateUserResponse) {}
+  rpc GetFollowerIds (GFollowerIdsRequest) returns (GFollowerIdsResponse) {}
+  rpc LoadUserFollowInformation (GLoadUserFollowInformationRequest) returns (GLoadUserFollowInformationResponse) {}
+}
+
+message GCreateUserRequest {
+  int64 id = 2;
+  string username = 3;
+  string nickname = 4;
+  string imagePath = 5;
+  bool isActive = 6;
+}
+
+message GCreateUserResponse {
+  bool isSuccess = 1;
+}
+
+message GFollowerIdsRequest {
+  int64 userId = 2;
+}
+
+message GFollowerIdsResponse {
+  repeated int64 followerIds = 1;
+}
+
+message GLoadUserFollowInformationRequest {
+  GPassport passport = 1;
+}
+
+message GLoadUserFollowInformationResponse {
+  int64 followerCount = 1;
+  int64 followingCount = 2;
+}
