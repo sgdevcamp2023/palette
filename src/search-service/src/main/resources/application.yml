@@ -11,6 +11,9 @@ spring:
       group-id: search-consumer-group
       auto-offset-reset: latest
 
+elasticsearch:
+  host-and-port: ${ES_HOST_AND_PORT}
+
 grpc:
   server:
     port: 11011
