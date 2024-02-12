@@ -5,6 +5,12 @@ spring:
   application:
     name: search-service
 
+  kafka:
+    bootstrap-servers: ${KAFKA_SERVERS}
+    consumer:
+      group-id: search-consumer-group
+      auto-offset-reset: latest
+
 grpc:
   server:
     port: 11011
