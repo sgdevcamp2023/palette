@@ -19,15 +19,6 @@ spring:
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
 
-eureka:
-  instance:
-    hostname: localhost
-  client:
-    fetch-registry: true
-    register-with-eureka: true
-    service-url:
-      defaultZone: http://host.docker.internal:8761/eureka
-
 grpc:
   server:
     port: 11005
@@ -41,3 +32,12 @@ grpc:
 passport:
   key: ${PASSPORT_KEY}
   algorithm: ${PASSPORT_ALGORITHM}
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://43.201.85.19:8761/eureka
