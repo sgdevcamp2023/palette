@@ -23,15 +23,6 @@ spring:
       host: ${AUTH_REDIS_HOST}
       port: ${AUTH_REDIS_PORT}
 
-eureka:
-  instance:
-    hostname: localhost
-  client:
-    fetch-registry: true
-    register-with-eureka: true
-    service-url:
-      defaultZone: http://host.docker.internal:8761/eureka
-
 jwt:
   secret-key: ${AUTH_JWT_SECRET_KEY}
 
@@ -53,3 +44,12 @@ grpc:
 passport:
   key: ${PASSPORT_KEY}
   algorithm: ${PASSPORT_ALGORITHM}
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://43.201.85.19:8761/eureka
