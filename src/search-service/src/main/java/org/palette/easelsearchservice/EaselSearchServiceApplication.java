@@ -8,6 +8,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.Import;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 @Import({
 		CommonModuleConfig.class,
@@ -15,6 +16,7 @@ import org.springframework.context.annotation.Import;
 		PassportAspect.class,
 		KafkaConsumerConfig.class
 })
+@EnableAsync
 @EnableDiscoveryClient
 @SpringBootApplication
 public class EaselSearchServiceApplication {
