@@ -1,8 +1,8 @@
-package org.palette.easelsocialservice.config;
+package org.palette.config;
 
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
-import org.palette.easelsocialservice.dto.event.EaselEvent;
+import org.palette.dto.EaselEvent;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

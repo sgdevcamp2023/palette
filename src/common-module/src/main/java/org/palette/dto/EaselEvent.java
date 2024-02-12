@@ -1,4 +1,4 @@
-package org.palette.easelsocialservice.dto.event;
+package org.palette.dto;
 
 public interface EaselEvent {
 

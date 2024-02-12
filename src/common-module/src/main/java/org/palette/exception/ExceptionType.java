@@ -115,22 +115,6 @@ public enum ExceptionType {
 
     ;
 
-    public String getCode() {
-        return code;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public HttpStatus getHttpStatus() {
-        return httpStatus;
-    }
-
     private final String code;
     private final String message;
     private final String description;
