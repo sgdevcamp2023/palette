@@ -19,15 +19,6 @@ spring:
         format_sql: true
         use-new-id-generator-mappings: false
 
-eureka:
-  instance:
-    hostname: host.docker.internal
-  client:
-    fetch-registry: true
-    register-with-eureka: true
-    service-url:
-      defaultZone: http://discovery:8761/eureka
-
 grpc:
   server:
     port: 11004
@@ -46,3 +37,12 @@ grpc:
 passport:
   key: ${PASSPORT_KEY}
   algorithm: ${PASSPORT_ALGORITHM}
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://43.201.85.19:8761/eureka
