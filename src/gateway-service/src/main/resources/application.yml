@@ -111,4 +111,4 @@ eureka:
     fetch-registry: true
     register-with-eureka: true
     service-url:
-      defaultZone: http://host.docker.internal:8761/eureka
+      defaultZone: http://43.201.85.19:8761/eureka/
