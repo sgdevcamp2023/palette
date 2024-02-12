@@ -11,6 +11,7 @@ import org.palette.easelsocialservice.persistence.domain.User;
 import org.palette.easelsocialservice.persistence.relationship.*;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -130,6 +131,10 @@ public class PaintEntityConverter {
     }
 
     private static List<LinkRecord> convertToLinkRecord(final List<Contains> links) {
+        if (links == null) {
+            return Collections.emptyList();
+        }
+
         return links.stream()
                 .map(media -> new LinkRecord(
                                 media.getStart(),
@@ -141,6 +146,10 @@ public class PaintEntityConverter {
     }
 
     private static List<MediaRecord> convertToMediaRecord(final List<Uses> medias) {
+        if (medias == null) {
+            return Collections.emptyList();
+        }
+
         return medias.stream()
                 .map(media -> new MediaRecord(
                         media.getMedia().getType(),
@@ -149,6 +158,10 @@ public class PaintEntityConverter {
     }
 
     private static List<UserRecord> convertToUserRecord(final List<TagsUser> taggedUsers) {
+        if (taggedUsers == null) {
+            return Collections.emptyList();
+        }
+
         return taggedUsers.stream()
                 .map(taggedUser -> new UserRecord(
                                 taggedUser.getUser().getUid(),
@@ -161,6 +174,10 @@ public class PaintEntityConverter {
     }
 
     private static List<MentionRecord> convertToMentionRecord(final List<Mentions> mentions) {
+        if (mentions == null) {
+            return Collections.emptyList();
+        }
+
         return mentions.stream()
                 .map(mention -> new MentionRecord(
                         mention.getStart(),
@@ -171,6 +188,10 @@ public class PaintEntityConverter {
     }
 
     private static List<HashtagRecord> convertToHashtagRecord(final List<Tags> hashtags) {
+        if (hashtags == null) {
+            return Collections.emptyList();
+        }
+
         return hashtags.stream()
                 .map(tags -> new HashtagRecord(
                         tags.getStart(),
