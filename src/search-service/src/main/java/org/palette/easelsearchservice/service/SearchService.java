@@ -4,9 +4,12 @@ import lombok.RequiredArgsConstructor;
 import org.palette.dto.event.PaintCreatedEvent;
 import org.palette.dto.event.detail.HashtagRecord;
 import org.palette.dto.event.detail.MentionRecord;
+import org.palette.easelsearchservice.dto.request.SearchRequest;
 import org.palette.easelsearchservice.dto.response.PaintResponse;
 import org.palette.easelsearchservice.persistence.SearchPaint;
 import org.palette.easelsearchservice.persistence.SearchRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,8 +19,19 @@ import java.util.List;
 public class SearchService {
     private final SearchRepository searchRepository;
 
-    public PaintResponse searchAllPaints() {
-        return null;
+    public List<PaintResponse> searchAllPaints(final SearchRequest searchRequest) {
+        Page<SearchPaint> searchPaints = searchRepository.findByTextContaining(
+                searchRequest.keyword(),
+                PageRequest.of(searchRequest.page(), searchRequest.size())
+        );
+
+        return convertToPaintResponse(searchPaints);
+    }
+
+    private List<PaintResponse> convertToPaintResponse(Page<SearchPaint> searchPaints) {
+        return searchPaints.stream()
+                .map(paint -> new PaintResponse(paint.getId(), paint.getText()))
+                .toList();
     }
 
     public void createPaint(final PaintCreatedEvent paintCreatedEvent) {

@@ -24,4 +24,8 @@ public record PaintResponse(
         Includes includes
 ) {
 
+    // TODO: add real Paint data
+    public PaintResponse(Long id, String text) {
+        this(id, false, null, null, null, null, null, null, null, text, 0, 0, 0, false, false, false, 0, null, null);
+    }
 }
