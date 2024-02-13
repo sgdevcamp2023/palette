@@ -129,7 +129,8 @@ class PostFragment : Fragment() {
 
         binding.ivBackBtn.setOnClickListener {
             editText.clearFocus()
-            val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            val imm =
+                requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(editText.windowToken, 0)
 
             navController.navigate(R.id.action_postFragment_to_timelineFragment)
@@ -220,12 +221,14 @@ class PostFragment : Fragment() {
 
                 binding.icDeleteImg.visibility = VISIBLE
                 binding.icDeleteImg.bringToFront()
+                binding.icDeleteImg.translationZ = 100f
 
                 binding.icDeleteImg.setOnClickListener {
                     // 이미지 삭제 처리
                     selectedImageUri = null
                     binding.icDeleteImg.visibility = GONE
                     binding.ivPostImg.visibility = GONE
+                    binding.cardView.visibility = GONE
 
                     binding.etPostContent.requestFocus()
                     binding.etPostContent.hint = "무슨 일이 일어나고 있나요?"
@@ -234,7 +237,10 @@ class PostFragment : Fragment() {
             }
 
             //delete Button 숨기기
-            binding.icDeleteImg.visibility = GONE
+            if (selectedImageUri == null) {
+                binding.icDeleteImg.visibility = GONE
+                binding.cardView.visibility = GONE
+            }
         }
     }
 }
