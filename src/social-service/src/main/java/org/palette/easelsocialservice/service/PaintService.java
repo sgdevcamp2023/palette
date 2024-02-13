@@ -5,12 +5,12 @@ import lombok.RequiredArgsConstructor;
 import org.palette.easelsocialservice.dto.request.RepaintRequest;
 import org.palette.easelsocialservice.dto.response.PaintResponse;
 import org.palette.easelsocialservice.dto.response.ThreadResponse;
-import org.palette.easelsocialservice.exception.BaseException;
-import org.palette.easelsocialservice.exception.ExceptionType;
 import org.palette.easelsocialservice.persistence.PaintRepository;
 import org.palette.easelsocialservice.persistence.domain.Paint;
 import org.palette.easelsocialservice.persistence.domain.PaintMetrics;
 import org.palette.easelsocialservice.persistence.domain.User;
+import org.palette.exception.BaseException;
+import org.palette.exception.ExceptionType;
 import org.springframework.stereotype.Service;
 
 import java.util.*;

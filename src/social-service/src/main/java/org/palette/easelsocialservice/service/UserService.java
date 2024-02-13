@@ -3,11 +3,11 @@ package org.palette.easelsocialservice.service;
 
 import lombok.RequiredArgsConstructor;
 import org.palette.easelsocialservice.dto.response.UserResponse;
-import org.palette.easelsocialservice.exception.BaseException;
-import org.palette.easelsocialservice.exception.ExceptionType;
 import org.palette.easelsocialservice.persistence.UserRepository;
 import org.palette.easelsocialservice.persistence.domain.Paint;
 import org.palette.easelsocialservice.persistence.domain.User;
+import org.palette.exception.BaseException;
+import org.palette.exception.ExceptionType;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;

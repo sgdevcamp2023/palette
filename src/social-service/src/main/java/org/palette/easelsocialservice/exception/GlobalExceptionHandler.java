@@ -1,6 +1,9 @@
 package org.palette.easelsocialservice.exception;
 
 import lombok.extern.slf4j.Slf4j;
+import org.palette.exception.BaseException;
+import org.palette.exception.ExceptionResponse;
+import org.palette.exception.ExceptionType;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -11,15 +14,6 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 @Slf4j
 @ControllerAdvice
 public class GlobalExceptionHandler {
-
-    private static void logException(ExceptionResponse exceptionResponse) {
-        log.error(
-                "code : {}, message : {}, description : {}",
-                exceptionResponse.code(),
-                exceptionResponse.description(),
-                exceptionResponse.message()
-        );
-    }
 
     @ExceptionHandler(value = {
             MethodArgumentNotValidException.class,
@@ -66,10 +60,23 @@ public class GlobalExceptionHandler {
                 .description(e.getLocalizedMessage())
                 .build();
 
-        logException(exceptionResponse);
+        logInternalException(e);
 
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(exceptionResponse);
+    }
+
+    private static void logException(ExceptionResponse exceptionResponse) {
+        log.error(
+                "code : {}, message : {}, description : {}",
+                exceptionResponse.code(),
+                exceptionResponse.description(),
+                exceptionResponse.message()
+        );
+    }
+
+    private static void logInternalException(Exception e) {
+        log.error(e.getLocalizedMessage());
     }
 }
