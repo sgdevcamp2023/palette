@@ -130,7 +130,7 @@ function JoinPage() {
             imageSrc={joinInfo.profileImagePath}
             onNextStep={onNextPage}
             onChangeImage={(path: string) =>
-              setJoinInfo((prev) => ({ ...prev, profilePath: path }))
+              setJoinInfo((prev) => ({ ...prev, profileImagePath: path }))
             }
             onJoin={() => registerMutate.mutate()}
           />
