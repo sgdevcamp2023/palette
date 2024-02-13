@@ -42,7 +42,7 @@ jobs:
           username: ${{ secrets.LIGHTSAIL_USERNAME }}
           key: ${{ secrets.LIGHTSAIL_KEY }}
           source: "src/user-service/build/libs/easel-user-service-0.0.1-SNAPSHOT.jar"
-          target: "/home/ubuntu"
+          target: "/home/ubuntu/palette/user-service"
 
       - name: API LIGHTSAIL 인스턴스 접속 및 애플리케이션 실행
         uses: appleboy/ssh-action@master
@@ -51,6 +51,6 @@ jobs:
           username: ${{ secrets.LIGHTSAIL_USERNAME }}
           key: ${{ secrets.LIGHTSAIL_KEY }}
           script: |
-            sudo cd /home/ubuntu
+            sudo cd /home/ubuntu/palette/user-service
             sudo fuser -k 10004/tcp
             sudo ./operate.sh
