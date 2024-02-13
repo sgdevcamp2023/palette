@@ -39,6 +39,7 @@ class PostFragment : Fragment() {
 
     private val permissionRequestCode = 100
     private val pickImageRequest = 1
+    private var selectedImageUri: Uri? = null
 
     private val imageList = mutableListOf<String>()
 
@@ -114,6 +115,10 @@ class PostFragment : Fragment() {
 
         binding.icGallery.setOnClickListener {
             openGallery()
+        }
+
+        binding.icDeleteImg.setOnClickListener {
+            selectedImageUri = null
         }
 
         return binding.root
@@ -212,6 +217,7 @@ class PostFragment : Fragment() {
             selectedImageUri?.let {
                 binding.ivPostImg.setImageURI(it)
                 binding.ivPostImg.scaleType = ImageView.ScaleType.CENTER_CROP
+                binding.ivPostImg.visibility = VISIBLE
                 binding.cardView.visibility = VISIBLE
 
                 binding.etPostContent.clearFocus()
