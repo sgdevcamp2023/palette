@@ -1,11 +1,11 @@
 package org.palette.easelnotificationservice.external.socket;
 
 import lombok.RequiredArgsConstructor;
-import org.palette.easelnotificationservice.exception.BaseException;
-import org.palette.easelnotificationservice.exception.ExceptionType;
 import org.palette.easelnotificationservice.persistence.User;
 import org.palette.easelnotificationservice.persistence.enums.AlarmAllowedType;
 import org.palette.easelnotificationservice.service.UserService;
+import org.palette.exception.BaseException;
+import org.palette.exception.ExceptionType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;

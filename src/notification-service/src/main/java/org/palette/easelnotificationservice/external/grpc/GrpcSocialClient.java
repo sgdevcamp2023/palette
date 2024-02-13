@@ -2,8 +2,8 @@ package org.palette.easelnotificationservice.external.grpc;
 
 import io.grpc.StatusRuntimeException;
 import net.devh.boot.grpc.client.inject.GrpcClient;
-import org.palette.easelnotificationservice.exception.BaseException;
-import org.palette.easelnotificationservice.exception.ExceptionType;
+import org.palette.exception.BaseException;
+import org.palette.exception.ExceptionType;
 import org.palette.grpc.GFollowerIdsRequest;
 import org.palette.grpc.GFollowerIdsResponse;
 import org.palette.grpc.GSocialServiceGrpc;

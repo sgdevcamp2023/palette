@@ -1,10 +1,10 @@
 package org.palette.easelnotificationservice.service;
 
 import lombok.RequiredArgsConstructor;
-import org.palette.easelnotificationservice.exception.BaseException;
-import org.palette.easelnotificationservice.exception.ExceptionType;
 import org.palette.easelnotificationservice.persistence.User;
 import org.palette.easelnotificationservice.persistence.UserJpaRepository;
+import org.palette.exception.BaseException;
+import org.palette.exception.ExceptionType;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
