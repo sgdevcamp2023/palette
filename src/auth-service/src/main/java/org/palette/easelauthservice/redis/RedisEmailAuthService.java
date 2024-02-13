@@ -1,8 +1,8 @@
 package org.palette.easelauthservice.redis;
 
 import lombok.RequiredArgsConstructor;
-import org.palette.easelauthservice.exception.BaseException;
-import org.palette.easelauthservice.exception.ExceptionType;
+import org.palette.exception.BaseException;
+import org.palette.exception.ExceptionType;
 import org.springframework.stereotype.Service;
 
 @Service

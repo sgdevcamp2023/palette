@@ -2,8 +2,8 @@ package org.palette.easelauthservice.external;
 
 import lombok.RequiredArgsConstructor;
 import net.devh.boot.grpc.client.inject.GrpcClient;
-import org.palette.easelauthservice.exception.BaseException;
-import org.palette.easelauthservice.exception.ExceptionType;
+import org.palette.exception.BaseException;
+import org.palette.exception.ExceptionType;
 import org.palette.grpc.*;
 import org.springframework.stereotype.Component;
 
