@@ -36,7 +36,7 @@ function HomePage() {
         }}
         right={{
           type: 'setting',
-          label: '로고',
+          label: '설정',
           onClick: handleNotSupport,
         }}
       />
