@@ -13,6 +13,7 @@ export { default as MenuModal } from './MenuModal';
 export { default as QuotePostBox } from './QuotePostBox';
 export { default as NotSupportText } from './NotSupportText';
 export { default as StepTitle } from './StepTitle';
+export { default as TagSearchUserModal } from './TagSearchUserModal';
 export { default as TimelineItemBox } from './TimelineItemBox';
 export { default as TempSavedPostModal } from './TempSavedPostModal';
 export { default as TimelineItemList } from './TimelineItemList';

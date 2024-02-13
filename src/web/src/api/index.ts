@@ -1,6 +1,12 @@
 import { env } from '@/constants';
 import { createApiWrappers } from './handler';
-import type { JoinInfo, LoginInfo, User, UserProfile } from '@/@types';
+import type {
+  JoinInfo,
+  LoginInfo,
+  User,
+  UserProfile,
+  UserSearchResult,
+} from '@/@types';
 import { cdnAPIClient, createApiClient } from './apiFactory';
 
 const client = {
@@ -38,6 +44,8 @@ const users = createApiWrappers({
     client.public.post('/users/temporary-join', request),
   getUserProfile: (userId: User['id']) =>
     client.private.get<UserProfile>(`/users/${userId}`),
+  searchUserByDisplayName: (keyword: string) =>
+    client.private.get<UserSearchResult[]>(`/users/search?keyword=${keyword}`),
   getMyProfile: () => client.private.get<UserProfile>(`/users/me`),
   updateProfile: (
     request: Pick<
