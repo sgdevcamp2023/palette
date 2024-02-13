@@ -1,9 +1,32 @@
+server:
+  port: 10011
+
+spring:
+  application:
+    name: search-service
+
+  kafka:
+    bootstrap-servers: ${KAFKA_SERVERS}
+    consumer:
+      group-id: search-consumer-group
+      auto-offset-reset: latest
+
+elasticsearch:
+  host-and-port: ${ES_HOST_AND_PORT}
+
+grpc:
+  server:
+    port: 11011
+
+passport:
+  key: ${PASSPORT_KEY}
+  algorithm: ${PASSPORT_ALGORITHM}
 
 eureka:
   instance:
-    hostname: localhost
+    hostname: 15.164.88.57
   client:
     fetch-registry: true
     register-with-eureka: true
     service-url:
-      defaultZone: http://52.78.82.226:8761/eureka
+      defaultZone: http://15.164.88.57:8761/eureka
