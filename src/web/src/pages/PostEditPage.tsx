@@ -5,7 +5,7 @@ import { useRouter } from '@tanstack/react-router';
 import { useMutation } from '@tanstack/react-query';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 
-import type { EditPaint } from '@/@types';
+import type { EditPaint, User } from '@/@types';
 import { useAutoHeightTextArea } from '@/hooks';
 import { EditPostCancelBottomSheet } from '@/components/bottomSheet';
 import {
@@ -22,6 +22,7 @@ import {
   CircularProgress,
   Header,
   Icon,
+  TagSearchUserModal,
   TempSavedPostModal,
   Typography,
 } from '@/components';
@@ -48,6 +49,7 @@ function PostEditPage() {
   const user = DUMMY_USER;
   const router = useRouter();
   const search = editPostRoute.useSearch();
+  const [tags, setTags] = useState<Pick<User, 'id' | 'nickname'>[]>([]);
   const [editPostInfo, setEditPostInfo] = useState<EditPaint>(forEditPaint({}));
   const textAreaRef = useAutoHeightTextArea(editPostInfo.text);
   const [image, setImage] = useState<string>('');
@@ -57,7 +59,8 @@ function PostEditPage() {
   const [isModalOpen, setIsModalOpen] = useState<{
     cancel: boolean;
     tempSaved: boolean;
-  }>({ cancel: false, tempSaved: false });
+    tag: boolean;
+  }>({ cancel: false, tempSaved: false, tag: false });
   const hasTempSavedPost = !!tempSavedStorage.get()?.length;
   const [tempSavedPost] = useState<EditPaint[]>(
     () => tempSavedStorage.get() ?? [],
@@ -107,6 +110,7 @@ function PostEditPage() {
           text: editPostInfo.text,
           medias: image ? [convertToMedia(image, 'image')] : [],
           quotePaintId: search.postId,
+          taggedUserIds: tags.map((tag) => tag.id),
         }),
       ),
     );
@@ -208,6 +212,18 @@ function PostEditPage() {
                   height={20}
                   onClick={() => setImage('')}
                 />
+                <button
+                  type="button"
+                  className="my-[8px] flex gap-[4px] items-center"
+                  onClick={() =>
+                    setIsModalOpen((prev) => ({ ...prev, tag: true }))
+                  }
+                >
+                  <Icon type="user" width={18} height={18} stroke="blue-500" />
+                  <Typography size="body-2" color="blue-500">
+                    사람 태그하기
+                  </Typography>
+                </button>
               </div>
             )}
           </div>
@@ -329,6 +345,14 @@ function PostEditPage() {
           }
           setImage={setImage}
           setEditPostInfo={setEditPostInfo}
+        />
+      )}
+
+      {isModalOpen.tag && (
+        <TagSearchUserModal
+          tags={tags}
+          setTags={setTags}
+          onClose={() => setIsModalOpen((prev) => ({ ...prev, tag: false }))}
         />
       )}
 
