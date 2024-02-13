@@ -1,10 +1,8 @@
-name: Sulasang CI/CD with Gradle, Github Actions
+name: Easel UserService CI/CD with Gradle, Github Actions
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    branches: [ "user/dev" ]
 
 jobs:
   build:
@@ -34,45 +32,25 @@ jobs:
         shell: bash
 
       - name: 프로젝트 빌드
-        run: ./gradlew clean build
+        run: ./gradlew clean build -x test
         shell: bash
 
       - name: API 빌드 파일 복사
         uses: appleboy/scp-action@master
         with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USERNAME }}
-          key: ${{ secrets.EC2_KEY }}
-          source: "sulasang-api/build/libs/sulasang-api-0.0.1-SNAPSHOT.jar"
+          host: ${{ secrets.LIGHTSAIL_HOST }}
+          username: ${{ secrets.LIGHTSAIL_USERNAME }}
+          key: ${{ secrets.LIGHTSAIL_KEY }}
+          source: "src/user-service/build/libs/easel-user-service-0.0.1-SNAPSHOT.jar"
           target: "/home/ubuntu"
 
-      - name: API EC2 인스턴스 접속 및 애플리케이션 실행
+      - name: API LIGHTSAIL 인스턴스 접속 및 애플리케이션 실행
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USERNAME }}
-          key: ${{ secrets.EC2_KEY }}
+          host: ${{ secrets.LIGHTSAIL_HOST }}
+          username: ${{ secrets.LIGHTSAIL_USERNAME }}
+          key: ${{ secrets.LIGHTSAIL_KEY }}
           script: |
             sudo cd /home/ubuntu
-            sudo fuser -k 8080/tcp
-            sudo ./start-api.sh
-
-      - name: Crawler 빌드 파일 복사
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USERNAME }}
-          key: ${{ secrets.EC2_KEY }}
-          source: "sulasang-crawler/build/libs/sulasang-crawler-0.0.1-SNAPSHOT.jar"
-          target: "/home/ubuntu"
-
-      - name: Crawler EC2 인스턴스 접속 및 애플리케이션 실행
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USERNAME }}
-          key: ${{ secrets.EC2_KEY }}
-          script: |
-            sudo cd /home/ubuntu
-            sudo fuser -k 8081/tcp
-            sudo ./start-crawler.sh
+            sudo fuser -k 10004/tcp
+            sudo ./operate.sh
