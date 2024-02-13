@@ -89,7 +89,11 @@ function JoinProfileImageBox({
         {imageSrc ? (
           <div className="relative w-[200px] h-[200px]">
             <img
-              src={forCloudinaryImage(imageSrc)}
+              src={forCloudinaryImage(imageSrc, {
+                resize: true,
+                width: 200,
+                height: 200,
+              })}
               alt="preview"
               className="rounded-full w-full h-full"
             />
