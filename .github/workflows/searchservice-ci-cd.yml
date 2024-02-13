@@ -129,8 +129,8 @@ jobs:
           PASSPORT_ALGORITHM: ${{ secrets.PASSPORT_ALGORITHM }}
 
           KAFKA_SERVERS: ${{ secrets.KAFKA_SERVERS }}
+        working-directory: ./src/search-service
         run: |
-          cd src/search-service
           ./gradlew clean build -x test
 
           docker run --privileged --rm tonistiigi/binfmt --install all
