@@ -1,0 +1,79 @@
+name: Timeline Service Docker Hub Push
+
+on:
+  push:
+    branches:
+      - 'timeline/dev'
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Cache Gradle dependencies
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            gradle-
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x src/timeline-service/gradlew
+
+      - name: Build and Push Docker Image
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+
+          AUTH_JWT_SECRET_KEY: ${{ secrets.AUTH_JWT_SECRET_KEY }}
+          AUTH_MAIL_HOST: ${{ secrets.AUTH_MAIL_HOST }}
+          AUTH_MAIL_PASSWORD: ${{ secrets.AUTH_MAIL_PASSWORD }}
+          AUTH_MAIL_PORT: ${{ secrets.AUTH_MAIL_PORT }}
+          AUTH_MAIL_USERNAME: ${{ secrets.AUTH_MAIL_USERNAME }}
+          AUTH_REDIS_HOST: ${{ secrets.AUTH_REDIS_HOST }}
+          AUTH_REDIS_PORT: ${{ secrets.AUTH_REDIS_PORT }}
+
+          USER_DB_URI: ${{ secrets.USER_DB_URI }}
+          USER_DB_USERNAME: ${{ secrets.USER_DB_USERNAME }}
+          USER_DB_USER_DB_PASSWORD: ${{ secrets.USER_DB_USER_DB_PASSWORD }}
+
+          SOCIAL_DB_URI: ${{ secrets.SOCIAL_DB_URI }}
+          SOCIAL_DB_USERNAME: ${{ secrets.SOCIAL_DB_USERNAME }}
+          SOCIAL_DB_PASSWORD: ${{ secrets.SOCIAL_DB_PASSWORD }}
+
+          TIMELINE_REDIS_HOST: ${{ secrets.TIMELINE_REDIS_HOST }}
+          TIMELINE_REDIS_PORT: ${{ secrets.TIMELINE_REDIS_PORT }}
+          TIMELINE_REDIS_PASSWORD: ${{ secrets.TIMELINE_REDIS_PASSWORD }}
+
+          NOTIFICATOIN_DB_URI: ${{ secrets.NOTIFICATOIN_DB_URI }}
+          NOTIFICATOIN_DB_USERNAME: ${{ secrets.NOTIFICATOIN_DB_USERNAME }}
+          NOTIFICATOIN_DB_USER_DB_PASSWORD: ${{ secrets.NOTIFICATOIN_DB_USER_DB_PASSWORD }}
+
+          LIGHTSAIL_HOST: ${{ secrets.LIGHTSAIL_HOST }}
+          LIGHTSAIL_KEY: ${{ secrets.LIGHTSAIL_KEY }}
+          LIGHTSAIL_USERNAME: ${{ secrets.LIGHTSAIL_USERNAME }}
+
+          PASSPORT_KEY: ${{ secrets.PASSPORT_KEY }}
+          PASSPORT_ALGORITHM: ${{ secrets.PASSPORT_ALGORITHM }}
+
+          KAFKA_SERVERS: ${{ secrets.KAFKA_SERVERS }}
+        run: |
+          cd src/timeline-service
+          ./gradlew clean build -x test
+
+          docker run --privileged --rm tonistiigi/binfmt --install all
+          docker buildx create --use
+          docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+          docker buildx build --platform=linux/amd64,linux/arm64 -t $DOCKER_USERNAME/timeline-service:latest . --push
