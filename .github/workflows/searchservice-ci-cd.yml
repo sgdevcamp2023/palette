@@ -89,6 +89,6 @@ jobs:
           username: ${{ secrets.LIGHTSAIL_USERNAME }}
           key: ${{ secrets.LIGHTSAIL_KEY }}
           script: |
-            sudo cd /home/ubuntu/palette/search-service
+            cd /home/ubuntu/palette/search-service
             sudo fuser -k 10011/tcp
             sudo ./operate.sh
