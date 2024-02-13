@@ -1,12 +1,12 @@
 package org.palette.easeluserservice.service;
 
 import lombok.RequiredArgsConstructor;
-import org.palette.easeluserservice.exception.BaseException;
-import org.palette.easeluserservice.exception.ExceptionType;
 import org.palette.easeluserservice.persistence.User;
 import org.palette.easeluserservice.persistence.UserJpaRepository;
 import org.palette.easeluserservice.persistence.embed.Profile;
 import org.palette.easeluserservice.persistence.embed.StaticContentPath;
+import org.palette.exception.BaseException;
+import org.palette.exception.ExceptionType;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

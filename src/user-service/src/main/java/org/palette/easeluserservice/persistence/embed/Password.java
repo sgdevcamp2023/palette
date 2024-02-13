@@ -4,8 +4,8 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.palette.easeluserservice.exception.BaseException;
-import org.palette.easeluserservice.exception.ExceptionType;
+import org.palette.exception.BaseException;
+import org.palette.exception.ExceptionType;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Embeddable
