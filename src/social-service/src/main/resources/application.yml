@@ -27,7 +27,7 @@ passport:
 
 eureka:
   instance:
-    hostname: localhost
+    hostname: 3.34.200.87
   client:
     fetch-registry: true
     register-with-eureka: true
