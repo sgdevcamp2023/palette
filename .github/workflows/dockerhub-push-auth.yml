@@ -58,12 +58,3 @@ jobs:
           docker buildx create --use
           docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
           docker buildx build --platform=linux/amd64,linux/arm64 -t $DOCKER_USERNAME/auth-service:latest . --push
-
-      - name: EC2 인스턴스 접속 및 애플리케이션 실행
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USERNAME }}
-          key: ${{ secrets.EC2_KEY }}
-          script: |
-            sudo ./operate.sh
