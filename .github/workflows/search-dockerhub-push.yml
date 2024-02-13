@@ -39,6 +39,8 @@ jobs:
           
           PASSPORT_KEY: ${{ secrets.PASSPORT_KEY }}
           PASSPORT_ALGORITHM: ${{ secrets.PASSPORT_ALGORITHM }}
+          KAFKA_SERVERS: ${{ secrets.KAFKA_SERVERS }}
+          ES_HOST_AND_PORT: ${{ secrets.ES_HOST_AND_PORT }}
         run: |
           cd src/search-service
           ./gradlew clean build -x test
