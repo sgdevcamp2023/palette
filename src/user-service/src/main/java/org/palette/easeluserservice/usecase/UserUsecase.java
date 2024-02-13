@@ -45,12 +45,18 @@ public class UserUsecase {
     public void executeTemporaryJoin(
             TemporaryJoinRequest temporaryJoinRequest
     ) {
+        System.out.println("!!!!!!!!!!!!!!! 유저 임시 저장 시작!!!!!!!!!!!");
+
         userService.isEmailAlreadyExists(temporaryJoinRequest.email());
+
+        System.out.println("!!!!!!!!!!!!!!! 유저 이메일 중복확인 완료!!!!!!!!!!!");
 
         final User user = userService.createTemporaryUser(
                 temporaryJoinRequest.email(),
                 temporaryJoinRequest.nickname()
         );
+
+        System.out.println("!!!!!!!!!!!!!!! 유저 임시 저장 완료!!!!!!!!!!!");
 
         gRPCAuthClient.sendEmailAuth(user);
     }
