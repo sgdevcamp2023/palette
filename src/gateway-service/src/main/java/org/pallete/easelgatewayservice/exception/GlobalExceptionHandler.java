@@ -1,9 +1,6 @@
 package org.pallete.easelgatewayservice.exception;
 
 import lombok.extern.slf4j.Slf4j;
-import org.palette.exception.BaseException;
-import org.palette.exception.ExceptionResponse;
-import org.palette.exception.ExceptionType;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -27,7 +24,7 @@ public class GlobalExceptionHandler {
                 .description(exceptionType.getDescription())
                 .build();
 
-        logBaseException(exceptionResponse);
+        logException(exceptionResponse);
 
         return ResponseEntity
                 .status(exceptionType.getHttpStatus())
@@ -45,7 +42,7 @@ public class GlobalExceptionHandler {
                 .message(exceptionType.getMessage())
                 .build();
 
-        logBaseException(exceptionResponse);
+        logException(exceptionResponse);
 
         return ResponseEntity
                 .status(exceptionType.getHttpStatus())
@@ -53,21 +50,22 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(value = {Exception.class})
-    public ResponseEntity<ExceptionResponse> handleException(Exception execption) {
+    public ResponseEntity<ExceptionResponse> handleException(Exception e) {
         ExceptionResponse exceptionResponse = ExceptionResponse.builder()
-                .code("GATEWAY_EXCEPTION")
-                .message("INTERNAL_SERVER_ERROR")
-                .description("서버 내부에 오류가 발생했습니다.")
+                .code("USER_SERVICE_EXCEPTION")
+                .message(e.getCause().getMessage())
+                .description(e.getLocalizedMessage())
                 .build();
 
-        logInternalException(execption);
+        logException(exceptionResponse);
+        logInternalException(e);
 
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(exceptionResponse);
     }
 
-    private static void logBaseException(ExceptionResponse exceptionResponse) {
+    private static void logException(ExceptionResponse exceptionResponse) {
         log.error(
                 "code : {}, message : {}, description : {}",
                 exceptionResponse.code(),
@@ -76,7 +74,8 @@ public class GlobalExceptionHandler {
         );
     }
 
-    private static void logInternalException(Exception exception) {
-        log.error(exception.getLocalizedMessage());
+    private static void logInternalException(Exception e) {
+        log.error(e.getLocalizedMessage());
     }
+
 }
