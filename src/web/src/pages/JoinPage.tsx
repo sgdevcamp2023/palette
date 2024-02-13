@@ -17,6 +17,8 @@ import {
 } from '@/components/join';
 import { apis } from '@/api';
 
+const MAX_PASSWORD_LENGTH = 8;
+
 function JoinPage() {
   const [isVerifyEmail, setIsVerifyEmail] = useState<boolean>(false);
   const [state, dispatch] = useReducer(joinStepReducer, JoinStep.INFORMATION);
@@ -108,9 +110,7 @@ function JoinPage() {
             email={joinInfo.email}
             emailVerifyCode={joinInfo.emailVerifyCode}
             disabled={isVerifyEmail || joinInfo.emailVerifyCode === ''}
-            onNextStep={() => {
-              verifyEmailCodeMutate.mutate();
-            }}
+            onNextStep={() => verifyEmailCodeMutate.mutate()}
             onChangeInput={handleChangeInput}
           />
         );
@@ -118,7 +118,7 @@ function JoinPage() {
         return (
           <JoinPasswordBox
             password={joinInfo.password}
-            disabled={joinInfo.password.length < 8}
+            disabled={joinInfo.password.length < MAX_PASSWORD_LENGTH}
             onNextStep={onNextPage}
             onChangeInput={handleChangeInput}
           />
