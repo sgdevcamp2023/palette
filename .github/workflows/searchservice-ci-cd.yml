@@ -30,7 +30,7 @@ jobs:
           distribution: 'temurin'
 
       - name: Grant execute permission for gradlew
-        run: chmod +x src/timeline-service/gradlew
+        run: chmod +x src/search-service/gradlew
 
       - name: 프로젝트 빌드
         env:
@@ -136,4 +136,4 @@ jobs:
           docker run --privileged --rm tonistiigi/binfmt --install all
           docker buildx create --use
           docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-          docker buildx build --platform=linux/amd64,linux/arm64 -t $DOCKER_USERNAME/social-service:latest . --push
+          docker buildx build --platform=linux/amd64,linux/arm64 -t $DOCKER_USERNAME/search-service:latest . --push
