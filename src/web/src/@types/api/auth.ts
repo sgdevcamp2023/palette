@@ -19,6 +19,11 @@ export interface User {
   followingCount: number;
 }
 
+export type UserSearchResult = Pick<User, 'id' | 'username' | 'nickname'> & {
+  imagePath: User['profileImagePath'];
+  status?: User['status'];
+  isFollowing?: boolean;
+};
 export type UserProfile = Pick<
   User,
   | 'backgroundImagePath'
