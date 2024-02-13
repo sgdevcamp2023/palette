@@ -219,10 +219,29 @@ function PostEditPage() {
                     setIsModalOpen((prev) => ({ ...prev, tag: true }))
                   }
                 >
-                  <Icon type="user" width={18} height={18} stroke="blue-500" />
-                  <Typography size="body-2" color="blue-500">
-                    사람 태그하기
-                  </Typography>
+                  {tags.length === 0 ? (
+                    <>
+                      <Icon
+                        type="user"
+                        width={18}
+                        height={18}
+                        stroke="blue-500"
+                      />
+                      <Typography size="body-2" color="blue-500">
+                        사람 태그하기
+                      </Typography>
+                    </>
+                  ) : (
+                    tags.map((tag) => (
+                      <Typography
+                        key={tag.id}
+                        size="body-3"
+                        className="border border-BlueGrey400 py-2 px-3 rounded-[24px]"
+                      >
+                        {tag.nickname}
+                      </Typography>
+                    ))
+                  )}
                 </button>
               </div>
             )}

@@ -49,12 +49,13 @@ function TagSearchUserModal({
         <div className="flex flex-col gap-[16px] justify-center mt-4">
           <div className="flex gap-2">
             {tags.map((tag) => (
-              <div
+              <Typography
                 key={tag.id}
-                className="px-2 py-1 border border-blueGrey-400 rounded-[12px]"
+                size="body-3"
+                className="border border-BlueGrey400 py-2 px-3 rounded-[24px]"
               >
                 {tag.nickname}
-              </div>
+              </Typography>
             ))}
           </div>
           {isLoading ? (
