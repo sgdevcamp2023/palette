@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 
 import {
@@ -11,6 +12,10 @@ import {
 import { TimelineItemListSkeleton } from '@/components/skeleton';
 
 function HomePage() {
+  const handleNotSupport = () => {
+    toast('아직 지원되지 않는 기능입니다.');
+  };
+
   return (
     <>
       <HelmetProvider>
@@ -31,7 +36,8 @@ function HomePage() {
         }}
         right={{
           type: 'setting',
-          label: '로고',
+          label: '설정',
+          onClick: handleNotSupport,
         }}
       />
       <Tabs
