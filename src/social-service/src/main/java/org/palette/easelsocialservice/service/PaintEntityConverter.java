@@ -1,15 +1,19 @@
 package org.palette.easelsocialservice.service;
 
 import lombok.RequiredArgsConstructor;
+import org.palette.dto.event.PaintCreatedEvent;
+import org.palette.dto.event.detail.*;
 import org.palette.easelsocialservice.dto.response.*;
 import org.palette.easelsocialservice.persistence.PaintRepository;
 import org.palette.easelsocialservice.persistence.domain.Paint;
 import org.palette.easelsocialservice.persistence.domain.PaintMetrics;
+import org.palette.easelsocialservice.persistence.domain.User;
 import org.palette.easelsocialservice.persistence.relationship.*;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
@@ -95,4 +99,84 @@ public class PaintEntityConverter {
                 .map(LinkResponse::from)
                 .toList();
     }
+
+    public static PaintCreatedEvent convertToPainCreatedEvent(Paint paint, boolean isQuotedPaint) {
+        boolean isReply = paint.getInReplyToPaint() == null;
+        User author = paint.getAuthor().getUser();
+        PaintCreatedEvent quotePaint = isQuotedPaint || paint.getQuotePaint() == null ? null : convertToPainCreatedEvent(paint.getQuotePaint().getPaint(), true);
+        List<HashtagRecord> hashtagRecords = convertToHashtagRecord(paint.getHashtags());
+        List<MentionRecord> mentionRecords = convertToMentionRecord(paint.getMentions());
+        List<UserRecord> taggedUserRecords  = convertToUserRecord(paint.getTaggedUsers());
+        List<MediaRecord> mediaRecords = convertToMediaRecord(paint.getMedias());
+        List<LinkRecord> linkRecords = convertToLinkRecord(paint.getLinks());
+
+        return new PaintCreatedEvent(
+                paint.getPid(),
+                isReply,
+                author.getUid(),
+                author.getUsername(),
+                author.getNickname(),
+                author.getImagePath(),
+                author.getActiveString(),
+                quotePaint,
+                paint.getCreatedAt(),
+                paint.getContent(),
+                hashtagRecords,
+                mentionRecords,
+                taggedUserRecords,
+                mediaRecords,
+                linkRecords
+                );
+    }
+
+    private static List<LinkRecord> convertToLinkRecord(final List<Contains> links) {
+        return links.stream()
+                .map(media -> new LinkRecord(
+                                media.getStart(),
+                                media.getEnd(),
+                                media.getLink().getShortLink(),
+                                media.getLink().getOriginalLink()
+                        )
+                ).toList();
+    }
+
+    private static List<MediaRecord> convertToMediaRecord(final List<Uses> medias) {
+        return medias.stream()
+                .map(media -> new MediaRecord(
+                        media.getMedia().getType(),
+                        media.getMedia().getPath())
+                ).toList();
+    }
+
+    private static List<UserRecord> convertToUserRecord(final List<TagsUser> taggedUsers) {
+        return taggedUsers.stream()
+                .map(taggedUser -> new UserRecord(
+                                taggedUser.getUser().getUid(),
+                                taggedUser.getUser().getUsername(),
+                                taggedUser.getUser().getNickname(),
+                                taggedUser.getUser().getImagePath(),
+                                taggedUser.getUser().getActiveString()
+                        )
+                ).toList();
+    }
+
+    private static List<MentionRecord> convertToMentionRecord(final List<Mentions> mentions) {
+        return mentions.stream()
+                .map(mention -> new MentionRecord(
+                        mention.getStart(),
+                        mention.getEnd(),
+                        mention.getUser().getUid(),
+                        mention.getUser().getUsername()
+                )).toList();
+    }
+
+    private static List<HashtagRecord> convertToHashtagRecord(final List<Tags> hashtags) {
+        return hashtags.stream()
+                .map(tags -> new HashtagRecord(
+                        tags.getStart(),
+                        tags.getEnd(),
+                        tags.getHashtag().getTag())
+                ).toList();
+    }
+
 }

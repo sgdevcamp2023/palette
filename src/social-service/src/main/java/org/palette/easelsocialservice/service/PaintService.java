@@ -22,8 +22,8 @@ public class PaintService {
     private final PaintRepository paintRepository;
     private final PaintEntityConverter paintEntityConverter;
 
-    public void createPaint(Paint paint) {
-        paintRepository.save(paint);
+    public Paint createPaint(Paint paint) {
+        return paintRepository.save(paint);
     }
 
     public void repaint(User user, RepaintRequest repaintRequest) {
