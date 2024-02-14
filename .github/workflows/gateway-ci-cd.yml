@@ -89,9 +89,10 @@ jobs:
           username: ${{ secrets.LIGHTSAIL_USERNAME }}
           key: ${{ secrets.LIGHTSAIL_KEY }}
           script: |
-            sudo cd /home/ubuntu/palette/gateway-service
-            sudo fuser -k 8000/tcp
-            sudo ./operate.sh
+            sudo su
+            cd /home/ubuntu/palette/gateway-service
+            fuser -k 8000/tcp
+            ./operate.sh
   
       - name: Build and Push Docker Image
         env:
