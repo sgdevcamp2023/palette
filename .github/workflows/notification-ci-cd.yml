@@ -69,7 +69,7 @@ jobs:
           PASSPORT_ALGORITHM: ${{ secrets.PASSPORT_ALGORITHM }}
 
           KAFKA_SERVERS: ${{ secrets.KAFKA_SERVERS }}
-        working-directory: ./src/search-service
+        working-directory: ./src/notification-service
         run: ./gradlew clean build -x test
         shell: bash
 
