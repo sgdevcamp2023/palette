@@ -1,4 +1,4 @@
-name: DiscoveryService Docker Hub Push
+name: DiscoveryService CI/CD by jar
 
 on:
   push:
