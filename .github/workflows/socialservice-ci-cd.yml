@@ -81,9 +81,6 @@ jobs:
           username: ${{ secrets.LIGHTSAIL_USERNAME }}
           key: ${{ secrets.LIGHTSAIL_KEY }}
           script: |
-            sudo su
             cd /home/ubuntu/palette/social-service
-            fuser -k 10003/tcp
-            ./operate.sh
-            exit
-            exit
+            sudo fuser -k 10003/tcp
+            sudo ./operate.sh
