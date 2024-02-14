@@ -12,7 +12,7 @@ spring:
     password: ${NOTIFICATION_DB_PASSWORD}
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: validate
     properties:
       hibernate:
         default_batch_size: 999
@@ -60,9 +60,9 @@ passport:
 
 eureka:
   instance:
-    hostname: 15.164.183.118
+    hostname: 15.164.88.57
   client:
     fetch-registry: true
     register-with-eureka: true
     service-url:
-      defaultZone: http://52.78.82.226:8761/eureka
+      defaultZone: http://15.164.88.57:8761/eureka
