@@ -27,9 +27,9 @@ passport:
 
 eureka:
   instance:
-    hostname: 3.34.200.87
+    hostname: 15.164.88.57
   client:
     fetch-registry: true
     register-with-eureka: true
     service-url:
-      defaultZone: http://52.78.82.226:8761/eureka
+      defaultZone: http://15.164.88.57:8761/eureka
