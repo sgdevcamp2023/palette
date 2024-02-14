@@ -89,6 +89,6 @@ jobs:
           username: ${{ secrets.LIGHTSAIL_USERNAME }}
           key: ${{ secrets.LIGHTSAIL_KEY }}
           script: |
-            sudo cd /home/ubuntu/palette/timeline-service
+            cd /home/ubuntu/palette/timeline-service
             sudo fuser -k 10005/tcp
             sudo ./operate.sh
