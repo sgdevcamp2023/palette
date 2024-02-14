@@ -31,7 +31,7 @@ jobs:
 
       - name: Grant execute permission for gradlew
         run: chmod +x src/user-service/gradlew
-
+        
       - name: 프로젝트 빌드
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
@@ -69,6 +69,7 @@ jobs:
           PASSPORT_ALGORITHM: ${{ secrets.PASSPORT_ALGORITHM }}
 
           KAFKA_SERVERS: ${{ secrets.KAFKA_SERVERS }}
+        working-directory: ./src/search-service
         run: ./gradlew clean build -x test
         shell: bash
 
