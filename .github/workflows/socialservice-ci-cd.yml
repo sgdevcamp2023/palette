@@ -33,7 +33,7 @@ jobs:
         run: chmod +x src/timeline-service/gradlew
 
       - name: 프로젝트 빌드
-          env:
+        env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 
