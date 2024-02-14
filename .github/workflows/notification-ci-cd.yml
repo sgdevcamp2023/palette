@@ -1,4 +1,4 @@
-name: NotificationService Docker Hub Push
+name: NotificationService CI/CD by jar
 
 on:
   push:
