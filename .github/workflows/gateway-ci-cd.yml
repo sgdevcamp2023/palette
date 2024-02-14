@@ -1,4 +1,4 @@
-name: GatewayService Docker Hub Push
+name: GatewayService CI/CD by jar
 
 on:
   push:
