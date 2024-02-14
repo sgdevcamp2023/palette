@@ -81,7 +81,7 @@ jobs:
           key: ${{ secrets.LIGHTSAIL_KEY }}
           source: "src/discovery-service/build/libs/easel-discovery-service-0.0.1-SNAPSHOT.jar"
           target: "/home/ubuntu/palette/discovery-service"
-
+  
       - name: API LIGHTSAIL 인스턴스 접속 및 애플리케이션 실행
         uses: appleboy/ssh-action@master
         with:
