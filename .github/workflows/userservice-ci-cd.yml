@@ -1,4 +1,4 @@
-name: UserService Docker Hub Push
+name: UserService CI/CD by jar
 
 on:
   push:
@@ -73,7 +73,7 @@ jobs:
         run: ./gradlew clean build -x test
         shell: bash
         
-      - name: API 빌드 파일 복사
+      - name: 빌드 파일 복사
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.LIGHTSAIL_HOST }}
@@ -82,7 +82,7 @@ jobs:
           source: "src/user-service/build/libs/easel-user-service-0.0.1-SNAPSHOT.jar"
           target: "/home/ubuntu/palette/user-service"
 
-      - name: API LIGHTSAIL 인스턴스 접속 및 애플리케이션 실행
+      - name: LIGHTSAIL 인스턴스 접속 및 애플리케이션 실행
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.LIGHTSAIL_HOST }}
@@ -93,49 +93,3 @@ jobs:
             cd /home/ubuntu/palette/user-service
             fuser -k 10004/tcp
             ./operate.sh
-  
-      - name: Build and Push Docker Image
-        env:
-          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-
-          AUTH_JWT_SECRET_KEY: ${{ secrets.AUTH_JWT_SECRET_KEY }}
-          AUTH_MAIL_HOST: ${{ secrets.AUTH_MAIL_HOST }}
-          AUTH_MAIL_PASSWORD: ${{ secrets.AUTH_MAIL_PASSWORD }}
-          AUTH_MAIL_PORT: ${{ secrets.AUTH_MAIL_PORT }}
-          AUTH_MAIL_USERNAME: ${{ secrets.AUTH_MAIL_USERNAME }}
-          AUTH_REDIS_HOST: ${{ secrets.AUTH_REDIS_HOST }}
-          AUTH_REDIS_PORT: ${{ secrets.AUTH_REDIS_PORT }}
-
-          USER_DB_URI: ${{ secrets.USER_DB_URI }}
-          USER_DB_USERNAME: ${{ secrets.USER_DB_USERNAME }}
-          USER_DB_USER_DB_PASSWORD: ${{ secrets.USER_DB_USER_DB_PASSWORD }}
-
-          SOCIAL_DB_URI: ${{ secrets.SOCIAL_DB_URI }}
-          SOCIAL_DB_USERNAME: ${{ secrets.SOCIAL_DB_USERNAME }}
-          SOCIAL_DB_PASSWORD: ${{ secrets.SOCIAL_DB_PASSWORD }}
-
-          TIMELINE_REDIS_HOST: ${{ secrets.TIMELINE_REDIS_HOST }}
-          TIMELINE_REDIS_PORT: ${{ secrets.TIMELINE_REDIS_PORT }}
-          TIMELINE_REDIS_PASSWORD: ${{ secrets.TIMELINE_REDIS_PASSWORD }}
-
-          NOTIFICATOIN_DB_URI: ${{ secrets.NOTIFICATOIN_DB_URI }}
-          NOTIFICATOIN_DB_USERNAME: ${{ secrets.NOTIFICATOIN_DB_USERNAME }}
-          NOTIFICATOIN_DB_USER_DB_PASSWORD: ${{ secrets.NOTIFICATOIN_DB_USER_DB_PASSWORD }}
-
-          LIGHTSAIL_HOST: ${{ secrets.LIGHTSAIL_HOST }}
-          LIGHTSAIL_KEY: ${{ secrets.LIGHTSAIL_KEY }}
-          LIGHTSAIL_USERNAME: ${{ secrets.LIGHTSAIL_USERNAME }}
-
-          PASSPORT_KEY: ${{ secrets.PASSPORT_KEY }}
-          PASSPORT_ALGORITHM: ${{ secrets.PASSPORT_ALGORITHM }}
-
-          KAFKA_SERVERS: ${{ secrets.KAFKA_SERVERS }}
-        run: |
-          cd src/user-service
-          ./gradlew clean build -x test
-
-          docker run --privileged --rm tonistiigi/binfmt --install all
-          docker buildx create --use
-          docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-          docker buildx build --platform=linux/amd64,linux/arm64 -t $DOCKER_USERNAME/social-service:latest . --push
