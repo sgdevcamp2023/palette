@@ -83,5 +83,5 @@ jobs:
           script: |
             sudo su
             cd /home/ubuntu/palette/social-service
-            fuser -k 10004/tcp
+            fuser -k 10003/tcp
             ./operate.sh
