@@ -69,9 +69,10 @@ jobs:
           PASSPORT_ALGORITHM: ${{ secrets.PASSPORT_ALGORITHM }}
 
           KAFKA_SERVERS: ${{ secrets.KAFKA_SERVERS }}
+        working-directory: ./src/social-service
         run: ./gradlew clean build -x test
         shell: bash
-
+        
       - name: API 빌드 파일 복사
         uses: appleboy/scp-action@master
         with:
