@@ -89,7 +89,6 @@ jobs:
           username: ${{ secrets.LIGHTSAIL_USERNAME }}
           key: ${{ secrets.LIGHTSAIL_KEY }}
           script: |
-            sudo su
             cd /home/ubuntu/palette/auth-service
-            fuser -k 10002/tcp
-            ./operate.sh
+            sudo fuser -k 10002/tcp
+            sudo ./operate.sh
