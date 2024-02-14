@@ -85,3 +85,5 @@ jobs:
             cd /home/ubuntu/palette/social-service
             fuser -k 10003/tcp
             ./operate.sh
+            exit
+            exit
