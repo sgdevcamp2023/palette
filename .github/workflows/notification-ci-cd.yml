@@ -89,7 +89,6 @@ jobs:
           username: ${{ secrets.LIGHTSAIL_USERNAME }}
           key: ${{ secrets.LIGHTSAIL_KEY }}
           script: |
-            sudo su
             cd /home/ubuntu/palette/notification-service
-            fuser -k 10009/tcp
-            ./operate.sh
+            sudo fuser -k 10009/tcp
+            sudo ./operate.sh
