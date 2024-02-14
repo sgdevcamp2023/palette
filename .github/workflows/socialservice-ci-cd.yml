@@ -1,4 +1,4 @@
-name: Social Service Docker Hub Push
+name: SocialService CI/CD by jar
 
 on:
   push:
@@ -30,7 +30,7 @@ jobs:
           distribution: 'temurin'
 
       - name: Grant execute permission for gradlew
-        run: chmod +x src/timeline-service/gradlew
+        run: chmod +x src/social-service/gradlew
 
       - name: 프로젝트 빌드
         env:
