@@ -1,4 +1,4 @@
-name: AuthService Docker Hub Push
+name: AuthService CI/CD by jar
 
 on:
   push:
