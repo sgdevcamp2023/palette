@@ -1,4 +1,4 @@
-name: SearchService Docker Hub Push
+name: SearchService CI/CD by jar
 
 on:
   push:
