@@ -116,7 +116,7 @@ const MainPostBox = forwardRef<HTMLDivElement, MainPostBoxProps>(
 
         <div className="flex flex-col gap-[16px] divide-y divide-y-blueGrey400">
           <Typography as="span" size="body-2" color="blueGrey-800">
-            {post.createdAt.toDateString()} ·
+            {new Date(post.createdAt).toDateString()} ·
             <Typography
               as="span"
               size="headline-8"

@@ -163,7 +163,7 @@ function ProfilePage() {
             <div className="flex gap-[4px] mt-[12px] items-center">
               <Icon type="calendar" width={12} height={12} />
               <Typography size="body-2" color="blueGrey-800">
-                {user.joinedAt.toDateString()}
+                {new Date(user.joinedAt).toDateString()}
               </Typography>
             </div>
 

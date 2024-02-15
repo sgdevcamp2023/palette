@@ -97,6 +97,6 @@ export const convertToMedia = (
   url: string,
   type: EditPaint['medias'][number]['type'],
 ): EditPaint['medias'][number] => ({
-  id: url,
+  path: url,
   type,
 });

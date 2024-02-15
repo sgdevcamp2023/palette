@@ -8,7 +8,7 @@ export interface TimelineItem {
   authorNickname: User['nickname'];
   authorImagePath: User['profileImagePath'];
   authorStatus: User['status'];
-  createdAt: Date;
+  createdAt: string;
   text: string;
   replyCount: number;
   repaintCount: number;
@@ -39,7 +39,7 @@ export interface TimelineItem {
 export interface EditPaint {
   text: string;
   medias: {
-    id: string;
+    path: string;
     type: 'image' | 'video';
   }[];
   taggedUserIds: string[];

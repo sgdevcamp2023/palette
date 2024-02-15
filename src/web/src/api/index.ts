@@ -24,7 +24,7 @@ const auth = createApiWrappers({
     client.public.post('/auth/re-send', request),
   login: (request: LoginInfo) =>
     client.public.post<{ accessToken: string; refreshToken: string }>(
-      '/auth/web',
+      '/auth/mobile',
       request,
     ),
   logout: () => client.private.post('/auth/web-logout'),

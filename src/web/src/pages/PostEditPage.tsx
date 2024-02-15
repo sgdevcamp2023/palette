@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import type { ChangeEvent } from 'react';
-import { useRouter } from '@tanstack/react-router';
+import { useNavigate, useRouter } from '@tanstack/react-router';
 import { useMutation } from '@tanstack/react-query';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 
@@ -48,6 +48,7 @@ const tempSavedStorage =
 function PostEditPage() {
   const user = DUMMY_USER;
   const router = useRouter();
+  const navigate = useNavigate();
   const search = editPostRoute.useSearch();
   const [tags, setTags] = useState<Pick<User, 'id' | 'nickname'>[]>([]);
   const [editPostInfo, setEditPostInfo] = useState<EditPaint>(forEditPaint({}));
@@ -77,6 +78,9 @@ function PostEditPage() {
           taggedUserIds: tags.map((tag) => tag.id),
         }),
       ),
+    onSuccess: () => {
+      navigate({ to: '/home' });
+    },
   });
 
   const uploadMutation = useMutation({

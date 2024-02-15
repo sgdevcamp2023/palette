@@ -14,7 +14,7 @@ export interface User {
   nickname: string;
   introduce: string;
   websitePath: string;
-  joinedAt: Date;
+  joinedAt: string;
   followerCount: number;
   followingCount: number;
 }
