@@ -1,12 +1,13 @@
 import { toast } from 'react-toastify';
+import { memo, useCallback } from 'react';
 import type { FormEvent, ChangeEvent } from 'react';
-import { useState, memo, useCallback } from 'react';
 import { useMutation } from '@tanstack/react-query';
 
 import { apis } from '@/api';
 import { StepTitle } from '..';
 import { Button, Input, Typography } from '../common';
 import type { NavigationEvent, JoinInfo } from './joinReducer';
+import { FullScreenSpinner } from '../skeleton';
 
 interface JoinEmailVerifyBoxProps extends NavigationEvent {
   email: string;
@@ -25,11 +26,22 @@ function JoinEmailVerifyBox({
   onNextStep,
   onChangeInput,
 }: JoinEmailVerifyBoxProps) {
-  const [isDirty, setIsDirty] = useState<boolean>(false);
+  const verifyEmailCodeMutate = useMutation({
+    mutationKey: ['verify-email', email],
+    mutationFn: () =>
+      apis.auth.verifyEmailCode({
+        email,
+        payload: emailVerifyCode,
+      }),
+    onError: () => toast('인증코드가 다릅니다.'),
+    onSuccess: () => {
+      onNextStep();
+    },
+  });
 
   const handleSubmitForm = useCallback((e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    onNextStep();
+    verifyEmailCodeMutate.mutate();
   }, []);
 
   const reSendEmailMutate = useMutation({
@@ -55,9 +67,6 @@ function JoinEmailVerifyBox({
               value={emailVerifyCode}
               maxLength={6}
               minLength={6}
-              status={isDirty ? 'dirty' : 'normal'}
-              onFocus={() => setIsDirty(true)}
-              onBlur={() => setIsDirty(false)}
               onChange={(e) => onChangeInput(e, 'emailVerifyCode')}
             />
           </div>
@@ -76,9 +85,8 @@ function JoinEmailVerifyBox({
               type="submit"
               color="blue"
               variant="filled"
-              disabled={disabled}
-              aria-disabled={disabled}
-              onClick={onNextStep}
+              disabled={disabled || verifyEmailCodeMutate.isPending}
+              aria-disabled={disabled || verifyEmailCodeMutate.isPending}
             >
               <Typography size="body-2" color="white">
                 다음
@@ -87,6 +95,9 @@ function JoinEmailVerifyBox({
           </div>
         </div>
       </form>
+      {verifyEmailCodeMutate.isPending && (
+        <FullScreenSpinner className="left-1/2 -translate-x-1/2" />
+      )}
     </>
   );
 }

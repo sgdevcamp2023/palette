@@ -1,10 +1,14 @@
+import { toast } from 'react-toastify';
+import { memo, useCallback, useState } from 'react';
 import type { FormEvent, ChangeEvent } from 'react';
-import { useState, useMemo, memo, useCallback } from 'react';
+import { useMutation } from '@tanstack/react-query';
 
+import { apis } from '@/api';
 import { isValidEmail } from '@/utils';
 import { NotSupportText, StepTitle } from '..';
 import { Button, Input, Typography } from '../common';
 import type { NavigationEvent, JoinInfo } from './joinReducer';
+import { FullScreenSpinner } from '../skeleton';
 
 interface JoinEmailBoxProps extends NavigationEvent {
   nickname: string;
@@ -23,32 +27,36 @@ function JoinEmailBox({
   onNextStep,
   onChangeInput,
 }: JoinEmailBoxProps) {
-  const [isDirty, setIsDirty] = useState<'initial' | 'dirty' | 'not-dirty'>(
-    'initial',
-  );
-  const [isInValidEmail, setIsInValidEmail] = useState<boolean>(false);
+  const [emailStatus, setEmailStatus] = useState<
+    'normal' | 'success' | 'error'
+  >('normal');
 
-  const emailStatus = useMemo((): Parameters<typeof Input>[0]['status'] => {
-    if (isDirty === 'initial') return 'normal';
-    if (isDirty === 'dirty') return 'dirty';
-    if (isInValidEmail) return 'error';
-    return 'success';
-  }, [isDirty, isInValidEmail]);
-
-  const handleSubmitForm = useCallback((e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (isValidEmail(email) && nickname !== '') {
+  const tempRegisterMutate = useMutation({
+    mutationKey: ['temp-register', nickname],
+    mutationFn: () =>
+      apis.users.temporaryJoin({
+        email,
+        nickname,
+      }),
+    onError: (error) => toast(`서버에 문제가 생겼습니다. ${error.message}`),
+    onSuccess: () => {
       onNextStep();
-    }
-  }, []);
+    },
+  });
 
-  const handleFocusOnEmail = () => {
-    setIsDirty('dirty');
-  };
+  const handleSubmitForm = useCallback(
+    (e: FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+
+      if (isValidEmail(email) && nickname !== '') {
+        tempRegisterMutate.mutate();
+      }
+    },
+    [email, nickname],
+  );
 
   const handleBlurOnEmail = () => {
-    setIsDirty('not-dirty');
-    setIsInValidEmail(!isValidEmail(email));
+    setEmailStatus(isValidEmail(email) ? 'success' : 'error');
   };
 
   return (
@@ -67,7 +75,6 @@ function JoinEmailBox({
               label="이메일"
               status={emailStatus}
               onChange={(e) => onChangeInput(e, 'email')}
-              onFocus={handleFocusOnEmail}
               onBlur={handleBlurOnEmail}
             />
           </div>
@@ -89,9 +96,8 @@ function JoinEmailBox({
             type="submit"
             color="blue"
             variant="filled"
-            disabled={disabled || isInValidEmail}
-            aria-disabled={disabled || isInValidEmail}
-            onClick={onNextStep}
+            disabled={disabled || tempRegisterMutate.isPending}
+            aria-disabled={disabled || tempRegisterMutate.isPending}
           >
             <Typography size="sub-headline-3" color="white">
               다음
@@ -99,6 +105,9 @@ function JoinEmailBox({
           </Button>
         </div>
       </form>
+      {tempRegisterMutate.isPending && (
+        <FullScreenSpinner className="left-1/2 -translate-x-1/2" />
+      )}
     </>
   );
 }

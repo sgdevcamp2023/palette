@@ -50,7 +50,6 @@ function JoinNameBox({
             variant="filled"
             disabled={disabled}
             aria-disabled={disabled}
-            onClick={onJoin}
           >
             <Typography size="body-2" color="white">
               가입
