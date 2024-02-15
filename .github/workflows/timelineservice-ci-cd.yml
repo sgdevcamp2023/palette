@@ -79,7 +79,7 @@ jobs:
           host: ${{ secrets.LIGHTSAIL_HOST }}
           username: ${{ secrets.LIGHTSAIL_USERNAME }}
           key: ${{ secrets.LIGHTSAIL_KEY }}
-          source: "src/user-service/build/libs/easel-timeline-service-0.0.1-SNAPSHOT.jar"
+          source: "src/timeline-service/build/libs/easel-timeline-service-0.0.1-SNAPSHOT.jar"
           target: "/home/ubuntu/palette/timeline-service"
 
       - name: LIGHTSAIL 인스턴스 접속 및 애플리케이션 실행
