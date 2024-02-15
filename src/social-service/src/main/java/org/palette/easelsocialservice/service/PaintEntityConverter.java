@@ -14,7 +14,6 @@ import org.springframework.stereotype.Component;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
@@ -29,14 +28,22 @@ public class PaintEntityConverter {
 
     public PaintResponse convertToPaintResponse(Paint paint, PaintMetrics paintMetrics) {
         PaintResponse quotePaint = getQuotePaint(paint);
-        Entities entities = covertToEntities(paint);
+        Entities entities = convertToEntities(paint);
         Includes includes = convertToIncludes(paint);
 
         return PaintResponse.buildByPaint(paint, quotePaint, entities, includes, paintMetrics);
     }
 
+    public PaintResponse convertToPaintResponse(Paint paint) {
+        PaintResponse quotePaint = getQuotePaint(paint);
+        Entities entities = convertToEntities(paint);
+        Includes includes = convertToIncludes(paint);
+
+        return PaintResponse.buildByPaint(paint, quotePaint, entities, includes);
+    }
+
     public PaintResponse convertToQuotePaintResponse(Paint paint) {
-        Entities entities = covertToEntities(paint);
+        Entities entities = convertToEntities(paint);
         Includes includes = convertToIncludes(paint);
 
         return PaintResponse.buildByPaint(paint, entities, includes);
@@ -51,7 +58,15 @@ public class PaintEntityConverter {
                 .toList();
     }
 
-    public Entities covertToEntities(Paint paint) {
+    public List<PaintResponse> convertToPaintResponse(final List<Paint> paints) {
+        return paints.stream()
+                .map(paint -> {
+                    return convertToPaintResponse(paint);
+                })
+                .toList();
+    }
+
+    public Entities convertToEntities(Paint paint) {
         List<HashtagResponse> hashtags = convertToHashtagResponse(paint.getHashtags());
         List<MentionResponse> mentions = convertToMentionResponse(paint.getMentions());
 
@@ -199,5 +214,4 @@ public class PaintEntityConverter {
                         tags.getHashtag().getTag())
                 ).toList();
     }
-
 }

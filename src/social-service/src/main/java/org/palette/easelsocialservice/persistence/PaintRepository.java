@@ -94,4 +94,11 @@ public interface PaintRepository extends Neo4jRepository<Paint, Long> {
 
     @Query("RETURN EXISTS((:User {uid: $uid}) -[:REPAINTS]-> (:Paint {pid: $pid}))")
     boolean existsRepaintsByUidAndPid(@Param("uid") Long uid, @Param("pid") Long pid);
+
+    @Query("MATCH (p:Paint) WHERE p.pid IN $paintIds " +
+            "WITH p " +
+            "OPTIONAL MATCH (p)<-[r]->(neighbors) " +
+            "WHERE type(r) <> 'REPLIES' AND type(r) <> 'REPAINTS' AND type(r) <> 'QUOTES' " +
+            "RETURN p, r, neighbors")
+    List<Paint> findAllPaintByPids(List<Long> paintIds);
 }

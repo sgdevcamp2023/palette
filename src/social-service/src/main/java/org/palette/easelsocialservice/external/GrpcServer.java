@@ -3,14 +3,20 @@ package org.palette.easelsocialservice.external;
 import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
 import net.devh.boot.grpc.server.service.GrpcService;
+import org.palette.easelsocialservice.dto.response.PaintResponse;
 import org.palette.easelsocialservice.persistence.domain.User;
+import org.palette.easelsocialservice.service.PaintService;
 import org.palette.easelsocialservice.service.UserService;
 import org.palette.grpc.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 @GrpcService
 @RequiredArgsConstructor
 public class GrpcServer extends GSocialServiceGrpc.GSocialServiceImplBase {
+    private final PaintService paintService;
     private final UserService userService;
 
     @Override
@@ -37,6 +43,27 @@ public class GrpcServer extends GSocialServiceGrpc.GSocialServiceImplBase {
                 .build();
         responseObserver.onNext(response);
         responseObserver.onCompleted();
+    }
+
+    @Override
+    public void getPaintsByIds(
+            final GGetPaintsByIdsRequest request,
+            final StreamObserver<GGetPaintsByIdsResponse> responseObserver
+    ) {
+        List<PaintResponse> paints = paintService.getAllPaintsByPid(request.getPaintIdsList());
+        List<GPaintResponse> gpaints = convertToGPaintResponses(paints);
+
+        GGetPaintsByIdsResponse response = GGetPaintsByIdsResponse.newBuilder()
+                .addAllPaints(gpaints)
+                .build();
+
+        responseObserver.onNext(response);
+        responseObserver.onCompleted();
+    }
+
+    private List<GPaintResponse> convertToGPaintResponses(final List<PaintResponse> paints) {
+        List<GPaintResponse> result = new ArrayList<>();
+        return result;
     }
 
     private User convertToUser(final GCreateUserRequest request) {

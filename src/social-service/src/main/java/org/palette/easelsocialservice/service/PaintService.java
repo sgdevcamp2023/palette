@@ -22,11 +22,11 @@ public class PaintService {
     private final PaintRepository paintRepository;
     private final PaintEntityConverter paintEntityConverter;
 
-    public Paint createPaint(Paint paint) {
+    public Paint createPaint(final Paint paint) {
         return paintRepository.save(paint);
     }
 
-    public void repaint(User user, RepaintRequest repaintRequest) {
+    public void repaint(final User user, final RepaintRequest repaintRequest) {
         Paint paint = paintRepository.findById(repaintRequest.originPaintId())
                 .orElseThrow(() -> new BaseException(ExceptionType.SOCIAL_400_000002));
 
@@ -38,7 +38,7 @@ public class PaintService {
         paintRepository.save(paint);
     }
 
-    public PaintResponse getPaintById(Long userId, Long paintId) {
+    public PaintResponse getPaintById(final Long userId, final Long paintId) {
         Paint paint = paintRepository.findByPid(paintId)
                 .orElseThrow(() -> new BaseException(ExceptionType.SOCIAL_400_000002));
         PaintMetrics metrics = paintRepository.findMetricsByPidAndUid(userId, paintId);
@@ -46,18 +46,18 @@ public class PaintService {
         return paintEntityConverter.convertToPaintResponse(paint, metrics);
     }
 
-    public Paint getPaintById(Long paintId) {
+    public Paint getPaintById(final Long paintId) {
         return paintRepository.findByPid(paintId)
                 .orElseThrow(() -> new BaseException(ExceptionType.SOCIAL_400_000002));
     }
 
-    public List<PaintResponse> getPaintBeforeById(Long userId, Long paintId) {
+    public List<PaintResponse> getPaintBeforeById(final Long userId, final Long paintId) {
         List<Paint> paints = distinctPaintsByPid(paintRepository.findAllBeforePaintByPid(paintId));
 
         return paintEntityConverter.convertToPaintResponse(userId, paints);
     }
 
-    public List<ThreadResponse> getPaintAfterById(Long userId, Long paintId) {
+    public List<ThreadResponse> getPaintAfterById(final Long userId, final Long paintId) {
         List<Paint> paints = distinctPaintsByPid(paintRepository.findAllAfterPaintByPid(paintId));
 
         List<ThreadResponse> threads = new LinkedList<>();
@@ -69,42 +69,42 @@ public class PaintService {
         return threads;
     }
 
-    public List<PaintResponse> getAllPaintsByUserId(Long userId) {
+    public List<PaintResponse> getAllPaintsByUserId(final Long userId) {
         return paintEntityConverter.convertToPaintResponse(
                 userId,
                 distinctPaintsByPid(paintRepository.findAllCreatesQuotesRepliesByUid(userId))
         );
     }
 
-    public List<PaintResponse> getAllRepliesByUserId(Long userId) {
+    public List<PaintResponse> getAllRepliesByUserId(final Long userId) {
         return paintEntityConverter.convertToPaintResponse(
                 userId,
                 distinctPaintsByPid(paintRepository.findAllCreatesQuotesRepliesByUid(userId))
         );
     }
 
-    public List<PaintResponse> getAllMarksPaintsByUserId(Long userId) {
+    public List<PaintResponse> getAllMarksPaintsByUserId(final Long userId) {
         return paintEntityConverter.convertToPaintResponse(
                 userId,
                 distinctPaintsByPid(paintRepository.findAllMarksByUid(userId))
         );
     }
 
-    public List<PaintResponse> getAllLikingPaintsByUserId(Long userId) {
+    public List<PaintResponse> getAllLikingPaintsByUserId(final Long userId) {
         return paintEntityConverter.convertToPaintResponse(
                 userId,
                 distinctPaintsByPid(paintRepository.findAllLikingByUid(userId))
         );
     }
 
-    public List<PaintResponse> getAllContainingMediaByUserId(Long userId) {
+    public List<PaintResponse> getAllContainingMediaByUserId(final Long userId) {
         return paintEntityConverter.convertToPaintResponse(
                 userId,
                 distinctPaintsByPid(paintRepository.findAllContainingMediaByUid(userId))
         );
     }
 
-    public void viewSinglePaint(Long paintId) {
+    public void viewSinglePaint(final Long paintId) {
         paintRepository.updatePaintView(paintId);
     }
 
@@ -114,19 +114,25 @@ public class PaintService {
         return paintEntityConverter.convertToPaintResponse(userId, paints);
     }
 
-    private ThreadResponse getThreadGroup(Integer threadId, Long userId, Paint paint) {
+    public List<PaintResponse> getAllPaintsByPid(final List<Long> paintIds) {
+        List<Paint> paints = distinctPaintsByPid(paintRepository.findAllPaintByPids(paintIds));
+
+        return paintEntityConverter.convertToPaintResponse(paints);
+    }
+
+    private ThreadResponse getThreadGroup(final Integer threadId, final Long userId, final Paint paint) {
         checkAndSetQuotePaint(paint);
         List<Paint> subPaints = distinctPaintsByPid(paintRepository.findAllAfterPaintsByPid(paint.getPid()));
         return new ThreadResponse(threadId, paintEntityConverter.convertToPaintResponse(userId, subPaints));
     }
 
-    private void checkAndSetQuotePaint(Paint paint) {
+    private void checkAndSetQuotePaint(final Paint paint) {
         if (!paint.isHasQuote()) return;
         Paint quotePaint = paintRepository.findQuotePaintByPid(paint.getPid());
         paint.addQuotePaint(quotePaint);
     }
 
-    private List<Paint> distinctPaintsByPid(List<Paint> paints) {
+    private List<Paint> distinctPaintsByPid(final List<Paint> paints) {
         return paints.stream()
                 .collect(Collectors.collectingAndThen(
                         Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(Paint::getPid))),
