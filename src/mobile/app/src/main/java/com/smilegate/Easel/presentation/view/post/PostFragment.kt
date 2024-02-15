@@ -163,9 +163,6 @@ class PostFragment : Fragment(), PostImgAdapter.OnItemClickListener {
         Glide.with(requireContext())
             .load(imageUri)
             .into(binding.ivPostImg)
-
-        // 이미지를 업로드하는 경우 버튼 색상 업데이트
-        updateButtonAppearance(false)
     }
 
     private fun loadImagesFromGallery() {
@@ -236,6 +233,9 @@ class PostFragment : Fragment(), PostImgAdapter.OnItemClickListener {
                 binding.icDeleteImg.visibility = VISIBLE
                 binding.icDeleteImg.bringToFront()
                 binding.icDeleteImg.translationZ = 100f
+
+                // 이미지를 업로드하는 경우 버튼 색상 업데이트
+                updateButtonAppearance(false)
 
                 binding.icDeleteImg.setOnClickListener {
                     // 이미지 삭제 처리
