@@ -77,4 +77,29 @@ public record PaintResponse(
                 includes
         );
     }
+
+    public static PaintResponse buildByPaint(Paint paint, PaintResponse quotePaint, Entities entities, Includes includes) {
+        User author = paint.getAuthor().getUser();
+        return new PaintResponse(
+                paint.getPid(),
+                paint.getInReplyToPaint() != null,
+                author.getUid(),
+                author.getUsername(),
+                author.getNickname(),
+                author.getImagePath(),
+                author.getActiveString(),
+                quotePaint,
+                paint.getCreatedAt(),
+                paint.getContent(),
+                0,
+                0,
+                0,
+                false,
+                false,
+                false,
+                paint.getViews(),
+                entities,
+                includes
+        );
+    }
 }

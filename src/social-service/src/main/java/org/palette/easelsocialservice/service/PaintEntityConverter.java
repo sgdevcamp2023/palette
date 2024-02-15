@@ -35,6 +35,14 @@ public class PaintEntityConverter {
         return PaintResponse.buildByPaint(paint, quotePaint, entities, includes, paintMetrics);
     }
 
+    public PaintResponse convertToPaintResponse(Paint paint) {
+        PaintResponse quotePaint = getQuotePaint(paint);
+        Entities entities = covertToEntities(paint);
+        Includes includes = convertToIncludes(paint);
+
+        return PaintResponse.buildByPaint(paint, quotePaint, entities, includes);
+    }
+
     public PaintResponse convertToQuotePaintResponse(Paint paint) {
         Entities entities = covertToEntities(paint);
         Includes includes = convertToIncludes(paint);
@@ -47,6 +55,14 @@ public class PaintEntityConverter {
                 .map(paint -> {
                     PaintMetrics metrics = paintRepository.findMetricsByPidAndUid(userId, paint.getPid());
                     return convertToPaintResponse(paint, metrics);
+                })
+                .toList();
+    }
+
+    public List<PaintResponse> convertToPaintResponse(final List<Paint> paints) {
+        return paints.stream()
+                .map(paint -> {
+                    return convertToPaintResponse(paint);
                 })
                 .toList();
     }
@@ -199,5 +215,4 @@ public class PaintEntityConverter {
                         tags.getHashtag().getTag())
                 ).toList();
     }
-
 }
