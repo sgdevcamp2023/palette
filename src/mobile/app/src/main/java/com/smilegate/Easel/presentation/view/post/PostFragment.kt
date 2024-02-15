@@ -75,7 +75,9 @@ class PostFragment : Fragment(), PostImgAdapter.OnItemClickListener {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                if (s.isNullOrEmpty() && !isViewVisible) {
+                val isEmpty = s.isNullOrEmpty()
+
+                if (isEmpty && !isViewVisible) {
 
                     for (view in editPageIcon) {
                         view.visibility = VISIBLE
@@ -86,11 +88,7 @@ class PostFragment : Fragment(), PostImgAdapter.OnItemClickListener {
                     binding.btnPost.isEnabled = false
                     //binding.btnPost.resources.getResourceName(R.drawable.btn_post_fragment)
 
-                    val textColorResourceId = R.color.Blue_200
-                    val textColor = ContextCompat.getColor(requireContext(), textColorResourceId)
-                    binding.btnPost.setTextColor(textColor)
-
-                } else if (!s.isNullOrEmpty() && isViewVisible) {
+                } else if (!isEmpty && isViewVisible) {
 
                     for (view in editPageIcon) {
                         view.visibility = INVISIBLE
@@ -100,11 +98,9 @@ class PostFragment : Fragment(), PostImgAdapter.OnItemClickListener {
 
                     binding.btnPost.isEnabled = true
                     //binding.btnPost.resources.getResourceName(R.drawable.btn_post_fragment_enabled)
-
-                    val textColorResourceId = R.color.white
-                    val textColor = ContextCompat.getColor(requireContext(), textColorResourceId)
-                    binding.btnPost.setTextColor(textColor)
                 }
+
+                updateButtonAppearance(isEmpty)
 
                 s?.let {
                     val currentLength = it.length
@@ -167,6 +163,9 @@ class PostFragment : Fragment(), PostImgAdapter.OnItemClickListener {
         Glide.with(requireContext())
             .load(imageUri)
             .into(binding.ivPostImg)
+
+        // 이미지를 업로드하는 경우 버튼 색상 업데이트
+        updateButtonAppearance(false)
     }
 
     private fun loadImagesFromGallery() {
@@ -249,6 +248,8 @@ class PostFragment : Fragment(), PostImgAdapter.OnItemClickListener {
                     binding.etPostContent.hint = "무슨 일이 일어나고 있나요?"
                     binding.horizontalScrollView.visibility = VISIBLE
 
+                    // 이미지를 삭제하는 경우 버튼 색상 업데이트
+                    updateButtonAppearance(true)
                 }
             }
 
@@ -256,7 +257,21 @@ class PostFragment : Fragment(), PostImgAdapter.OnItemClickListener {
             if (selectedImageUri == null) {
                 binding.icDeleteImg.visibility = GONE
                 binding.cardView.visibility = GONE
+
+                // 이미지를 삭제하는 경우 버튼 색상 업데이트
+                updateButtonAppearance(true)
             }
         }
+    }
+
+    private fun updateButtonAppearance(isEmpty: Boolean) {
+        val textColorResId = if (isEmpty) R.color.Blue_200 else R.color.white
+        val textColor = ContextCompat.getColor(requireContext(), textColorResId)
+
+        val backgroundResId = if (isEmpty) R.drawable.btn_post_fragment else R.drawable.btn_post_fragment_enabled
+        val backgroundDrawable = ContextCompat.getDrawable(requireContext(), backgroundResId)
+
+        binding.btnPost.setTextColor(textColor)
+        binding.btnPost.background = backgroundDrawable
     }
 }
