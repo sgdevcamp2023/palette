@@ -1,7 +1,9 @@
 import { toast } from 'react-toastify';
 import type { FormEvent, ChangeEvent } from 'react';
 import { useState, memo, useCallback } from 'react';
+import { useMutation } from '@tanstack/react-query';
 
+import { apis } from '@/api';
 import { StepTitle } from '..';
 import { Button, Input, Typography } from '../common';
 import type { NavigationEvent, JoinInfo } from './joinReducer';
@@ -30,9 +32,13 @@ function JoinEmailVerifyBox({
     onNextStep();
   }, []);
 
-  const handleClickResendButton = () => {
-    toast('아직 구현이 안되어 있어요!');
-  };
+  const reSendEmailMutate = useMutation({
+    mutationKey: ['re-send', email],
+    mutationFn: () => apis.auth.reSendEmailCode({ email }),
+    onSettled: () => {
+      toast('이메일이 다시 발송되었습니다.');
+    },
+  });
 
   return (
     <>
@@ -60,8 +66,9 @@ function JoinEmailVerifyBox({
               as="span"
               size="body-3"
               role="button"
+              tabIndex={0}
               color="blue-500"
-              onClick={handleClickResendButton}
+              onClick={() => reSendEmailMutate.mutate()}
             >
               이메일을 받지 못하셨나요?
             </Typography>

@@ -18,6 +18,8 @@ const client = {
 const auth = createApiWrappers({
   verifyEmailCode: (request: { email: User['email']; payload: string }) =>
     client.public.post('/auth', request),
+  reSendEmailCode: (request: { email: User['email'] }) =>
+    client.public.post('/auth/re-send', request),
   login: (request: LoginInfo) => client.public.post('/auth/web', request),
   logout: () => client.private.post('/auth/web-logout'),
 });
