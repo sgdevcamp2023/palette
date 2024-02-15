@@ -11,7 +11,8 @@ import org.springframework.stereotype.Component;
 public class EventConsumer {
     private final TimelineUsecase timelineUseCase;
 
-    @KafkaListener(topics = "paint-created", groupId = "${spring.kafka.consumer.group-id}")
+    @KafkaListener(topics = "paint_created", groupId = "${spring.kafka.consumer.group-id}",
+            containerFactory = "kafkaListenerContainerFactory")
     public void consumePaintCreatedEvent(PaintCreatedEvent paintCreatedEvent) {
         timelineUseCase.handlePaintCreatedEvent(paintCreatedEvent);
     }
