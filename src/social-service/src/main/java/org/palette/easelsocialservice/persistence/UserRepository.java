@@ -39,4 +39,7 @@ public interface UserRepository extends Neo4jRepository<User, Long> {
 
     @Query("MATCH (u:User) -[:REPAINTS]-> (:Paint { pid: $pid }) RETURN u")
     List<User> findRepaintedByPaintId(@Param("pid") Long pid);
+
+    @Query("MATCH (:User {uid: $uid})<-[:FOLLOWS]-(u:User) RETURN u.uid")
+    List<Long> findFollowerUidsByUid(@Param("uid") Long uid);
 }

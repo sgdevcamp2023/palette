@@ -102,6 +102,10 @@ public class UserService {
         return convertToUserResponse(userRepository.findRepaintedByPaintId(paintId));
     }
 
+    public List<Long> getFollowerIds(final Long userId) {
+        return userRepository.findFollowerUidsByUid(userId);
+    }
+
     private List<UserResponse> convertToUserResponse(final List<User> users) {
         return users
                 .stream()
