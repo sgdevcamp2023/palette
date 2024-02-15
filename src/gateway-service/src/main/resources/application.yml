@@ -71,6 +71,8 @@ spring:
               /api/users/{id}/like/{paintId},
               /api/users/{id}/repaint,
               /api/users/{id}/repaint/{sourcePaintId}
+          filters:
+            - RewritePath=/api/?(?<segment>.*), /$\{segment}
 
         - id: TRENDS-SERVICE
           uri: lb://TRENDS-SERVICE
