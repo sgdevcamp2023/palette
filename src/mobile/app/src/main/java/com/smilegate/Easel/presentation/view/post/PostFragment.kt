@@ -44,6 +44,8 @@ class PostFragment : Fragment(), PostImgAdapter.OnItemClickListener {
 
     private val imageList = mutableListOf<String>()
 
+    private lateinit var editPageIcon: List<View>
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -58,15 +60,6 @@ class PostFragment : Fragment(), PostImgAdapter.OnItemClickListener {
         val bottomNavigation = activity?.findViewById<BottomNavigationView>(R.id.nav_view)
         bottomNavigation?.visibility = GONE
 
-        val editPageIcon = listOf(
-            binding.ivSpace,
-            binding.icSpaceIcon,
-            binding.ivCamera,
-            binding.icCameraIcon,
-            binding.tvTempStorage,
-            binding.rvPostImg,
-        )
-
         binding.etPostContent.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
@@ -77,27 +70,9 @@ class PostFragment : Fragment(), PostImgAdapter.OnItemClickListener {
             override fun afterTextChanged(s: Editable?) {
                 val isEmpty = s.isNullOrEmpty()
 
-                if (isEmpty && !isViewVisible) {
-
-                    for (view in editPageIcon) {
-                        view.visibility = VISIBLE
-                    }
-
-                    isViewVisible = true
-
-                    binding.btnPost.isEnabled = false
-                    //binding.btnPost.resources.getResourceName(R.drawable.btn_post_fragment)
-
-                } else if (!isEmpty && isViewVisible) {
-
-                    for (view in editPageIcon) {
-                        view.visibility = INVISIBLE
-                    }
-
-                    isViewVisible = false
-
-                    binding.btnPost.isEnabled = true
-                    //binding.btnPost.resources.getResourceName(R.drawable.btn_post_fragment_enabled)
+                if (isEmpty != isViewVisible) {
+                    handleStateChanges(isEmpty)
+                    isViewVisible = isEmpty
                 }
 
                 updateButtonAppearance(isEmpty)
@@ -272,5 +247,22 @@ class PostFragment : Fragment(), PostImgAdapter.OnItemClickListener {
 
         binding.btnPost.setTextColor(textColor)
         binding.btnPost.background = backgroundDrawable
+    }
+
+    private fun handleStateChanges(isEmpty: Boolean) {
+        val visibility = if (isEmpty) VISIBLE else INVISIBLE
+        val enabled = !isEmpty
+
+        editPageIcon = listOf(
+            binding.ivSpace,
+            binding.icSpaceIcon,
+            binding.ivCamera,
+            binding.icCameraIcon,
+            binding.tvTempStorage,
+            binding.rvPostImg
+        )
+
+        editPageIcon.forEach { it.visibility = visibility }
+        binding.btnPost.isEnabled = enabled
     }
 }
