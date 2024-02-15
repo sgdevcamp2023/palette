@@ -1,12 +1,12 @@
 import type { TimelineItem } from '@/@types';
 
-function getRandomAdjustedDate(): Date {
+function getRandomAdjustedDate(): string {
   const currentDate = new Date();
   const timeOffset = Math.floor(Math.random() * 1000 * 60 * 60 * 24); // 1일은 86,400,000 밀리초
 
   const adjustedDate = new Date(currentDate.getTime() - timeOffset);
 
-  return adjustedDate;
+  return adjustedDate.toISOString();
 }
 
 const DUMMY_ITEM: TimelineItem = {
@@ -17,7 +17,7 @@ const DUMMY_ITEM: TimelineItem = {
   authorNickname: '이상민',
   authorImagePath: 'profile/k3cvomo4mknrzsub83n7',
   authorStatus: 'public',
-  createdAt: new Date(),
+  createdAt: new Date().toISOString(),
   text: `안녕하세요, @2023 개발캠프 여러분!\n지난 주에 이어서 오늘은 리사이클 팀의 현우 님(React-Query), 규민 님(상태관리)의 세미나가 진행됩니다.\n점심 식사하시고 1시 30분에 미팅룸 6번에서 만나요`,
   replyCount: 123,
   repaintCount: 34,

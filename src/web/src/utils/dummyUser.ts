@@ -11,7 +11,7 @@ export const DUMMY_USER: User = {
   nickname: '상민',
   introduce: '상민이의 소개 !',
   websitePath: 'https://github.com/poiu694',
-  joinedAt: new Date(),
+  joinedAt: new Date().toISOString(),
   followerCount: 423,
   followingCount: 12,
 };
