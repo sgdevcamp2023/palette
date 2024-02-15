@@ -129,17 +129,16 @@ class PostFragment : Fragment(), PostImgAdapter.OnItemClickListener {
         val editText = view.findViewById<EditText>(R.id.et_post_content)
         editText.requestFocus()
 
+        val imm =
+            requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+
         binding.ivBackBtn.setOnClickListener {
             editText.clearFocus()
-            val imm =
-                requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(editText.windowToken, 0)
 
             navController.navigate(R.id.action_postFragment_to_timelineFragment)
         }
 
-        val imm =
-            requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT)
 
         if (ContextCompat.checkSelfPermission(
