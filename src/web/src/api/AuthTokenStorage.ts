@@ -7,12 +7,7 @@ export class AuthTokenStorage {
   private storage: ReturnType<typeof generateLocalStorage<string | null>>;
 
   constructor(key: string) {
-    this.spawn();
     this.storage = generateLocalStorage<string | null>(key);
-    this.authToken = null;
-  }
-
-  spawn(): void {
     this.authToken = this.storage.get();
   }
 

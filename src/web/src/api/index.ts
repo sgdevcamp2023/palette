@@ -125,16 +125,16 @@ const images = createApiWrappers({
 
 const paints = createApiWrappers({
   getPaintById: (paintId: TimelineItem['id']) =>
-    client.public.get<TimelineItem>(`/paints/${paintId}`),
+    client.private.get<TimelineItem>(`/paints/${paintId}`),
   getBeforePaintsById: (paintId: TimelineItem['id']) =>
-    client.public.get<TimelineItem[]>(`/paints/${paintId}/before`),
+    client.private.get<TimelineItem[]>(`/paints/${paintId}/before`),
   getAfterPaintsById: (paintId: TimelineItem['id']) =>
-    client.public.get<TimelineItem[]>(`/paints/${paintId}/after`),
+    client.private.get<TimelineItem[]>(`/paints/${paintId}/after`),
   getPaints: (paintId: TimelineItem['id']) =>
-    client.public.get<TimelineItem[]>(`/paints/${paintId}`),
-  createPaint: (request: EditPaint) => client.public.post('/paints', request),
+    client.private.get<TimelineItem[]>(`/paints/${paintId}`),
+  createPaint: (request: EditPaint) => client.private.post('/paints', request),
   getQuotePaintList: (paintId: TimelineItem['id']) =>
-    client.public.get<
+    client.private.get<
       (Pick<TimelineItem, 'authorId' | 'createdAt' | 'id' | 'text'> & {
         includes: {
           paints: Pick<TimelineItem, 'authorId' | 'createdAt' | 'id' | 'text'>;
