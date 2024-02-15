@@ -10,6 +10,10 @@ import type { LoginInfo } from '@/@types';
 import { ContentLayout, Header } from '@/components';
 import { LoginStep, LoginStepReducer } from '@/components/login/loginReducer';
 import { LoginEmailBox, LoginPasswordBox } from '@/components/login';
+import {
+  accessTokenStorage,
+  refreshTokenStorage,
+} from '@/api/AuthTokenStorage';
 
 function LoginPage() {
   const [state, dispatch] = useReducer(LoginStepReducer, LoginStep.EMAIL);
@@ -21,8 +25,10 @@ function LoginPage() {
   const loginMutate = useMutation({
     mutationKey: ['login', loginInfo.email],
     mutationFn: () => apis.auth.login(loginInfo),
-    onSuccess: () => {
+    onSuccess: (res) => {
       toast(`${loginInfo.email}님 로그인이 완료되었습니다.`);
+      accessTokenStorage.setToken(res.accessToken);
+      refreshTokenStorage.setToken(res.refreshToken);
       navigate({ to: '/home' });
     },
     onError: () => toast.error('아이디 혹은 비밀번호가 틀렸습니다.'),
