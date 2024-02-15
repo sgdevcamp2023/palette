@@ -44,8 +44,7 @@ function JoinPage() {
       toast(`${joinInfo.username}님 회원가입이 완료되었습니다.`);
       navigate({ to: '/' });
     },
-    onError: (res) => {
-      console.log(res);
+    onError: () => {
       toast('회원가입에 문제가 생겼습니다.');
     },
   });
