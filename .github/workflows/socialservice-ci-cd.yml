@@ -81,10 +81,6 @@ jobs:
           username: ${{ secrets.LIGHTSAIL_USERNAME }}
           key: ${{ secrets.LIGHTSAIL_KEY }}
           script: |
-            pwd
             cd /home/ubuntu/palette/social-service
-            pwd
             sudo fuser -k 10003/tcp
-            pwd
-            sudo ./operate.sh
-            pwd
+            sudo operate.sh
