@@ -172,10 +172,8 @@ class PostFragment : Fragment(), PostImgAdapter.OnItemClickListener {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == permissionRequestCode) {
-            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                loadImagesFromGallery()
-            }
+        if (requestCode == permissionRequestCode && grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            loadImagesFromGallery()
         }
     }
 
