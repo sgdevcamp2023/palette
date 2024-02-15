@@ -3,14 +3,15 @@ import type { ForwardedRef } from 'react';
 import { useNavigate } from '@tanstack/react-router';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
+import { apis } from '@/api';
 import { Button } from './common';
 import type { PaintAction } from '@/hooks';
 import { postDetailRoute } from '@/routes';
 import QuotePostBox from './QuotePostBox';
 import Typography from './common/Typography';
+import { cn, forCloudinaryImage } from '@/utils';
 import TimelineItemMenu from './TimelineItemMenu';
 import AccessibleIconButton from './AccessibleIconButton';
-import { cn, fetchMainPost, forCloudinaryImage } from '@/utils';
 
 interface MainPostBoxProps {
   className?: string;
@@ -24,7 +25,7 @@ const MainPostBox = forwardRef<HTMLDivElement, MainPostBoxProps>(
     const params = postDetailRoute.useParams();
     const { data: post } = useSuspenseQuery({
       queryKey: ['post', params.postId],
-      queryFn: fetchMainPost,
+      queryFn: () => apis.paints.getPaintById(params.postId),
     });
     const hasMedia = post?.includes.medias.length > 0;
 

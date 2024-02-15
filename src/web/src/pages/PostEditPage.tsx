@@ -66,6 +66,19 @@ function PostEditPage() {
     () => tempSavedStorage.get() ?? [],
   );
 
+  const createPaintMutation = useMutation({
+    mutationKey: ['create-paint'],
+    mutationFn: () =>
+      apis.paints.createPaint(
+        forEditPaint({
+          text: editPostInfo.text,
+          medias: image ? [convertToMedia(image, 'image')] : [],
+          quotePaintId: search.postId,
+          taggedUserIds: tags.map((tag) => tag.id),
+        }),
+      ),
+  });
+
   const uploadMutation = useMutation({
     mutationKey: ['image-upload'],
     mutationFn: (imageFile: File) =>
@@ -103,17 +116,8 @@ function PostEditPage() {
 
   const handleClickNotSupport = () => toast('아직 지원되지 않는 기능입니다.');
 
-  const handleSubmitPost = async () => {
-    toast(
-      JSON.stringify(
-        forEditPaint({
-          text: editPostInfo.text,
-          medias: image ? [convertToMedia(image, 'image')] : [],
-          quotePaintId: search.postId,
-          taggedUserIds: tags.map((tag) => tag.id),
-        }),
-      ),
-    );
+  const handleSubmitPost = () => {
+    createPaintMutation.mutate();
   };
 
   return (

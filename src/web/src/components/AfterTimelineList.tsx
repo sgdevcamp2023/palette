@@ -3,9 +3,10 @@ import type { ForwardedRef } from 'react';
 import { useNavigate } from '@tanstack/react-router';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
+import { apis } from '@/api';
+import { cn } from '@/utils';
 import type { PaintAction } from '@/hooks';
 import { postDetailRoute } from '@/routes';
-import { cn, fetchAfterPost } from '@/utils';
 import TimelineItemBox from './TimelineItemBox';
 
 interface AfterTimelineListProps {
@@ -19,7 +20,7 @@ const AfterTimelineList = forwardRef<HTMLDivElement, AfterTimelineListProps>(
     const params = postDetailRoute.useParams();
     const { data: posts } = useSuspenseQuery({
       queryKey: ['post', params.postId, 'before'],
-      queryFn: fetchAfterPost,
+      queryFn: () => apis.paints.getBeforePaintsById(params.postId),
     });
 
     if (Array.isArray(posts) && posts.length === 0) {
