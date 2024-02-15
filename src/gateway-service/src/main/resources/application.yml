@@ -58,6 +58,7 @@ spring:
           uri: lb://SOCIAL-SERVICE
           predicates:
             - Path=/api/paints/**,
+              /api/paints,
               /api/users/{id}/following,
               /api/users/{id}/follower,
               /api/users/{id}/verified_follower,
