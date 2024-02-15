@@ -23,6 +23,7 @@ public class GrpcSocialClient {
                     .setUserId(userId)
                     .build());
         } catch (final StatusRuntimeException e) {
+
             throw new BaseException(ExceptionType.COMMON_500_000001);
         }
     }

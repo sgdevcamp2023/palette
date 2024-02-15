@@ -23,6 +23,8 @@ public class TimelineUsecase extends GSocialServiceGrpc.GSocialServiceImplBase {
     private final PaintCacheService paintCacheService;
 
     public void handlePaintCreatedEvent(PaintCreatedEvent paintCreatedEvent) {
+        System.out.println("------------------------------------------------------------------");
+        System.out.println(paintCreatedEvent);
         final GFollowerIdsResponse followerIds = gRPCSocialClient.getFollowerIds(paintCreatedEvent.authorId());
         paintCacheService.cachePaint(paintCreatedEvent.id(), Paint.from(paintCreatedEvent));
         followerPaintMapService.addPaintToFollowersTimeline(followerIds.getFollowerIdsList(), paintCreatedEvent.id());
