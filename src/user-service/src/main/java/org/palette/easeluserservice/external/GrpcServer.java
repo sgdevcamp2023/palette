@@ -31,6 +31,7 @@ public class GrpcServer extends GUserServiceGrpc.GUserServiceImplBase {
         responseObserver.onCompleted();
     }
 
+    @Transactional
     @Override
     public void checkEmailAndPassword(
             GCheckEmailAndPasswordRequest request,
