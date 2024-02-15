@@ -1,8 +1,10 @@
 import { env } from '@/constants';
 import { createApiWrappers } from './handler';
 import type {
+  EditPaint,
   JoinInfo,
   LoginInfo,
+  TimelineItem,
   User,
   UserProfile,
   UserSearchResult,
@@ -117,8 +119,29 @@ const images = createApiWrappers({
   },
 });
 
+const paints = createApiWrappers({
+  getPaintById: (paintId: TimelineItem['id']) =>
+    client.public.get<TimelineItem>(`/paints/${paintId}`),
+  getBeforePaintsById: (paintId: TimelineItem['id']) =>
+    client.public.get<TimelineItem[]>(`/paints/${paintId}/before`),
+  getAfterPaintsById: (paintId: TimelineItem['id']) =>
+    client.public.get<TimelineItem[]>(`/paints/${paintId}/after`),
+  getPaints: (paintId: TimelineItem['id']) =>
+    client.public.get<TimelineItem[]>(`/paints/${paintId}`),
+  createPaint: (request: EditPaint) => client.public.post('/paints', request),
+  getQuotePaintList: (paintId: TimelineItem['id']) =>
+    client.public.get<
+      (Pick<TimelineItem, 'authorId' | 'createdAt' | 'id' | 'text'> & {
+        includes: {
+          paints: Pick<TimelineItem, 'authorId' | 'createdAt' | 'id' | 'text'>;
+        };
+      })[]
+    >(`/paints/${paintId}/quote-paints`),
+});
+
 export const apis = {
   auth,
   users,
   images,
+  paints,
 } as const;
