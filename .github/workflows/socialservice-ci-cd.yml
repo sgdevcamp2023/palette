@@ -83,4 +83,4 @@ jobs:
           script: |
             cd /home/ubuntu/palette/social-service
             sudo fuser -k 10003/tcp
-            ./operate.sh
+            timeout 1s ./operate.sh
