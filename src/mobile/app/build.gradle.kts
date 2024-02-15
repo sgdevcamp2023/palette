@@ -13,7 +13,7 @@ android {
 
     defaultConfig {
         applicationId = "com.smilegate.Easel"
-        minSdk = 28
+        minSdk = 33
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -41,7 +41,7 @@ android {
 
 dependencies {
 
-    implementation("androidx.core:core-ktx:1.9.0")
+    implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
@@ -64,7 +64,6 @@ dependencies {
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation ("com.squareup.okhttp3:okhttp:4.10.0")
     implementation ("com.squareup.okhttp3:logging-interceptor:4.10.0")
-    implementation ("com.github.bumptech.glide:glide:4.14.1")
 
     //cardview
     implementation ("androidx.cardview:cardview:1.0.0")
@@ -84,4 +83,8 @@ dependencies {
     //FloatingActionButton
     implementation ("com.github.clans:fab:1.6.4")
 
+    implementation ("com.github.bumptech.glide:glide:4.14.1")
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.14.1")
+
+    implementation ("com.mikhaellopez:circularprogressbar:3.1.0")
 }

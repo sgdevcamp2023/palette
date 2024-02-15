@@ -251,6 +251,10 @@
         android:label="fragment_post"
         tools:layout="@layout/fragment_post">
 
+        <action
+            android:id="@+id/action_postFragment_to_timelineFragment"
+            app:destination="@id/timelineFragment"/>
+
     </fragment>
 
     <fragment

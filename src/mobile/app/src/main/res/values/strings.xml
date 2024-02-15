@@ -83,4 +83,11 @@
     <string name="empty_bookmark_layout_headline">나중을 위해 게시물 저장</string>
     <string name="empty_bookmark_layout_announce">좋은 게시물은 근야 흘려 보내지 마세요. 나중에 다시 쉽게\n찾을 수 있도록 북마크에 추가하세요.</string>
 
+
+    <!--PostFragment-->
+    <string name="post_fragment_temp_storage">임시 보관함</string>
+    <string name="post_fragment_post">게시하기</string>
+    <string name="post_fragment_sample_text">무슨 일이 일어나고 있나요?</string>
+    <string name="post_fragment_reply_approve">모든 사람이 답글을 달 수 있습니다</string>
+
 </resources>
