@@ -3,7 +3,7 @@ name: DiscoveryService CI/CD by jar
 on:
   push:
     branches:
-      - '/dev'
+      - 'discovery/dev'
 
 jobs:
   build-and-push:
