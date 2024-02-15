@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -24,13 +25,13 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.smilegate.Easel.R
 import com.smilegate.Easel.databinding.FragmentPostBinding
 import com.smilegate.Easel.presentation.adapter.PostImgAdapter
 
-
-class PostFragment : Fragment() {
+class PostFragment : Fragment(), PostImgAdapter.OnItemClickListener {
     private lateinit var binding: FragmentPostBinding
 
     private lateinit var navController: NavController
@@ -158,7 +159,14 @@ class PostFragment : Fragment() {
         } else {
             loadImagesFromGallery()
         }
+    }
 
+    override fun onImageClick(imageUri: String) {
+        // 이미지를 ivPostImg에 설정
+        Log.d("PostFragment", "Setting image to ivPostImg: $imageUri")
+        Glide.with(requireContext())
+            .load(imageUri)
+            .into(binding.ivPostImg)
     }
 
     private fun loadImagesFromGallery() {
@@ -184,7 +192,8 @@ class PostFragment : Fragment() {
         // RecyclerView 설정
         binding.rvPostImg.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        binding.rvPostImg.adapter = PostImgAdapter(imageList)
+        val adapter = PostImgAdapter(imageList, this)
+        binding.rvPostImg.adapter = adapter
     }
 
     override fun onRequestPermissionsResult(
@@ -238,6 +247,7 @@ class PostFragment : Fragment() {
 
                     binding.etPostContent.requestFocus()
                     binding.etPostContent.hint = "무슨 일이 일어나고 있나요?"
+                    binding.horizontalScrollView.visibility = VISIBLE
 
                 }
             }
