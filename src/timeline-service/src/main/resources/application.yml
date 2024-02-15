@@ -16,8 +16,6 @@ spring:
     consumer:
       group-id: timeline-consumer-group
       auto-offset-reset: earliest
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
 
 grpc:
   server:
@@ -35,9 +33,9 @@ passport:
 
 eureka:
   instance:
-    hostname: localhost
+    hostname: 15.164.88.57
   client:
     fetch-registry: true
     register-with-eureka: true
     service-url:
-      defaultZone: http://52.78.82.226:8761/eureka
+      defaultZone: http://15.164.88.57:8761/eureka
