@@ -63,63 +63,6 @@ public class GrpcServer extends GSocialServiceGrpc.GSocialServiceImplBase {
 
     private List<GPaintResponse> convertToGPaintResponses(final List<PaintResponse> paints) {
         List<GPaintResponse> result = new ArrayList<>();
-        List<GHashtagResponse> hashtags = new ArrayList<>();
-        hashtags.add(GHashtagResponse.newBuilder()
-                .setStart(0)
-                .setEnd(2)
-                .setTag("tag")
-                .build());
-
-        List<GMentionResponse> mentions = new ArrayList<>();
-        mentions.add(GMentionResponse.newBuilder()
-                .setStart(0)
-                .setEnd(2)
-                .setUserId(3L)
-                .setMention("mention")
-                .build());
-
-        List<GUserResponse> taggedUsers = new ArrayList<>();
-        taggedUsers.add(GUserResponse.newBuilder()
-                .setId(1L)
-                .setUsername("username")
-                .setNickname("nickname")
-                .setImagePath("imagePath")
-                .setStatus("status")
-                .build());
-
-        List<GMediaResponse> medias = new ArrayList<>();
-        medias.add(GMediaResponse.newBuilder()
-                .setType("type")
-                .setPath("path")
-                .build());
-
-        List<GLinkResponse> links = new ArrayList<>();
-        links.add(GLinkResponse.newBuilder()
-                .setStart(0)
-                .setEnd(2)
-                .setShortLink("shortLink")
-                .setOriginalLink("originalLink")
-                .build());
-
-        result.add(GPaintResponse.newBuilder()
-                .setPid(10L)
-                .setIsReply(false)
-                .setAuthorId(1L)
-                .setAuthorUsername("username")
-                .setAuthorNickname("nickname")
-                .setAuthorImagePath("imagePath")
-                .setAuthorStatus("status")
-                .setQuote(GPaintResponse.newBuilder()
-                        .setPid(11L)
-                        .build())
-                .setCreatedAt("2024-02-15")
-                .setText("text")
-                .addAllHashtags(hashtags)
-                .addAllMentions(mentions)
-                .addAllTaggedUsers(taggedUsers)
-                .addAllMedias(medias)
-                .addAllLinks(links)
-                .build());
         return result;
     }
 
