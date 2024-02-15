@@ -51,14 +51,12 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = {Exception.class})
     public ResponseEntity<ExceptionResponse> handleException(Exception e) {
+        logInternalException(e);
         ExceptionResponse exceptionResponse = ExceptionResponse.builder()
-                .code("USER_SERVICE_EXCEPTION")
+                .code("GATEWAY_EXCEPTION")
                 .message(e.getCause().getMessage())
                 .description(e.getLocalizedMessage())
                 .build();
-
-        logException(exceptionResponse);
-        logInternalException(e);
 
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
