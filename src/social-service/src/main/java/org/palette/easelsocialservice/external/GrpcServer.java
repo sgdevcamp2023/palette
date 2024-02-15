@@ -30,6 +30,19 @@ public class GrpcServer extends GSocialServiceGrpc.GSocialServiceImplBase {
     }
 
     @Override
+    public void getFollowerIds(
+            final GFollowerIdsRequest request,
+            final StreamObserver<GFollowerIdsResponse> responseObserver
+    ) {
+        List<Long> followerIds = userService.getFollowerIds(request.getUserId());
+        GFollowerIdsResponse response = GFollowerIdsResponse.newBuilder()
+                .addAllFollowerIds(followerIds)
+                .build();
+        responseObserver.onNext(response);
+        responseObserver.onCompleted();
+    }
+
+    @Override
     public void loadUserFollowInformation(
             final GLoadUserFollowInformationRequest request,
             final StreamObserver<GLoadUserFollowInformationResponse> responseObserver
