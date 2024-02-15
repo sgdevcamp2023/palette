@@ -4,7 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.palette.easelauthservice.AcceptanceTestBase;
-import org.palette.easelauthservice.dto.request.AuthEmailResendRequest;
+import org.palette.easelauthservice.dto.request.ResendEmailAuthRequest;
 import org.palette.easelauthservice.redis.RedisEmailAuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -23,7 +23,7 @@ class Resend extends AcceptanceTestBase {
     @Test
     @DisplayName("인증번호 재발송 성공")
     void success() throws Exception {
-        AuthEmailResendRequest request = new AuthEmailResendRequest(
+        ResendEmailAuthRequest request = new ResendEmailAuthRequest(
                 "kitten.diger@gmail.com"
         );
 

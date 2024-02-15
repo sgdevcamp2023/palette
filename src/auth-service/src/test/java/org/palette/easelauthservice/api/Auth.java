@@ -4,8 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.palette.easelauthservice.AcceptanceTestBase;
-import org.palette.easelauthservice.dto.request.EmailAuthRequest;
-import org.palette.easelauthservice.redis.EmailAuth;
+import org.palette.easelauthservice.dto.request.SendEmailAuthRequest;
 import org.palette.easelauthservice.redis.RedisEmailAuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -24,14 +23,14 @@ class Auth extends AcceptanceTestBase {
     @Test
     @DisplayName("인증번호 입력 성공")
     void success() throws Exception {
-        EmailAuthRequest emailAuthRequest = new EmailAuthRequest(
+        SendEmailAuthRequest sendEmailAuthRequest = new SendEmailAuthRequest(
                 "diger@gmail.com",
                 "testPayload"
         );
 
         executePost(
                 "/auth",
-                emailAuthRequest
+                sendEmailAuthRequest
         ).andExpect(status().isOk());
     }
 }

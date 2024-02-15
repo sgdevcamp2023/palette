@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.palette.easelauthservice.component.jwt.JwtAgent;
 import org.palette.easelauthservice.component.jwt.component.JwtPair;
 import org.palette.easelauthservice.component.mailsender.EmailAuthMailSender;
-import org.palette.easelauthservice.dto.request.AuthEmailResendRequest;
-import org.palette.easelauthservice.dto.request.EmailAuthRequest;
+import org.palette.easelauthservice.dto.request.ResendEmailAuthRequest;
+import org.palette.easelauthservice.dto.request.SendEmailAuthRequest;
 import org.palette.easelauthservice.dto.request.LoginRequest;
 import org.palette.easelauthservice.external.GrpcUserClient;
 import org.palette.easelauthservice.redis.EmailAuth;
@@ -28,8 +28,8 @@ public class AuthUsecase extends GAuthServiceGrpc.GAuthServiceImplBase {
     private final JwtAgent jwtAgent;
     private final PassportGenerator passportGenerator;
 
-    public void verifyEmail(EmailAuthRequest emailAuthRequest) {
-        String email = emailAuthRequest.email();
+    public void verifyEmail(SendEmailAuthRequest sendEmailAuthRequest) {
+        String email = sendEmailAuthRequest.email();
         EmailAuth emailAuth = redisEmailAuthService.loadByEmail(email);
         emailAuth.isAbusing();
         if (emailAuth.comparePayload(emailAuth.getAuthPayload())) {
@@ -41,8 +41,8 @@ public class AuthUsecase extends GAuthServiceGrpc.GAuthServiceImplBase {
         redisEmailAuthService.update(emailAuth);
     }
 
-    public void resend(AuthEmailResendRequest authEmailResendRequest) {
-        String email = authEmailResendRequest.email();
+    public void resend(ResendEmailAuthRequest resendEmailAuthRequest) {
+        String email = resendEmailAuthRequest.email();
         EmailAuth emailAuth = redisEmailAuthService.loadByEmail(email);
         emailAuth.isAbusing();
         emailAuth.updateAuthPayload();

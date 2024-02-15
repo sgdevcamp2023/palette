@@ -1,6 +1,6 @@
 package org.palette.easelauthservice.dto.request;
 
-public record EmailAuthRequest(
+public record SendEmailAuthRequest(
         String email,
         String payload
 ) {

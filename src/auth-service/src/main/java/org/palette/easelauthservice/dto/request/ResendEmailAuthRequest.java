@@ -1,6 +1,6 @@
 package org.palette.easelauthservice.dto.request;
 
-public record AuthEmailResendRequest(
+public record ResendEmailAuthRequest(
         String email
 ) {
 }

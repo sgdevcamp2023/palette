@@ -6,8 +6,8 @@ import org.palette.easelauthservice.component.cookie.AuthCookiePair;
 import org.palette.easelauthservice.component.cookie.CookieAgent;
 import org.palette.easelauthservice.component.cookie.LogoutCookiePair;
 import org.palette.easelauthservice.component.jwt.component.JwtPair;
-import org.palette.easelauthservice.dto.request.AuthEmailResendRequest;
-import org.palette.easelauthservice.dto.request.EmailAuthRequest;
+import org.palette.easelauthservice.dto.request.ResendEmailAuthRequest;
+import org.palette.easelauthservice.dto.request.SendEmailAuthRequest;
 import org.palette.easelauthservice.dto.request.LoginRequest;
 import org.palette.easelauthservice.usecase.AuthUsecase;
 import org.springframework.http.ResponseEntity;
@@ -25,17 +25,17 @@ public class AuthController {
 
     @PostMapping
     public ResponseEntity<Void> auth(
-            @RequestBody EmailAuthRequest emailAuthRequest
+            @RequestBody SendEmailAuthRequest sendEmailAuthRequest
     ) {
-        authUsecase.verifyEmail(emailAuthRequest);
+        authUsecase.verifyEmail(sendEmailAuthRequest);
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/re-send")
-    public ResponseEntity<Void> reSend(
-            @RequestBody AuthEmailResendRequest authEmailResendRequest
+    @PostMapping("/resend")
+    public ResponseEntity<Void> resend(
+            @RequestBody ResendEmailAuthRequest resendEmailAuthRequest
     ) {
-        authUsecase.resend(authEmailResendRequest);
+        authUsecase.resend(resendEmailAuthRequest);
         return ResponseEntity.ok().build();
     }
 
