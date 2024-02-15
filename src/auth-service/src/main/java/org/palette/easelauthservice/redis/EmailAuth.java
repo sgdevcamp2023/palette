@@ -13,7 +13,7 @@ import org.springframework.data.redis.core.RedisHash;
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-@RedisHash(value = "email_auth", timeToLive = 10000000)
+@RedisHash(value = "email_auth", timeToLive = 600)
 public class EmailAuth {
 
     @Id
