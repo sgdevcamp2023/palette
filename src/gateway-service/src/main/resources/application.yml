@@ -11,16 +11,18 @@ spring:
   cloud:
     gateway:
       globalcors:
+        # add-to-simple-url-handler-mapping: true
         cors-configurations:
           '[/**]':
-            allowedOrigins: [ "http://localhost:5173", "http://127.0.0.1:5173" ]
+            allowedOrigins: 'http://localhost:5173'
             allow-credentials: true
             allowedHeaders: '*'
             allowedMethods:
-              - PUT
               - GET
               - POST
               - DELETE
+              - PUT
+              - PATCH
               - OPTIONS
       routes:
         - id: AUTH-SERVICE
