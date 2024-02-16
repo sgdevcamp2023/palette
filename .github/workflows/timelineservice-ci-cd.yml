@@ -92,5 +92,5 @@ jobs:
           key: ${{ secrets.LIGHTSAIL_KEY }}
           script: |
             cd /home/ubuntu/palette/timeline-service
-            sudo fuser -k 10005/tcp
+            ./stop.sh
             ./operate.sh
