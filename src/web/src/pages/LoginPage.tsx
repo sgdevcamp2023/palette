@@ -1,19 +1,12 @@
-import { toast } from 'react-toastify';
 import type { ChangeEvent } from 'react';
 import { useReducer, useState } from 'react';
 import { useNavigate } from '@tanstack/react-router';
-import { useMutation } from '@tanstack/react-query';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 
-import { apis } from '@/api';
 import type { LoginInfo } from '@/@types';
 import { ContentLayout, Header } from '@/components';
 import { LoginStep, LoginStepReducer } from '@/components/login/loginReducer';
 import { LoginEmailBox, LoginPasswordBox } from '@/components/login';
-import {
-  accessTokenStorage,
-  refreshTokenStorage,
-} from '@/api/AuthTokenStorage';
 
 function LoginPage() {
   const [state, dispatch] = useReducer(LoginStepReducer, LoginStep.EMAIL);
@@ -22,17 +15,7 @@ function LoginPage() {
     password: '',
   });
   const navigate = useNavigate();
-  const loginMutate = useMutation({
-    mutationKey: ['login', loginInfo.email],
-    mutationFn: () => apis.auth.login(loginInfo),
-    onSuccess: (res) => {
-      toast(`${loginInfo.email}님 로그인이 완료되었습니다.`);
-      accessTokenStorage.setToken(res.accessToken);
-      refreshTokenStorage.setToken(res.refreshToken);
-      navigate({ to: '/home' });
-    },
-    onError: () => toast.error('아이디 혹은 비밀번호가 틀렸습니다.'),
-  });
+
 
   const handleChangeInput = (
     e: ChangeEvent<HTMLInputElement>,
@@ -68,7 +51,6 @@ function LoginPage() {
             disabled={loginInfo.password === ''}
             email={loginInfo.email}
             password={loginInfo.password}
-            onLogin={() => loginMutate.mutate()}
             onChangeInput={handleChangeInput}
             onClickForgetPassword={() => navigate({ to: '/change-password' })}
           />

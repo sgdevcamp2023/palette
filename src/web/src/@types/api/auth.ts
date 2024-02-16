@@ -26,6 +26,7 @@ export type UserSearchResult = Pick<User, 'id' | 'username' | 'nickname'> & {
 };
 export type UserProfile = Pick<
   User,
+  | 'id'
   | 'backgroundImagePath'
   | 'profileImagePath'
   | 'nickname'

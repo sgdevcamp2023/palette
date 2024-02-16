@@ -29,8 +29,11 @@ type ImageQuality =
   | 'jpegmini:best'
   | 'jpegmini:high'
   | 'jpegmini:medium';
+
+const DEFAULT_IMAGE = 'profile/qliaa3hqpcqnhwiz7gcv';
+
 export const forCloudinaryImage = (
-  id: string,
+  id: string | undefined,
   options:
     | {
         resize: true;
@@ -47,7 +50,7 @@ export const forCloudinaryImage = (
     height: 400,
   },
 ): string => {
-  const image = cld.image(id);
+  const image = cld.image(id ?? DEFAULT_IMAGE);
   if (!image) {
     throw new ImageNotFoundError();
   }

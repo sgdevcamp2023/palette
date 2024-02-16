@@ -69,12 +69,14 @@ function JoinPage() {
     switch (step) {
       case JoinStep.INFORMATION:
         return (
-          <JoinEmailBox
-            disabled={joinInfo.email === '' || joinInfo.nickname === ''}
-            email={joinInfo.email}
-            nickname={joinInfo.nickname}
+          <JoinProfileImageBox
+            disabled={joinInfo.profileImagePath === ''}
+            imageSrc={joinInfo.profileImagePath}
             onNextStep={onNextPage}
-            onChangeInput={handleChangeInput}
+            onChangeImage={(path: string) =>
+              setJoinInfo((prev) => ({ ...prev, profileImagePath: path }))
+            }
+            onJoin={() => registerMutate.mutate()}
           />
         );
       case JoinStep.EMAIL_VERIFY:

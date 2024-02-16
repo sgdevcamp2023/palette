@@ -1,9 +1,18 @@
+import { toast } from 'react-toastify';
+import { useMutation } from '@tanstack/react-query';
+import { useNavigate } from '@tanstack/react-router';
 import { memo, useCallback, useState } from 'react';
 import type { FormEvent, ChangeEvent } from 'react';
 
 import { StepTitle } from '..';
 import type { LoginInfo } from '@/@types';
 import { Button, Input, Typography } from '../common';
+import {
+  accessTokenStorage,
+  refreshTokenStorage,
+} from '@/api/AuthTokenStorage';
+import { apis } from '@/api';
+import { FullScreenSpinner } from '../skeleton';
 
 interface LoginPasswordBoxProps {
   email: string;
@@ -13,7 +22,6 @@ interface LoginPasswordBoxProps {
     e: ChangeEvent<HTMLInputElement>,
     type: keyof LoginInfo,
   ) => void;
-  onLogin: VoidFunction;
   onClickForgetPassword: VoidFunction;
 }
 
@@ -22,18 +30,33 @@ function LoginPasswordBox({
   password,
   disabled,
   onChangeInput,
-  onLogin,
   onClickForgetPassword,
 }: LoginPasswordBoxProps) {
+  const navigate = useNavigate();
   const [isHidden, setIsHidden] = useState<boolean>(true);
 
-  const handleSubmitForm = useCallback((e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const loginMutate = useMutation({
+    mutationKey: ['login', email],
+    mutationFn: () => apis.auth.login({ email, password }),
+    onSuccess: (res) => {
+      toast(`${email}님 로그인이 완료되었습니다.`);
+      accessTokenStorage.setToken(res.accessToken);
+      refreshTokenStorage.setToken(res.refreshToken);
+      navigate({ to: '/home' });
+    },
+    onError: () => toast.error('아이디 혹은 비밀번호가 틀렸습니다.'),
+  });
 
-    if (password !== '') {
-      onLogin();
-    }
-  }, []);
+  const handleSubmitForm = useCallback(
+    (e: FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+
+      if (password !== '') {
+        loginMutate.mutate();
+      }
+    },
+    [password],
+  );
 
   return (
     <>
@@ -41,7 +64,7 @@ function LoginPasswordBox({
         title="시작하려면 먼저 이메일 또는 사용자 아이디를 입력하세요."
         className="mt-[28px] break-keep"
       />
-      <form onSubmit={handleSubmitForm} className="w-full h-full">
+      <form onSubmit={handleSubmitForm} className="w-full">
         <div className="flex flex-col h-full pb-[24px] overflow-hidden">
           <div className="flex flex-col gap-[100px]">
             <div className="mt-[54px] flex flex-col gap-[40px]">
@@ -65,32 +88,37 @@ function LoginPasswordBox({
               />
             </div>
 
-            <div className="flex flex-col gap-[28px] items-center">
+            <div className="text-center">
               <Button
                 type="submit"
                 variant="filled"
                 disabled={disabled}
                 aria-disabled={disabled}
-                onClick={onLogin}
               >
                 <Typography size="body-2" color="white">
                   로그인하기
                 </Typography>
               </Button>
-              <Typography
-                size="body-1"
-                color="grey-600"
-                role="navigation"
-                aria-label="비밀번호를 잊으셨나요?"
-                className="cursor-pointer hover:text-blue-500 transition-colors"
-                onClick={onClickForgetPassword}
-              >
-                비밀번호를 잊으셨나요?
-              </Typography>
             </div>
           </div>
         </div>
       </form>
+      <Button
+        onClick={onClickForgetPassword}
+        className="cursor-pointer hover:text-blue-500 transition-colors bg-transparent"
+      >
+        <Typography
+          size="body-1"
+          color="grey-600"
+          aria-label="비밀번호를 잊으셨나요?"
+        >
+          비밀번호를 잊으셨나요?
+        </Typography>
+      </Button>
+
+      {loginMutate.isPending && (
+        <FullScreenSpinner className="left-1/2 -translate-x-1/2" />
+      )}
     </>
   );
 }
