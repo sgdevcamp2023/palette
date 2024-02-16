@@ -1,6 +1,7 @@
 package org.palette.easelsocialservice.usecase;
 
 import lombok.RequiredArgsConstructor;
+import org.palette.dto.event.UpdateUserImagePathEvent;
 import org.palette.easelsocialservice.dto.request.FollowUserRequest;
 import org.palette.easelsocialservice.dto.request.LikePaintRequest;
 import org.palette.easelsocialservice.dto.request.MarkPaintRequest;
@@ -8,6 +9,7 @@ import org.palette.easelsocialservice.dto.response.PaintResponse;
 import org.palette.easelsocialservice.persistence.domain.Paint;
 import org.palette.easelsocialservice.service.PaintService;
 import org.palette.easelsocialservice.service.UserService;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -59,5 +61,10 @@ public class UserUsecase {
 
     public void unlikePaint(final Long userId, final Long paintId) {
         userService.unlike(userId, paintId);
+    }
+
+    @Async
+    public void updateUserImagePath(final Long userId, final String newImagePath) {
+        userService.updateUserImagePath(userId, newImagePath);
     }
 }

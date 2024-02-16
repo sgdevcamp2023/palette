@@ -112,4 +112,8 @@ public class UserService {
                 .map(UserResponse::from)
                 .toList();
     }
+
+    public void updateUserImagePath(final Long userId, final String newImagePath) {
+        userRepository.updateUserImagePathByUid(userId, newImagePath);
+    }
 }
