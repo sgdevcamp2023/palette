@@ -34,6 +34,8 @@ jobs:
         
       - name: 프로젝트 빌드
         env:
+          EUREKA_HOST: ${{ secrets.EUREKA_HOST }}
+          EUREKA_DEFAULT_ZONE: ${{ secrets.EUREKA_DEFAULT_ZONE }}
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 
@@ -90,5 +92,5 @@ jobs:
           key: ${{ secrets.LIGHTSAIL_KEY }}
           script: |
             cd /home/ubuntu/palette/discovery-service
-            sudo fuser -k 8761/tcp
-            sudo ./operate.sh
+            ./stop.sh
+            ./operate.sh
