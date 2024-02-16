@@ -93,4 +93,4 @@ jobs:
           script: |
             cd /home/ubuntu/palette/timeline-service
             sudo fuser -k 10005/tcp
-            sudo ./operate.sh
+            ./operate.sh
