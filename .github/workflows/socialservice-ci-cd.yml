@@ -84,5 +84,6 @@ jobs:
           key: ${{ secrets.LIGHTSAIL_KEY }}
           script: |
             cd /home/ubuntu/palette/social-service
+            sudo su
             ./stop.sh
             ./operate.sh
