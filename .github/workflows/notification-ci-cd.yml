@@ -92,5 +92,5 @@ jobs:
           key: ${{ secrets.LIGHTSAIL_KEY }}
           script: |
             cd /home/ubuntu/palette/notification-service
-            sudo fuser -k 10009/tcp
+            ./stop.sh
             ./operate.sh
