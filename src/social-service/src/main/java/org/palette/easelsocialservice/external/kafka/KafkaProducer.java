@@ -1,4 +1,4 @@
-package org.palette.easelsocialservice.external;
+package org.palette.easelsocialservice.external.kafka;
 
 import lombok.RequiredArgsConstructor;
 import org.palette.dto.EaselEvent;
