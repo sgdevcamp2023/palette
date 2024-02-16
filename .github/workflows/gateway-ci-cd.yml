@@ -92,5 +92,5 @@ jobs:
           key: ${{ secrets.LIGHTSAIL_KEY }}
           script: |
             cd /home/ubuntu/palette/gateway-service
-            sudo fuser -k 8000/tcp
+            ./stop.sh
             ./operate.sh
