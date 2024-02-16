@@ -92,5 +92,6 @@ jobs:
           key: ${{ secrets.LIGHTSAIL_KEY }}
           script: |
             cd /home/ubuntu/palette/discovery-service
+            sudo su
             ./stop.sh
             ./operate.sh
