@@ -1,7 +1,7 @@
 import pandas as pd
 import random, re, json, tweet_image_list
 from neo4j.time import DateTime
-from datetime import datetime, timedelta
+from datetime import timedelta
 
 def get_tweet_info():
     user_df = pd.read_csv('user.csv')
