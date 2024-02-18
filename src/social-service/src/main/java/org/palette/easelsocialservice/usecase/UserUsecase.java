@@ -1,7 +1,6 @@
 package org.palette.easelsocialservice.usecase;
 
 import lombok.RequiredArgsConstructor;
-import org.palette.dto.event.UpdateUserImagePathEvent;
 import org.palette.easelsocialservice.dto.request.FollowUserRequest;
 import org.palette.easelsocialservice.dto.request.LikePaintRequest;
 import org.palette.easelsocialservice.dto.request.MarkPaintRequest;
@@ -64,7 +63,7 @@ public class UserUsecase {
     }
 
     @Async
-    public void updateUserImagePath(final Long userId, final String newImagePath) {
-        userService.updateUserImagePath(userId, newImagePath);
+    public void updateUserImagePath(final Long userId, final String nickname, final String imagePath) {
+        userService.updateUser(userId, nickname, imagePath);
     }
 }

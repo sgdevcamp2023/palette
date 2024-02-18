@@ -43,6 +43,7 @@ public interface UserRepository extends Neo4jRepository<User, Long> {
     @Query("MATCH (:User {uid: $uid})<-[:FOLLOWS]-(u:User) RETURN u.uid")
     List<Long> findFollowerUidsByUid(@Param("uid") Long uid);
 
-    @Query("MATCH (u:User {uid: $uid}) SET u.imagePath = $imagePath RETURN u;")
-    void updateUserImagePathByUid(@Param("uid") Long uid, @Param("imagePath") String imagePath);
+    @Query("MATCH (u:User {uid: $uid}) SET u.nickname = $nickname, u.imagePath = $imagePath RETURN u;")
+    void updateUserByUid(@Param("uid") Long userId, @Param("nickname") String nickname, @Param("imagePath") String imagePath);
+
 }

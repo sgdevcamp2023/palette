@@ -13,6 +13,8 @@ spring:
 
   kafka:
     bootstrap-servers: ${KAFKA_SERVERS}
+    consumer:
+      group-id: social-service
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
@@ -27,9 +29,9 @@ passport:
 
 eureka:
   instance:
-    hostname: 15.164.88.57
+    hostname: ${EUREKA_HOST}
   client:
     fetch-registry: true
     register-with-eureka: true
     service-url:
-      defaultZone: http://15.164.88.57:8761/eureka
+      defaultZone: ${EUREKA_DEFAULT_ZONE}

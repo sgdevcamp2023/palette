@@ -113,7 +113,7 @@ public class UserService {
                 .toList();
     }
 
-    public void updateUserImagePath(final Long userId, final String newImagePath) {
-        userRepository.updateUserImagePathByUid(userId, newImagePath);
+    public void updateUser(final Long userId, final String nickname, final String imagePath) {
+        userRepository.updateUserByUid(userId, nickname, imagePath);
     }
 }
