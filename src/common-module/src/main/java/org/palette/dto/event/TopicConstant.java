@@ -10,7 +10,7 @@ public enum TopicConstant {
     LIKED_PAINT("liked_paint"),
     QUOTED_PAINT("quoted_paint"),
     FOLLOWED("followed"),
-    UPDATE_PROFILE_IMAGE_PATH("update_profile_image_path")
+    UPDATE_USER("update_user")
 
     ;
     final String value;
