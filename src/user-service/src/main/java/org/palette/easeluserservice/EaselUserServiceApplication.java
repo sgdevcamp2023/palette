@@ -3,6 +3,7 @@ package org.palette.easeluserservice;
 import org.palette.aop.EaselAuthenticationContext;
 import org.palette.aop.PassportAspect;
 import org.palette.config.CommonModuleConfig;
+import org.palette.config.KafkaProducerConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Import;

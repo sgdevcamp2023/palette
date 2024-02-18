@@ -1,6 +1,7 @@
 package org.palette.easeluserservice.usecase;
 
 import lombok.RequiredArgsConstructor;
+import org.palette.dto.event.UpdateUserEvent;
 import org.palette.easeluserservice.dto.request.EditProfileRequest;
 import org.palette.easeluserservice.dto.request.JoinRequest;
 import org.palette.easeluserservice.dto.request.TemporaryJoinRequest;
@@ -9,12 +10,14 @@ import org.palette.easeluserservice.dto.response.UsernameDuplicationVerifyRespon
 import org.palette.easeluserservice.dto.response.VerifyEmailDuplicationResponse;
 import org.palette.easeluserservice.external.GrpcAuthClient;
 import org.palette.easeluserservice.external.GrpcSocialClient;
+import org.palette.easeluserservice.external.KafkaProducer;
 import org.palette.easeluserservice.persistence.User;
 import org.palette.easeluserservice.service.UserService;
 import org.palette.exception.BaseException;
 import org.palette.exception.ExceptionType;
 import org.palette.grpc.GLoadUserFollowInformationResponse;
 import org.palette.passport.component.UserInfo;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +29,7 @@ public class UserUsecase {
     private final UserService userService;
     private final GrpcSocialClient gRPCSocialClient;
     private final GrpcAuthClient gRPCAuthClient;
+    private final KafkaProducer kafkaProducer;
 
     public VerifyEmailDuplicationResponse executeNicknameDuplicationVerify(
             String email
@@ -131,13 +135,16 @@ public class UserUsecase {
             UserInfo userInfo,
             EditProfileRequest editProfileRequest
     ) {
-        userService.loadById(userInfo.id()).editProfile(
+        User user = userService.loadById(userInfo.id());
+        user.editProfile(
                 editProfileRequest.nickname(),
                 editProfileRequest.introduce(),
                 editProfileRequest.profileImagePath(),
                 editProfileRequest.backgroundImagePath(),
                 editProfileRequest.websitePath()
         );
+
+        kafkaProducer.execute(convertToUpdateUserEvent(user));
     }
 
     private void validateJoinRequest(JoinRequest joinRequest, User user) {
@@ -145,5 +152,16 @@ public class UserUsecase {
             throw new BaseException(ExceptionType.USER_401_000001);
         }
         userService.isUsernameAlreadyExists(joinRequest.username());
+    }
+
+    private UpdateUserEvent convertToUpdateUserEvent(User user) {
+        return new UpdateUserEvent(
+                user.getId(),
+                user.getProfile().nickname(),
+                user.getProfile().introduce(),
+                user.getProfile().staticContentPath().profileImagePath(),
+                user.getProfile().staticContentPath().backgroundImagePath(),
+                user.getProfile().staticContentPath().websitePath()
+        );
     }
 }
