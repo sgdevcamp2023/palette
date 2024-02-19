@@ -12,8 +12,7 @@ public record JoinRequest(
         @NotBlank
         String username,
         Optional<String> introduce,
-        Optional<String> profilePath,
-        Optional<String> backgroundPath,
+        Optional<String> profileImagePath,
         Optional<String> websitePath
 ) {
 }
