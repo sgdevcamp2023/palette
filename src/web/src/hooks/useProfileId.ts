@@ -10,10 +10,7 @@ export const useProfileId = (): string => {
   const { data: me } = useQuery({
     queryKey: ['user-profile', 'me'],
     queryFn: () => apis.users.getMyProfile(),
-    enabled:
-      typeof userIdFromStorage !== 'undefined' &&
-      userIdFromStorage != null &&
-      userIdFromStorage !== '',
+    enabled: !userIdFromStorage,
   });
 
   useEffect(() => {
