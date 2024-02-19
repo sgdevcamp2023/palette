@@ -45,7 +45,7 @@ spring:
               /api/users/{id},
               /api/users/me
           filters:
-            - RewritePath=/api/users/(?<segment>/?.*), /$\{segment}
+            - RewritePath=/api/users/?(?<segment>/?.*), /$\{segment}
 
         - id: TIMELINE-SERVICE
           uri: lb://TIMELINE-SERVICE
@@ -111,9 +111,9 @@ spring:
 
 eureka:
   instance:
-    hostname: ${EUREKA_HOST}
+    hostname: localhost
   client:
     fetch-registry: true
     register-with-eureka: true
     service-url:
-      defaultZone: ${EUREKA_DEFAULT_ZONE}
+      defaultZone: http://localhost:8761/eureka
