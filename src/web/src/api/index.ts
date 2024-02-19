@@ -21,7 +21,7 @@ const auth = createApiWrappers({
   verifyEmailCode: (request: { email: User['email']; payload: string }) =>
     client.public.post('/auth', request),
   reSendEmailCode: (request: { email: User['email'] }) =>
-    client.public.post('/auth/re-send', request),
+    client.public.post('/auth/resend', request),
   login: (request: LoginInfo) =>
     client.public.post<{ accessToken: string; refreshToken: string }>(
       '/auth/mobile',
