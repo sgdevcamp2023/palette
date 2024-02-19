@@ -10,6 +10,7 @@ export { default as FloatingButton } from './FloatingButton';
 export { default as Header } from './Header';
 export { default as MainPostBox } from './MainPostBox';
 export { default as MenuModal } from './MenuModal';
+export { default as NotSupportBox } from './NotSupportBox';
 export { default as QuotePostBox } from './QuotePostBox';
 export { default as NotSupportText } from './NotSupportText';
 export { default as StepTitle } from './StepTitle';
