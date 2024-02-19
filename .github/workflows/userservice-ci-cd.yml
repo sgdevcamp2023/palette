@@ -92,6 +92,5 @@ jobs:
           key: ${{ secrets.LIGHTSAIL_KEY }}
           script: |
             cd /home/ubuntu/palette/user-service
-            sudo su
-            ./stop.sh
-            ./operate.sh
+            sudo ./stop.sh
+            sudo ./operate.sh
