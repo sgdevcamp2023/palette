@@ -1,7 +1,8 @@
+import { memo } from 'react';
+
+import { cn } from '@/utils';
 import type { UserProfile } from '@/@types';
 import { Icon, Typography } from './common';
-import { cn } from '@/utils';
-import { memo } from 'react';
 
 interface ProfileInformationBoxProps {
   className?: string;
