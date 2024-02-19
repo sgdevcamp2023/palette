@@ -14,11 +14,7 @@ export const useProfileId = (): string => {
   });
 
   useEffect(() => {
-    if (!me) {
-      return;
-    }
-
-    if (me.id) {
+    if (me?.id) {
       userIdStorage.set(me.id);
     }
   }, [me?.id]);
