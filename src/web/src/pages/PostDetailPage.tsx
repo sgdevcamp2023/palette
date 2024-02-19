@@ -63,7 +63,10 @@ function PostDetailPage() {
           ref={parentRef}
           className="flex flex-col flex-start px-[10px] pt-[44px] pb-[50px] overflow-y-scroll max-h-[calc(100vh-44px)]"
         >
-          <AsyncBoundary pendingFallback={<span />}>
+          <AsyncBoundary
+            pendingFallback={<span />}
+            rejectedFallback={() => <span />}
+          >
             <BeforeTimelineList
               mainPostRef={mainPostRef}
               parentRef={parentRef}
@@ -79,7 +82,10 @@ function PostDetailPage() {
             />
           </AsyncBoundary>
 
-          <AsyncBoundary pendingFallback={<Spinner className="mt-10" />}>
+          <AsyncBoundary
+            pendingFallback={<Spinner className="mt-10" />}
+            rejectedFallback={() => <span />}
+          >
             <AfterTimelineList paintAction={paintAction} />
           </AsyncBoundary>
         </div>
