@@ -20,6 +20,7 @@ import {
   ProfilePage,
   PostDetailPage,
   SearchResultPage,
+  MyProfilePage,
 } from '@/pages';
 import { AsyncBoundary } from '@/components';
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from '@/constants';
@@ -121,6 +122,12 @@ export const profileRoute = new Route({
   }),
 });
 
+const myProfileRoute = new Route({
+  getParentRoute: () => rootRoute,
+  path: '/profile/me',
+  component: () => <MyProfilePage />,
+});
+
 export const editPostRoute = new Route({
   getParentRoute: () => postRoute,
   path: '/edit',
@@ -149,6 +156,7 @@ const routeTree = rootRoute.addChildren([
   joinRoute,
   changePasswordRoute,
   profileRoute,
+  myProfileRoute,
   postRoute.addChildren([editPostRoute, postDetailRoute]),
 ]);
 

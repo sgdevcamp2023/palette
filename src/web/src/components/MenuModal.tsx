@@ -57,7 +57,6 @@ function MenuModal({ onClose }: MenuModalProps) {
         {me?.username}
       </Typography>
       <div className="flex gap-[10px] mt-[12px]">
-        {/* TODO: Following, Follower Page로 이동 */}
         <div
           role="button"
           tabIndex={0}
@@ -94,8 +93,7 @@ function MenuModal({ onClose }: MenuModalProps) {
             className="flex gap-[24px] items-center"
             onClick={() =>
               navigate({
-                to: '/profile/$userId',
-                params: { userId: String(me?.id) },
+                to: '/profile/me',
               })
             }
           >
@@ -189,7 +187,6 @@ function MenuModal({ onClose }: MenuModalProps) {
             exit={{ opacity: 0 }}
             className="flex flex-col gap-[24px] mt-[24px]"
           >
-            {/* TODO: 설정 페이지로 이동 */}
             <div
               className="flex gap-[20px] items-center"
               role="button"

@@ -5,6 +5,7 @@ export { default as ErrorFallbackPage } from './ErrorFallbackPage';
 export { default as HomePage } from './HomePage';
 export { default as LoginPage } from './LoginPage';
 export { default as MembershipEntryPage } from './MembershipEntryPage';
+export { default as MyProfilePage } from './MyProfilePage';
 export { default as NotificationPage } from './NotificationPage';
 export { default as SearchPage } from './SearchPage';
 export { default as SearchResultPage } from './SearchResultPage';

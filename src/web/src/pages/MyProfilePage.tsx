@@ -15,16 +15,14 @@ import {
   Typography,
 } from '@/components';
 import { useThrottle } from '@/hooks';
-import { profileRoute } from '@/routes';
 import { DEFAULT_BACKGROUND_IMAGE } from '@/constants';
 
 const MIN_IMAGE_HEIGHT = 50;
 const DEFAULT_IMAGE_HEIGHT = 124;
-function ProfilePage() {
-  const params = profileRoute.useParams();
+function MyProfilePage() {
   const { data: user } = useQuery({
-    queryKey: ['user-profile', params.userId],
-    queryFn: () => apis.users.getUserProfile(params.userId),
+    queryKey: ['user-profile', 'me'],
+    queryFn: () => apis.users.getMyProfile(),
   });
 
   const scrollRef = useRef<HTMLDivElement | null>(null);
@@ -55,10 +53,7 @@ function ProfilePage() {
       <main className="relative">
         <ProfileHeader isExpandImage={isExpandImage} />
         <img
-          src={forCloudinaryImage(user?.backgroundImagePath, {
-            resize: false,
-            defaultImage: DEFAULT_BACKGROUND_IMAGE,
-          })}
+          src={forCloudinaryImage(user?.backgroundImagePath)}
           alt="user-background"
           className="w-full top-0 transition-all"
           style={{
@@ -68,7 +63,10 @@ function ProfilePage() {
         {isExpandImage ? (
           <div className="flex justify-end relative items-center mt-[10px] pl-3 pr-2">
             <img
-              src={forCloudinaryImage(user?.profileImagePath)}
+              src={forCloudinaryImage(user?.profileImagePath, {
+                resize: false,
+                defaultImage: DEFAULT_BACKGROUND_IMAGE,
+              })}
               alt="user"
               className="w-[70px] h-[70px] rounded-full border-2 border-white absolute left-3 top-[-35px]"
             />
@@ -113,4 +111,4 @@ function ProfilePage() {
   );
 }
 
-export default ProfilePage;
+export default MyProfilePage;
