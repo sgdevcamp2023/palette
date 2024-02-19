@@ -3,6 +3,7 @@ package org.palette.easeluserservice.external;
 import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
 import net.devh.boot.grpc.server.service.GrpcService;
+import org.palette.aop.InternalErrorLogging;
 import org.palette.easeluserservice.persistence.User;
 import org.palette.easeluserservice.service.UserService;
 import org.palette.grpc.*;
@@ -14,6 +15,7 @@ public class GrpcServer extends GUserServiceGrpc.GUserServiceImplBase {
 
     private final UserService userService;
 
+    @InternalErrorLogging
     @Transactional
     @Override
     public void updateUserAuthStatus(
@@ -31,6 +33,7 @@ public class GrpcServer extends GUserServiceGrpc.GUserServiceImplBase {
         responseObserver.onCompleted();
     }
 
+    @InternalErrorLogging
     @Transactional
     @Override
     public void checkEmailAndPassword(
@@ -55,6 +58,7 @@ public class GrpcServer extends GUserServiceGrpc.GUserServiceImplBase {
         responseObserver.onCompleted();
     }
 
+    @InternalErrorLogging
     @Override
     public void loadUserInfoFromId(
             GLoadUserInfoFromIdRequest request,
