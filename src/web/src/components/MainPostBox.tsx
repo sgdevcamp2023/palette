@@ -238,7 +238,7 @@ const MainPostBox = forwardRef<HTMLDivElement, MainPostBoxProps>(
                 iconType={post.like ? 'solidHeart' : 'heart'}
                 label="마음에 들어요 누르기"
                 className="transition-colors hover:bg-grey-200 rounded-full p-1"
-                onClick={() => paintAction.onClickHeart(post.id)}
+                onClick={() => paintAction.onClickHeart(post.id, post.like)}
               />
             </div>
             <div className="flex gap-[4px] items-center">

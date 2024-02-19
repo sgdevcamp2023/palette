@@ -109,7 +109,7 @@ function TimelineItemList({ type, className, userId }: TimelineItemListProps) {
               })
             }
             onClickRetweet={() => paintAction.onClickRetweet(paint.id)}
-            onClickHeart={() => paintAction.onClickHeart(paint.id)}
+            onClickHeart={() => paintAction.onClickHeart(paint.id, paint.like)}
             onClickViews={() => paintAction.onClickViews(paint.id)}
             onClickShare={() => paintAction.onClickShare(paint.id)}
             onClickMore={() => paintAction.onClickMore(paint.id)}

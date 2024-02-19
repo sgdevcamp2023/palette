@@ -85,6 +85,63 @@ const users = createApiWrappers({
     client.private.get<TimelineItem[]>(`/users/${userId}/media`),
   getUserLikePaints: (userId: User['id']) =>
     client.private.get<TimelineItem[]>(`/users/${userId}/heart`),
+  followUser: (userId: User['id']) =>
+    client.private.post(`/users/${userId}/follow`),
+  unFollowUser: (userId: User['id']) =>
+    client.private.delete(`/users/${userId}/follow`),
+  likePaint: ({
+    userId,
+    paintId,
+  }: {
+    userId: User['id'];
+    paintId: TimelineItem['id'];
+  }) =>
+    client.private.post<{ paintId: TimelineItem['id'] }>(
+      `/users/${userId}/like`,
+      { paintId },
+    ),
+  disLikePaint: ({
+    userId,
+    paintId,
+  }: {
+    userId: User['id'];
+    paintId: TimelineItem['id'];
+  }) =>
+    client.private.delete<{ paintId: TimelineItem['id'] }>(
+      `/users/${userId}/like/${paintId}`,
+    ),
+  rePaint: ({
+    userId,
+    paintId,
+  }: {
+    userId: User['id'];
+    paintId: TimelineItem['id'];
+  }) =>
+    client.private.post<{ paintId: TimelineItem['id'] }>(
+      `/users/${userId}/repaint`,
+      { paintId },
+    ),
+  markPaint: ({
+    userId,
+    paintId,
+  }: {
+    userId: User['id'];
+    paintId: TimelineItem['id'];
+  }) =>
+    client.private.post<{ paintId: TimelineItem['id'] }>(
+      `/users/${userId}/mark`,
+      { paintId },
+    ),
+  unMarkPaint: ({
+    userId,
+    paintId,
+  }: {
+    userId: User['id'];
+    paintId: TimelineItem['id'];
+  }) =>
+    client.private.delete<{ paintId: TimelineItem['id'] }>(
+      `/users/${userId}/mark/${paintId}`,
+    ),
 });
 
 const images = createApiWrappers({

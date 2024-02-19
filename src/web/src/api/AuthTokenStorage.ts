@@ -33,5 +33,6 @@ export class AuthTokenStorage {
   }
 }
 
+export const userIdStorage = generateLocalStorage<string>('@@@userId');
 export const accessTokenStorage = new AuthTokenStorage('@@@accessToken');
 export const refreshTokenStorage = new AuthTokenStorage('@@@refreshToken');
