@@ -17,7 +17,6 @@ import org.palette.exception.BaseException;
 import org.palette.exception.ExceptionType;
 import org.palette.grpc.GLoadUserFollowInformationResponse;
 import org.palette.passport.component.UserInfo;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -71,8 +70,7 @@ public class UserUsecase {
                 joinRequest.password(),
                 joinRequest.username(),
                 joinRequest.introduce(),
-                joinRequest.profilePath(),
-                joinRequest.backgroundPath(),
+                joinRequest.profileImagePath(),
                 joinRequest.websitePath()
         );
 

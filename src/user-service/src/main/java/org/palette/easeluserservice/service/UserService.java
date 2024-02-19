@@ -47,7 +47,6 @@ public class UserService {
             String username,
             Optional<String> introduce,
             Optional<String> profileImagePath,
-            Optional<String> backgroundImagePath,
             Optional<String> websitePath
     ) {
         user.join(
@@ -59,7 +58,7 @@ public class UserService {
                         introduce.orElse(DEFAULT_STRING_VALUE),
                         new StaticContentPath(
                                 profileImagePath.orElse(DEFAULT_STRING_VALUE),
-                                backgroundImagePath.orElse(DEFAULT_STRING_VALUE),
+                                DEFAULT_STRING_VALUE,
                                 websitePath.orElse(DEFAULT_STRING_VALUE)
                         )
                 )
