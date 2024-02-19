@@ -1,6 +1,7 @@
 package org.palette.easeluserservice.usecase;
 
 import lombok.RequiredArgsConstructor;
+import org.palette.dto.event.TemporaryUserDeletionEvent;
 import org.palette.dto.event.UpdateUserEvent;
 import org.palette.easeluserservice.dto.request.EditProfileRequest;
 import org.palette.easeluserservice.dto.request.JoinRequest;
@@ -163,5 +164,9 @@ public class UserUsecase {
                 user.getProfile().staticContentPath().backgroundImagePath(),
                 user.getProfile().staticContentPath().websitePath()
         );
+    }
+
+    public void deleteTemporaryUser(final TemporaryUserDeletionEvent temporaryUserDeletionEvent) {
+        userService.deleteTemporaryUser(temporaryUserDeletionEvent.email());
     }
 }
