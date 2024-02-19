@@ -3,7 +3,7 @@ import { useNavigate } from '@tanstack/react-router';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
 import { apis } from '@/api';
-import { usePaintAction } from '@/hooks';
+import { usePaintAction, useProfileId } from '@/hooks';
 import type { TimelineItem, User } from '@/@types';
 import TimelineItemBox from './TimelineItemBox';
 import { cn, createDummyTimelineItem } from '@/utils';
@@ -24,7 +24,6 @@ interface TimelineItemListProps {
     | 'search-user'
     | 'search-media';
   className?: string;
-  userId?: User['id'];
 }
 
 function delay(ms: number): Promise<TimelineItem[]> {
@@ -46,10 +45,10 @@ function getQueryFnByType(
   userId?: User['id'],
 ): Promise<TimelineItem[]> {
   switch (type) {
-    case 'follow':
-      return apis.auth.logout() as unknown as Promise<TimelineItem[]>;
     case 'recommend':
       return delay(1250);
+    case 'follow':
+      return apis.auth.logout() as unknown as Promise<TimelineItem[]>;
     case 'post':
       if (!userId) throw new UserNotFoundError();
       return apis.users.getUserPaints(userId);
@@ -75,14 +74,15 @@ function getQueryFnByType(
   }
 }
 
-function TimelineItemList({ type, className, userId }: TimelineItemListProps) {
+function TimelineItemList({ type, className }: TimelineItemListProps) {
+  const userId = useProfileId();
   const { data: paints } = useSuspenseQuery({
     queryKey: ['paint', type, userId],
     queryFn: () => getQueryFnByType(type, userId),
   });
 
   const navigate = useNavigate();
-  const paintAction = usePaintAction();
+  const paintAction = usePaintAction({ userId });
 
   return (
     <>

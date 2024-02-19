@@ -26,8 +26,5 @@ export const useProfileId = (): string => {
     }
   }, [me?.id]);
 
-  if (!me?.id || userIdFromStorage) {
-    throw new Error('유효하지 않은 사용자입니다.');
-  }
-  return me.id ?? userIdFromStorage;
+  return me?.id ?? userIdFromStorage ?? '';
 };

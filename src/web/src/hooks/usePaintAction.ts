@@ -5,7 +5,6 @@ import { useMutation } from '@tanstack/react-query';
 import { apis } from '@/api';
 import { useThrottle } from './useThrottle';
 import type { TimelineItem } from '@/@types';
-import { useProfileId } from './useProfileId';
 import { usePreservedCallback } from './usePreservedCallback';
 
 interface BottomSheetState {
@@ -25,9 +24,7 @@ const INITIAL_SHOW_MORE_MENU = {
   show: false,
 } as const;
 
-export const usePaintAction = () => {
-  const userId = useProfileId();
-
+export const usePaintAction = ({ userId }: { userId: string }) => {
   const navigate = useNavigate();
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState<BottomSheetState>(
     INITIAL_BOTTOM_SHEET_OPEN,

@@ -30,11 +30,12 @@ function PostDetailPage() {
   });
   const router = useRouter();
   const navigate = useNavigate();
-  const paintAction = usePaintAction();
   const params = postDetailRoute.useParams();
 
   const parentRef = useRef<HTMLDivElement>(null);
   const mainPostRef = useRef<HTMLDivElement>(null);
+
+  const paintAction = usePaintAction({ userId: me?.id ?? '' });
 
   return (
     <>
