@@ -1,7 +1,7 @@
 import { toast } from 'react-toastify';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 
-import { ContentLayout, Header } from '@/components';
+import { ContentLayout, Header, NotSupportBox } from '@/components';
 
 function ChatPage() {
   const handleNotSupport = () => {
@@ -32,8 +32,8 @@ function ChatPage() {
           onClick: handleNotSupport,
         }}
       />
-      <ContentLayout>
-        <h1 className="text-headline-1">CHAT</h1>
+      <ContentLayout className="h-full mt-0 mb-0">
+        <NotSupportBox description="채팅 기능은 아직 준비중이에요!" />
       </ContentLayout>
     </>
   );
