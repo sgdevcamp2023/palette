@@ -2,6 +2,7 @@ package org.palette.easelnotificationservice.external.grpc;
 
 import io.grpc.StatusRuntimeException;
 import net.devh.boot.grpc.client.inject.GrpcClient;
+import org.palette.aop.InternalErrorLogging;
 import org.palette.exception.BaseException;
 import org.palette.exception.ExceptionType;
 import org.palette.grpc.GFollowerIdsRequest;
@@ -15,6 +16,7 @@ public class GrpcSocialClient {
     @GrpcClient("social-service")
     private GSocialServiceGrpc.GSocialServiceBlockingStub gSocialServiceBlockingStub;
 
+    @InternalErrorLogging
     public GFollowerIdsResponse getPaintWriterFollowersIds(final Long writerId) {
         try {
             return gSocialServiceBlockingStub.getFollowerIds(

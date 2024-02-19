@@ -3,6 +3,7 @@ package org.palette.easelnotificationservice.external.grpc;
 import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
 import net.devh.boot.grpc.server.service.GrpcService;
+import org.palette.aop.InternalErrorLogging;
 import org.palette.easelnotificationservice.service.UserService;
 import org.palette.grpc.GCreateNotificationUserRequest;
 import org.palette.grpc.GCreateNotificationUserResponse;
@@ -15,6 +16,7 @@ public class GrpcServer extends GNotificationServiceGrpc.GNotificationServiceImp
 
     private final UserService userService;
 
+    @InternalErrorLogging
     @Transactional
     @Override
     public void createNotificationUser(
