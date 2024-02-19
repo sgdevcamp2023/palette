@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 
 @FeignClient(name = "AUTH-SERVICE")
+@Deprecated
 public interface AuthFeignClient extends AuthClient {
 
     @Override
