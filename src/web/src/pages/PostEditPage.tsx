@@ -2,14 +2,13 @@ import { useState } from 'react';
 import { toast } from 'react-toastify';
 import type { ChangeEvent } from 'react';
 import { useNavigate, useRouter } from '@tanstack/react-router';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 
 import type { EditPaint, User } from '@/@types';
 import { useAutoHeightTextArea } from '@/hooks';
 import { EditPostCancelBottomSheet } from '@/components/bottomSheet';
 import {
-  DUMMY_USER,
   convertToMedia,
   countByte,
   forCloudinaryImage,
@@ -46,7 +45,6 @@ const tempSavedStorage =
   generateLocalStorage<EditPaint[]>('temp-saved-storage');
 
 function PostEditPage() {
-  const user = DUMMY_USER;
   const router = useRouter();
   const navigate = useNavigate();
   const search = editPostRoute.useSearch();
@@ -56,6 +54,11 @@ function PostEditPage() {
   const [image, setImage] = useState<string>('');
   const isNotDirty =
     editPostInfo.text.length === EMPTY_LENGTH && image.length === EMPTY_LENGTH;
+
+  const { data: me } = useQuery({
+    queryKey: ['user-profile', 'me'],
+    queryFn: () => apis.users.getMyProfile(),
+  });
 
   const [isModalOpen, setIsModalOpen] = useState<{
     cancel: boolean;
@@ -182,7 +185,7 @@ function PostEditPage() {
       <main className="pt-[64px] pb-[40px] max-h-screen overflow-y-scroll">
         <div className="px-[10px] flex gap-[8px]">
           <img
-            src={forCloudinaryImage(user.profileImagePath)}
+            src={forCloudinaryImage(me?.profileImagePath)}
             alt="user"
             className="w-[34px] h-[34px] rounded-full"
           />
