@@ -9,13 +9,12 @@ spring:
     redis:
       host: ${TIMELINE_REDIS_HOST}
       port: ${TIMELINE_REDIS_PORT}
-      password: ${TIMELINE_REDIS_PASSWORD}
 
   kafka:
     bootstrap-servers: ${KAFKA_SERVERS}
     consumer:
-      group-id: timeline-consumer-group
-      auto-offset-reset: earliest
+      group-id: timeline-service
+      auto-offset-reset: latest
 
 grpc:
   server:
