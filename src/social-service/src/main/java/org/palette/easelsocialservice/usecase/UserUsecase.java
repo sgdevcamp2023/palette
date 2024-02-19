@@ -8,6 +8,7 @@ import org.palette.easelsocialservice.dto.response.PaintResponse;
 import org.palette.easelsocialservice.persistence.domain.Paint;
 import org.palette.easelsocialservice.service.PaintService;
 import org.palette.easelsocialservice.service.UserService;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -59,5 +60,10 @@ public class UserUsecase {
 
     public void unlikePaint(final Long userId, final Long paintId) {
         userService.unlike(userId, paintId);
+    }
+
+    @Async
+    public void updateUserImagePath(final Long userId, final String nickname, final String imagePath) {
+        userService.updateUser(userId, nickname, imagePath);
     }
 }

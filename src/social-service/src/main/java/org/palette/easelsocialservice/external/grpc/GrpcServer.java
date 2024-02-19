@@ -1,4 +1,4 @@
-package org.palette.easelsocialservice.external;
+package org.palette.easelsocialservice.external.grpc;
 
 import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;
