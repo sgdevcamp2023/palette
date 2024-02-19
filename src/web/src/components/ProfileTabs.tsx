@@ -24,9 +24,13 @@ function ProfileTabs({ className }: ProfileTabsProps) {
             >
               <AsyncBoundary
                 pendingFallback={<TimelineItemListSkeleton />}
-                rejectedFallback={(props) => <ErrorWithResetBox {...props} />}
+                rejectedFallback={(props) => (
+                  <div className="py-10 pb-32">
+                    <ErrorWithResetBox {...props} />
+                  </div>
+                )}
               >
-                <TimelineItemList type="my-post" />
+                <TimelineItemList type="post" />
               </AsyncBoundary>
             </ContentLayout>
           ),
@@ -40,9 +44,13 @@ function ProfileTabs({ className }: ProfileTabsProps) {
             >
               <AsyncBoundary
                 pendingFallback={<TimelineItemListSkeleton />}
-                rejectedFallback={(props) => <ErrorWithResetBox {...props} />}
+                rejectedFallback={(props) => (
+                  <div className="py-10 pb-32">
+                    <ErrorWithResetBox {...props} />
+                  </div>
+                )}
               >
-                <TimelineItemList type="my-reply" />
+                <TimelineItemList type="reply" />
               </AsyncBoundary>
             </ContentLayout>
           ),
@@ -56,9 +64,13 @@ function ProfileTabs({ className }: ProfileTabsProps) {
             >
               <AsyncBoundary
                 pendingFallback={<TimelineItemListSkeleton />}
-                rejectedFallback={(props) => <ErrorWithResetBox {...props} />}
+                rejectedFallback={(props) => (
+                  <div className="py-10 pb-32">
+                    <ErrorWithResetBox {...props} />
+                  </div>
+                )}
               >
-                <TimelineItemList type="my-post" />
+                <TimelineItemList type="post" />
               </AsyncBoundary>
             </ContentLayout>
           ),
@@ -72,7 +84,11 @@ function ProfileTabs({ className }: ProfileTabsProps) {
             >
               <AsyncBoundary
                 pendingFallback={<TimelineItemListSkeleton />}
-                rejectedFallback={(props) => <ErrorWithResetBox {...props} />}
+                rejectedFallback={(props) => (
+                  <div className="py-10 pb-32">
+                    <ErrorWithResetBox {...props} />
+                  </div>
+                )}
               >
                 <TimelineItemList type="media" />
               </AsyncBoundary>
@@ -88,7 +104,11 @@ function ProfileTabs({ className }: ProfileTabsProps) {
             >
               <AsyncBoundary
                 pendingFallback={<TimelineItemListSkeleton />}
-                rejectedFallback={(props) => <ErrorWithResetBox {...props} />}
+                rejectedFallback={(props) => (
+                  <div className="py-10 pb-32">
+                    <ErrorWithResetBox {...props} />
+                  </div>
+                )}
               >
                 <TimelineItemList type="heart" />
               </AsyncBoundary>
@@ -98,6 +118,6 @@ function ProfileTabs({ className }: ProfileTabsProps) {
       ]}
     />
   );
-};
+}
 
 export default ProfileTabs;

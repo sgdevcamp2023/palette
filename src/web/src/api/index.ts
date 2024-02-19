@@ -77,6 +77,14 @@ const users = createApiWrappers({
         | 'websitePath'
       > & { userId: User['id'] }
     >('/users/profile', request),
+  getUserPaints: (userId: User['id']) =>
+    client.private.get<TimelineItem[]>(`/users/${userId}/paint`),
+  getUserReplyPaints: (userId: User['id']) =>
+    client.private.get<TimelineItem[]>(`/users/${userId}/reply`),
+  getUserMediaPaints: (userId: User['id']) =>
+    client.private.get<TimelineItem[]>(`/users/${userId}/media`),
+  getUserLikePaints: (userId: User['id']) =>
+    client.private.get<TimelineItem[]>(`/users/${userId}/heart`),
 });
 
 const images = createApiWrappers({
