@@ -27,15 +27,26 @@ dependencies {
     implementation("net.devh:grpc-spring-boot-starter:2.15.0.RELEASE")
     implementation(project(":common-module"))
 
-    implementation("org.springframework.boot:spring-boot-starter-web")
+    // Discovery
     implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
+
+    // Tomcat
+    implementation("org.springframework.boot:spring-boot-starter-web")
+
+    // JMS
     implementation("org.springframework.boot:spring-boot-starter-mail")
 
+    // Redis
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
 
+    // JWT
     implementation ("io.jsonwebtoken:jjwt-api:0.11.5")
     implementation ("io.jsonwebtoken:jjwt-impl:0.11.5")
     implementation ("io.jsonwebtoken:jjwt-jackson:0.11.5")
+
+    // CircuitBreaker
+//    implementation("org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j")
+//    implementation("org.springframework.boot:spring-boot-starter-actuator")
 
     compileOnly("org.projectlombok:lombok")
     annotationProcessor("org.projectlombok:lombok")
