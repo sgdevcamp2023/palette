@@ -53,7 +53,10 @@ function MyProfilePage() {
       <main className="relative">
         <ProfileHeader isExpandImage={isExpandImage} />
         <img
-          src={forCloudinaryImage(user?.backgroundImagePath)}
+          src={forCloudinaryImage(user?.backgroundImagePath, {
+            resize: false,
+            defaultImage: DEFAULT_BACKGROUND_IMAGE,
+          })}
           alt="user-background"
           className="w-full top-0 transition-all"
           style={{
@@ -63,10 +66,7 @@ function MyProfilePage() {
         {isExpandImage ? (
           <div className="flex justify-end relative items-center mt-[10px] pl-3 pr-2">
             <img
-              src={forCloudinaryImage(user?.profileImagePath, {
-                resize: false,
-                defaultImage: DEFAULT_BACKGROUND_IMAGE,
-              })}
+              src={forCloudinaryImage(user?.profileImagePath)}
               alt="user"
               className="w-[70px] h-[70px] rounded-full border-2 border-white absolute left-3 top-[-35px]"
             />
