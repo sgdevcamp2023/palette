@@ -91,6 +91,7 @@ public class UserUsecase {
         );
 
         return new RetrieveUserResponse(
+                retrieveTargetUser.getId(),
                 retrieveTargetUser.getProfile().staticContentPath().backgroundImagePath(),
                 retrieveTargetUser.getProfile().staticContentPath().profileImagePath(),
                 retrieveTargetUser.getUsername(),
@@ -116,6 +117,7 @@ public class UserUsecase {
         );
 
         return new RetrieveUserResponse(
+                user.getId(),
                 user.getProfile().staticContentPath().backgroundImagePath(),
                 user.getProfile().staticContentPath().profileImagePath(),
                 user.getUsername(),
