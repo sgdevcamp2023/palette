@@ -31,7 +31,7 @@ public class AuthController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/re-send")
+    @PostMapping("/resend")
     public ResponseEntity<Void> resend(
             @RequestBody ResendEmailAuthRequest resendEmailAuthRequest
     ) {
