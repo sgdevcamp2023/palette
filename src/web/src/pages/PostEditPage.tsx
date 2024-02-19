@@ -383,7 +383,9 @@ function PostEditPage() {
         />
       )}
 
-      {uploadMutation.isPending && <FullScreenSpinner />}
+      {(uploadMutation.isPending || createPaintMutation.isPending) && (
+        <FullScreenSpinner />
+      )}
     </>
   );
 }
