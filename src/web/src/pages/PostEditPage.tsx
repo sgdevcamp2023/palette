@@ -1,15 +1,14 @@
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import type { ChangeEvent } from 'react';
-import { useRouter } from '@tanstack/react-router';
-import { useMutation } from '@tanstack/react-query';
+import { useNavigate, useRouter } from '@tanstack/react-router';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 
 import type { EditPaint, User } from '@/@types';
 import { useAutoHeightTextArea } from '@/hooks';
 import { EditPostCancelBottomSheet } from '@/components/bottomSheet';
 import {
-  DUMMY_USER,
   convertToMedia,
   countByte,
   forCloudinaryImage,
@@ -46,8 +45,8 @@ const tempSavedStorage =
   generateLocalStorage<EditPaint[]>('temp-saved-storage');
 
 function PostEditPage() {
-  const user = DUMMY_USER;
   const router = useRouter();
+  const navigate = useNavigate();
   const search = editPostRoute.useSearch();
   const [tags, setTags] = useState<Pick<User, 'id' | 'nickname'>[]>([]);
   const [editPostInfo, setEditPostInfo] = useState<EditPaint>(forEditPaint({}));
@@ -55,6 +54,11 @@ function PostEditPage() {
   const [image, setImage] = useState<string>('');
   const isNotDirty =
     editPostInfo.text.length === EMPTY_LENGTH && image.length === EMPTY_LENGTH;
+
+  const { data: me } = useQuery({
+    queryKey: ['user-profile', 'me'],
+    queryFn: () => apis.users.getMyProfile(),
+  });
 
   const [isModalOpen, setIsModalOpen] = useState<{
     cancel: boolean;
@@ -65,6 +69,22 @@ function PostEditPage() {
   const [tempSavedPost] = useState<EditPaint[]>(
     () => tempSavedStorage.get() ?? [],
   );
+
+  const createPaintMutation = useMutation({
+    mutationKey: ['create-paint'],
+    mutationFn: () =>
+      apis.paints.createPaint(
+        forEditPaint({
+          text: editPostInfo.text,
+          medias: image ? [convertToMedia(image, 'image')] : [],
+          quotePaintId: search.postId,
+          taggedUserIds: tags.map((tag) => tag.id),
+        }),
+      ),
+    onSuccess: () => {
+      navigate({ to: '/home' });
+    },
+  });
 
   const uploadMutation = useMutation({
     mutationKey: ['image-upload'],
@@ -103,17 +123,8 @@ function PostEditPage() {
 
   const handleClickNotSupport = () => toast('아직 지원되지 않는 기능입니다.');
 
-  const handleSubmitPost = async () => {
-    toast(
-      JSON.stringify(
-        forEditPaint({
-          text: editPostInfo.text,
-          medias: image ? [convertToMedia(image, 'image')] : [],
-          quotePaintId: search.postId,
-          taggedUserIds: tags.map((tag) => tag.id),
-        }),
-      ),
-    );
+  const handleSubmitPost = () => {
+    createPaintMutation.mutate();
   };
 
   return (
@@ -174,7 +185,7 @@ function PostEditPage() {
       <main className="pt-[64px] pb-[40px] max-h-screen overflow-y-scroll">
         <div className="px-[10px] flex gap-[8px]">
           <img
-            src={forCloudinaryImage(user.profileImagePath)}
+            src={forCloudinaryImage(me?.profileImagePath)}
             alt="user"
             className="w-[34px] h-[34px] rounded-full"
           />
@@ -375,7 +386,9 @@ function PostEditPage() {
         />
       )}
 
-      {uploadMutation.isPending && <FullScreenSpinner />}
+      {(uploadMutation.isPending || createPaintMutation.isPending) && (
+        <FullScreenSpinner />
+      )}
     </>
   );
 }

@@ -2,20 +2,12 @@ import { generateLocalStorage } from '@/utils';
 import { AuthenticationRequiredError } from './AuthenticationRequiredError';
 
 export class AuthTokenStorage {
-  private readonly authTokenKey = '@@@authToken';
-
-  private readonly storage = generateLocalStorage<string | null>(
-    this.authTokenKey,
-  );
-
   private authToken: string | null;
 
-  constructor() {
-    this.spawn();
-    this.authToken = null;
-  }
+  private storage: ReturnType<typeof generateLocalStorage<string | null>>;
 
-  spawn(): void {
+  constructor(key: string) {
+    this.storage = generateLocalStorage<string | null>(key);
     this.authToken = this.storage.get();
   }
 
@@ -41,4 +33,6 @@ export class AuthTokenStorage {
   }
 }
 
-export const authTokenStorage = new AuthTokenStorage();
+export const userIdStorage = generateLocalStorage<string>('@@@userId');
+export const accessTokenStorage = new AuthTokenStorage('@@@accessToken');
+export const refreshTokenStorage = new AuthTokenStorage('@@@refreshToken');

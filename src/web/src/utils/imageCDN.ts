@@ -1,7 +1,7 @@
 import { Cloudinary } from '@cloudinary/url-gen';
 import { Resize } from '@cloudinary/url-gen/actions';
 
-import { env } from '@/constants';
+import { DEFAULT_PROFILE_IMAGE, env } from '@/constants';
 import type { ImageSize } from '@/@types';
 
 export const cld = new Cloudinary({
@@ -29,8 +29,9 @@ type ImageQuality =
   | 'jpegmini:best'
   | 'jpegmini:high'
   | 'jpegmini:medium';
+
 export const forCloudinaryImage = (
-  id: string,
+  id: string | undefined,
   options:
     | {
         resize: true;
@@ -38,8 +39,9 @@ export const forCloudinaryImage = (
         ratio?: '16:9' | '3:4' | '1:1' | false;
         width: ImageSize['width'];
         height: ImageSize['height'];
+        defaultImage?: string;
       }
-    | { resize: false; quality?: ImageQuality } = {
+    | { resize: false; quality?: ImageQuality; defaultImage?: string } = {
     resize: true,
     quality: 'auto',
     ratio: '1:1',
@@ -47,7 +49,7 @@ export const forCloudinaryImage = (
     height: 400,
   },
 ): string => {
-  const image = cld.image(id);
+  const image = cld.image(id ?? options.defaultImage ?? DEFAULT_PROFILE_IMAGE);
   if (!image) {
     throw new ImageNotFoundError();
   }

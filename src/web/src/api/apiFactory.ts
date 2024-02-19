@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import { env } from '@/constants';
-import { authTokenStorage } from './AuthTokenStorage';
+import { accessTokenStorage } from './AuthTokenStorage';
 
 export const createApiClient = ({ auth }: { auth: boolean }) => {
   const client = axios.create({
@@ -10,7 +10,7 @@ export const createApiClient = ({ auth }: { auth: boolean }) => {
 
   if (auth) {
     client.interceptors.request.use((config) => {
-      const token = authTokenStorage.getTokenOrThrow();
+      const token = accessTokenStorage.getTokenOrThrow();
       config.headers.Authorization = `Bearer ${token}`;
       return config;
     });

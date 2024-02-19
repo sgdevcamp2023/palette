@@ -52,7 +52,7 @@ function TempSavedPostModal({
     const nextTempSavedPost = [...tempSavedPost].filter(
       (post) => JSON.stringify(post) !== JSON.stringify(item),
     );
-    if (item.medias.length) setImage(item.medias[0].id);
+    if (item.medias.length) setImage(item.medias[0].path);
     setEditPostInfo(item);
     setTempSavedPost(nextTempSavedPost);
     tempSavedStorage.remove();
@@ -119,7 +119,7 @@ function TempSavedPostModal({
                 </div>
                 {post.medias.length > 0 && (
                   <img
-                    src={post.medias[0].id}
+                    src={post.medias[0].path}
                     alt="uploaded"
                     className="w-[62px] h-[62px] rounded-[12px]"
                   />

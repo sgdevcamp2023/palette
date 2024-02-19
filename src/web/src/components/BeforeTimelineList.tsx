@@ -3,9 +3,10 @@ import type { ForwardedRef, RefObject } from 'react';
 import { useNavigate } from '@tanstack/react-router';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
+import { cn } from '@/utils';
+import { apis } from '@/api';
 import type { PaintAction } from '@/hooks';
 import { postDetailRoute } from '@/routes';
-import { cn, fetchBeforePost } from '@/utils';
 import TimelineItemBox from './TimelineItemBox';
 
 interface BeforeTimelineListProps {
@@ -25,7 +26,7 @@ const BeforeTimelineList = forwardRef<HTMLDivElement, BeforeTimelineListProps>(
     const params = postDetailRoute.useParams();
     const { data: posts, isSuccess } = useSuspenseQuery({
       queryKey: ['post', params.postId, 'before'],
-      queryFn: fetchBeforePost,
+      queryFn: () => apis.paints.getBeforePaintsById(params.postId),
     });
 
     if (Array.isArray(posts) && posts.length === 0) {
@@ -64,7 +65,7 @@ const BeforeTimelineList = forwardRef<HTMLDivElement, BeforeTimelineListProps>(
               })
             }
             onClickRetweet={() => paintAction.onClickRetweet(post.id)}
-            onClickHeart={() => paintAction.onClickHeart(post.id)}
+            onClickHeart={() => paintAction.onClickHeart(post.id, post.like)}
             onClickViews={() => paintAction.onClickViews(post.id)}
             onClickShare={() => paintAction.onClickShare(post.id)}
             onClickMore={() => paintAction.onClickMore(post.id)}

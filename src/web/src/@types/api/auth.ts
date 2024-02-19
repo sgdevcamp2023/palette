@@ -14,7 +14,7 @@ export interface User {
   nickname: string;
   introduce: string;
   websitePath: string;
-  joinedAt: Date;
+  joinedAt: string;
   followerCount: number;
   followingCount: number;
 }
@@ -26,6 +26,7 @@ export type UserSearchResult = Pick<User, 'id' | 'username' | 'nickname'> & {
 };
 export type UserProfile = Pick<
   User,
+  | 'id'
   | 'backgroundImagePath'
   | 'profileImagePath'
   | 'nickname'

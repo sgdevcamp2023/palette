@@ -2,7 +2,7 @@ import { memo, useEffect, useState } from 'react';
 import { cva } from 'class-variance-authority';
 import type { MouseEvent, MouseEventHandler, ReactNode } from 'react';
 
-import { DUMMY_USER, cn } from '@/utils';
+import { cn } from '@/utils';
 import MenuModal from './MenuModal';
 import Typography from './common/Typography';
 import type { IconKeyType } from './common/Icon';
@@ -148,10 +148,7 @@ function Header({ left, center, right, position, className }: HeaderProps) {
         <HeaderButton header={right} align="end" />
       </header>
       {isProfile && isProfileModalOpen && (
-        <MenuModal
-          user={DUMMY_USER}
-          onClose={() => setIsProfileModalOpen(false)}
-        />
+        <MenuModal onClose={() => setIsProfileModalOpen(false)} />
       )}
     </>
   );

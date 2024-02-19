@@ -59,7 +59,6 @@ function JoinPasswordBox({
             variant="filled"
             disabled={disabled}
             aria-disabled={disabled}
-            onClick={onNextStep}
           >
             <Typography size="body-2" color="white">
               다음

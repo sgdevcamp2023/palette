@@ -15,16 +15,14 @@ import {
   Typography,
 } from '@/components';
 import { useThrottle } from '@/hooks';
-import { profileRoute } from '@/routes';
 import { DEFAULT_BACKGROUND_IMAGE } from '@/constants';
 
 const MIN_IMAGE_HEIGHT = 50;
 const DEFAULT_IMAGE_HEIGHT = 124;
-function ProfilePage() {
-  const params = profileRoute.useParams();
+function MyProfilePage() {
   const { data: user } = useQuery({
-    queryKey: ['user-profile', params.userId],
-    queryFn: () => apis.users.getUserProfile(params.userId),
+    queryKey: ['user-profile', 'me'],
+    queryFn: () => apis.users.getMyProfile(),
   });
 
   const scrollRef = useRef<HTMLDivElement | null>(null);
@@ -113,4 +111,4 @@ function ProfilePage() {
   );
 }
 
-export default ProfilePage;
+export default MyProfilePage;

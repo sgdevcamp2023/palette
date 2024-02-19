@@ -20,7 +20,6 @@ import { apis } from '@/api';
 const MAX_PASSWORD_LENGTH = 8;
 
 function JoinPage() {
-  const [isVerifyEmail, setIsVerifyEmail] = useState<boolean>(false);
   const [state, dispatch] = useReducer(joinStepReducer, JoinStep.INFORMATION);
   const [joinInfo, setJoinInfo] = useState<JoinInfo>({
     nickname: '',
@@ -45,7 +44,9 @@ function JoinPage() {
       toast(`${joinInfo.username}님 회원가입이 완료되었습니다.`);
       navigate({ to: '/' });
     },
-    onError: () => toast('회원가입에 문제가 생겼습니다.'),
+    onError: () => {
+      toast('회원가입에 문제가 생겼습니다.');
+    },
   });
 
   const onNextPage = () => dispatch({ direction: 'next' });
@@ -64,43 +65,14 @@ function JoinPage() {
     setJoinInfo((prev) => ({ ...prev, [type]: e.target.value }));
   };
 
-  const tempRegisterMutate = useMutation({
-    mutationKey: ['temp-register', joinInfo.username],
-    mutationFn: () =>
-      apis.users.temporaryJoin({
-        email: joinInfo.email,
-        nickname: joinInfo.nickname,
-      }),
-    onError: () => toast('서버에 문제가 생겼습니다.'),
-    onSuccess: () => {
-      setIsVerifyEmail(true);
-      onNextPage();
-    },
-  });
-
-  const verifyEmailCodeMutate = useMutation({
-    mutationKey: ['verify-email', joinInfo.username],
-    mutationFn: () =>
-      apis.auth.verifyEmailCode({
-        email: joinInfo.email,
-        payload: joinInfo.emailVerifyCode,
-      }),
-    onError: () => toast('인증코드가 다릅니다.'),
-    onSuccess: () => {
-      setIsVerifyEmail(true);
-      onNextPage();
-    },
-  });
-
   const getJoinBox = (step: JoinStep): JSX.Element => {
     switch (step) {
       case JoinStep.INFORMATION:
         return (
           <JoinEmailBox
-            disabled={joinInfo.email === '' || joinInfo.nickname === ''}
             email={joinInfo.email}
             nickname={joinInfo.nickname}
-            onNextStep={() => tempRegisterMutate.mutate()}
+            onNextStep={onNextPage}
             onChangeInput={handleChangeInput}
           />
         );
@@ -109,8 +81,8 @@ function JoinPage() {
           <JoinEmailVerifyBox
             email={joinInfo.email}
             emailVerifyCode={joinInfo.emailVerifyCode}
-            disabled={isVerifyEmail || joinInfo.emailVerifyCode === ''}
-            onNextStep={() => verifyEmailCodeMutate.mutate()}
+            disabled={joinInfo.emailVerifyCode === ''}
+            onNextStep={onNextPage}
             onChangeInput={handleChangeInput}
           />
         );

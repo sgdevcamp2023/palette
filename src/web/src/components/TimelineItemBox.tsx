@@ -75,7 +75,7 @@ function TimelineItemBox({
             </Typography>
             <Typography size="body-1" color="blueGrey-800">
               {post.authorUsername} ·{' '}
-              {getDiffDateText(post.createdAt, new Date())}
+              {getDiffDateText(new Date(post.createdAt), new Date())}
             </Typography>
           </div>
           <AccessibleIconButton

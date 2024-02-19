@@ -3,8 +3,8 @@ import { useNavigate } from '@tanstack/react-router';
 import { useSuspenseQuery } from '@tanstack/react-query';
 
 import { apis } from '@/api';
-import { usePaintAction } from '@/hooks';
-import type { TimelineItem } from '@/@types';
+import { usePaintAction, useProfileId } from '@/hooks';
+import type { TimelineItem, User } from '@/@types';
 import TimelineItemBox from './TimelineItemBox';
 import { cn, createDummyTimelineItem } from '@/utils';
 import ReplyBottomSheet from './bottomSheet/ReplyBottomSheet';
@@ -15,8 +15,8 @@ interface TimelineItemListProps {
   type:
     | 'follow'
     | 'recommend'
-    | 'my-post'
-    | 'my-reply'
+    | 'post'
+    | 'reply'
     | 'media'
     | 'heart'
     | 'search-recommend'
@@ -34,22 +34,33 @@ function delay(ms: number): Promise<TimelineItem[]> {
   });
 }
 
+class UserNotFoundError extends Error {
+  constructor() {
+    super('유효하지 않는 사용자입니다.');
+  }
+}
+
 function getQueryFnByType(
   type: TimelineItemListProps['type'],
+  userId?: User['id'],
 ): Promise<TimelineItem[]> {
   switch (type) {
-    case 'follow':
-      return apis.auth.logout() as unknown as Promise<TimelineItem[]>;
     case 'recommend':
       return delay(1250);
-    case 'my-post':
-      return delay(1250);
-    case 'my-reply':
-      return delay(1250);
+    case 'follow':
+      return apis.auth.logout() as unknown as Promise<TimelineItem[]>;
+    case 'post':
+      if (!userId) throw new UserNotFoundError();
+      return apis.users.getUserPaints(userId);
+    case 'reply':
+      if (!userId) throw new UserNotFoundError();
+      return apis.users.getUserReplyPaints(userId);
     case 'media':
-      return delay(1250);
+      if (!userId) throw new UserNotFoundError();
+      return apis.users.getUserMediaPaints(userId);
     case 'heart':
-      return delay(1250);
+      if (!userId) throw new UserNotFoundError();
+      return apis.users.getUserLikePaints(userId);
     case 'search-recommend':
       return delay(1250);
     case 'search-recent':
@@ -64,13 +75,14 @@ function getQueryFnByType(
 }
 
 function TimelineItemList({ type, className }: TimelineItemListProps) {
+  const userId = useProfileId();
   const { data: paints } = useSuspenseQuery({
-    queryKey: ['paint', type],
-    queryFn: () => getQueryFnByType(type),
+    queryKey: ['paint', type, userId],
+    queryFn: () => getQueryFnByType(type, userId),
   });
 
   const navigate = useNavigate();
-  const paintAction = usePaintAction();
+  const paintAction = usePaintAction({ userId });
 
   return (
     <>
@@ -97,7 +109,7 @@ function TimelineItemList({ type, className }: TimelineItemListProps) {
               })
             }
             onClickRetweet={() => paintAction.onClickRetweet(paint.id)}
-            onClickHeart={() => paintAction.onClickHeart(paint.id)}
+            onClickHeart={() => paintAction.onClickHeart(paint.id, paint.like)}
             onClickViews={() => paintAction.onClickViews(paint.id)}
             onClickShare={() => paintAction.onClickShare(paint.id)}
             onClickMore={() => paintAction.onClickMore(paint.id)}

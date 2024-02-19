@@ -27,7 +27,7 @@ describe('forEditPaint', () => {
       hashtags: [],
       mentions: [],
       links: [],
-      medias: [{ type: 'image', id: 'https://www.naver.com' }],
+      medias: [{ type: 'image', path: 'https://www.naver.com' }],
     });
   });
 
@@ -114,7 +114,7 @@ describe('forEditPaint', () => {
           end: 33,
         },
       ],
-      medias: [{ type: 'image', id: 'https://www.naver.com' }],
+      medias: [{ type: 'image', path: 'https://www.naver.com' }],
     });
   });
 
@@ -149,7 +149,7 @@ describe('forEditPaint', () => {
           end: 93,
         },
       ],
-      medias: [{ type: 'image', id: 'https://www.naver.com' }],
+      medias: [{ type: 'image', path: 'https://www.naver.com' }],
     });
   });
 });

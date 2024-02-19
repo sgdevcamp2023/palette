@@ -1,8 +1,11 @@
 import { useRef } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { useNavigate, useRouter } from '@tanstack/react-router';
 
+import { apis } from '@/api';
 import { usePaintAction } from '@/hooks';
+import { postDetailRoute } from '@/routes';
 import {
   AfterTimelineList,
   AsyncBoundary,
@@ -12,24 +15,27 @@ import {
   MainPostBox,
   Typography,
 } from '@/components';
-import { DUMMY_USER, forCloudinaryImage } from '@/utils';
+import { forCloudinaryImage } from '@/utils';
 import {
   ReplyBottomSheet,
   ShareBottomSheet,
   ViewsBottomSheet,
 } from '@/components/bottomSheet';
 import { Spinner, TimelineItemBoxSkeleton } from '@/components/skeleton';
-import { postDetailRoute } from '@/routes';
 
 function PostDetailPage() {
-  const me = DUMMY_USER;
+  const { data: me } = useQuery({
+    queryKey: ['user-profile', 'me'],
+    queryFn: () => apis.users.getMyProfile(),
+  });
   const router = useRouter();
   const navigate = useNavigate();
-  const paintAction = usePaintAction();
   const params = postDetailRoute.useParams();
 
   const parentRef = useRef<HTMLDivElement>(null);
   const mainPostRef = useRef<HTMLDivElement>(null);
+
+  const paintAction = usePaintAction({ userId: me?.id ?? '' });
 
   return (
     <>
@@ -58,7 +64,10 @@ function PostDetailPage() {
           ref={parentRef}
           className="flex flex-col flex-start px-[10px] pt-[44px] pb-[50px] overflow-y-scroll max-h-[calc(100vh-44px)]"
         >
-          <AsyncBoundary pendingFallback={<span />}>
+          <AsyncBoundary
+            pendingFallback={<span />}
+            rejectedFallback={() => <span />}
+          >
             <BeforeTimelineList
               mainPostRef={mainPostRef}
               parentRef={parentRef}
@@ -74,7 +83,10 @@ function PostDetailPage() {
             />
           </AsyncBoundary>
 
-          <AsyncBoundary pendingFallback={<Spinner className="mt-10" />}>
+          <AsyncBoundary
+            pendingFallback={<Spinner className="mt-10" />}
+            rejectedFallback={() => <span />}
+          >
             <AfterTimelineList paintAction={paintAction} />
           </AsyncBoundary>
         </div>
@@ -89,7 +101,7 @@ function PostDetailPage() {
         }
       >
         <img
-          src={forCloudinaryImage(me.profileImagePath)}
+          src={forCloudinaryImage(me?.profileImagePath)}
           alt="your profile"
           className="w-[36px] h-[36px] rounded-full"
         />
