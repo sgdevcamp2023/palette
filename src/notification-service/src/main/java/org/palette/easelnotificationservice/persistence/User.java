@@ -38,10 +38,10 @@ public class User {
     @Enumerated(EnumType.STRING)
     private List<AlarmAllowedType> alarmAllowedStatus = new ArrayList<>();
 
-    public static User build(String nickname, String androidFcmToken) {
+    public static User build(String nickname) {
         return User.builder()
                 .nickname(nickname)
-                .androidFcmToken(androidFcmToken)
+                .androidFcmToken("")
                 .alarmAllowedStatus(DEFAULT_ALARM_ALLOWED_STATUS).build();
     }
 
