@@ -51,18 +51,13 @@ public class PaintEntityConverter {
 
     public List<PaintResponse> convertToPaintResponse(Long userId, List<Paint> paints) {
         return paints.stream()
-                .map(paint -> {
-                    PaintMetrics metrics = paintRepository.findMetricsByPidAndUid(userId, paint.getPid());
-                    return convertToPaintResponse(paint, metrics);
-                })
+                .map(paint -> convertToPaintResponse(paint, paintRepository.findMetricsByPidAndUid(userId, paint.getPid())))
                 .toList();
     }
 
     public List<PaintResponse> convertToPaintResponse(final List<Paint> paints) {
         return paints.stream()
-                .map(paint -> {
-                    return convertToPaintResponse(paint);
-                })
+                .map(this::convertToPaintResponse)
                 .toList();
     }
 
