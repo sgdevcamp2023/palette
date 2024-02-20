@@ -84,7 +84,9 @@ spring:
         - id: SEARCH-SERVICE
           uri: lb://SEARCH-SERVICE
           predicates:
-            - Path=/api/search/**
+            - Path=
+              /api/search/paints/**
+              /api/search/users/**
           filters:
             - RewritePath=/api/search/?(?<segment>.*), /$\{segment}
 
