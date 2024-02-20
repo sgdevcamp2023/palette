@@ -1,8 +1,10 @@
 package org.palette.easeltimelineservice.usecase;
 
 import lombok.RequiredArgsConstructor;
+import org.palette.dto.event.LikedPaintEvent;
 import org.palette.dto.event.PaintCreatedEvent;
 import org.palette.dto.event.ReplyCreatedEvent;
+import org.palette.dto.event.UnlikedPaintEvent;
 import org.palette.easeltimelineservice.external.grpc.GrpcSocialClient;
 import org.palette.easeltimelineservice.persistence.domain.Paint;
 import org.palette.easeltimelineservice.service.FollowerPaintMapService;
@@ -38,5 +40,13 @@ public class TimelineUsecase extends GSocialServiceGrpc.GSocialServiceImplBase {
 
     public void handleReplyCreatedEvent(final ReplyCreatedEvent replyCreatedEvent) {
         paintMetricsService.incrementReplyCount(replyCreatedEvent.pid());
+    }
+
+    public void handleLikedPaintEvent(final LikedPaintEvent likedPaintEvent) {
+        paintMetricsService.incrementLikeCount(likedPaintEvent.paintId());
+    }
+
+    public void handleUnlikedPaintEvent(final UnlikedPaintEvent unlikedPaintEvent) {
+        paintMetricsService.decrementLikeCount(unlikedPaintEvent.paintId());
     }
 }
