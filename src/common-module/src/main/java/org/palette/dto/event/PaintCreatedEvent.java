@@ -11,7 +11,7 @@ import java.util.List;
 @Builder(access = AccessLevel.PRIVATE)
 public record PaintCreatedEvent(
         Long id,
-        Boolean isReply,
+        Long replyTo,
         Long authorId,
         String authorUsername,
         String authorNickname,
