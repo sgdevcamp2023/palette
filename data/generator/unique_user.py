@@ -157,7 +157,6 @@
 
 
 ###############################################
-
 # import pandas as pd
 
 # # CSV 파일 읽기
@@ -176,3 +175,15 @@
 
 # # 변경된 데이터를 새 CSV 파일로 저장
 # user_df.to_csv('updated_user.csv', index=False)
+
+##################################################
+import pandas as pd
+
+# 데이터 불러오기
+user_df = pd.read_csv('user.csv')
+
+# 'Uid' 컬럼의 모든 값에 1 더하기
+user_df['Uid'] = user_df['Uid'] + 1
+
+# 변경된 데이터프레임을 새로운 CSV 파일에 저장
+user_df.to_csv('user.csv', index=False)
