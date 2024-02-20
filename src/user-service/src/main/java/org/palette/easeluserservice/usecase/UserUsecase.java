@@ -9,6 +9,7 @@ import org.palette.easeluserservice.dto.response.RetrieveUserResponse;
 import org.palette.easeluserservice.dto.response.UsernameDuplicationVerifyResponse;
 import org.palette.easeluserservice.dto.response.VerifyEmailDuplicationResponse;
 import org.palette.easeluserservice.external.GrpcAuthClient;
+import org.palette.easeluserservice.external.GrpcNotificationClient;
 import org.palette.easeluserservice.external.GrpcSocialClient;
 import org.palette.easeluserservice.external.KafkaProducer;
 import org.palette.easeluserservice.persistence.User;
@@ -28,6 +29,7 @@ public class UserUsecase {
     private final UserService userService;
     private final GrpcSocialClient gRPCSocialClient;
     private final GrpcAuthClient gRPCAuthClient;
+    private final GrpcNotificationClient grpcNotificationClient;
     private final KafkaProducer kafkaProducer;
 
     public VerifyEmailDuplicationResponse executeNicknameDuplicationVerify(
@@ -75,6 +77,7 @@ public class UserUsecase {
         );
 
         gRPCSocialClient.createSocialUser(user);
+        grpcNotificationClient.createNotificationUser(user);
     }
 
     public RetrieveUserResponse retrieveOther(

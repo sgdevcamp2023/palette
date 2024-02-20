@@ -7,17 +7,10 @@ import org.palette.easeluserservice.dto.request.JoinRequest;
 import org.palette.easeluserservice.e2e.AcceptanceTestBase;
 import org.palette.easeluserservice.persistence.User;
 import org.palette.easeluserservice.persistence.UserJpaRepository;
-import org.palette.easeluserservice.persistence.embed.Password;
-import org.palette.easeluserservice.persistence.embed.Pin;
-import org.palette.easeluserservice.persistence.embed.Profile;
-import org.palette.easeluserservice.persistence.embed.StaticContentPath;
-import org.palette.easeluserservice.persistence.enums.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.time.LocalDateTime;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -45,7 +38,6 @@ class Join extends AcceptanceTestBase {
                 "diger@gmail.com",
                 "digerPassword",
                 "digerHashTag",
-                null,
                 null,
                 null,
                 null
