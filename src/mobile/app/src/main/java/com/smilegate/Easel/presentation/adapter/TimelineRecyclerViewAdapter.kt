@@ -167,6 +167,14 @@ class TimelineRecyclerViewAdapter(private val context: Context, private val time
                 binding.ivTimelineContentImg.setVisibleOrGone(item.contentImg != null)
                 binding.ivTimelineContentCard.setVisibleOrGone(item.contentImg != null)
 
+                binding.quoteCardView.setVisibleOrGone(item.viewType != VIEW_TYPE_ORIGINAL)
+                binding.ivQuoteProfileImg.setVisibleOrGone(item.quoteProfileImg != null)
+                binding.tvQuoteNickname.setVisibleOrGone(item.quoteNickName != null)
+                binding.tvQuoteUsername.setVisibleOrGone(item.quoteUserName != null)
+                binding.tvQuoteTime.setVisibleOrGone(item.quoteTimeAgo != null)
+                binding.tvQuoteText.setVisibleOrGone(item.quoteContent != null)
+                binding.ivQuoteContentImg.setVisibleOrGone(item.quoteContentImg != null)
+
                 binding.tvTimelineHashtag.setVisibleOrGone(!item.hashtag.isNullOrEmpty())
                 binding.tvTimelineMention.setVisibleOrInvisible(item.replys != null)
                 binding.tvTimelineRetweet.setVisibleOrInvisible(item.reposts != null)
@@ -240,6 +248,14 @@ class TimelineRecyclerViewAdapter(private val context: Context, private val time
             binding.tvTimelineContent.setVisibleOrGone(!item.content.isNullOrEmpty())
             binding.ivTimelineContentImg.setVisibleOrGone(item.contentImg != null)
             binding.ivTimelineContentCard.setVisibleOrGone(item.contentImg != null)
+
+            binding.quoteCardView.setVisibleOrGone(item.viewType != VIEW_TYPE_ORIGINAL)
+            binding.ivQuoteProfileImg.setVisibleOrGone(item.quoteProfileImg != null)
+            binding.tvQuoteNickname.setVisibleOrGone(item.quoteNickName != null)
+            binding.tvQuoteUsername.setVisibleOrGone(item.quoteUserName != null)
+            binding.tvQuoteTime.setVisibleOrGone(item.quoteTimeAgo != null)
+            binding.tvQuoteText.setVisibleOrGone(item.quoteContent != null)
+            binding.ivQuoteContentImg.setVisibleOrGone(item.quoteContentImg != null)
 
             binding.tvTimelineHashtag.setVisibleOrGone(!item.hashtag.isNullOrEmpty())
             binding.tvTimelineMention.setVisibleOrInvisible(item.replys != null)
