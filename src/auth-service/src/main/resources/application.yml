@@ -23,6 +23,12 @@ spring:
       host: ${AUTH_REDIS_HOST}
       port: ${AUTH_REDIS_PORT}
 
+  kafka:
+    bootstrap-servers: ${KAFKA_SERVERS}
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
 jwt:
   secret-key: ${AUTH_JWT_SECRET_KEY}
 
