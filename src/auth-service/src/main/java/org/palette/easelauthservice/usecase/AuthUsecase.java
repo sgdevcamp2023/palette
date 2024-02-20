@@ -1,6 +1,7 @@
 package org.palette.easelauthservice.usecase;
 
 import lombok.RequiredArgsConstructor;
+import org.palette.aop.InternalErrorLogging;
 import org.palette.easelauthservice.component.jwt.JwtAgent;
 import org.palette.easelauthservice.component.jwt.component.JwtPair;
 import org.palette.easelauthservice.component.mailsender.EmailAuthMailSender;
@@ -28,6 +29,7 @@ public class AuthUsecase extends GAuthServiceGrpc.GAuthServiceImplBase {
     private final JwtAgent jwtAgent;
     private final PassportGenerator passportGenerator;
 
+    @InternalErrorLogging
     public void verifyEmail(SendEmailAuthRequest sendEmailAuthRequest) {
         String email = sendEmailAuthRequest.email();
         EmailAuth emailAuth = redisEmailAuthService.loadByEmail(email);
@@ -41,6 +43,7 @@ public class AuthUsecase extends GAuthServiceGrpc.GAuthServiceImplBase {
         redisEmailAuthService.update(emailAuth);
     }
 
+    @InternalErrorLogging
     public void resend(ResendEmailAuthRequest resendEmailAuthRequest) {
         String email = resendEmailAuthRequest.email();
         EmailAuth emailAuth = redisEmailAuthService.loadByEmail(email);
@@ -52,6 +55,7 @@ public class AuthUsecase extends GAuthServiceGrpc.GAuthServiceImplBase {
         emailAuthMailSender.send(email, emailAuth.getAuthPayload());
     }
 
+    @InternalErrorLogging
     public JwtPair login(LoginRequest loginRequest) {
         String email = loginRequest.email();
         String password = loginRequest.password();
@@ -61,6 +65,7 @@ public class AuthUsecase extends GAuthServiceGrpc.GAuthServiceImplBase {
         );
     }
 
+    @InternalErrorLogging
     public String validateJWT(String jwtPayload) {
         Long userId = jwtAgent.parseUserId(jwtPayload);
         GLoadUserInfoFromIdResponse gLoadUserInfoFromIdResponse = grpcUserClient.loadById(userId);
