@@ -1,6 +1,9 @@
 package org.palette.easelsearchservice.dto.response;
 
+import org.palette.grpc.GPaintResponse;
+
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public record PaintResponse(
         Long id,
@@ -23,9 +26,56 @@ public record PaintResponse(
         Entities entities,
         Includes includes
 ) {
+    public static PaintResponse buildByGPaintResponse(GPaintResponse gPaint, PaintResponse quotePaint,
+                                             Entities entities, Includes includes) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-    // TODO: add real Paint data
-    public PaintResponse(Long id, String text) {
-        this(id, false, null, null, null, null, null, null, null, text, 0, 0, 0, false, false, false, 0, null, null);
+        return new PaintResponse(
+                gPaint.getPid(),
+                gPaint.getIsReply(),
+                gPaint.getAuthorId(),
+                gPaint.getAuthorUsername(),
+                gPaint.getAuthorNickname(),
+                gPaint.getAuthorImagePath(),
+                gPaint.getAuthorStatus(),
+                quotePaint,
+                LocalDateTime.parse(gPaint.getCreatedAt(), formatter),
+                gPaint.getText(),
+                0,
+                0,
+                0,
+                false,
+                false,
+                false,
+                0,
+                entities,
+                includes
+        );
+    }
+
+    public static PaintResponse buildByGPaintResponse(GPaintResponse gPaint, Entities entities, Includes includes) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        return new PaintResponse(
+                gPaint.getPid(),
+                gPaint.getIsReply(),
+                gPaint.getAuthorId(),
+                gPaint.getAuthorUsername(),
+                gPaint.getAuthorNickname(),
+                gPaint.getAuthorImagePath(),
+                gPaint.getAuthorStatus(),
+                null,
+                LocalDateTime.parse(gPaint.getCreatedAt(), formatter),
+                gPaint.getText(),
+                0,
+                0,
+                0,
+                false,
+                false,
+                false,
+                0,
+                entities,
+                includes
+        );
     }
 }

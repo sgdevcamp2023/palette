@@ -17,6 +17,12 @@ elasticsearch:
 grpc:
   server:
     port: 11011
+  client:
+    social-service:
+      address: 'discovery:///SOCIAL-SERVICE'
+      enableKeepAlive: true
+      keepAliveWithoutCalls: true
+      negotiationType: plaintext
 
 passport:
   key: ${PASSPORT_KEY}
