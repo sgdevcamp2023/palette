@@ -14,7 +14,7 @@ public enum TopicConstant {
     UPDATE_USER("update_user"),
     REPLY_CREATED("reply_created"),
     TEMPORARY_USER_DELETION("temporary_user_deletion"),
-    ;
+    UNLIKED_PAINT("unliked_paint");
     final String value;
 
     public String value() {
