@@ -12,7 +12,8 @@ public class KafkaConsumer {
 
     private final UserUsecase userUsecase;
 
-    @KafkaListener(topics = "paint_created", groupId = "${spring.kafka.consumer.group-id}")
+    @KafkaListener(topics = "paint_created", groupId = "${spring.kafka.consumer.group-id}",
+            containerFactory = "kafkaListenerContainerFactory")
     public void consumePaintCreatedEvent(TemporaryUserDeletionEvent temporaryUserDeletionEvent) {
         userUsecase.deleteTemporaryUser(temporaryUserDeletionEvent);
     }
