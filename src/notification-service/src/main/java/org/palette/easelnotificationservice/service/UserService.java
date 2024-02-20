@@ -17,6 +17,10 @@ public class UserService {
 
     private final UserJpaRepository userJpaRepository;
 
+    public User create(String nickname) {
+        return userJpaRepository.save(User.build(nickname));
+    }
+
     public List<User> loadAllByIds(List<Long> ids) {
         return userJpaRepository.findAllById(ids);
     }
