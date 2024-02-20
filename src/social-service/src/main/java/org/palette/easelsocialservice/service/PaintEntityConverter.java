@@ -112,7 +112,7 @@ public class PaintEntityConverter {
     }
 
     public static PaintCreatedEvent convertToPainCreatedEvent(Paint paint, boolean isQuotedPaint) {
-        boolean isReply = paint.getInReplyToPaint() == null;
+        Long inReplyToPaintId = paint.getInReplyToPaint() == null ? null : paint.getInReplyToPaint().getPaint().getPid();
         User author = paint.getAuthor().getUser();
         PaintCreatedEvent quotePaint = isQuotedPaint || paint.getQuotePaint() == null ? null : convertToPainCreatedEvent(paint.getQuotePaint().getPaint(), true);
         List<HashtagRecord> hashtagRecords = convertToHashtagRecord(paint.getHashtags());
@@ -123,7 +123,7 @@ public class PaintEntityConverter {
 
         return new PaintCreatedEvent(
                 paint.getPid(),
-                isReply,
+                inReplyToPaintId,
                 author.getUid(),
                 author.getUsername(),
                 author.getNickname(),

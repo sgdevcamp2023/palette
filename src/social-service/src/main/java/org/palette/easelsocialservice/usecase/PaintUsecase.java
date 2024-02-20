@@ -3,7 +3,6 @@ package org.palette.easelsocialservice.usecase;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.palette.dto.event.ReplyCreatedEvent;
 import org.palette.easelsocialservice.dto.request.MentionRequest;
 import org.palette.easelsocialservice.dto.request.PaintCreateRequest;
 import org.palette.easelsocialservice.dto.request.RepaintRequest;
@@ -50,7 +49,6 @@ public class PaintUsecase {
                 .ifPresent(inReplyToPaintId -> {
                     Paint inReplyToPaint = paintService.getPaintById(inReplyToPaintId);
                     PaintEntityBinder.bindReplyPaint(paint, inReplyToPaint);
-                    kafkaProducer.execute(new ReplyCreatedEvent(inReplyToPaint.getPid()));
                 });
 
         Optional.ofNullable(paintCreateRequest.mentions())

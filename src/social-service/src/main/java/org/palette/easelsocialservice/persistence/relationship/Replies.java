@@ -1,5 +1,6 @@
 package org.palette.easelsocialservice.persistence.relationship;
 
+import lombok.Getter;
 import org.palette.easelsocialservice.persistence.domain.Paint;
 import org.springframework.data.neo4j.core.schema.RelationshipId;
 import org.springframework.data.neo4j.core.schema.RelationshipProperties;
@@ -12,6 +13,7 @@ public class Replies {
     private Long id;
 
     @TargetNode
+    @Getter
     private Paint paint;
 
     public Replies(Paint paint) {
