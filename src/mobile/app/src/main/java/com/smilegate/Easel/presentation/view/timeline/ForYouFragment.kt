@@ -27,6 +27,9 @@ class ForYouFragment : Fragment() {
 
     private var savedScrollPosition: Int = 0
 
+    private val maxDummyData = 20
+    private val allViewType = 3
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -106,8 +109,8 @@ class ForYouFragment : Fragment() {
 
         val timelineList = mutableListOf<TimelineItem>()
 
-        for (i in 0 until 8) {
-            val viewType = i % 3 // 랜덤한 뷰 타입 결정
+        for (i in 0 until maxDummyData) {
+            val viewType = i % allViewType // 랜덤한 뷰 타입 결정
 
             val timelineItem = when (viewType) {
                 0 -> TimelineItem(
@@ -150,7 +153,7 @@ class ForYouFragment : Fragment() {
                     2,
                     5,
                 )
-                else -> TimelineItem(
+                2 -> TimelineItem(
                     viewType,
                     profileImgId,
                     "이원영",
@@ -170,6 +173,7 @@ class ForYouFragment : Fragment() {
                     null,
                     24,
                 )
+                else -> throw IllegalArgumentException("Invalid view type")
             }
 
             timelineList.add(timelineItem)

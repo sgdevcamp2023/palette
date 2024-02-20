@@ -119,7 +119,7 @@ class FollowingFragment : Fragment() {
 
         val timelineList = mutableListOf<TimelineItem>()
 
-        for (i in 0 until 8) {
+        for (i in 0 until 20) {
             val viewType = i % 3 // 랜덤한 뷰 타입 결정
 
             val timelineItem = when (viewType) {
