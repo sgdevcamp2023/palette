@@ -2,6 +2,7 @@ package org.palette.easelsocialservice.service;
 
 import lombok.RequiredArgsConstructor;
 import org.palette.dto.event.PaintCreatedEvent;
+import org.palette.dto.event.ReplyCreatedEvent;
 import org.palette.dto.event.detail.*;
 import org.palette.easelsocialservice.dto.response.*;
 import org.palette.easelsocialservice.persistence.PaintRepository;
@@ -19,6 +20,10 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class PaintEntityConverter {
     private final PaintRepository paintRepository;
+
+    public static ReplyCreatedEvent convertToReplyEvent(final Long pid) {
+        return new ReplyCreatedEvent(pid);
+    }
 
     public PaintResponse getQuotePaint(Paint paint) {
         return Optional.ofNullable(paint.getQuotePaint())
@@ -51,18 +56,13 @@ public class PaintEntityConverter {
 
     public List<PaintResponse> convertToPaintResponse(Long userId, List<Paint> paints) {
         return paints.stream()
-                .map(paint -> {
-                    PaintMetrics metrics = paintRepository.findMetricsByPidAndUid(userId, paint.getPid());
-                    return convertToPaintResponse(paint, metrics);
-                })
+                .map(paint -> convertToPaintResponse(paint, paintRepository.findMetricsByPidAndUid(userId, paint.getPid())))
                 .toList();
     }
 
     public List<PaintResponse> convertToPaintResponse(final List<Paint> paints) {
         return paints.stream()
-                .map(paint -> {
-                    return convertToPaintResponse(paint);
-                })
+                .map(this::convertToPaintResponse)
                 .toList();
     }
 
@@ -122,7 +122,7 @@ public class PaintEntityConverter {
         PaintCreatedEvent quotePaint = isQuotedPaint || paint.getQuotePaint() == null ? null : convertToPainCreatedEvent(paint.getQuotePaint().getPaint(), true);
         List<HashtagRecord> hashtagRecords = convertToHashtagRecord(paint.getHashtags());
         List<MentionRecord> mentionRecords = convertToMentionRecord(paint.getMentions());
-        List<UserRecord> taggedUserRecords  = convertToUserRecord(paint.getTaggedUsers());
+        List<UserRecord> taggedUserRecords = convertToUserRecord(paint.getTaggedUsers());
         List<MediaRecord> mediaRecords = convertToMediaRecord(paint.getMedias());
         List<LinkRecord> linkRecords = convertToLinkRecord(paint.getLinks());
 
@@ -142,7 +142,7 @@ public class PaintEntityConverter {
                 taggedUserRecords,
                 mediaRecords,
                 linkRecords
-                );
+        );
     }
 
     private static List<LinkRecord> convertToLinkRecord(final List<Contains> links) {

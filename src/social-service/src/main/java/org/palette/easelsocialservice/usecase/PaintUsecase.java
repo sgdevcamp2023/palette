@@ -49,6 +49,7 @@ public class PaintUsecase {
                 .ifPresent(inReplyToPaintId -> {
                     Paint inReplyToPaint = paintService.getPaintById(inReplyToPaintId);
                     PaintEntityBinder.bindReplyPaint(paint, inReplyToPaint);
+                    kafkaProducer.execute(PaintEntityConverter.convertToReplyEvent(inReplyToPaint.getPid()));
                 });
 
         Optional.ofNullable(paintCreateRequest.mentions())
