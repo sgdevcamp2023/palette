@@ -1,11 +1,12 @@
 package org.pallete.easelgatewayservice.util;
 
 import com.netflix.appinfo.InstanceInfo;
-import com.netflix.discovery.DiscoveryClient;
 import com.netflix.discovery.EurekaClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -26,6 +27,8 @@ public class DiscoveryUtilizer {
 
     @Scheduled(fixedDelay = 10000)
     public void renewAuthInstancesRoundRobinList() {
-        authInstancesRoundRobinList = new RoundRobinList<>(discoveryClient.getApplication(AUTH_SERVICE_ID).getInstances());
+        final List<InstanceInfo> authServiceInstances = discoveryClient.getApplication(AUTH_SERVICE_ID).getInstances();
+        if (authServiceInstances.isEmpty()) return;
+        authInstancesRoundRobinList = new RoundRobinList<>(authServiceInstances);
     }
 }
