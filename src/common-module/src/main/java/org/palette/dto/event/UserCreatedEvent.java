@@ -6,7 +6,8 @@ public record UserCreatedEvent(
         Long id,
         String nickname,
         String username,
-        String introduce
+        String introduce,
+        String profileImagePath
 ) implements EaselEvent {
     @Override
     public String getTopic() {
