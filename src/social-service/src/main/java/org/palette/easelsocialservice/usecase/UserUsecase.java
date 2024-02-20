@@ -1,10 +1,13 @@
 package org.palette.easelsocialservice.usecase;
 
 import lombok.RequiredArgsConstructor;
+import org.palette.dto.event.LikedPaintEvent;
+import org.palette.dto.event.UnlikedPaintEvent;
 import org.palette.easelsocialservice.dto.request.FollowUserRequest;
 import org.palette.easelsocialservice.dto.request.LikePaintRequest;
 import org.palette.easelsocialservice.dto.request.MarkPaintRequest;
 import org.palette.easelsocialservice.dto.response.PaintResponse;
+import org.palette.easelsocialservice.external.kafka.KafkaProducer;
 import org.palette.easelsocialservice.persistence.domain.Paint;
 import org.palette.easelsocialservice.service.PaintService;
 import org.palette.easelsocialservice.service.UserService;
@@ -19,9 +22,11 @@ public class UserUsecase {
 
     private final UserService userService;
     private final PaintService paintService;
+    private final KafkaProducer kafkaProducer;
 
     public void likePaint(Long userId, LikePaintRequest likePaintRequest) {
         Paint paint = paintService.getPaintById(likePaintRequest.paintId());
+        kafkaProducer.execute(new LikedPaintEvent(userId, paint.getPid()));
         userService.likePaint(userId, paint);
     }
 
@@ -59,6 +64,7 @@ public class UserUsecase {
     }
 
     public void unlikePaint(final Long userId, final Long paintId) {
+        kafkaProducer.execute(new UnlikedPaintEvent(userId, paintId));
         userService.unlike(userId, paintId);
     }
 
