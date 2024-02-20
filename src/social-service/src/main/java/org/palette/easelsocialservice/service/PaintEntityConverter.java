@@ -122,7 +122,7 @@ public class PaintEntityConverter {
         PaintCreatedEvent quotePaint = isQuotedPaint || paint.getQuotePaint() == null ? null : convertToPainCreatedEvent(paint.getQuotePaint().getPaint(), true);
         List<HashtagRecord> hashtagRecords = convertToHashtagRecord(paint.getHashtags());
         List<MentionRecord> mentionRecords = convertToMentionRecord(paint.getMentions());
-        List<UserRecord> taggedUserRecords  = convertToUserRecord(paint.getTaggedUsers());
+        List<UserRecord> taggedUserRecords = convertToUserRecord(paint.getTaggedUsers());
         List<MediaRecord> mediaRecords = convertToMediaRecord(paint.getMedias());
         List<LinkRecord> linkRecords = convertToLinkRecord(paint.getLinks());
 
@@ -142,7 +142,7 @@ public class PaintEntityConverter {
                 taggedUserRecords,
                 mediaRecords,
                 linkRecords
-                );
+        );
     }
 
     private static List<LinkRecord> convertToLinkRecord(final List<Contains> links) {
