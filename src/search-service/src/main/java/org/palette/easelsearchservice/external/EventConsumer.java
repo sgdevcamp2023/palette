@@ -29,7 +29,7 @@ public class EventConsumer {
     }
 
     @InternalErrorLogging
-    @KafkaListener(topics = "user_created", groupId = "${spring.kafka.consumer.group-id}",
+    @KafkaListener(topics = "update_user", groupId = "${spring.kafka.consumer.group-id}",
             containerFactory = "kafkaListenerContainerFactory")
     public void consumeUserUpdatedEvent(UpdateUserEvent updateUserEvent) {
         searchUsecase.updateUser(updateUserEvent);
