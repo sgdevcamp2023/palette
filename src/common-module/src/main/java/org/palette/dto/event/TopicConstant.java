@@ -12,7 +12,8 @@ public enum TopicConstant {
     FOLLOWED("followed"),
     USER_CREATED("user_created"),
     UPDATE_USER("update_user"),
-
+    REPLY_CREATED("reply_created"),
+    TEMPORARY_USER_DELETION("temporary_user_deletion"),
     ;
     final String value;
 

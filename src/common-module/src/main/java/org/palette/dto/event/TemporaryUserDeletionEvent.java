@@ -6,6 +6,6 @@ public record TemporaryUserDeletionEvent(String email) implements EaselEvent {
 
     @Override
     public String getTopic() {
-        return "temporary_user_deletion";
+        return TopicConstant.TEMPORARY_USER_DELETION.value;
     }
 }
