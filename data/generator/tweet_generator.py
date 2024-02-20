@@ -6,11 +6,12 @@ from datetime import timedelta
 def get_tweet_info():
     user_df = pd.read_csv('user.csv')
 
-    kr_limit = 9000   # 0 ~ 9000
-    en_limit = 10000   # 0 ~ 31962
+    kr_limit = 2000   # 0 ~ 9000
+    en_limit = 2000   # 0 ~ 31962
 
     df = pd.read_csv('tweet_kr.csv')
-    df = df.head(kr_limit)
+    df = df.head(kr_limit) # 상위 n개
+    # df = df.tail(-100) # 상위 100개를 제외한 100개
     tweets_kr = df['tokens'].tolist()
 
     df = pd.read_csv('tweet_us.csv')
