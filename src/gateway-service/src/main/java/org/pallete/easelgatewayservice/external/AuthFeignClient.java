@@ -5,8 +5,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 
 @FeignClient(name = "AUTH-SERVICE")
-public interface FeignAuthClient {
+@Deprecated
+public interface AuthFeignClient extends AuthClient {
 
+    @Override
     @PostMapping("/passport")
     String validateAndProvidedPassport(
             @RequestHeader("Authorization") String jwtPayload

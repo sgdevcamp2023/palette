@@ -1,9 +1,9 @@
 package org.pallete.easelgatewayservice.filter;
 
-import org.pallete.easelgatewayservice.external.FeignAuthClient;
+import org.pallete.easelgatewayservice.external.AuthClient;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
@@ -12,11 +12,13 @@ import org.springframework.web.server.ServerWebExchange;
 public class AuthorizationGatewayFilter extends AbstractGatewayFilterFactory<AuthorizationGatewayFilter.Config> {
 
     private static final String AUTHORIZATION_HEADER_NAME = "Authorization";
-    private final FeignAuthClient feignAuthClient;
+    private final AuthClient authClient;
 
-    public AuthorizationGatewayFilter(@Lazy FeignAuthClient feignAuthClient) {
+    public AuthorizationGatewayFilter(
+            @Qualifier("AuthRestClient") AuthClient authClient
+    ) {
         super(Config.class);
-        this.feignAuthClient = feignAuthClient;
+        this.authClient = authClient;
     }
 
     public static class Config {
@@ -33,7 +35,7 @@ public class AuthorizationGatewayFilter extends AbstractGatewayFilterFactory<Aut
             }
 
             if (isRequestContainsAuthorization(exchange)) {
-                String passport = feignAuthClient.validateAndProvidedPassport(extractJWT(exchange));
+                String passport = authClient.validateAndProvidedPassport(extractJWT(exchange));
 
                 ServerHttpRequest request = exchange
                         .getRequest()

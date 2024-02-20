@@ -11,8 +11,9 @@ import org.springframework.context.annotation.Configuration;
 // Reference : https://github.com/spring-cloud/spring-cloud-openfeign/issues/235
 
 @Configuration
+@Deprecated
 public class FeignResponseDecoderConfig {
-    private ObjectFactory<HttpMessageConverters> messageConverters = HttpMessageConverters::new;
+    private final ObjectFactory<HttpMessageConverters> messageConverters = HttpMessageConverters::new;
 
     @Bean
     SpringFormEncoder feignFormEncoder() {
