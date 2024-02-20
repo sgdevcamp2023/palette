@@ -2,6 +2,7 @@ package org.palette.easeluserservice.external;
 
 import io.grpc.StatusRuntimeException;
 import net.devh.boot.grpc.client.inject.GrpcClient;
+import org.palette.aop.InternalErrorLogging;
 import org.palette.easeluserservice.persistence.User;
 import org.palette.exception.BaseException;
 import org.palette.exception.ExceptionType;
@@ -15,6 +16,7 @@ public class GrpcSocialClient {
     @GrpcClient("social-service")
     private GSocialServiceGrpc.GSocialServiceBlockingStub gSocialServiceBlockingStub;
 
+    @InternalErrorLogging
     public GCreateUserResponse createSocialUser(final User user) {
         try {
             return gSocialServiceBlockingStub.createUser(
@@ -30,6 +32,7 @@ public class GrpcSocialClient {
         }
     }
 
+    @InternalErrorLogging
     public GLoadUserFollowInformationResponse loadUserFollowShipCount(
             final UserInfo userInfo,
             final User user,
@@ -41,6 +44,7 @@ public class GrpcSocialClient {
         return retrieveFollowShipOther(user, integrityKey);
     }
 
+    @InternalErrorLogging
     private GLoadUserFollowInformationResponse retrieveFollowShipMe(
             final UserInfo userInfo,
             final String integrityKey
@@ -67,6 +71,7 @@ public class GrpcSocialClient {
         }
     }
 
+    @InternalErrorLogging
     private GLoadUserFollowInformationResponse retrieveFollowShipOther(
             final User user,
             final String integrityKey

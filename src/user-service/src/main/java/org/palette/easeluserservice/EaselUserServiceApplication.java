@@ -1,6 +1,7 @@
 package org.palette.easeluserservice;
 
 import org.palette.aop.EaselAuthenticationContext;
+import org.palette.aop.LoggingAspect;
 import org.palette.aop.PassportAspect;
 import org.palette.config.CommonModuleConfig;
 import org.palette.config.KafkaConsumerConfig;
@@ -14,7 +15,9 @@ import org.springframework.context.annotation.Import;
         EaselAuthenticationContext.class,
         PassportAspect.class,
         KafkaConsumerConfig.class,
-        KafkaProducerConfig.class
+        KafkaProducerConfig.class,
+        LoggingAspect.class
+
 })
 @SpringBootApplication
 public class EaselUserServiceApplication {

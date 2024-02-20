@@ -9,15 +9,17 @@ import org.palette.exception.ExceptionType;
 import org.palette.grpc.GCreateNotificationUserRequest;
 import org.palette.grpc.GNotificationServiceGrpc;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
-public class GrpcAuthClient {
+public class GrpcNotificationClient {
 
-    @GrpcClient("notification-service")
+    @GrpcClient("auth-service")
     private GNotificationServiceGrpc.GNotificationServiceBlockingStub gNotificationServiceBlockingStub;
 
     @InternalErrorLogging
-    public void sendEmailAuth(User user) {
+    @Transactional
+    public void createNotificationUser(User user) {
         try {
             gNotificationServiceBlockingStub.createNotificationUser(
                     GCreateNotificationUserRequest.newBuilder()
