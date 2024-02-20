@@ -11,4 +11,8 @@ public record LikedPaintEvent(
     public String getTopic() {
         return TopicConstant.LIKED_PAINT.value;
     }
+
+    public LikedPaintEvent(final Long likingUserId, final Long paintId) {
+        this(likingUserId, paintId, -1L);
+    }
 }
