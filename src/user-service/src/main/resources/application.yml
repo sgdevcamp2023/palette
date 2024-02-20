@@ -20,6 +20,9 @@ spring:
         use-new-id-generator-mappings: false
   kafka:
     bootstrap-servers: ${KAFKA_SERVERS}
+    consumer:
+      group-id: user-service
+      auto-offset-reset: earliest
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer

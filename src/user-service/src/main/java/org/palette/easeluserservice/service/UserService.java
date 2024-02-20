@@ -111,4 +111,7 @@ public class UserService {
         );
     }
 
+    public void deleteTemporaryUser(final String email) {
+        userJpaRepository.deleteByEmail(email);
+    }
 }
