@@ -3,7 +3,6 @@ package org.palette.easeltimelineservice.usecase;
 import lombok.RequiredArgsConstructor;
 import org.palette.dto.event.LikedPaintEvent;
 import org.palette.dto.event.PaintCreatedEvent;
-import org.palette.dto.event.ReplyCreatedEvent;
 import org.palette.dto.event.UnlikedPaintEvent;
 import org.palette.easeltimelineservice.external.grpc.GrpcSocialClient;
 import org.palette.easeltimelineservice.persistence.domain.Paint;
@@ -17,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -30,16 +30,14 @@ public class TimelineUsecase extends GSocialServiceGrpc.GSocialServiceImplBase {
     public void handlePaintCreatedEvent(PaintCreatedEvent paintCreatedEvent) {
         final GFollowerIdsResponse followerIds = gRPCSocialClient.getFollowerIds(paintCreatedEvent.authorId());
         paintCacheService.cachePaint(paintCreatedEvent.id(), Paint.from(paintCreatedEvent));
+        Optional.ofNullable(paintCreatedEvent.inReplyToPaintId())
+                .ifPresent(paintMetricsService::incrementReplyCount);
         followerPaintMapService.addPaintToFollowersTimeline(followerIds.getFollowerIdsList(), paintCreatedEvent.id());
     }
 
     public List<PaintResponse> getFollowingTimeline(final Long userId, final Pageable pageable) {
         List<Long> paintIds = followerPaintMapService.getFollowingTimelinePaintIds(userId, pageable);
         return paintCacheService.getPaints(paintIds);
-    }
-
-    public void handleReplyCreatedEvent(final ReplyCreatedEvent replyCreatedEvent) {
-        paintMetricsService.incrementReplyCount(replyCreatedEvent.pid());
     }
 
     public void handleLikedPaintEvent(final LikedPaintEvent likedPaintEvent) {
