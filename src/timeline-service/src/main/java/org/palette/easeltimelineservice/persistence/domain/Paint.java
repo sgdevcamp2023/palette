@@ -16,7 +16,7 @@ import java.util.Optional;
 public class Paint {
 
     private Long id;
-    private Boolean isReply;
+    private Long replyTo;
     private Long authorId;
     private String authorUsername;
     private String authorNickname;
@@ -34,7 +34,7 @@ public class Paint {
     public static Paint from(final PaintCreatedEvent paintCreatedEvent) {
         return new Paint(
                 paintCreatedEvent.id(),
-                paintCreatedEvent.isReply(),
+                paintCreatedEvent.replyTo(),
                 paintCreatedEvent.authorId(),
                 paintCreatedEvent.authorUsername(),
                 paintCreatedEvent.authorNickname(),

@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public record PaintResponse(
         Long id,
-        Boolean isReply,
+        Long isReply,
         Long authorId,
         String authorUsername,
         String authorNickname,
@@ -29,7 +29,7 @@ public record PaintResponse(
     public static PaintResponse from(Paint paint) {
         return new PaintResponse(
                 paint.getId(),
-                paint.getIsReply(),
+                paint.getReplyTo(),
                 paint.getAuthorId(),
                 paint.getAuthorUsername(),
                 paint.getAuthorNickname(),
