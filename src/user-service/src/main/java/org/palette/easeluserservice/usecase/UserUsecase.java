@@ -31,7 +31,7 @@ public class UserUsecase {
     private final UserService userService;
     private final GrpcSocialClient gRPCSocialClient;
     private final GrpcAuthClient gRPCAuthClient;
-    private final GrpcNotificationClient grpcNotificationClient;
+    private final GrpcNotificationClient gRPCNotificationClient;
     private final KafkaProducer kafkaProducer;
 
     public VerifyEmailDuplicationResponse executeNicknameDuplicationVerify(
@@ -79,7 +79,7 @@ public class UserUsecase {
         );
 
         gRPCSocialClient.createSocialUser(user);
-        grpcNotificationClient.createNotificationUser(user);
+        gRPCNotificationClient.createNotificationUser(user);
 
         kafkaProducer.execute(
                 new UserCreatedEvent(
