@@ -6,10 +6,7 @@ import org.palette.dto.event.PaintCreatedEvent;
 import org.palette.dto.event.UnlikedPaintEvent;
 import org.palette.easeltimelineservice.external.grpc.GrpcSocialClient;
 import org.palette.easeltimelineservice.persistence.domain.Paint;
-import org.palette.easeltimelineservice.service.FollowerPaintMapService;
-import org.palette.easeltimelineservice.service.PaintCacheService;
-import org.palette.easeltimelineservice.service.PaintMetricsService;
-import org.palette.easeltimelineservice.service.PaintResponse;
+import org.palette.easeltimelineservice.service.*;
 import org.palette.grpc.GFollowerIdsResponse;
 import org.palette.grpc.GSocialServiceGrpc;
 import org.springframework.stereotype.Service;
@@ -37,7 +34,11 @@ public class TimelineUsecase extends GSocialServiceGrpc.GSocialServiceImplBase {
     public List<PaintResponse> getFollowingTimeline(final Long userId) {
         List<Long> paintIds = followerPaintMapService.getFollowingTimelinePaintIds(userId);
         final List<Paint> paints = paintCacheService.getPaints(paintIds);
-        return paints.stream().map(PaintResponse::from).toList();
+        return paints.stream().map(paint -> {
+                    PaintMetrics metrics = paintMetricsService.getPaintMetrics(paint.getId());
+                    return PaintResponse.of(paint, metrics);
+                }
+        ).toList();
     }
 
     public void handleLikedPaintEvent(final LikedPaintEvent likedPaintEvent) {
@@ -53,6 +54,10 @@ public class TimelineUsecase extends GSocialServiceGrpc.GSocialServiceImplBase {
         List<Long> paintIds = followerPaintMapService.getFollowingTimelinePaintIds(userId);
         paints.removeIf(paint -> paintIds.contains(paint.getId()));
         paints.removeIf(paint -> paint.getAuthorId().equals(userId));
-        return paints.stream().map(PaintResponse::from).toList();
+        return paints.stream().map(paint -> {
+                    PaintMetrics metrics = paintMetricsService.getPaintMetrics(paint.getId());
+                    return PaintResponse.of(paint, metrics);
+                }
+        ).toList();
     }
 }

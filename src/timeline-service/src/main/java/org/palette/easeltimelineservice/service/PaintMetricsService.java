@@ -48,4 +48,29 @@ public class PaintMetricsService {
                         delta
                 );
     }
+
+    public PaintMetrics getPaintMetrics(final Long pid) {
+        final Integer replyCount = (Integer) redistemplate.opsForHash().get(
+                RedisKeyUtil.constructKey(RedisKeyConstants.METRICS_PREFIX.getKey(), pid),
+                REPLY_COUNT
+        );
+
+        final Integer repaintCount = (Integer) redistemplate.opsForHash().get(
+                RedisKeyUtil.constructKey(RedisKeyConstants.METRICS_PREFIX.getKey(), pid),
+                REPAINT_COUNT
+        );
+
+        final Integer likeCount = (Integer) redistemplate.opsForHash().get(
+                RedisKeyUtil.constructKey(RedisKeyConstants.METRICS_PREFIX.getKey(), pid),
+                LIKE_COUNT
+        );
+        return new PaintMetrics(replyCount, repaintCount, likeCount);
+    }
+
+    public Integer getPaintMetric(final Long pid, final String metric) {
+        return (Integer) redistemplate.opsForHash().get(
+                RedisKeyUtil.constructKey(RedisKeyConstants.METRICS_PREFIX.getKey(), pid),
+                metric
+        );
+    }
 }

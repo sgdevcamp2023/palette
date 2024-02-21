@@ -38,9 +38,33 @@ public record PaintResponse(
                 Optional.ofNullable(paint.getQuotePaint()).map(PaintResponse::from).orElse(null),
                 paint.getCreatedAt(),
                 paint.getText(),
+                null,
+                null,
+                null,
+                false,
+                false,
+                false,
                 0,
-                0,
-                0,
+                new Entities(null, null),
+                new Includes(null, null, null)
+        );
+    }
+
+    public static PaintResponse of(Paint paint, PaintMetrics metrics) {
+        return new PaintResponse(
+                paint.getId(),
+                paint.getIsReply(),
+                paint.getAuthorId(),
+                paint.getAuthorUsername(),
+                paint.getAuthorNickname(),
+                paint.getAuthorImagePath(),
+                paint.getAuthorStatus(),
+                Optional.ofNullable(paint.getQuotePaint()).map(PaintResponse::from).orElse(null),
+                paint.getCreatedAt(),
+                paint.getText(),
+                metrics.replyCount(),
+                metrics.repaintCount(),
+                metrics.likeCount(),
                 false,
                 false,
                 false,
