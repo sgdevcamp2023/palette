@@ -86,7 +86,7 @@ export const usePaintAction = ({
   const handleClickReply = usePreservedCallback((id: TimelineItem['id']) => {
     navigate({
       to: '/post/edit',
-      search: { postId: id },
+      search: { inReplyToPaintId: id },
     });
   });
 

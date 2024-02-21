@@ -174,7 +174,7 @@ function TimelineItemList({
             onClickReply={() =>
               navigate({
                 to: '/post/edit',
-                search: { postId: paint.id },
+                search: { inReplyToPaintId: paint.id },
               })
             }
             onClickRetweet={() => paintAction.onClickRetweet(paint.id)}

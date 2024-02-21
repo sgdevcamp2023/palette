@@ -75,7 +75,7 @@ const AfterTimelineList = forwardRef<HTMLDivElement, AfterTimelineListProps>(
             onClickReply={() =>
               navigate({
                 to: '/post/edit',
-                search: { postId: post.id },
+                search: { inReplyToPaintId: post.id },
               })
             }
             onClickRetweet={() => paintAction.onClickRetweet(post.id)}
