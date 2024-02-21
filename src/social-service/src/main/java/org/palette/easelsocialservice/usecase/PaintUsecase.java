@@ -5,17 +5,28 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.palette.easelsocialservice.dto.request.MentionRequest;
 import org.palette.easelsocialservice.dto.request.PaintCreateRequest;
+import org.palette.easelsocialservice.dto.request.RepaintRequest;
 import org.palette.easelsocialservice.dto.response.PaintCreateResponse;
-import org.palette.easelsocialservice.persistence.domain.*;
+import org.palette.easelsocialservice.dto.response.PaintResponse;
+import org.palette.easelsocialservice.dto.response.ThreadResponse;
+import org.palette.easelsocialservice.dto.response.UserResponse;
+import org.palette.easelsocialservice.external.kafka.KafkaProducer;
+import org.palette.easelsocialservice.persistence.domain.Link;
+import org.palette.easelsocialservice.persistence.domain.Media;
+import org.palette.easelsocialservice.persistence.domain.Paint;
+import org.palette.easelsocialservice.persistence.domain.User;
 import org.palette.easelsocialservice.service.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
 public class PaintUsecase {
+
+    private final KafkaProducer kafkaProducer;
     private final PaintService paintService;
     private final UserService userService;
     private final LinkService linkService;
@@ -23,39 +34,88 @@ public class PaintUsecase {
 
     @Transactional
     public PaintCreateResponse createPaint(Long userId, PaintCreateRequest paintCreateRequest) {
-        Paint paint = paintService.createPaint(paintCreateRequest.text(), paintCreateRequest.inReplyToPaintId(), paintCreateRequest.quotePaintId());
+        Paint paint = new Paint(paintCreateRequest.text());
 
         User user = userService.getUser(userId);
-        paintService.bindUserWithPaint(user, paint);
+        PaintEntityBinder.bindUserWithPaint(user, paint);
 
-        paintCreateRequest.mentions().ifPresent(mentions -> {
-            List<Long> uids = mentions.stream().map(MentionRequest::userId).distinct().toList();
+        Optional.ofNullable(paintCreateRequest.quotePaintId())
+                .ifPresent(quotePaintId -> {
+                    Paint quotePaint = paintService.getPaintById(quotePaintId);
+                    PaintEntityBinder.bindQuotePaint(paint, quotePaint);
+                });
 
-            userService.checkUserExists(uids);
-            Map<Long, User> users = userService.getUserMapByUids(uids);
-            paintService.createMentions(paint, mentions, users);
-        });
+        Optional.ofNullable(paintCreateRequest.inReplyToPaintId())
+                .ifPresent(inReplyToPaintId -> {
+                    Paint inReplyToPaint = paintService.getPaintById(inReplyToPaintId);
+                    PaintEntityBinder.bindReplyPaint(paint, inReplyToPaint);
+                });
 
-        paintCreateRequest.taggedUserIds().ifPresent(taggedUserIds -> {
-            userService.checkUserExists(taggedUserIds);
-            List<User> users = userService.getUsersByUids(taggedUserIds);
-            paintService.createTaggedUsers(paint, users);
-        });
+        Optional.ofNullable(paintCreateRequest.mentions())
+                .ifPresent(mentions -> {
+                    List<Long> uids = mentions.stream().map(MentionRequest::userId).distinct().toList();
+                    userService.checkUserExists(uids);
+                    Map<Long, User> users = userService.getUserMapByUids(uids);
+                    PaintEntityBinder.bindMentions(paint, mentions, users);
+                });
 
-        paintCreateRequest.hashtags().ifPresent(hashtags -> {
-            paintService.bindHashtagsWithPaint(paint, hashtags);
-        });
+        Optional.ofNullable(paintCreateRequest.taggedUserIds())
+                .ifPresent(taggedUserIds -> {
+                    userService.checkUserExists(taggedUserIds);
+                    List<User> users = userService.getUsersByUids(taggedUserIds);
+                    PaintEntityBinder.bindTaggedUsers(paint, users);
+                });
 
-        paintCreateRequest.links().ifPresent(links -> {
-            List<Link> createdLinks = linkService.createLinks(links);
-            paintService.bindLinksWithPaint(paint, createdLinks);
-        });
+        Optional.ofNullable(paintCreateRequest.hashtags())
+                .ifPresent(hashtags -> PaintEntityBinder.bindHashtagsWithPaint(paint, hashtags));
 
-        paintCreateRequest.medias().ifPresent(medias -> {
-            List<Media> createdMedias = mediaService.createMedias(medias);
-            paintService.bindMediaWithPaint(paint, createdMedias);
-        });
+        Optional.ofNullable(paintCreateRequest.links())
+                .ifPresent(links -> {
+                    List<Link> createdLinks = linkService.createLinks(links);
+                    PaintEntityBinder.bindLinksWithPaint(paint, links, createdLinks);
+                });
 
-        return new PaintCreateResponse(paint.getPid());
+        Optional.ofNullable(paintCreateRequest.medias())
+                .ifPresent(medias -> {
+                    List<Media> createdMedias = mediaService.createMedias(medias);
+                    PaintEntityBinder.bindMediaWithPaint(paint, createdMedias);
+                });
+
+        Paint persistencePaint = paintService.createPaint(paint);
+
+        kafkaProducer.execute(PaintEntityConverter.convertToPainCreatedEvent(persistencePaint, false));
+
+        return new PaintCreateResponse(persistencePaint.getPid());
+    }
+
+    public void repaint(Long userId, RepaintRequest repaintRequest) {
+        User user = userService.getUser(userId);
+        paintService.repaint(user, repaintRequest);
+    }
+
+    public PaintResponse getSinglePaint(Long userId, Long paintId) {
+        PaintResponse paintResponse = paintService.getPaintById(userId, paintId);
+        paintService.viewSinglePaint(paintId);
+        return paintResponse;
+    }
+
+    public List<PaintResponse> getSingleBefore(Long userId, Long paintId) {
+        return paintService.getPaintBeforeById(userId, paintId);
+    }
+
+    public List<ThreadResponse> getSingleAfter(Long userId, Long paintId) {
+        return paintService.getPaintAfterById(userId, paintId);
+    }
+
+    public List<PaintResponse> getQuotePaints(final Long userId, final Long paintId) {
+        return paintService.getQuotePaintsById(userId, paintId);
+    }
+
+    public List<UserResponse> getLikedUsers(final Long paintId) {
+        return userService.getLikedUsers(paintId);
+    }
+
+    public List<UserResponse> getRepaintedUsers(final Long paintId) {
+        return userService.getRepaintedUsers(paintId);
     }
 }

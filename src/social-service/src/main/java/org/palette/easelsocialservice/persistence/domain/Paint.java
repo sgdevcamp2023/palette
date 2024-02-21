@@ -8,7 +8,6 @@ import org.springframework.data.neo4j.core.schema.Node;
 import org.springframework.data.neo4j.core.schema.Relationship;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -28,6 +27,9 @@ public class Paint {
     @Relationship(type = "QUOTES")
     private Quotes quotePaint;
 
+    @Relationship(type = "REPAINTS", direction = Relationship.Direction.INCOMING)
+    private List<Repaints> repaints;
+
     @Relationship(type = "MENTIONS")
     private List<Mentions> mentions;
 
@@ -45,6 +47,8 @@ public class Paint {
 
     private String content;
 
+    private boolean hasQuote;
+
     private Integer views;
 
     private LocalDateTime createdAt;
@@ -61,43 +65,43 @@ public class Paint {
         this.author = new Creates(user);
     }
 
-    public void addLink(Link link) {
-        this.links.add(new Contains(link));
-    }
-
-    public void addHashtag(Hashtag hashtag, int startIdx, int endIdx) {
-        if (this.hashtags == null) {
-            this.hashtags = new LinkedList<>();
-        }
-        this.hashtags.add(new Tags(hashtag, startIdx, endIdx));
-    }
-
-    public void addMedia(Media media) {
-        if (this.medias == null) {
-            this.medias = new LinkedList<>();
-        }
-        this.medias.add(new Uses(media));
-    }
-
-    public void addInReplyToPaint(Paint paint) {
+    public void setInReplyToPaint(Paint paint) {
         this.inReplyToPaint = new Replies(paint);
     }
 
     public void addQuotePaint(Paint paint) {
+        this.hasQuote = true;
         this.quotePaint = new Quotes(paint);
     }
 
-    public void addTaggedUser(User user) {
-        if (this.taggedUsers == null) {
-            this.taggedUsers = new LinkedList<>();
+    public void addRepaint(User user) {
+        if (this.repaints == null) {
+            this.repaints = new LinkedList<>();
         }
-        this.taggedUsers.add(new TagsUser(user));
+        this.repaints.add(new Repaints(user));
     }
 
-    public void addMention(User user, int start, int end) {
-        if (this.mentions == null) {
-            this.mentions = new LinkedList<>();
-        }
-        this.mentions.add(new Mentions(user, start, end));
+    public void addAllLinks(List<Contains> contains) {
+        this.links = contains;
+    }
+
+    public void addAllMentions(List<Mentions> mentions) {
+        this.mentions = mentions;
+    }
+
+    public void addAllTaggedUsers(List<TagsUser> tagsUsers) {
+        this.taggedUsers = tagsUsers;
+    }
+
+    public void addAllHashtags(List<Tags> tags) {
+        this.hashtags = tags;
+    }
+
+    public void addAllMedia(List<Uses> medias) {
+        this.medias = medias;
+    }
+
+    public void updateView() {
+        this.views++;
     }
 }

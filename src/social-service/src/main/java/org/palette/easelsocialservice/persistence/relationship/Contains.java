@@ -9,13 +9,20 @@ import org.springframework.data.neo4j.core.schema.TargetNode;
 @Getter
 @RelationshipProperties
 public class Contains {
+
     @RelationshipId
     private Long id;
 
     @TargetNode
     private Link link;
 
-    public Contains(Link link) {
+    private Integer start;
+
+    private Integer end;
+
+    public Contains(Link link, Integer start, Integer end) {
         this.link = link;
+        this.start = start;
+        this.end = end;
     }
 }
