@@ -12,7 +12,6 @@ import org.palette.easeltimelineservice.service.PaintMetricsService;
 import org.palette.easeltimelineservice.service.PaintResponse;
 import org.palette.grpc.GFollowerIdsResponse;
 import org.palette.grpc.GSocialServiceGrpc;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,9 +34,10 @@ public class TimelineUsecase extends GSocialServiceGrpc.GSocialServiceImplBase {
         followerPaintMapService.addPaintToFollowersTimeline(followerIds.getFollowerIdsList(), paintCreatedEvent.id());
     }
 
-    public List<PaintResponse> getFollowingTimeline(final Long userId, final Pageable pageable) {
-        List<Long> paintIds = followerPaintMapService.getFollowingTimelinePaintIds(userId, pageable);
-        return paintCacheService.getPaints(paintIds);
+    public List<PaintResponse> getFollowingTimeline(final Long userId) {
+        List<Long> paintIds = followerPaintMapService.getFollowingTimelinePaintIds(userId);
+        final List<Paint> paints = paintCacheService.getPaints(paintIds);
+        return paints.stream().map(PaintResponse::from).toList();
     }
 
     public void handleLikedPaintEvent(final LikedPaintEvent likedPaintEvent) {
@@ -46,5 +46,13 @@ public class TimelineUsecase extends GSocialServiceGrpc.GSocialServiceImplBase {
 
     public void handleUnlikedPaintEvent(final UnlikedPaintEvent unlikedPaintEvent) {
         paintMetricsService.decrementLikeCount(unlikedPaintEvent.paintId());
+    }
+
+    public List<PaintResponse> getForYouTimeline(final Long userId) {
+        List<Paint> paints = paintCacheService.getRandomPaints();
+        List<Long> paintIds = followerPaintMapService.getFollowingTimelinePaintIds(userId);
+        paints.removeIf(paint -> paintIds.contains(paint.getId()));
+        paints.removeIf(paint -> paint.getAuthorId().equals(userId));
+        return paints.stream().map(PaintResponse::from).toList();
     }
 }

@@ -34,7 +34,7 @@ public class Paint {
     public static Paint from(final PaintCreatedEvent paintCreatedEvent) {
         return new Paint(
                 paintCreatedEvent.id(),
-                paintCreatedEvent.isReply(),
+                paintCreatedEvent.inReplyToPaintId() != null,
                 paintCreatedEvent.authorId(),
                 paintCreatedEvent.authorUsername(),
                 paintCreatedEvent.authorNickname(),

@@ -2,7 +2,6 @@ package org.palette.easeltimelineservice.service;
 
 import lombok.RequiredArgsConstructor;
 import org.palette.easeltimelineservice.util.RedisKeyUtil;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
@@ -27,10 +26,9 @@ public class FollowerPaintMapService {
         });
     }
 
-    public List<Long> getFollowingTimelinePaintIds(final Long userId, final Pageable pageable) {
+    public List<Long> getFollowingTimelinePaintIds(final Long userId) {
         final String key = RedisKeyUtil.constructKey(FOLLOWER_PAINT_TIMELINE_PREFIX.getKey(), userId);
-        return Optional.ofNullable(redistemplate.opsForList()
-                        .range(key, pageable.getOffset(), pageable.getOffset() + pageable.getPageSize() - 1))
+        return Optional.ofNullable(redistemplate.opsForList().range(key, 0, -1))
                 .orElse(List.of())
                 .stream()
                 .map(object -> Long.valueOf(object.toString()))

@@ -23,13 +23,19 @@ public class PaintCacheService {
         redistemplate.opsForValue().set(key, paint);
     }
 
-    public List<PaintResponse> getPaints(final List<Long> paintIds) {
+    public List<Paint> getPaints(final List<Long> paintIds) {
         final List<String> keys = RedisKeyUtil.constructKeys(PAINT_PREFIX.getKey(), paintIds);
         return Optional.ofNullable(redistemplate.opsForValue().multiGet(keys))
                 .orElseGet(Collections::emptyList)
                 .stream()
                 .map(Paint.class::cast)
-                .map(PaintResponse::from)
+                .toList();
+    }
+
+    public List<Paint> getRandomPaints() {
+        return Optional.ofNullable(redistemplate.opsForSet().randomMembers(PAINT_PREFIX.getKey(), 200))
+                .stream()
+                .map(Paint.class::cast)
                 .toList();
     }
 }
