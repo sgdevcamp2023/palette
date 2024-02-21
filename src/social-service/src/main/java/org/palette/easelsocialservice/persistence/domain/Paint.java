@@ -1,10 +1,6 @@
 package org.palette.easelsocialservice.persistence.domain;
 
 import lombok.Getter;
-import org.palette.dto.event.detail.HashtagRecord;
-import org.palette.dto.event.detail.LinkRecord;
-import org.palette.dto.event.detail.MediaRecord;
-import org.palette.dto.event.detail.UserRecord;
 import org.palette.easelsocialservice.persistence.relationship.*;
 import org.springframework.data.neo4j.core.schema.GeneratedValue;
 import org.springframework.data.neo4j.core.schema.Id;
@@ -14,7 +10,6 @@ import org.springframework.data.neo4j.core.schema.Relationship;
 import java.time.LocalDateTime;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Getter
 @Node

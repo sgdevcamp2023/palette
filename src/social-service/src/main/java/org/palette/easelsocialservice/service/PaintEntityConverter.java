@@ -51,18 +51,13 @@ public class PaintEntityConverter {
 
     public List<PaintResponse> convertToPaintResponse(Long userId, List<Paint> paints) {
         return paints.stream()
-                .map(paint -> {
-                    PaintMetrics metrics = paintRepository.findMetricsByPidAndUid(userId, paint.getPid());
-                    return convertToPaintResponse(paint, metrics);
-                })
+                .map(paint -> convertToPaintResponse(paint, paintRepository.findMetricsByPidAndUid(userId, paint.getPid())))
                 .toList();
     }
 
     public List<PaintResponse> convertToPaintResponse(final List<Paint> paints) {
         return paints.stream()
-                .map(paint -> {
-                    return convertToPaintResponse(paint);
-                })
+                .map(this::convertToPaintResponse)
                 .toList();
     }
 
@@ -117,18 +112,18 @@ public class PaintEntityConverter {
     }
 
     public static PaintCreatedEvent convertToPainCreatedEvent(Paint paint, boolean isQuotedPaint) {
-        boolean isReply = paint.getInReplyToPaint() == null;
+        Long inReplyToPaintId = paint.getInReplyToPaint() == null ? null : paint.getInReplyToPaint().getPaint().getPid();
         User author = paint.getAuthor().getUser();
         PaintCreatedEvent quotePaint = isQuotedPaint || paint.getQuotePaint() == null ? null : convertToPainCreatedEvent(paint.getQuotePaint().getPaint(), true);
         List<HashtagRecord> hashtagRecords = convertToHashtagRecord(paint.getHashtags());
         List<MentionRecord> mentionRecords = convertToMentionRecord(paint.getMentions());
-        List<UserRecord> taggedUserRecords  = convertToUserRecord(paint.getTaggedUsers());
+        List<UserRecord> taggedUserRecords = convertToUserRecord(paint.getTaggedUsers());
         List<MediaRecord> mediaRecords = convertToMediaRecord(paint.getMedias());
         List<LinkRecord> linkRecords = convertToLinkRecord(paint.getLinks());
 
         return new PaintCreatedEvent(
                 paint.getPid(),
-                isReply,
+                inReplyToPaintId,
                 author.getUid(),
                 author.getUsername(),
                 author.getNickname(),
@@ -142,7 +137,7 @@ public class PaintEntityConverter {
                 taggedUserRecords,
                 mediaRecords,
                 linkRecords
-                );
+        );
     }
 
     private static List<LinkRecord> convertToLinkRecord(final List<Contains> links) {
