@@ -45,8 +45,8 @@ public record PaintResponse(
                 false,
                 false,
                 0,
-                new Entities(null, null),
-                new Includes(null, null, null)
+                new Entities(paint.getHashtagRecords(), paint.getMentionRecords()),
+                new Includes(paint.getMediaRecords(), paint.getMentionRecords(), paint.getLinkRecord())
         );
     }
 
@@ -69,8 +69,8 @@ public record PaintResponse(
                 false,
                 false,
                 0,
-                new Entities(null, null),
-                new Includes(null, null, null)
+                new Entities(paint.getHashtagRecords(), paint.getMentionRecords()),
+                new Includes(paint.getMediaRecords(), paint.getMentionRecords(), paint.getLinkRecord())
         );
     }
 }
