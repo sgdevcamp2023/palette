@@ -1,9 +1,8 @@
 package org.palette.exception;
 
-import lombok.AccessLevel;
 import lombok.Builder;
 
-@Builder(access = AccessLevel.PROTECTED)
+@Builder
 public record ExceptionResponse(
         String code,
         String message,

@@ -7,7 +7,7 @@ import org.palette.dto.event.detail.MentionRecord;
 import org.palette.easelsearchservice.dto.request.SearchRequest;
 import org.palette.easelsearchservice.dto.response.PaintResponse;
 import org.palette.easelsearchservice.persistence.SearchPaint;
-import org.palette.easelsearchservice.persistence.SearchRepository;
+import org.palette.easelsearchservice.persistence.SearchPaintRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -16,11 +16,11 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class SearchService {
-    private final SearchRepository searchRepository;
+public class SearchPaintService {
+    private final SearchPaintRepository searchPaintRepository;
 
     public List<PaintResponse> searchAllPaints(final SearchRequest searchRequest) {
-        Page<SearchPaint> searchPaints = searchRepository.findByTextContaining(
+        Page<SearchPaint> searchPaints = searchPaintRepository.findByTextContaining(
                 searchRequest.keyword(),
                 PageRequest.of(searchRequest.page(), searchRequest.size())
         );
@@ -35,7 +35,7 @@ public class SearchService {
     }
 
     public void createPaint(final PaintCreatedEvent paintCreatedEvent) {
-        searchRepository.save(
+        searchPaintRepository.save(
                 SearchPaint.builder()
                         .id(paintCreatedEvent.id())
                         .authorId(paintCreatedEvent.authorId())
