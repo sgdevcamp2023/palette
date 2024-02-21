@@ -11,9 +11,4 @@ public record UserInfo(
         String createdAt,
         String deletedAt
 ) {
-    @Override
-    public String deletedAt() {
-        if (deletedAt == null) return "";
-        return deletedAt;
-    }
 }

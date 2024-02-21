@@ -1,6 +1,10 @@
 server:
   port: 10003
 
+logging:
+  level:
+    root: ERROR
+
 spring:
   application:
     name: social-service
@@ -11,15 +15,27 @@ spring:
       password: ${SOCIAL_DB_PASSWORD}
     uri: ${SOCIAL_DB_URI}
 
-eureka:
-  instance:
-    hostname: localhost
-  client:
-    fetch-registry: true
-    register-with-eureka: true
-    service-url:
-      defaultZone: http://host.docker.internal:8761/eureka
+  kafka:
+    bootstrap-servers: ${KAFKA_SERVERS}
+    consumer:
+      group-id: social-service
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
 
 grpc:
   server:
     port: 11003
+
+passport:
+  key: ${PASSPORT_KEY}
+  algorithm: ${PASSPORT_ALGORITHM}
+
+eureka:
+  instance:
+    hostname: ${EUREKA_HOST}
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: ${EUREKA_DEFAULT_ZONE}
