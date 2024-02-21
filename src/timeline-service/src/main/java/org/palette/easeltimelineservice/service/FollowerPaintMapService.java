@@ -28,10 +28,10 @@ public class FollowerPaintMapService {
 
     public List<Long> getFollowingTimelinePaintIds(final Long userId) {
         final String key = RedisKeyUtil.constructKey(FOLLOWER_PAINT_TIMELINE_PREFIX.getKey(), userId);
-        return Optional.ofNullable(redistemplate.opsForList().range(key, 1, -1))
+        return Optional.ofNullable(redistemplate.opsForList().range(key, 0, -1))
                 .orElse(List.of())
                 .stream()
-                .map(Long::valueOf)
+                .map(Long::parseLong)
                 .toList();
     }
 }
