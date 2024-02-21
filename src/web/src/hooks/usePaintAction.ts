@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 import { useNavigate } from '@tanstack/react-router';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 
 import { apis } from '@/api';
 import { useThrottle } from './useThrottle';
@@ -24,7 +24,13 @@ const INITIAL_SHOW_MORE_MENU = {
   show: false,
 } as const;
 
-export const usePaintAction = ({ userId }: { userId: string }) => {
+export const usePaintAction = ({
+  userId,
+  onLikeOrDislike,
+}: {
+  userId: string;
+  onLikeOrDislike?: (id: TimelineItem['id']) => void;
+}) => {
   const navigate = useNavigate();
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState<BottomSheetState>(
     INITIAL_BOTTOM_SHEET_OPEN,
@@ -35,22 +41,21 @@ export const usePaintAction = ({ userId }: { userId: string }) => {
     show: boolean;
   }>(INITIAL_SHOW_MORE_MENU);
 
-  const queryClient = useQueryClient();
   const likePaintMutate = useMutation({
     mutationKey: ['like-paint', selectedPostId],
     mutationFn: ({ paintId }: { paintId: TimelineItem['id'] }) =>
       apis.users.likePaint({ userId, paintId }),
-    onMutate: () => {
-      queryClient.invalidateQueries({ queryKey: ['paint'] });
+    onMutate: (mutate) => {
+      onLikeOrDislike?.(mutate.paintId);
     },
   });
 
   const disLikePaintMutate = useMutation({
-    mutationKey: ['like-paint', selectedPostId],
+    mutationKey: ['dislike-paint', selectedPostId],
     mutationFn: ({ paintId }: { paintId: TimelineItem['id'] }) =>
-      apis.users.likePaint({ userId, paintId }),
-    onMutate: () => {
-      queryClient.invalidateQueries({ queryKey: ['paint'] });
+      apis.users.disLikePaint({ userId, paintId }),
+    onMutate: (mutate) => {
+      onLikeOrDislike?.(mutate.paintId);
     },
   });
 

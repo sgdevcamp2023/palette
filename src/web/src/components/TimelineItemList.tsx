@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { useNavigate } from '@tanstack/react-router';
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 
 import { apis } from '@/api';
 import { usePaintAction, useProfileId } from '@/hooks';
@@ -12,19 +12,20 @@ import ShareBottomSheet from './bottomSheet/ShareBottomSheet';
 import ViewsBottomSheet from './bottomSheet/ViewsBottomSheet';
 import { Typography } from './common';
 
+export type TimelineItemType =
+  | 'follow'
+  | 'recommend'
+  | 'post'
+  | 'reply'
+  | 'media'
+  | 'heart'
+  | 'bookmark'
+  | 'search-recommend'
+  | 'search-recent'
+  | 'search-user'
+  | 'search-media';
 interface TimelineItemListProps {
-  type:
-    | 'follow'
-    | 'recommend'
-    | 'post'
-    | 'reply'
-    | 'media'
-    | 'heart'
-    | 'bookmark'
-    | 'search-recommend'
-    | 'search-recent'
-    | 'search-user'
-    | 'search-media';
+  type: TimelineItemType;
   className?: string;
 }
 
@@ -102,14 +103,34 @@ function getQueryFnByType(
 }
 
 function TimelineItemList({ type, className }: TimelineItemListProps) {
+  const navigate = useNavigate();
   const userId = useProfileId();
   const { data: paints } = useSuspenseQuery({
     queryKey: ['paint', type, userId],
     queryFn: () => getQueryFnByType(type, userId),
   });
 
-  const navigate = useNavigate();
-  const paintAction = usePaintAction({ userId });
+  const queryClient = useQueryClient();
+  const paintAction = usePaintAction({
+    userId,
+    onLikeOrDislike: (paintId) => {
+      queryClient.setQueryData<TimelineItem[]>(
+        ['paint', type, userId],
+        (prev) => {
+          if (prev) {
+            const nextPaints = [...prev];
+            const willUpdateIndex = nextPaints.findIndex(
+              (paint) => paint.id === paintId,
+            );
+            nextPaints[willUpdateIndex].like =
+              !nextPaints[willUpdateIndex].like;
+            return nextPaints;
+          }
+          return [];
+        },
+      );
+    },
+  });
 
   return (
     <>

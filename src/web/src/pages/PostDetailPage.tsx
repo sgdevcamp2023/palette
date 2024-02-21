@@ -4,7 +4,6 @@ import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { useNavigate, useRouter } from '@tanstack/react-router';
 
 import { apis } from '@/api';
-import { usePaintAction } from '@/hooks';
 import { postDetailRoute } from '@/routes';
 import {
   AfterTimelineList,
@@ -16,11 +15,6 @@ import {
   Typography,
 } from '@/components';
 import { forCloudinaryImage } from '@/utils';
-import {
-  ReplyBottomSheet,
-  ShareBottomSheet,
-  ViewsBottomSheet,
-} from '@/components/bottomSheet';
 import { Spinner, TimelineItemBoxSkeleton } from '@/components/skeleton';
 
 function PostDetailPage() {
@@ -34,8 +28,6 @@ function PostDetailPage() {
 
   const parentRef = useRef<HTMLDivElement>(null);
   const mainPostRef = useRef<HTMLDivElement>(null);
-
-  const paintAction = usePaintAction({ userId: me?.id ?? '' });
 
   return (
     <>
@@ -69,16 +61,16 @@ function PostDetailPage() {
             rejectedFallback={() => <span />}
           >
             <BeforeTimelineList
+              userId={me?.id ?? ''}
               mainPostRef={mainPostRef}
               parentRef={parentRef}
-              paintAction={paintAction}
             />
           </AsyncBoundary>
 
           <AsyncBoundary pendingFallback={<TimelineItemBoxSkeleton />}>
             <MainPostBox
+              userId={me?.id ?? ''}
               ref={mainPostRef}
-              paintAction={paintAction}
               className="mt-[24px]"
             />
           </AsyncBoundary>
@@ -87,7 +79,7 @@ function PostDetailPage() {
             pendingFallback={<Spinner className="mt-10" />}
             rejectedFallback={() => <span />}
           >
-            <AfterTimelineList paintAction={paintAction} />
+            <AfterTimelineList userId={me?.id ?? ''} />
           </AsyncBoundary>
         </div>
       </ContentLayout>
@@ -111,20 +103,6 @@ function PostDetailPage() {
           </Typography>
         </div>
       </button>
-      <ReplyBottomSheet
-        id={paintAction.selectedPostId}
-        isOpen={paintAction.isBottomSheetOpen.reply}
-        onClose={() => paintAction.onCloseBottomSheet('reply')}
-      />
-      <ViewsBottomSheet
-        isOpen={paintAction.isBottomSheetOpen.views}
-        onClose={() => paintAction.onCloseBottomSheet('views')}
-      />
-      <ShareBottomSheet
-        id={paintAction.selectedPostId}
-        isOpen={paintAction.isBottomSheetOpen.share}
-        onClose={() => paintAction.onCloseBottomSheet('share')}
-      />
     </>
   );
 }
