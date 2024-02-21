@@ -3,6 +3,7 @@ package org.palette.easeluserservice.usecase;
 import lombok.RequiredArgsConstructor;
 import org.palette.dto.event.TemporaryUserDeletionEvent;
 import org.palette.dto.event.UpdateUserEvent;
+import org.palette.dto.event.UserCreatedEvent;
 import org.palette.easeluserservice.dto.request.EditProfileRequest;
 import org.palette.easeluserservice.dto.request.JoinRequest;
 import org.palette.easeluserservice.dto.request.TemporaryJoinRequest;
@@ -30,7 +31,7 @@ public class UserUsecase {
     private final UserService userService;
     private final GrpcSocialClient gRPCSocialClient;
     private final GrpcAuthClient gRPCAuthClient;
-    private final GrpcNotificationClient grpcNotificationClient;
+    private final GrpcNotificationClient gRPCNotificationClient;
     private final KafkaProducer kafkaProducer;
 
     public VerifyEmailDuplicationResponse executeNicknameDuplicationVerify(
@@ -78,7 +79,17 @@ public class UserUsecase {
         );
 
         gRPCSocialClient.createSocialUser(user);
-        grpcNotificationClient.createNotificationUser(user);
+        //TODO gRPCNotificationClient.createNotificationUser(user);
+
+        kafkaProducer.execute(
+                new UserCreatedEvent(
+                        user.getId(),
+                        user.getProfile().nickname(),
+                        user.getUsername(),
+                        user.getProfile().introduce(),
+                        user.getProfile().staticContentPath().profileImagePath()
+                )
+        );
     }
 
     public RetrieveUserResponse retrieveOther(

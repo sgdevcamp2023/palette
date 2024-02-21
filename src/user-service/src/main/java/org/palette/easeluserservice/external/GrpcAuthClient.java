@@ -6,22 +6,22 @@ import org.palette.aop.InternalErrorLogging;
 import org.palette.easeluserservice.persistence.User;
 import org.palette.exception.BaseException;
 import org.palette.exception.ExceptionType;
-import org.palette.grpc.GCreateNotificationUserRequest;
-import org.palette.grpc.GNotificationServiceGrpc;
+import org.palette.grpc.GAuthServiceGrpc;
+import org.palette.grpc.GSendEmailAuthRequest;
 import org.springframework.stereotype.Component;
 
 @Component
 public class GrpcAuthClient {
 
-    @GrpcClient("notification-service")
-    private GNotificationServiceGrpc.GNotificationServiceBlockingStub gNotificationServiceBlockingStub;
+    @GrpcClient("auth-service")
+    private GAuthServiceGrpc.GAuthServiceBlockingStub gAuthServiceBlockingStub;
 
     @InternalErrorLogging
     public void sendEmailAuth(User user) {
         try {
-            gNotificationServiceBlockingStub.createNotificationUser(
-                    GCreateNotificationUserRequest.newBuilder()
-                            .setNickname(user.getProfile().nickname())
+            gAuthServiceBlockingStub.sendEmailAuth(
+                    GSendEmailAuthRequest.newBuilder()
+                            .setEmail(user.getEmail())
                             .build()
             );
         } catch (final StatusRuntimeException e) {
