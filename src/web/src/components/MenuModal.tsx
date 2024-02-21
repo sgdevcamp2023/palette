@@ -1,23 +1,27 @@
-import { useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { memo, useState } from 'react';
 import { toast } from 'react-toastify';
+import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from '@tanstack/react-router';
+import { AnimatePresence, motion } from 'framer-motion';
 
-import type { User } from '@/@types';
+import { apis } from '@/api';
 import { Icon, Typography } from './common';
+import { cn, forCloudinaryImage } from '@/utils';
 import AccessibleIconButton from './AccessibleIconButton';
-import { cn } from '@/utils';
 
 interface MenuModalProps {
-  user: User;
   onClose: VoidFunction;
 }
 
 const IPHONE_SE_HEIGHT = 667;
 
-function MenuModal({ user, onClose }: MenuModalProps) {
+function MenuModal({ onClose }: MenuModalProps) {
   const navigate = useNavigate();
   const [isShowToggle, setIsShowToggle] = useState<boolean>(false);
+  const { data: me } = useQuery({
+    queryKey: ['user-profile', 'me'],
+    queryFn: () => apis.users.getMyProfile(),
+  });
 
   const handleClickNotSupport = () => toast('아직 지원되지 않는 기능입니다.');
   const isScreenHeightShort = Number(window.screen.height) <= IPHONE_SE_HEIGHT;
@@ -25,7 +29,7 @@ function MenuModal({ user, onClose }: MenuModalProps) {
   return (
     <motion.div
       key="menu-modal"
-      className="absolute z-[50] w-full px-[28px] h-full bg-white"
+      className="absolute z-[9999] w-full px-[28px] h-full bg-white max-w-[420px]"
       initial={{ x: -375 }}
       animate={{ x: 0 }}
       transition={{
@@ -34,7 +38,7 @@ function MenuModal({ user, onClose }: MenuModalProps) {
     >
       <div className="flex justify-between items-center mt-[24px]">
         <img
-          src={user.profileImagePath}
+          src={forCloudinaryImage(me?.profileImagePath)}
           alt="user profile"
           className="w-[40px] min-w[40px] h-[40px] min-h-[40px] rounded-full"
         />
@@ -47,23 +51,25 @@ function MenuModal({ user, onClose }: MenuModalProps) {
         />
       </div>
       <Typography size="headline-7" color="grey-600" className="mt-[10px]">
-        {user.nickname}
+        {me?.nickname}
       </Typography>
       <Typography size="body-1" color="blueGrey-800" className="mt-[8px]">
-        {user.username}
+        {me?.username}
       </Typography>
       <div className="flex gap-[10px] mt-[12px]">
-        {/* TODO: Following, Follower Page로 이동 */}
         <div
           role="button"
           tabIndex={0}
           className="flex gap-[4px]"
           onClick={() =>
-            navigate({ to: '/profile/$userId', params: { userId: user.id } })
+            navigate({
+              to: '/profile/$userId',
+              params: { userId: String(me?.id) },
+            })
           }
         >
           <Typography as="span" size="headline-8" color="grey-600">
-            {user.followings}
+            {me?.followingCount}
           </Typography>
           <Typography as="span" size="body-2" color="blueGrey-800">
             팔로잉
@@ -71,7 +77,7 @@ function MenuModal({ user, onClose }: MenuModalProps) {
         </div>
         <div className="flex gap-[4px]">
           <Typography as="span" size="headline-8" color="grey-600">
-            {user.followers}
+            {me?.followerCount}
           </Typography>
           <Typography as="span" size="body-2" color="blueGrey-800">
             팔로워
@@ -86,7 +92,9 @@ function MenuModal({ user, onClose }: MenuModalProps) {
             type="button"
             className="flex gap-[24px] items-center"
             onClick={() =>
-              navigate({ to: '/profile/$userId', params: { userId: user.id } })
+              navigate({
+                to: '/profile/me',
+              })
             }
           >
             <Icon type="user" width={24} height={24} />
@@ -179,7 +187,6 @@ function MenuModal({ user, onClose }: MenuModalProps) {
             exit={{ opacity: 0 }}
             className="flex flex-col gap-[24px] mt-[24px]"
           >
-            {/* TODO: 설정 페이지로 이동 */}
             <div
               className="flex gap-[20px] items-center"
               role="button"
@@ -232,4 +239,6 @@ function MenuModal({ user, onClose }: MenuModalProps) {
   );
 }
 
-export default MenuModal;
+const MemoizedMenuModal = memo(MenuModal);
+
+export default MemoizedMenuModal;

@@ -32,7 +32,6 @@ function Modal({
     } else {
       window.document.body.style.width = 'auto';
       window.document.body.style.position = 'static';
-      window.document.body.style.overflow = 'auto';
     }
   }, [isOpen]);
 

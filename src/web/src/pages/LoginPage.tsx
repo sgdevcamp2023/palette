@@ -1,10 +1,10 @@
-import { toast } from 'react-toastify';
 import type { ChangeEvent } from 'react';
 import { useReducer, useState } from 'react';
 import { useNavigate } from '@tanstack/react-router';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 
+import type { LoginInfo } from '@/@types';
 import { ContentLayout, Header } from '@/components';
-import type { LoginInfo } from '@/components/login/loginReducer';
 import { LoginStep, LoginStepReducer } from '@/components/login/loginReducer';
 import { LoginEmailBox, LoginPasswordBox } from '@/components/login';
 
@@ -16,15 +16,6 @@ function LoginPage() {
   });
   const navigate = useNavigate();
 
-  const handleLogin = async () => {
-    try {
-      // TODO: api 연동
-      toast(`${loginInfo.email}님 로그인이 완료되었습니다.`);
-      navigate({ to: '/home' });
-    } catch (err) {
-      toast.error('서버에 잠시 문제가 생겼습니다.');
-    }
-  };
 
   const handleChangeInput = (
     e: ChangeEvent<HTMLInputElement>,
@@ -60,7 +51,6 @@ function LoginPage() {
             disabled={loginInfo.password === ''}
             email={loginInfo.email}
             password={loginInfo.password}
-            onLogin={handleLogin}
             onChangeInput={handleChangeInput}
             onClickForgetPassword={() => navigate({ to: '/change-password' })}
           />
@@ -82,6 +72,12 @@ function LoginPage() {
 
   return (
     <>
+      <HelmetProvider>
+        <Helmet>
+          <title>Easel | 로그인</title>
+          <meta name="description" content="로그인 페이지" />
+        </Helmet>
+      </HelmetProvider>
       <Header
         left={{
           type: state === LoginStep.EMAIL ? 'text' : 'leftStickArrow',
@@ -95,7 +91,11 @@ function LoginPage() {
           height: 26,
         }}
       />
-      <ContentLayout isShowBottomNavigation={false} className="h-full">
+      <ContentLayout
+        isShowBottomNavigation={false}
+        className="h-full"
+        isShowFloatingButton={false}
+      >
         <div className="flex flex-col h-full pb-[24px] overflow-hidden">
           {children}
         </div>

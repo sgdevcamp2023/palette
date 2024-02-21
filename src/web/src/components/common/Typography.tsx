@@ -1,4 +1,4 @@
-import type { ElementType, HTMLAttributes } from 'react';
+import { memo, type ElementType, type HTMLAttributes } from 'react';
 import { cva } from 'class-variance-authority';
 
 import type { ColorType, FontKeyType } from '@/@types';
@@ -47,8 +47,9 @@ export const TypographyVariants = cva<{
       'green-200': 'text-green-200',
       'purple-100': 'text-purple-100',
       'purple-200': 'text-purple-200',
+      'pink-100': 'text-pink-100',
+      'pink-200': 'text-pink-200',
       'red-100': 'text-red-100',
-      'red-200': 'text-red-200',
       'yellow-100': 'text-yellow-100',
       'blue-100': 'text-blue-100',
       'blue-200': 'text-blue-200',
@@ -85,4 +86,6 @@ function Typography({
   );
 }
 
-export default Typography;
+const MemoizedTypography = memo(Typography);
+
+export default MemoizedTypography;

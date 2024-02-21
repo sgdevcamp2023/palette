@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { useNavigate } from '@tanstack/react-router';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 
 import {
   Button,
@@ -22,6 +23,12 @@ function ChangePasswordPage() {
 
   return (
     <>
+      <HelmetProvider>
+        <Helmet>
+          <title>Easel | 비밀번호 변경</title>
+          <meta name="description" content="비밀번호 변경 페이지" />
+        </Helmet>
+      </HelmetProvider>
       <Header
         left={{
           type: 'text',
@@ -35,7 +42,11 @@ function ChangePasswordPage() {
           height: 26,
         }}
       />
-      <ContentLayout isShowBottomNavigation={false} className="h-full">
+      <ContentLayout
+        isShowBottomNavigation={false}
+        className="h-full"
+        isShowFloatingButton={false}
+      >
         <div className="flex flex-col gap-[54px]">
           <StepTitle
             title="내 Easel 계정 찾기"

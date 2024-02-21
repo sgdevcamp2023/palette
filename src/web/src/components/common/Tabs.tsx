@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { useEffect, useRef, useState } from 'react';
+import { memo, useEffect, useRef, useState } from 'react';
 
 import { cn } from '@/utils';
 import { Typography } from '@/components';
@@ -10,9 +10,10 @@ interface TabProps {
     content: ReactNode;
   }[];
   className?: string;
+  menuClassName?: string;
 }
 
-function Tabs({ tabs, className }: TabProps) {
+function Tabs({ tabs, className, menuClassName }: TabProps) {
   const [activeTabIndex, setActiveTabIndex] = useState<number>(0);
   const [tabUnderlineLeft, setTabUnderlineLeft] = useState<number>(0);
   const [tabUnderlineWidth, setTabUnderlineWidth] = useState<number>(0);
@@ -43,7 +44,9 @@ function Tabs({ tabs, className }: TabProps) {
           className,
         )}
       >
-        <div className="w-full flex justify-around pb-[10px]">
+        <div
+          className={cn('w-full flex justify-around pb-[10px]', menuClassName)}
+        >
           {tabs.map((tab, index) => (
             <button
               type="button"
@@ -74,4 +77,6 @@ function Tabs({ tabs, className }: TabProps) {
   );
 }
 
-export default Tabs;
+const MemoizedTabs = memo(Tabs);
+
+export default MemoizedTabs;

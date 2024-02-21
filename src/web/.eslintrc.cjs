@@ -35,5 +35,19 @@ module.exports = {
       "allowedInvalidRoles": ["text"],
       "ignoreNonDOM": true
     }], // role="text"만 예외로 허용하여 ARIA spec을 확장해서 사용합니다.
+    "max-classes-per-file": [
+      "error",
+      { "ignoreExpressions": true, "max": 2 }
+    ], // class는 최대 2개까지 사용 가능합니다.
+    "class-methods-use-this": "off", // this 사용에 대한 제한을 사용하지 않습니다.
+    "no-param-reassign": "off", // param을 reassign 할 수 있게 만듭니다.
+    "react/no-unstable-nested-components": [
+      "off",
+      {
+        "allowAsProps":  true,
+        "customValidators": [] /* optional array of validators used for propTypes validation */
+      }
+    ],// error-boundary에서 fallback을 받기위해 사용합니다.
+    "no-restricted-syntax": "off" // for ... of의 문법을 사용합니다.
   },
 };

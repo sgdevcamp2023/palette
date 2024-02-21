@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import { cva } from 'class-variance-authority';
-import type { MouseEvent, MouseEventHandler } from 'react';
+import type { MouseEvent, MouseEventHandler, ReactNode } from 'react';
 
-import { DUMMY_USER, cn } from '@/utils';
+import { cn } from '@/utils';
 import MenuModal from './MenuModal';
 import Typography from './common/Typography';
 import type { IconKeyType } from './common/Icon';
@@ -25,6 +25,11 @@ type HeaderType =
       label: string;
       className?: string;
       onClick?: MouseEventHandler<HTMLButtonElement>;
+    }
+  | {
+      type: 'node';
+      onClick?: MouseEventHandler<HTMLButtonElement>;
+      node: ReactNode;
     };
 
 const HeaderButtonVariants = cva<{
@@ -52,7 +57,7 @@ function HeaderButton({
 
   return (
     <>
-      {header.type !== 'text' && (
+      {header.type !== 'text' && header.type !== 'node' && (
         <AccessibleIconButton
           width={header.width ?? 20}
           height={header.height ?? 20}
@@ -75,6 +80,7 @@ function HeaderButton({
           </Typography>
         </button>
       )}
+      {header.type === 'node' && header.node}
     </>
   );
 }
@@ -82,7 +88,7 @@ function HeaderButton({
 const HeaderVariants = cva<{
   position: Record<'sticky' | 'fixed', string>;
 }>(
-  'flex justify-between items-center px-[14px] w-[420px] max-w-full h-[44px]',
+  'flex justify-between items-center px-[14px] w-[420px] max-w-full h-[44px] bg-white z-[999]',
   {
     variants: {
       position: {
@@ -114,6 +120,7 @@ function Header({ left, center, right, position, className }: HeaderProps) {
     if (isProfile) {
       setIsProfileModalOpen((prev) => !prev);
     }
+    if (left?.type === 'node') return;
     left?.onClick?.(e);
   };
 
@@ -125,7 +132,6 @@ function Header({ left, center, right, position, className }: HeaderProps) {
     } else {
       window.document.body.style.width = 'auto';
       window.document.body.style.position = 'static';
-      window.document.body.style.overflow = 'auto';
     }
   }, [isProfileModalOpen]);
 
@@ -142,13 +148,12 @@ function Header({ left, center, right, position, className }: HeaderProps) {
         <HeaderButton header={right} align="end" />
       </header>
       {isProfile && isProfileModalOpen && (
-        <MenuModal
-          user={DUMMY_USER}
-          onClose={() => setIsProfileModalOpen(false)}
-        />
+        <MenuModal onClose={() => setIsProfileModalOpen(false)} />
       )}
     </>
   );
 }
 
-export default Header;
+const MemoizedHeader = memo(Header);
+
+export default MemoizedHeader;

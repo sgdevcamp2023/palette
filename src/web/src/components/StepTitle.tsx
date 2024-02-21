@@ -1,3 +1,5 @@
+import { memo } from 'react';
+
 import { cn } from '@/utils';
 import Typography from './common/Typography';
 
@@ -22,4 +24,6 @@ function StepTitle({ title, description, className }: StepTitleProps) {
   );
 }
 
-export default StepTitle;
+const MemoizedStepTitle = memo(StepTitle);
+
+export default MemoizedStepTitle;

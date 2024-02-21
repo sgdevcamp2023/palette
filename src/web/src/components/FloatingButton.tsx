@@ -1,14 +1,15 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import { toast } from 'react-toastify';
-import { motion } from 'framer-motion';
 import { useNavigate } from '@tanstack/react-router';
 
-import AccessibleIconButton from './AccessibleIconButton';
 import { useLongPress } from '@/hooks';
+import { cn, iconOpacity } from '@/utils';
+import type { ScrollDirectionProps } from '@/@types';
+import AccessibleIconButton, {
+  FramerAccessibleIconButton,
+} from './AccessibleIconButton';
 
-const FramerIconButton = motion(AccessibleIconButton);
-
-function FloatingButton() {
+function FloatingButton({ direction }: ScrollDirectionProps) {
   const navigate = useNavigate();
   const [isShowMenu, setIsShowMenu] = useState<boolean>(false);
 
@@ -32,11 +33,14 @@ function FloatingButton() {
           onClick={() => setIsShowMenu(false)}
         />
       ) : (
-        <FramerIconButton
+        <FramerAccessibleIconButton
           iconType="addText"
           width={24}
           height={24}
-          className="flex justify-center items-center bg-black rounded-full w-[56px] h-[56px] fixed right-[10px] bottom-[60px]"
+          className={cn(
+            'flex justify-center items-center bg-black rounded-full w-[56px] h-[56px] fixed right-[10px] bottom-[60px] transition-colors',
+            iconOpacity(direction),
+          )}
           label="게시글 작성 플로팅 버튼"
           {...attrs}
           onClick={() => navigate({ to: '/post/edit' })}
@@ -50,7 +54,7 @@ function FloatingButton() {
             className="bg-grey-200 opacity-60 w-full h-full absolute top-0 left-0 z-[10]"
             onClick={() => setIsShowMenu(false)}
           />
-          <FramerIconButton
+          <FramerAccessibleIconButton
             initial={{
               right: 10,
               bottom: 60,
@@ -67,7 +71,7 @@ function FloatingButton() {
             label="이미지 첨부"
             onClick={() => navigate({ to: '/post/edit' })}
           />
-          <FramerIconButton
+          <FramerAccessibleIconButton
             initial={{
               right: 10,
               bottom: 60,
@@ -84,7 +88,7 @@ function FloatingButton() {
             label="GIF 첨부"
             onClick={() => toast('지원하지 않는 기능입니다.')}
           />
-          <FramerIconButton
+          <FramerAccessibleIconButton
             initial={{
               right: 10,
               bottom: 60,
@@ -106,4 +110,6 @@ function FloatingButton() {
   );
 }
 
-export default FloatingButton;
+const MemoizedFloatingButton = memo(FloatingButton);
+
+export default MemoizedFloatingButton;

@@ -1,5 +1,5 @@
 import { cva } from 'class-variance-authority';
-import type { InputHTMLAttributes } from 'react';
+import { memo, type InputHTMLAttributes } from 'react';
 
 import Icon from './Icon';
 import { cn } from '@/utils';
@@ -15,7 +15,7 @@ const InputVariants = cva<{
       status: {
         normal: 'text-blueGrey-800 focus:border-blue-500',
         success: 'text-blue-500 focus:border-blue-500',
-        error: 'text-red-200 focus:border-red-200',
+        error: 'text-pink-200 focus:border-pink-200',
         dirty: 'text-blueGrey-800 focus:border-blue-500',
       },
     },
@@ -30,7 +30,7 @@ const LabelVariants = cva<{
     variants: {
       status: {
         normal: 'peer-focus:text-blue-500',
-        error: 'peer-focus:text-red-200',
+        error: 'peer-focus:text-pink-200',
         success: 'peer-focus:text-blue-500',
         dirty: 'peer-focus:text-blue-500',
       },
@@ -96,4 +96,6 @@ function Input({
   );
 }
 
-export default Input;
+const MemoizedInput = memo(Input);
+
+export default MemoizedInput;

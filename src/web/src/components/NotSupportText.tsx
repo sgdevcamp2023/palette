@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { toast } from 'react-toastify';
 
 import { cn } from '@/utils';
@@ -20,7 +21,7 @@ function NotSupportText({
   return (
     <Typography
       as="span"
-      role="alertdialog"
+      role="button"
       size={size}
       color={color}
       className={cn('mx-1 cursor-pointer', className)}
@@ -31,4 +32,6 @@ function NotSupportText({
   );
 }
 
-export default NotSupportText;
+const MemoizedNotSupportText = memo(NotSupportText);
+
+export default MemoizedNotSupportText;
