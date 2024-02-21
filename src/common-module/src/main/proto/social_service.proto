@@ -56,7 +56,7 @@ message GPaintResponse {
   string authorNickname = 5;
   string authorImagePath = 6;
   string authorStatus = 7;
-  GQuotePaintResponse quote = 8;
+  GPaintResponse quote = 8;
   string createdAt = 9;
   string text = 10;
   repeated GHashtagResponse hashtags = 11;
@@ -64,23 +64,6 @@ message GPaintResponse {
   repeated GUserResponse taggedUsers = 13;
   repeated GMediaResponse medias = 14;
   repeated GLinkResponse links = 15;
-}
-
-message GQuotePaintResponse {
-  int64 pid = 1;
-  bool isReply = 2;
-  int64 authorId = 3;
-  string authorUsername = 4;
-  string authorNickname = 5;
-  string authorImagePath = 6;
-  string authorStatus = 7;
-  string createdAt = 8;
-  string text = 9;
-  repeated GHashtagResponse hashtags = 10;
-  repeated GMentionResponse mentions = 11;
-  repeated GUserResponse taggedUsers = 12;
-  repeated GMediaResponse medias = 13;
-  repeated GLinkResponse links = 14;
 }
 
 message GHashtagResponse {
