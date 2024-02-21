@@ -26,7 +26,7 @@
 
 **4. 사용자 팔로잉**
 
-   원하는 사용자에 팔로우를 할 수 있습니다.
+   원하는 사용자를 팔로우 할 수 있습니다.
    ![](public/readme/application1.png)
    ![](public/readme/application2.png)
 
