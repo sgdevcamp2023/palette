@@ -69,6 +69,7 @@
         android:layout_width="16dp"
         android:layout_height="16dp"
         android:layout_marginTop="18dp"
+        android:layout_marginEnd="10dp"
         android:backgroundTint="@color/BlueGrey_500"
         android:src="@drawable/ic_three_dot"
         app:layout_constraintEnd_toEndOf="parent"
