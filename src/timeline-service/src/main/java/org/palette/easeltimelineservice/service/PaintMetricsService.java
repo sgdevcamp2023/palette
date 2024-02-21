@@ -5,6 +5,8 @@ import org.palette.easeltimelineservice.util.RedisKeyUtil;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class PaintMetricsService {
@@ -53,14 +55,21 @@ public class PaintMetricsService {
         final Integer replyCount = getPaintMetric(pid, REPLY_COUNT);
         final Integer repaintCount = getPaintMetric(pid, REPAINT_COUNT);
         final Integer likeCount = getPaintMetric(pid, LIKE_COUNT);
-
         return PaintMetrics.of(replyCount, repaintCount, likeCount);
     }
 
     public Integer getPaintMetric(final Long pid, final String metric) {
-        return (Integer) redistemplate.opsForHash().get(
+        final String string = Optional.ofNullable(redistemplate.opsForHash().get(
                 RedisKeyUtil.constructKey(RedisKeyConstants.METRICS_PREFIX.getKey(), pid),
                 metric
+        )).orElse("0").toString();
+        return Integer.parseInt(string);
+    }
+
+    public void create(final Long id) {
+        redistemplate.opsForHash().putAll(
+                RedisKeyUtil.constructKey(RedisKeyConstants.METRICS_PREFIX.getKey(), id),
+                PaintMetrics.DEFAULT_METRICS.asMap()
         );
     }
 }

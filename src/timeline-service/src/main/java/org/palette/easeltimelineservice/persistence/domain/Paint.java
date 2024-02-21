@@ -16,13 +16,13 @@ import java.util.Optional;
 public class Paint {
 
     private Long id;
-    private Boolean isReply;
+    private Boolean isReply = false;
     private Long authorId;
     private String authorUsername;
     private String authorNickname;
     private String authorImagePath;
     private String authorStatus;
-    private Paint quotePaint;
+    private Paint quotePaint = null;
     private LocalDateTime createdAt;
     private String text;
     private List<HashtagRecord> hashtagRecords;

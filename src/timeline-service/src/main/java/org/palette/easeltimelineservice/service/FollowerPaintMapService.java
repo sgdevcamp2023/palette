@@ -15,23 +15,23 @@ import static org.palette.easeltimelineservice.service.RedisKeyConstants.FOLLOWE
 @RequiredArgsConstructor
 public class FollowerPaintMapService {
 
-    private final RedisTemplate<String, Object> redistemplate;
+    private final RedisTemplate<String, String> redistemplate;
 
     public void addPaintToFollowersTimeline(List<Long> followerIds, Long paintId) {
         followerIds.forEach(userId -> {
             final String key = RedisKeyUtil.constructKey(FOLLOWER_PAINT_TIMELINE_PREFIX.getKey(), userId);
             redistemplate.opsForList()
-                    .leftPush(key, paintId);
+                    .leftPush(key, paintId.toString());
             redistemplate.expire(key, Duration.ofDays(5));
         });
     }
 
     public List<Long> getFollowingTimelinePaintIds(final Long userId) {
         final String key = RedisKeyUtil.constructKey(FOLLOWER_PAINT_TIMELINE_PREFIX.getKey(), userId);
-        return Optional.ofNullable(redistemplate.opsForList().range(key, 0, -1))
+        return Optional.ofNullable(redistemplate.opsForList().range(key, 1, -1))
                 .orElse(List.of())
                 .stream()
-                .map(object -> Long.valueOf(object.toString()))
+                .map(Long::valueOf)
                 .toList();
     }
 }

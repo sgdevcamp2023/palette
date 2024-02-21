@@ -1,5 +1,7 @@
 package org.palette.easeltimelineservice.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.palette.easeltimelineservice.persistence.domain.Paint;
 import org.palette.easeltimelineservice.util.RedisKeyUtil;
@@ -16,27 +18,44 @@ import static org.palette.easeltimelineservice.service.RedisKeyConstants.PAINT_P
 @RequiredArgsConstructor
 public class PaintCacheService {
 
-    private final RedisTemplate<String, Object> redistemplate;
+    private final RedisTemplate<String, String> redistemplate;
+    private final ObjectMapper objectMapper;
 
     public void cachePaint(Long paintId, Paint paint) {
         String key = RedisKeyUtil.constructKey(PAINT_PREFIX.getKey(), paintId);
-        redistemplate.opsForValue().set(key, paint);
+        String paintJson;
+        try {
+            paintJson = objectMapper.writeValueAsString(paint);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+        redistemplate.opsForValue().set(key, paintJson);
+        redistemplate.opsForSet().add("paint_keys", paintId.toString());
     }
 
     public List<Paint> getPaints(final List<Long> paintIds) {
         final List<String> keys = RedisKeyUtil.constructKeys(PAINT_PREFIX.getKey(), paintIds);
-        return Optional.ofNullable(redistemplate.opsForValue().multiGet(keys))
+        final List<String> value = redistemplate.opsForValue().multiGet(keys);
+        return Optional.ofNullable(value)
                 .orElseGet(Collections::emptyList)
                 .stream()
-                .map(Paint.class::cast)
+                .map(json -> {
+                    try {
+                        return objectMapper.readValue(json, Paint.class);
+                    } catch (JsonProcessingException e) {
+                        throw new RuntimeException(e);
+                    }
+                })
                 .toList();
     }
 
     public List<Paint> getRandomPaints() {
-        return Optional.ofNullable(redistemplate.opsForSet().randomMembers(PAINT_PREFIX.getKey(), 200))
+        List<Long> paintIds = Optional.ofNullable(redistemplate.opsForSet().randomMembers("paint_keys", 200))
                 .orElseGet(Collections::emptyList)
                 .stream()
-                .map(Paint.class::cast)
+                .map(Long::valueOf)
+                .distinct()
                 .toList();
+        return getPaints(paintIds);
     }
 }
