@@ -10,6 +10,7 @@ import { cn, createDummyTimelineItem } from '@/utils';
 import ReplyBottomSheet from './bottomSheet/ReplyBottomSheet';
 import ShareBottomSheet from './bottomSheet/ShareBottomSheet';
 import ViewsBottomSheet from './bottomSheet/ViewsBottomSheet';
+import { Typography } from './common';
 
 interface TimelineItemListProps {
   type:
@@ -19,6 +20,7 @@ interface TimelineItemListProps {
     | 'reply'
     | 'media'
     | 'heart'
+    | 'bookmark'
     | 'search-recommend'
     | 'search-recent'
     | 'search-user'
@@ -34,6 +36,28 @@ function delay(ms: number): Promise<TimelineItem[]> {
   });
 }
 
+function EmptyBox() {
+  return (
+    <div className="py-10 pb-32">
+      <div className="flex flex-col gap-[40px] h-full justify-center items-center px-4">
+        <div className="flex items-center justify-center w-[200px] h-[200px] rounded-full bg-yellow-100">
+          <Typography size="headline-1" className="text-[100px]">
+            🔥
+          </Typography>
+        </div>
+        <div className="w-full flex flex-col justify-center items-center gap-3">
+          <Typography size="headline-7" color="grey-600">
+            게시글이 아직 없습니다.
+          </Typography>
+          <Typography size="body-1" color="grey-600">
+            새로운 게시글을 작성해 보세요.
+          </Typography>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 class UserNotFoundError extends Error {
   constructor() {
     super('유효하지 않는 사용자입니다.');
@@ -46,9 +70,12 @@ function getQueryFnByType(
 ): Promise<TimelineItem[]> {
   switch (type) {
     case 'recommend':
-      return delay(1250);
+      return apis.timelines.getRecommendTimelineList();
     case 'follow':
-      return apis.auth.logout() as unknown as Promise<TimelineItem[]>;
+      return apis.timelines.getFollowingTimelineList();
+    case 'bookmark':
+      if (!userId) throw new UserNotFoundError();
+      return apis.users.getUserMarkPaints(userId);
     case 'post':
       if (!userId) throw new UserNotFoundError();
       return apis.users.getUserPaints(userId);
@@ -93,6 +120,7 @@ function TimelineItemList({ type, className }: TimelineItemListProps) {
           className,
         )}
       >
+        {paints.length === 0 && <EmptyBox />}
         {paints.map((paint) => (
           <TimelineItemBox
             key={paint.id}

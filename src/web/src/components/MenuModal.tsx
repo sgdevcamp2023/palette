@@ -111,7 +111,11 @@ function MenuModal({ onClose }: MenuModalProps) {
           <button
             type="button"
             className="flex gap-[24px] items-center"
-            onClick={handleClickNotSupport}
+            onClick={() =>
+              navigate({
+                to: '/bookmark',
+              })
+            }
           >
             <Icon type="bookmark" width={20} height={20} />
             <Typography size="headline-5" color="grey-600">

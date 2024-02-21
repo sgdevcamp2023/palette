@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 import { useNavigate } from '@tanstack/react-router';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { apis } from '@/api';
 import { useThrottle } from './useThrottle';
@@ -35,16 +35,23 @@ export const usePaintAction = ({ userId }: { userId: string }) => {
     show: boolean;
   }>(INITIAL_SHOW_MORE_MENU);
 
+  const queryClient = useQueryClient();
   const likePaintMutate = useMutation({
     mutationKey: ['like-paint', selectedPostId],
     mutationFn: ({ paintId }: { paintId: TimelineItem['id'] }) =>
       apis.users.likePaint({ userId, paintId }),
+    onMutate: () => {
+      queryClient.invalidateQueries({ queryKey: ['paint'] });
+    },
   });
 
   const disLikePaintMutate = useMutation({
     mutationKey: ['like-paint', selectedPostId],
     mutationFn: ({ paintId }: { paintId: TimelineItem['id'] }) =>
       apis.users.likePaint({ userId, paintId }),
+    onMutate: () => {
+      queryClient.invalidateQueries({ queryKey: ['paint'] });
+    },
   });
 
   const handleClickTimelineActionIcon = (

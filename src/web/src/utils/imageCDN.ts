@@ -49,7 +49,7 @@ export const forCloudinaryImage = (
     height: 400,
   },
 ): string => {
-  const image = cld.image(id ?? options.defaultImage ?? DEFAULT_PROFILE_IMAGE);
+  const image = cld.image(id || options.defaultImage || DEFAULT_PROFILE_IMAGE);
   if (!image) {
     throw new ImageNotFoundError();
   }
