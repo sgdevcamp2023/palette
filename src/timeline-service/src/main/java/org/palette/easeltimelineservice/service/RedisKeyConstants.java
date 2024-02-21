@@ -7,7 +7,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum RedisKeyConstants {
     FOLLOWER_PAINT_TIMELINE_PREFIX("follow_timeline"),
-    PAINT_PREFIX("paint");
+    PAINT_PREFIX("paint"),
+    METRICS_PREFIX("metrics");
 
     private final String key;
 }

@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "org.palette.grpc";
+
+service GNotificationService {
+  rpc CreateNotificationUser (GCreateNotificationUserRequest) returns (GCreateNotificationUserResponse) {}
+}
+
+message GCreateNotificationUserRequest {
+  string nickname = 2;
+}
+
+message GCreateNotificationUserResponse {
+  bool isSuccess = 1;
+}
