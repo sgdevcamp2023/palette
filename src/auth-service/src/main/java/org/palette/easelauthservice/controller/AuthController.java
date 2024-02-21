@@ -2,6 +2,7 @@ package org.palette.easelauthservice.controller;
 
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.palette.aop.InternalErrorLogging;
 import org.palette.easelauthservice.component.cookie.AuthCookiePair;
 import org.palette.easelauthservice.component.cookie.CookieAgent;
 import org.palette.easelauthservice.component.cookie.LogoutCookiePair;
@@ -23,6 +24,7 @@ public class AuthController {
     private final AuthUsecase authUsecase;
     private final CookieAgent cookieAgent;
 
+    @InternalErrorLogging
     @PostMapping
     public ResponseEntity<Void> auth(
             @RequestBody SendEmailAuthRequest sendEmailAuthRequest
@@ -31,6 +33,7 @@ public class AuthController {
         return ResponseEntity.ok().build();
     }
 
+    @InternalErrorLogging
     @PostMapping("/resend")
     public ResponseEntity<Void> resend(
             @RequestBody ResendEmailAuthRequest resendEmailAuthRequest
@@ -39,6 +42,7 @@ public class AuthController {
         return ResponseEntity.ok().build();
     }
 
+    @InternalErrorLogging
     @PostMapping("/web")
     public ResponseEntity<Void> webLogin(
             @RequestBody LoginRequest loginRequest,
@@ -52,6 +56,7 @@ public class AuthController {
         return ResponseEntity.ok().build();
     }
 
+    @InternalErrorLogging
     @PostMapping("/logout")
     public ResponseEntity<Void> logout(
             HttpServletResponse httpServletResponse
@@ -63,6 +68,7 @@ public class AuthController {
         return ResponseEntity.ok().build();
     }
 
+    @InternalErrorLogging
     @PostMapping("/mobile")
     public ResponseEntity<JwtPair> mobileLogin(
             @RequestBody LoginRequest loginRequest
@@ -72,6 +78,7 @@ public class AuthController {
                 .body(authUsecase.login(loginRequest));
     }
 
+    @InternalErrorLogging
     @PostMapping("/passport")
     public ResponseEntity<String> generatePassport(
             @RequestHeader("Authorization") String jwtPayload

@@ -1,6 +1,7 @@
 package org.palette.easelauthservice.component.mailsender;
 
 import lombok.RequiredArgsConstructor;
+import org.palette.aop.InternalErrorLogging;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -17,6 +18,7 @@ public class EmailAuthMailSenderByJMS implements EmailAuthMailSender {
 
     private final JavaMailSender javaMailSender;
 
+    @InternalErrorLogging
     @Override
     public void send(
             String to,
