@@ -1,6 +1,6 @@
 ## Smilegate Server Devcamp 5th - Palette (2조)
 
-<p align=""><img src="resources/banner.png" width="50%" /></p>
+<p ><img src="resources/banner.png" width="50%" /></p>
 
 ## 🎨 Easel
 
@@ -11,24 +11,29 @@
 **1. 트윗 작성**
 
     트윗을 작성하여 게시하고 싶은 내용을 담을 수 있습니다. 이미지, 동영상과 같은 정적 컨텐츠도 업로드 가능합니다.
-   ![](public/readme/recruiting-process.png)
+
+![](public/readme/recruiting-process.png)
 **2. 타임라인 조회**
 
     각 사용자에게 추천되는 트윗을 조회할 수 있습니다. 또한 팔로우하고 있는 사용자의 트윗만 조회할 수도 있습니다.
-   ![](public/readme/recruit-announcement.png)
+
+![](public/readme/recruit-announcement.png)
 **3. 재게시, 인용, 답글, 좋아요, 북마크**
 
     조회한 트윗에 대해 재게시, 인용, 답글을 남길 수 있고 좋아요(마음에 들어요), 북마크를 지정하여 해당 관계들로만 따로 모아볼 수 있습니다.
-   ![](public/readme/faq.png)
+
+![](public/readme/faq.png)
 **4. 사용자 팔로잉**
 
     원하는 사용자를 팔로우 할 수 있습니다.
-   ![](public/readme/application1.png)
-   ![](public/readme/application2.png)
+
+![](public/readme/application1.png)
+![](public/readme/application2.png)
 
 ## 기술 스택
 
 ### [Frontend](https://github.com/sgdevcamp2023/palette/tree/main/src/web)
+
 - React, TypeScript, Vite, react-error-boundary
 - tailwindcss, Framer Motion.
 - Tanstack Query, Tanstack Router
@@ -36,6 +41,7 @@
 - Jest
 
 ### [Android](https://github.com/sgdevcamp2023/palette/tree/main/src/mobile)
+
 - MVVM
 - Android 13 SDK(minSdk 26, targetSdk 33, compileSdk 33)
 - AGP 7.0.0 이상
@@ -48,6 +54,7 @@
 - okhttp3
 
 ### [Backend](https://github.com/sgdevcamp2023/palette/tree/main/src)
+
 - Java
 - Spring Boot, JPA
 - Spring Cloud Gateway, Spring Cloud Netflix
@@ -62,27 +69,27 @@ Palette는 개인의 색깔을 섞어서 필요한 팀 색깔을 만들기 위�
 
 <table>
     <tr align="center">
-        <td><B>김도율(Server)<B></td>
-        <td><B>김도현(Server)<B></td>
-        <td><B>박희원(Mobile)<B></td>
-        <td><B>이상민(Web)<B></td>
-        <td><B>이원영(Server)<B></td>
+        <td><B>김도율(Server)</B></td>
+        <td><B>김도현(Server)</B></td>
+        <td><B>박희원(Mobile)</B></td>
+        <td><B>이상민(Web)</B></td>
+        <td><B>이원영(Server)</B></td>
     </tr>
     <tr align="center">
         <td>
-            <p align=""><img src="https://github.com/doxxx93.png" width="70%" /></p>
+            <p><img src="https://github.com/doxxx93.png" width="70%"/></p>
         </td>
         <td>
-          <p align=""><img src="https://github.com/k-diger.png" width="70%" /></p>
+            <p><img src="https://github.com/k-diger.png" width="70%" alt=""/></p>
         </td>
         <td>
-            <p align=""><img src="https://github.com/HeewonP825.png" width="70%" /></p>
+            <p><img src="https://github.com/HeewonP825.png" width="70%" alt=""/></p>
         </td>
         <td>
-            <p align=""><img src="https://github.com/poiu694.png" width="70%" /></p>
+            <p><img src="https://github.com/poiu694.png" width="70%" alt=""/></p>
         </td>
         <td>
-            <p align=""><img src="https://github.com/210-reverof.png" width="70%" /></p>
+            <p><img src="https://github.com/210-reverof.png" width="70%" alt=""/></p>
         </td>
     </tr>
     <tr align="center">
@@ -103,3 +110,4 @@ Palette는 개인의 색깔을 섞어서 필요한 팀 색깔을 만들기 위�
         </td>
     </tr>
 </table>
+
