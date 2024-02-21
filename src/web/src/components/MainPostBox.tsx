@@ -44,7 +44,11 @@ const MainPostBox = forwardRef<HTMLDivElement, MainPostBoxProps>(
           ['paint', params.postId],
           (prev) => {
             if (prev) {
-              return { ...prev, like: !prev.like };
+              return {
+                ...prev,
+                like: !prev.like,
+                likeCount: prev.like ? prev.likeCount - 1 : prev.likeCount + 1,
+              };
             }
             return post;
           },

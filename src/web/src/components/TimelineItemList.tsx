@@ -124,6 +124,10 @@ function TimelineItemList({ type, className }: TimelineItemListProps) {
             );
             nextPaints[willUpdateIndex].like =
               !nextPaints[willUpdateIndex].like;
+            nextPaints[willUpdateIndex].likeCount += nextPaints[willUpdateIndex]
+              .like
+              ? 1
+              : -1;
             return nextPaints;
           }
           return [];

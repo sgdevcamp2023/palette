@@ -43,6 +43,11 @@ const BeforeTimelineList = forwardRef<HTMLDivElement, BeforeTimelineListProps>(
               );
               nextPaints[willUpdateIndex].like =
                 !nextPaints[willUpdateIndex].like;
+              nextPaints[willUpdateIndex].likeCount += nextPaints[
+                willUpdateIndex
+              ].like
+                ? 1
+                : -1;
               return nextPaints;
             }
             return [];
