@@ -19,7 +19,7 @@ public class GrpcNotificationClient {
 
     @InternalErrorLogging
     @Transactional
-    public void createNotificationUser(User user) {
+    public void createNotificationUser(final User user) {
         try {
             gNotificationServiceBlockingStub.createNotificationUser(
                     GCreateNotificationUserRequest.newBuilder()
