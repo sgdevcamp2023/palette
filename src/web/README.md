@@ -31,14 +31,29 @@ pnpm dev # dev 모드로 시작
 🎨 PALETTE # PROJECT
  ┣ 🗂️ public # 정적인 파일 관리
  ┣ 🗂️ src
+ ┃ ┣ 🗂️ @types # 공통 타입 인터페이스 정의
  ┃ ┣ 🗂️ api # api 와 관련되어 사용
  ┃ ┣ 🗂️ components # 페이지에서 사용되는 컴포넌트
  ┃ ┃ ┗ 🗂️ common # atom에 해당하는 디자인 시스템 컴포넌트
+ ┃ ┣ 🗂️ constants # 정적 상수와 관련되어 사용
  ┃ ┣ 🗂️ hooks # 범용성을 위한 리액트 훅
  ┃ ┣ 🗂️ pages # PALETTE 내 사용되는 페이지
- ┃ ┣ 🗂️ styles # design system을 위한 폰트, 색상 등 관리
- ┃ ┣ 🗂️ types # 범용적으로 사용되는 타입 관리
+ ┃ ┣ 🗂️ routes # 페이지에 라우팅 관리
  ┃ ┣ 🗂️ utils # 리액트와 종속되지 않는 유틸 관리
  ┃ ┣ 📄 App.tsx
- ┃ ┗ 📄 main.tsx
+ ┃ ┣ 📄 index.css
+ ┃ ┣ 📄 main.tsx
+ ┃ ┗ 📄 vite-env.d.ts
+```
+
+### env
+
+```text
+VITE_BASE_SERVER_URL = ''
+VITE_CDN_BASE_URL = ''
+VITE_CLOUD_NAME = ''
+VITE_CLD_API_KEY = ''
+VITE_CLD_PRESET_NAME = ''
+VITE_CLD_SECRET = ''
+VITE_CLD_ENVIRONMENT_VARIABLE = ''
 ```
