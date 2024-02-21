@@ -24,18 +24,14 @@ repositories {
 extra["springCloudVersion"] = "2023.0.0"
 
 dependencies {
-    implementation ("net.devh:grpc-spring-boot-starter:2.15.0.RELEASE")
+    implementation("org.springframework.kafka:spring-kafka")
+
+    implementation("net.devh:grpc-spring-boot-starter:2.15.0.RELEASE")
     implementation(project(":common-module"))
 
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-
-    implementation("io.hypersistence:hypersistence-utils-hibernate-60:3.7.0")
-    implementation("com.vladmihalcea:hibernate-types-52:2.10.4")
-    implementation("io.hypersistence:hypersistence-utils-hibernate-5:3.1.1")
-
-    implementation("com.fasterxml.jackson.module:jackson-module-jakarta-xmlbind-annotations")
 
     runtimeOnly("com.mysql:mysql-connector-j")
     implementation("org.springframework.boot:spring-boot-starter-validation")
