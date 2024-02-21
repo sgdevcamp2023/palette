@@ -17,6 +17,7 @@ public class UserService {
 
     private final UserJpaRepository userJpaRepository;
 
+    @Transactional
     public User create(String nickname) {
         return userJpaRepository.save(User.build(nickname));
     }
