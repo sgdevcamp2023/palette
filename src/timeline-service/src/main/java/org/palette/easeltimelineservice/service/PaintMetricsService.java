@@ -45,7 +45,7 @@ public class PaintMetricsService {
     }
 
     public void incrementViewCount(final Long aLong) {
-        changeMetricCount(aLong, "viewCount", DELTA);
+        changeMetricCount(aLong, VIEW_COUNT, DELTA);
     }
 
     private void changeMetricCount(final Long pid, final String metric, final int delta) {

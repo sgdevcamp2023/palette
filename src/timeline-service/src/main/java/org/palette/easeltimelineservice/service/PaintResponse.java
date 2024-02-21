@@ -68,7 +68,7 @@ public record PaintResponse(
                 false,
                 false,
                 false,
-                0,
+                metrics.viewCount(),
                 new Entities(paint.getHashtagRecords(), paint.getMentionRecords()),
                 new Includes(paint.getMediaRecords(), paint.getMentionRecords(), paint.getLinkRecord())
         );
