@@ -50,21 +50,11 @@ public class PaintMetricsService {
     }
 
     public PaintMetrics getPaintMetrics(final Long pid) {
-        final Integer replyCount = (Integer) redistemplate.opsForHash().get(
-                RedisKeyUtil.constructKey(RedisKeyConstants.METRICS_PREFIX.getKey(), pid),
-                REPLY_COUNT
-        );
+        final Integer replyCount = getPaintMetric(pid, REPLY_COUNT);
+        final Integer repaintCount = getPaintMetric(pid, REPAINT_COUNT);
+        final Integer likeCount = getPaintMetric(pid, LIKE_COUNT);
 
-        final Integer repaintCount = (Integer) redistemplate.opsForHash().get(
-                RedisKeyUtil.constructKey(RedisKeyConstants.METRICS_PREFIX.getKey(), pid),
-                REPAINT_COUNT
-        );
-
-        final Integer likeCount = (Integer) redistemplate.opsForHash().get(
-                RedisKeyUtil.constructKey(RedisKeyConstants.METRICS_PREFIX.getKey(), pid),
-                LIKE_COUNT
-        );
-        return new PaintMetrics(replyCount, repaintCount, likeCount);
+        return PaintMetrics.of(replyCount, repaintCount, likeCount);
     }
 
     public Integer getPaintMetric(final Long pid, final String metric) {
