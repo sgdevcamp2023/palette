@@ -1,0 +1,61 @@
+server:
+  port: 10002
+
+mail-host-address: ${AUTH_MAIL_HOST_ADDRESS}
+
+spring:
+  application:
+    name: auth-service
+  mail:
+    host: ${AUTH_MAIL_HOST}
+    username: ${AUTH_MAIL_USERNAME}
+    password: ${AUTH_MAIL_PASSWORD}
+    port: ${AUTH_MAIL_PORT}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          ssl:
+            enable: true
+            trust: smtp.naver.com
+  data:
+    redis:
+      host: ${AUTH_REDIS_HOST}
+      port: ${AUTH_REDIS_PORT}
+
+  kafka:
+    bootstrap-servers: ${KAFKA_SERVERS}
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+jwt:
+  secret-key: ${AUTH_JWT_SECRET_KEY}
+
+grpc:
+  server:
+    port: 11002
+  client:
+    user-service:
+      address: 'discovery:///USER-SERVICE'
+      enableKeepAlive: true
+      keepAliveWithoutCalls: true
+      negotiationType: plaintext
+    social-service:
+      address: 'discovery:///SOCIAL-SERVICE'
+      enableKeepAlive: true
+      keepAliveWithoutCalls: true
+      negotiationType: plaintext
+
+passport:
+  key: ${PASSPORT_KEY}
+  algorithm: ${PASSPORT_ALGORITHM}
+
+eureka:
+  instance:
+    hostname: ${EUREKA_HOST}
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: ${EUREKA_DEFAULT_ZONE}

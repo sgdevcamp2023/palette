@@ -1,0 +1,34 @@
+version: '3.7'
+services:
+  es:
+    build:
+      context: ./Dockerfile
+      args:
+        VERSION: 7.15.2
+    container_name: es
+    environment:
+      - node.name=single-node
+      - cluster.name=backtony
+      - discovery.type=single-node
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    networks:
+      - es-bridge
+
+  kibana:
+    container_name: kibana
+    image: docker.elastic.co/kibana/kibana:7.15.2
+    environment:
+      SERVER_NAME: kibana
+      ELASTICSEARCH_HOSTS: http://es:9200
+    ports:
+      - "5601:5601"
+    depends_on:
+      - es
+    networks:
+      - es-bridge
+
+networks:
+  es-bridge:
+    driver: bridge

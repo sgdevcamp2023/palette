@@ -71,4 +71,17 @@ dependencies {
     //cardview
     implementation ("androidx.cardview:cardview:1.0.0")
 
+    //CircleImageView
+    implementation ("de.hdodenhof:circleimageview:3.1.0")
+
+    //lottie Animation
+    implementation("com.airbnb.android:lottie:6.0.0")
+
+    //JSON
+    implementation ("com.google.code.gson:gson:2.8.8")
+
+    //SwipeRefreshLayout
+    implementation ("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
+
+
 }
