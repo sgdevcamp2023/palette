@@ -52,9 +52,13 @@ public class TimelineUsecase extends GSocialServiceGrpc.GSocialServiceImplBase {
     public List<PaintResponse> getForYouTimeline(final Long userId) {
         List<Paint> paints = paintCacheService.getRandomPaints();
         List<Long> paintIds = followerPaintMapService.getFollowingTimelinePaintIds(userId);
-        paints.removeIf(paint -> paintIds.contains(paint.getId()));
-        paints.removeIf(paint -> paint.getAuthorId().equals(userId));
-        return paints.stream().map(paint -> {
+
+        List<Paint> filteredPaints = paints.stream()
+                .filter(paint -> !paintIds.contains(paint.getId()))
+                .filter(paint -> !paint.getAuthorId().equals(userId))
+                .toList();
+
+        return filteredPaints.stream().map(paint -> {
                     PaintMetrics metrics = paintMetricsService.getPaintMetrics(paint.getId());
                     return PaintResponse.of(paint, metrics);
                 }
