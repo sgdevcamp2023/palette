@@ -1,0 +1,40 @@
+server:
+  port: 10005
+
+spring:
+  application:
+    name: timeline-service
+
+  data:
+    redis:
+      host: ${TIMELINE_REDIS_HOST}
+      port: ${TIMELINE_REDIS_PORT}
+
+  kafka:
+    bootstrap-servers: ${KAFKA_SERVERS}
+    consumer:
+      group-id: timeline-service
+      auto-offset-reset: latest
+
+grpc:
+  server:
+    port: 11005
+  client:
+    social-service:
+      address: 'discovery:///SOCIAL-SERVICE'
+      enableKeepAlive: true
+      keepAliveWithoutCalls: true
+      negotiationType: plaintext
+
+passport:
+  key: ${PASSPORT_KEY}
+  algorithm: ${PASSPORT_ALGORITHM}
+
+eureka:
+  instance:
+    hostname: ${EUREKA_HOST}
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: ${EUREKA_DEFAULT_ZONE}
