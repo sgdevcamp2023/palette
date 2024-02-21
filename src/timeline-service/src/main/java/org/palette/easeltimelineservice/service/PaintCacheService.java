@@ -34,6 +34,7 @@ public class PaintCacheService {
 
     public List<Paint> getRandomPaints() {
         return Optional.ofNullable(redistemplate.opsForSet().randomMembers(PAINT_PREFIX.getKey(), 200))
+                .orElseGet(Collections::emptyList)
                 .stream()
                 .map(Paint.class::cast)
                 .toList();
