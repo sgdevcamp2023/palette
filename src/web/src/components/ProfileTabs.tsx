@@ -32,7 +32,7 @@ function ProfileTabs({ className }: ProfileTabsProps) {
                   </div>
                 )}
               >
-                <TimelineItemList type="post" />
+                <TimelineItemList type="post" className="pb-32" />
               </AsyncBoundary>
             </ContentLayout>
           ),
@@ -52,7 +52,7 @@ function ProfileTabs({ className }: ProfileTabsProps) {
                   </div>
                 )}
               >
-                <TimelineItemList type="reply" />
+                <TimelineItemList type="reply" className="pb-32" />
               </AsyncBoundary>
             </ContentLayout>
           ),
@@ -101,7 +101,7 @@ function ProfileTabs({ className }: ProfileTabsProps) {
                   </div>
                 )}
               >
-                <TimelineItemList type="media" />
+                <TimelineItemList type="media" className="pb-32" />
               </AsyncBoundary>
             </ContentLayout>
           ),
@@ -121,7 +121,7 @@ function ProfileTabs({ className }: ProfileTabsProps) {
                   </div>
                 )}
               >
-                <TimelineItemList type="heart" />
+                <TimelineItemList type="heart" className="pb-32" />
               </AsyncBoundary>
             </ContentLayout>
           ),
