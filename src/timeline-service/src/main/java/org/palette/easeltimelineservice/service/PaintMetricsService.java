@@ -14,6 +14,8 @@ public class PaintMetricsService {
     public static final String REPLY_COUNT = "replyCount";
     public static final String REPAINT_COUNT = "repaintCount";
     public static final String LIKE_COUNT = "likeCount";
+
+    public static final String VIEW_COUNT = "viewCount";
     public static final int DELTA = 1;
 
     private final RedisTemplate<String, String> redistemplate;
@@ -42,6 +44,10 @@ public class PaintMetricsService {
         changeMetricCount(pid, LIKE_COUNT, -DELTA);
     }
 
+    public void incrementViewCount(final Long aLong) {
+        changeMetricCount(aLong, "viewCount", DELTA);
+    }
+
     private void changeMetricCount(final Long pid, final String metric, final int delta) {
         redistemplate.opsForHash()
                 .increment(
@@ -55,7 +61,8 @@ public class PaintMetricsService {
         final Integer replyCount = getPaintMetric(pid, REPLY_COUNT);
         final Integer repaintCount = getPaintMetric(pid, REPAINT_COUNT);
         final Integer likeCount = getPaintMetric(pid, LIKE_COUNT);
-        return PaintMetrics.of(replyCount, repaintCount, likeCount);
+        final Integer viewCount = getPaintMetric(pid, VIEW_COUNT);
+        return PaintMetrics.of(replyCount, repaintCount, likeCount, viewCount);
     }
 
     public Integer getPaintMetric(final Long pid, final String metric) {

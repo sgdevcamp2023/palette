@@ -3,12 +3,12 @@ package org.palette.easeltimelineservice.usecase;
 import lombok.RequiredArgsConstructor;
 import org.palette.dto.event.LikedPaintEvent;
 import org.palette.dto.event.PaintCreatedEvent;
+import org.palette.dto.event.PaintViewedEvent;
 import org.palette.dto.event.UnlikedPaintEvent;
 import org.palette.easeltimelineservice.external.grpc.GrpcSocialClient;
 import org.palette.easeltimelineservice.persistence.domain.Paint;
 import org.palette.easeltimelineservice.service.*;
 import org.palette.grpc.GFollowerIdsResponse;
-import org.palette.grpc.GSocialServiceGrpc;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,7 +16,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class TimelineUsecase extends GSocialServiceGrpc.GSocialServiceImplBase {
+public class TimelineUsecase {
 
     private final GrpcSocialClient gRPCSocialClient;
     private final FollowerPaintMapService followerPaintMapService;
@@ -64,5 +64,9 @@ public class TimelineUsecase extends GSocialServiceGrpc.GSocialServiceImplBase {
                     return PaintResponse.of(paint, metrics);
                 }
         ).toList();
+    }
+
+    public void handlePaintViewedEvent(final PaintViewedEvent paintViewedEvent) {
+        paintMetricsService.incrementViewCount(paintViewedEvent.paintId());
     }
 }

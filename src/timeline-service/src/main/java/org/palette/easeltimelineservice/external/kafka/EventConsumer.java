@@ -3,6 +3,7 @@ package org.palette.easeltimelineservice.external.kafka;
 import lombok.RequiredArgsConstructor;
 import org.palette.dto.event.LikedPaintEvent;
 import org.palette.dto.event.PaintCreatedEvent;
+import org.palette.dto.event.PaintViewedEvent;
 import org.palette.dto.event.UnlikedPaintEvent;
 import org.palette.easeltimelineservice.usecase.TimelineUsecase;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -29,5 +30,11 @@ public class EventConsumer {
             containerFactory = "kafkaListenerContainerFactory")
     public void consumeUnlikedPaintEvent(UnlikedPaintEvent unlikedPaintEvent) {
         timelineUseCase.handleUnlikedPaintEvent(unlikedPaintEvent);
+    }
+
+    @KafkaListener(topics = "paint_viewed", groupId = "${spring.kafka.consumer.group-id}",
+            containerFactory = "kafkaListenerContainerFactory")
+    public void consumePaintViewedEvent(PaintViewedEvent paintViewedEvent) {
+        timelineUseCase.handlePaintViewedEvent(paintViewedEvent);
     }
 }
