@@ -1,0 +1,19 @@
+package org.palette.easelnotificationservice.persistence.enums;
+
+public enum AlarmAllowedType {
+    PAINT_CREATED,
+
+    MENTIONED, REPLIED, RETWEETED, LIKED, PHOTO_TAGGED, MOMENT,
+
+    NEW_FOLLOWER, MY_CONTACTS_BEEN_JOINED,
+
+    DM, DM_MENTIONED,
+
+    TOPIC, RECOMMEND, SPACE, OTHER_REALTIME_LIVE,
+
+    NEWS_SPORTS, NEW_FEATURE,
+
+    EMERGENCY,
+
+    PROFESSIONAL_ALARM
+}
