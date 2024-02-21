@@ -20,8 +20,10 @@ interface TimelineItemBoxProps {
   onClickViews: VoidFunction;
   onClickShare: VoidFunction;
   onClickMore: VoidFunction;
+  onCloseMenu: VoidFunction;
 }
 
+const MAX_NAME_LENGTH = 8;
 function TimelineItemBox({
   post,
   isShowMenu,
@@ -33,6 +35,7 @@ function TimelineItemBox({
   onClickViews,
   onClickShare,
   onClickMore,
+  onCloseMenu,
 }: TimelineItemBoxProps) {
   const navigate = useNavigate();
   const hasMedia = post.includes.medias.length > 0;
@@ -71,11 +74,15 @@ function TimelineItemBox({
         <div className="w-full flex justify-between relative">
           <div className="flex gap-[4px] items-center">
             <Typography size="headline-8" color="grey-600">
-              {post.authorNickname}
+              {post.authorNickname.length > MAX_NAME_LENGTH
+                ? `${post.authorNickname.slice(0, MAX_NAME_LENGTH)}...`
+                : post.authorNickname}
             </Typography>
             <Typography size="body-1" color="blueGrey-800">
-              {post.authorUsername} ·{' '}
-              {getDiffDateText(new Date(post.createdAt), new Date())}
+              {post.authorUsername.length > MAX_NAME_LENGTH
+                ? `${post.authorUsername.slice(0, MAX_NAME_LENGTH)}...`
+                : post.authorUsername}{' '}
+              · {getDiffDateText(new Date(post.createdAt), new Date())}
             </Typography>
           </div>
           <AccessibleIconButton
@@ -92,8 +99,11 @@ function TimelineItemBox({
           />
           {isShowMenu && (
             <TimelineItemMenu
+              paintId={post.id}
+              isMark={post.marked}
               userId={post.authorId}
               username={post.authorUsername}
+              onCloseMenu={onCloseMenu}
             />
           )}
         </div>

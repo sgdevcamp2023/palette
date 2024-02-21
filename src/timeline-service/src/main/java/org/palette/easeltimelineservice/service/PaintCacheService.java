@@ -25,8 +25,7 @@ public class PaintCacheService {
 
     public List<Paint> getPaints(final List<Long> paintIds) {
         final List<String> keys = RedisKeyUtil.constructKeys(PAINT_PREFIX.getKey(), paintIds);
-        return Optional.ofNullable(redistemplate.opsForValue().multiGet(keys))
-                .orElseGet(Collections::emptyList)
+        return Optional.ofNullable(redistemplate.opsForValue().multiGet(keys)).orElse(Collections.emptyList())
                 .stream()
                 .map(Paint.class::cast)
                 .toList();
@@ -34,6 +33,7 @@ public class PaintCacheService {
 
     public List<Paint> getRandomPaints() {
         return Optional.ofNullable(redistemplate.opsForSet().randomMembers(PAINT_PREFIX.getKey(), 200))
+                .orElse(Collections.emptyList())
                 .stream()
                 .map(Paint.class::cast)
                 .toList();

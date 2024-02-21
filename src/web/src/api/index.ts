@@ -30,6 +30,13 @@ const auth = createApiWrappers({
   logout: () => client.private.post('/auth/web-logout'),
 });
 
+const timelines = createApiWrappers({
+  getRecommendTimelineList: () =>
+    client.private.get<TimelineItem[]>(`/timeline/for-you`),
+  getFollowingTimelineList: () =>
+    client.private.get<TimelineItem[]>(`/timeline/following`),
+});
+
 const users = createApiWrappers({
   checkDuplicateEmail: ({ email }: { email: User['email'] }) =>
     client.public.post<{ isDuplicated: boolean }>('/users/verify-email', {
@@ -79,12 +86,14 @@ const users = createApiWrappers({
     >('/users/profile', request),
   getUserPaints: (userId: User['id']) =>
     client.private.get<TimelineItem[]>(`/users/${userId}/paint`),
+  getUserMarkPaints: (userId: User['id']) =>
+    client.private.get<TimelineItem[]>(`/users/${userId}/mark`),
   getUserReplyPaints: (userId: User['id']) =>
     client.private.get<TimelineItem[]>(`/users/${userId}/reply`),
   getUserMediaPaints: (userId: User['id']) =>
     client.private.get<TimelineItem[]>(`/users/${userId}/media`),
   getUserLikePaints: (userId: User['id']) =>
-    client.private.get<TimelineItem[]>(`/users/${userId}/heart`),
+    client.private.get<TimelineItem[]>(`/users/${userId}/like`),
   followUser: (userId: User['id']) =>
     client.private.post(`/users/${userId}/follow`),
   unFollowUser: (userId: User['id']) =>
@@ -211,6 +220,7 @@ const paints = createApiWrappers({
 export const apis = {
   auth,
   users,
+  timelines,
   images,
   paints,
 } as const;

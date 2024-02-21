@@ -1,9 +1,12 @@
 import { toast } from 'react-toastify';
+import { useNavigate } from '@tanstack/react-router';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 
 import { ContentLayout, Header, NotSupportBox } from '@/components';
 
 function ChatPage() {
+  const navigate = useNavigate();
+
   const handleNotSupport = () => {
     toast('아직 지원되지 않는 기능입니다.');
   };
@@ -25,6 +28,7 @@ function ChatPage() {
           type: 'palette',
           label: '로고',
           width: 26,
+          onClick: () => navigate({ to: '/home' }),
         }}
         right={{
           type: 'setting',

@@ -12,6 +12,8 @@ interface QuotePostBoxProps {
   className?: string;
 }
 
+const MAX_NAME_LENGTH = 8;
+
 function QuotePostBox({
   post,
   className,
@@ -48,11 +50,15 @@ function QuotePostBox({
             className="rounded-full w-[20px] h-[20px] min-w-[20px] max-w-[20px] aspect-video"
           />
           <Typography size="headline-8" color="grey-600">
-            {post.authorNickname}
+            {post.authorNickname.length > MAX_NAME_LENGTH
+              ? `${post.authorNickname.slice(0, MAX_NAME_LENGTH)}...`
+              : post.authorNickname}
           </Typography>
           <Typography size="body-1" color="blueGrey-800">
-            {post.authorUsername} ·{' '}
-            {getDiffDateText(new Date(post.createdAt), new Date())}
+            {post.authorUsername.length > MAX_NAME_LENGTH
+              ? `${post.authorUsername.slice(0, MAX_NAME_LENGTH)}...`
+              : post.authorUsername}{' '}
+            · {getDiffDateText(new Date(post.createdAt), new Date())}
           </Typography>
         </div>
 

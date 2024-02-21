@@ -1,6 +1,7 @@
-import { memo } from 'react';
+import { memo, useEffect } from 'react';
 import { useNavigate } from '@tanstack/react-router';
-import { useSuspenseQuery } from '@tanstack/react-query';
+import type { Dispatch, SetStateAction } from 'react';
+import { useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 
 import { apis } from '@/api';
 import { usePaintAction, useProfileId } from '@/hooks';
@@ -10,20 +11,25 @@ import { cn, createDummyTimelineItem } from '@/utils';
 import ReplyBottomSheet from './bottomSheet/ReplyBottomSheet';
 import ShareBottomSheet from './bottomSheet/ShareBottomSheet';
 import ViewsBottomSheet from './bottomSheet/ViewsBottomSheet';
+import { Typography } from './common';
+import { profileRoute } from '@/routes';
 
+export type TimelineItemType =
+  | 'follow'
+  | 'recommend'
+  | 'post'
+  | 'reply'
+  | 'media'
+  | 'heart'
+  | 'bookmark'
+  | 'search-recommend'
+  | 'search-recent'
+  | 'search-user'
+  | 'search-media';
 interface TimelineItemListProps {
-  type:
-    | 'follow'
-    | 'recommend'
-    | 'post'
-    | 'reply'
-    | 'media'
-    | 'heart'
-    | 'search-recommend'
-    | 'search-recent'
-    | 'search-user'
-    | 'search-media';
+  type: TimelineItemType;
   className?: string;
+  setPaintLength?: Dispatch<SetStateAction<number>>;
 }
 
 function delay(ms: number): Promise<TimelineItem[]> {
@@ -32,6 +38,28 @@ function delay(ms: number): Promise<TimelineItem[]> {
       resolve(createDummyTimelineItem(10));
     }, ms);
   });
+}
+
+function EmptyBox() {
+  return (
+    <div className="py-10 pb-32">
+      <div className="flex flex-col gap-[40px] h-full justify-center items-center px-4">
+        <div className="flex items-center justify-center w-[200px] h-[200px] rounded-full bg-yellow-100">
+          <Typography size="headline-1" className="text-[100px]">
+            🔥
+          </Typography>
+        </div>
+        <div className="w-full flex flex-col justify-center items-center gap-3">
+          <Typography size="headline-7" color="grey-600">
+            게시글이 아직 없습니다.
+          </Typography>
+          <Typography size="body-1" color="grey-600">
+            새로운 게시글을 작성해 보세요.
+          </Typography>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 class UserNotFoundError extends Error {
@@ -46,9 +74,12 @@ function getQueryFnByType(
 ): Promise<TimelineItem[]> {
   switch (type) {
     case 'recommend':
-      return delay(1250);
+      return apis.timelines.getRecommendTimelineList();
     case 'follow':
-      return apis.auth.logout() as unknown as Promise<TimelineItem[]>;
+      return apis.timelines.getFollowingTimelineList();
+    case 'bookmark':
+      if (!userId) throw new UserNotFoundError();
+      return apis.users.getUserMarkPaints(userId);
     case 'post':
       if (!userId) throw new UserNotFoundError();
       return apis.users.getUserPaints(userId);
@@ -74,15 +105,52 @@ function getQueryFnByType(
   }
 }
 
-function TimelineItemList({ type, className }: TimelineItemListProps) {
-  const userId = useProfileId();
+function TimelineItemList({
+  type,
+  className,
+  setPaintLength,
+}: TimelineItemListProps) {
+  const navigate = useNavigate();
+  const myUserId = useProfileId();
+  const params = profileRoute.useParams();
+  const userId = params.userId ? params.userId : myUserId;
+
   const { data: paints } = useSuspenseQuery({
     queryKey: ['paint', type, userId],
     queryFn: () => getQueryFnByType(type, userId),
   });
 
-  const navigate = useNavigate();
-  const paintAction = usePaintAction({ userId });
+  const queryClient = useQueryClient();
+  const paintAction = usePaintAction({
+    userId,
+    onLikeOrDislike: (paintId) => {
+      queryClient.setQueryData<TimelineItem[]>(
+        ['paint', type, userId],
+        (prev) => {
+          if (prev) {
+            const nextPaints = [...prev];
+            const willUpdateIndex = nextPaints.findIndex(
+              (paint) => paint.id === paintId,
+            );
+            nextPaints[willUpdateIndex].like =
+              !nextPaints[willUpdateIndex].like;
+            nextPaints[willUpdateIndex].likeCount += nextPaints[willUpdateIndex]
+              .like
+              ? 1
+              : -1;
+            return nextPaints;
+          }
+          return [];
+        },
+      );
+    },
+  });
+
+  useEffect(() => {
+    if (setPaintLength) {
+      setPaintLength(paints.length);
+    }
+  }, [paints]);
 
   return (
     <>
@@ -93,6 +161,7 @@ function TimelineItemList({ type, className }: TimelineItemListProps) {
           className,
         )}
       >
+        {paints.length === 0 && <EmptyBox />}
         {paints.map((paint) => (
           <TimelineItemBox
             key={paint.id}
@@ -105,7 +174,7 @@ function TimelineItemList({ type, className }: TimelineItemListProps) {
             onClickReply={() =>
               navigate({
                 to: '/post/edit',
-                search: { postId: paint.id },
+                search: { inReplyToPaintId: paint.id },
               })
             }
             onClickRetweet={() => paintAction.onClickRetweet(paint.id)}
@@ -113,6 +182,7 @@ function TimelineItemList({ type, className }: TimelineItemListProps) {
             onClickViews={() => paintAction.onClickViews(paint.id)}
             onClickShare={() => paintAction.onClickShare(paint.id)}
             onClickMore={() => paintAction.onClickMore(paint.id)}
+            onCloseMenu={paintAction.onCloseMenu}
           />
         ))}
       </div>

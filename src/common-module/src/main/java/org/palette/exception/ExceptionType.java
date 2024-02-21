@@ -170,7 +170,7 @@ public enum ExceptionType {
 
     // 500
     USER_500_000001(
-            "USER_500_000001",
+            "AUTH_500_000001",
             "INTERNAL SERVER ERROR",
             "서버 간 통신 중 예기치 못한 오류가 발생했습니다.",
             HttpStatus.INTERNAL_SERVER_ERROR

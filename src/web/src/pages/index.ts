@@ -1,3 +1,4 @@
+export { default as BookmarkPage } from './BookmarkPage';
 export { default as ChangePasswordPage } from './ChangePasswordPage';
 export { default as ChatPage } from './ChatPage';
 export { default as ErrorPage } from './ErrorPage';

@@ -24,7 +24,13 @@ const INITIAL_SHOW_MORE_MENU = {
   show: false,
 } as const;
 
-export const usePaintAction = ({ userId }: { userId: string }) => {
+export const usePaintAction = ({
+  userId,
+  onLikeOrDislike,
+}: {
+  userId: string;
+  onLikeOrDislike?: (id: TimelineItem['id']) => void;
+}) => {
   const navigate = useNavigate();
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState<BottomSheetState>(
     INITIAL_BOTTOM_SHEET_OPEN,
@@ -39,12 +45,18 @@ export const usePaintAction = ({ userId }: { userId: string }) => {
     mutationKey: ['like-paint', selectedPostId],
     mutationFn: ({ paintId }: { paintId: TimelineItem['id'] }) =>
       apis.users.likePaint({ userId, paintId }),
+    onMutate: (mutate) => {
+      onLikeOrDislike?.(mutate.paintId);
+    },
   });
 
   const disLikePaintMutate = useMutation({
-    mutationKey: ['like-paint', selectedPostId],
+    mutationKey: ['dislike-paint', selectedPostId],
     mutationFn: ({ paintId }: { paintId: TimelineItem['id'] }) =>
-      apis.users.likePaint({ userId, paintId }),
+      apis.users.disLikePaint({ userId, paintId }),
+    onMutate: (mutate) => {
+      onLikeOrDislike?.(mutate.paintId);
+    },
   });
 
   const handleClickTimelineActionIcon = (
@@ -74,7 +86,7 @@ export const usePaintAction = ({ userId }: { userId: string }) => {
   const handleClickReply = usePreservedCallback((id: TimelineItem['id']) => {
     navigate({
       to: '/post/edit',
-      search: { postId: id },
+      search: { inReplyToPaintId: id },
     });
   });
 
@@ -91,6 +103,10 @@ export const usePaintAction = ({ userId }: { userId: string }) => {
       id: prev.id ? '' : id,
       show: prev.id !== id,
     }));
+  }, []);
+
+  const handleCloseMenu = useCallback(() => {
+    setIsShowMoreMenu({ id: '', show: false });
   }, []);
 
   const handleClickCloseBottomSheet = useCallback(
@@ -111,6 +127,7 @@ export const usePaintAction = ({ userId }: { userId: string }) => {
     onClickShare: handleClickShare,
     onClickViews: handleClickViews,
     onClickMore: handleClickMore,
+    onCloseMenu: handleCloseMenu,
     onCloseBottomSheet: handleClickCloseBottomSheet,
   };
 };

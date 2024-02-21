@@ -16,4 +16,34 @@ public interface UserRepository extends Neo4jRepository<User, Long> {
 
     @Query("MATCH (u:User) WHERE u.uid IN $uids RETURN u")
     List<User> findAllByUids(List<Long> uids);
+
+    boolean existsByUid(Long uid);
+
+    @Query("MATCH (:User { uid: $uid }) - [r:LIKES] -> (:Paint { pid: $pid }) DELETE r")
+    void deleteLikeById(@Param("uid") Long uid, @Param("pid") Long pid);
+
+    @Query("MATCH (:User { uid: $uid })-[r:FOLLOWS]->() RETURN count(r)")
+    int countFollowings(@Param("uid") Long uid);
+
+    @Query("MATCH (:User { uid: $uid })<-[r:FOLLOWS]-() RETURN count(r)")
+    int countFollowers(@Param("uid") Long uid);
+
+    @Query("MATCH (:User { uid: $uid }) - [r:MARKS] -> (:Paint { pid: $pid }) DELETE r")
+    void deleteMarkById(@Param("uid") Long uid, @Param("pid") Long pid);
+
+    @Query("MATCH (u:User) -[:LIKES]-> (:Paint { pid: $pid }) RETURN u")
+    List<User> findLikedByPaintId(@Param("pid") Long pid);
+
+    @Query("RETURN EXISTS((:User {uid: $uid}) -[:LIKES]-> (:Paint {pid: $pid}))")
+    boolean existsLikesByUidAndPid(@Param("uid") Long uid, @Param("pid") Long pid);
+
+    @Query("MATCH (u:User) -[:REPAINTS]-> (:Paint { pid: $pid }) RETURN u")
+    List<User> findRepaintedByPaintId(@Param("pid") Long pid);
+
+    @Query("MATCH (:User {uid: $uid})<-[:FOLLOWS]-(u:User) RETURN u.uid")
+    List<Long> findFollowerUidsByUid(@Param("uid") Long uid);
+
+    @Query("MATCH (u:User {uid: $uid}) SET u.nickname = $nickname, u.imagePath = $imagePath RETURN u;")
+    void updateUserByUid(@Param("uid") Long userId, @Param("nickname") String nickname, @Param("imagePath") String imagePath);
+
 }

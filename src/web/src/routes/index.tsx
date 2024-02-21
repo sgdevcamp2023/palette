@@ -21,6 +21,7 @@ import {
   PostDetailPage,
   SearchResultPage,
   MyProfilePage,
+  BookmarkPage,
 } from '@/pages';
 import { AsyncBoundary } from '@/components';
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from '@/constants';
@@ -37,6 +38,12 @@ const homeRoute = new Route({
   getParentRoute: () => rootRoute,
   path: '/home',
   component: () => <HomePage />,
+});
+
+const bookMarkRoute = new Route({
+  getParentRoute: () => rootRoute,
+  path: '/bookmark',
+  component: () => <BookmarkPage />,
 });
 
 const loginRoute = new Route({
@@ -132,8 +139,11 @@ export const editPostRoute = new Route({
   getParentRoute: () => postRoute,
   path: '/edit',
   component: () => <PostEditPage />,
-  validateSearch: (search: Record<string, string>): { postId?: string } => ({
+  validateSearch: (
+    search: Record<string, string>,
+  ): { postId?: string; inReplyToPaintId?: string } => ({
     postId: search.postId,
+    inReplyToPaintId: search.inReplyToPaintId,
   }),
 });
 
@@ -147,6 +157,7 @@ const notFoundRoute = new NotFoundRoute({
 });
 
 const routeTree = rootRoute.addChildren([
+  bookMarkRoute,
   homeRoute,
   loginRoute,
   notificationRoute,

@@ -24,6 +24,7 @@ const DUMMY_ITEM: TimelineItem = {
   likeCount: 43,
   views: 1253,
   like: true,
+  isFollowing: false,
   marked: true,
   repainted: true,
   quotePaint: null,

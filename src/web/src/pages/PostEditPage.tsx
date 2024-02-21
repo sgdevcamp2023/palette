@@ -79,6 +79,7 @@ function PostEditPage() {
           medias: image ? [convertToMedia(image, 'image')] : [],
           quotePaintId: search.postId,
           taggedUserIds: tags.map((tag) => tag.id),
+          inReplyToPaintId: search.inReplyToPaintId,
         }),
       ),
     onSuccess: () => {
