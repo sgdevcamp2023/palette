@@ -11,6 +11,7 @@ import org.palette.easelsocialservice.persistence.domain.PaintMetrics;
 import org.palette.easelsocialservice.persistence.domain.User;
 import org.palette.exception.BaseException;
 import org.palette.exception.ExceptionType;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -104,6 +105,7 @@ public class PaintService {
         );
     }
 
+    @Async
     public void viewSinglePaint(final Long paintId) {
         paintRepository.updatePaintView(paintId);
     }

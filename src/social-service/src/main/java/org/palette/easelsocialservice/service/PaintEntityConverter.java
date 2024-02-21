@@ -2,6 +2,7 @@ package org.palette.easelsocialservice.service;
 
 import lombok.RequiredArgsConstructor;
 import org.palette.dto.event.PaintCreatedEvent;
+import org.palette.dto.event.PaintViewedEvent;
 import org.palette.dto.event.detail.*;
 import org.palette.easelsocialservice.dto.response.*;
 import org.palette.easelsocialservice.persistence.PaintRepository;
@@ -19,6 +20,10 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class PaintEntityConverter {
     private final PaintRepository paintRepository;
+
+    public static PaintViewedEvent convertToPaintViewedEvent(final Long paintId) {
+        return new PaintViewedEvent(paintId);
+    }
 
     public PaintResponse getQuotePaint(Paint paint) {
         return Optional.ofNullable(paint.getQuotePaint())

@@ -96,6 +96,7 @@ public class PaintUsecase {
     public PaintResponse getSinglePaint(Long userId, Long paintId) {
         PaintResponse paintResponse = paintService.getPaintById(userId, paintId);
         paintService.viewSinglePaint(paintId);
+        kafkaProducer.execute(PaintEntityConverter.convertToPaintViewedEvent(paintId));
         return paintResponse;
     }
 
