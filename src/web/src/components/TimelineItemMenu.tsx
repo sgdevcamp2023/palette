@@ -7,6 +7,7 @@ import type { User } from '@/@types';
 import { Icon, Typography } from './common';
 import type { IconKeyType } from './common/Icon';
 import { apis } from '@/api';
+import { useProfileId } from '@/hooks';
 
 interface TimelineItemMenuProps {
   userId: User['id'];
@@ -43,6 +44,7 @@ function TimelineItemMenu({
   userId,
   isFollowing,
 }: TimelineItemMenuProps) {
+  const profileId = useProfileId();
   const queryClient = useQueryClient();
 
   const followMutation = useMutation({
@@ -79,17 +81,21 @@ function TimelineItemMenu({
       />
       <span role="none" className="w-full h-[7px] bg-grey-200" />
       <div className="divide-y divide-grey-200">
-        <TimelineItemMenuItem
-          type={isFollowing ? 'userMinus' : 'userPlus'}
-          text={`${username}님 ${isFollowing ? '언팔로우하기' : '팔로우 하기'}`}
-          onClick={() => {
-            if (isFollowing) {
-              unFollowMutation.mutate();
-            } else {
-              followMutation.mutate();
-            }
-          }}
-        />
+        {profileId !== userId && (
+          <TimelineItemMenuItem
+            type={isFollowing ? 'userMinus' : 'userPlus'}
+            text={`${username}님 ${
+              isFollowing ? '언팔로우하기' : '팔로우 하기'
+            }`}
+            onClick={() => {
+              if (isFollowing) {
+                unFollowMutation.mutate();
+              } else {
+                followMutation.mutate();
+              }
+            }}
+          />
+        )}
         <TimelineItemMenuItem
           type="list"
           text="리스트에 추가 삭제"

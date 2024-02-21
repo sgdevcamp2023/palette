@@ -5,7 +5,7 @@ import { useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 
 import { apis } from '@/api';
 import { Button } from './common';
-import { usePaintAction } from '@/hooks';
+import { usePaintAction, useProfileId } from '@/hooks';
 import QuotePostBox from './QuotePostBox';
 import { postDetailRoute } from '@/routes';
 import type { TimelineItem } from '@/@types';
@@ -13,7 +13,11 @@ import Typography from './common/Typography';
 import { cn, forCloudinaryImage } from '@/utils';
 import TimelineItemMenu from './TimelineItemMenu';
 import AccessibleIconButton from './AccessibleIconButton';
-import { ReplyBottomSheet, ShareBottomSheet, ViewsBottomSheet } from './bottomSheet';
+import {
+  ReplyBottomSheet,
+  ShareBottomSheet,
+  ViewsBottomSheet,
+} from './bottomSheet';
 
 interface MainPostBoxProps {
   userId: string;
@@ -22,7 +26,8 @@ interface MainPostBoxProps {
 
 const MainPostBox = forwardRef<HTMLDivElement, MainPostBoxProps>(
   ({ userId, className }, ref: ForwardedRef<HTMLDivElement>) => {
-    const isFollow = false;
+    const profileId = useProfileId();
+    const isFollow = profileId === userId;
     const navigate = useNavigate();
     const params = postDetailRoute.useParams();
     const { data: post } = useSuspenseQuery({
