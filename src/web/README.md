@@ -6,6 +6,18 @@
 
 pnpm이 강제가 아니므로, 필요에 따라 `npm,` `yarn` 을 통해 설치 및 실행도 가능합니다.
 
+### env
+
+```text
+VITE_BASE_SERVER_URL = ''
+VITE_CDN_BASE_URL = ''
+VITE_CLOUD_NAME = ''
+VITE_CLD_API_KEY = ''
+VITE_CLD_PRESET_NAME = ''
+VITE_CLD_SECRET = ''
+VITE_CLD_ENVIRONMENT_VARIABLE = ''
+```
+
 ### pnpm 설치
 
 [pnpm](https://pnpm.io/installation) 공식 문서에 따라 설치를 진행합니다.
@@ -46,14 +58,6 @@ pnpm dev # dev 모드로 시작
  ┃ ┗ 📄 vite-env.d.ts
 ```
 
-### env
+## 프론트엔드 아키텍처
 
-```text
-VITE_BASE_SERVER_URL = ''
-VITE_CDN_BASE_URL = ''
-VITE_CLOUD_NAME = ''
-VITE_CLD_API_KEY = ''
-VITE_CLD_PRESET_NAME = ''
-VITE_CLD_SECRET = ''
-VITE_CLD_ENVIRONMENT_VARIABLE = ''
-```
+![frontend architecture](./public/web_architecture.png)
