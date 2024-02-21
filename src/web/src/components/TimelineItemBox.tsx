@@ -23,6 +23,7 @@ interface TimelineItemBoxProps {
   onCloseMenu: VoidFunction;
 }
 
+const MAX_NAME_LENGTH = 8;
 function TimelineItemBox({
   post,
   isShowMenu,
@@ -73,11 +74,15 @@ function TimelineItemBox({
         <div className="w-full flex justify-between relative">
           <div className="flex gap-[4px] items-center">
             <Typography size="headline-8" color="grey-600">
-              {post.authorNickname}
+              {post.authorNickname.length > MAX_NAME_LENGTH
+                ? `${post.authorNickname.slice(0, MAX_NAME_LENGTH)}...`
+                : post.authorNickname}
             </Typography>
             <Typography size="body-1" color="blueGrey-800">
-              {post.authorUsername} ·{' '}
-              {getDiffDateText(new Date(post.createdAt), new Date())}
+              {post.authorUsername.length > MAX_NAME_LENGTH
+                ? `${post.authorUsername.slice(0, MAX_NAME_LENGTH)}...`
+                : post.authorUsername}{' '}
+              · {getDiffDateText(new Date(post.createdAt), new Date())}
             </Typography>
           </div>
           <AccessibleIconButton
