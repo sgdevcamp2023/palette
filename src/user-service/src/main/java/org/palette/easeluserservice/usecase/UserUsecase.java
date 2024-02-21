@@ -79,7 +79,7 @@ public class UserUsecase {
         );
 
         gRPCSocialClient.createSocialUser(user);
-        gRPCNotificationClient.createNotificationUser(user);
+        //TODO gRPCNotificationClient.createNotificationUser(user);
 
         kafkaProducer.execute(
                 new UserCreatedEvent(
