@@ -114,6 +114,8 @@ const MainPostBox = forwardRef<HTMLDivElement, MainPostBoxProps>(
               {paintAction.isShowMoreMenu.id === post.id &&
                 paintAction.isShowMoreMenu.show && (
                   <TimelineItemMenu
+                    paintId={post.id}
+                    isMark={post.marked}
                     userId={post.authorId}
                     username={post.authorUsername}
                     onCloseMenu={paintAction.onCloseMenu}

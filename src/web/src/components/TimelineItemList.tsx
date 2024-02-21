@@ -1,5 +1,6 @@
-import { memo } from 'react';
+import { memo, useEffect } from 'react';
 import { useNavigate } from '@tanstack/react-router';
+import type { Dispatch, SetStateAction } from 'react';
 import { useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 
 import { apis } from '@/api';
@@ -11,6 +12,7 @@ import ReplyBottomSheet from './bottomSheet/ReplyBottomSheet';
 import ShareBottomSheet from './bottomSheet/ShareBottomSheet';
 import ViewsBottomSheet from './bottomSheet/ViewsBottomSheet';
 import { Typography } from './common';
+import { profileRoute } from '@/routes';
 
 export type TimelineItemType =
   | 'follow'
@@ -27,6 +29,7 @@ export type TimelineItemType =
 interface TimelineItemListProps {
   type: TimelineItemType;
   className?: string;
+  setPaintLength?: Dispatch<SetStateAction<number>>;
 }
 
 function delay(ms: number): Promise<TimelineItem[]> {
@@ -102,9 +105,16 @@ function getQueryFnByType(
   }
 }
 
-function TimelineItemList({ type, className }: TimelineItemListProps) {
+function TimelineItemList({
+  type,
+  className,
+  setPaintLength,
+}: TimelineItemListProps) {
   const navigate = useNavigate();
-  const userId = useProfileId();
+  const myUserId = useProfileId();
+  const params = profileRoute.useParams();
+  const userId = params.userId ? params.userId : myUserId;
+
   const { data: paints } = useSuspenseQuery({
     queryKey: ['paint', type, userId],
     queryFn: () => getQueryFnByType(type, userId),
@@ -136,6 +146,12 @@ function TimelineItemList({ type, className }: TimelineItemListProps) {
     },
   });
 
+  useEffect(() => {
+    if (setPaintLength) {
+      setPaintLength(paints.length);
+    }
+  }, [paints]);
+
   return (
     <>
       <div
@@ -158,7 +174,7 @@ function TimelineItemList({ type, className }: TimelineItemListProps) {
             onClickReply={() =>
               navigate({
                 to: '/post/edit',
-                search: { postId: paint.id },
+                search: { inReplyToPaintId: paint.id },
               })
             }
             onClickRetweet={() => paintAction.onClickRetweet(paint.id)}

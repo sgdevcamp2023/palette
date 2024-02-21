@@ -5,8 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 
 import { apis } from '@/api';
-import type { TimelineItem } from '@/@types';
-import { createDummyTimelineItem, forCloudinaryImage } from '@/utils';
+import { forCloudinaryImage } from '@/utils';
 import {
   Button,
   ProfileHeader,
@@ -18,6 +17,7 @@ import { useThrottle } from '@/hooks';
 import { profileRoute } from '@/routes';
 import { DEFAULT_BACKGROUND_IMAGE } from '@/constants';
 
+const DEFAULT_PAINTS_LENGTH = 0;
 const MIN_IMAGE_HEIGHT = 50;
 const DEFAULT_IMAGE_HEIGHT = 124;
 function ProfilePage() {
@@ -28,9 +28,12 @@ function ProfilePage() {
   });
 
   const scrollRef = useRef<HTMLDivElement | null>(null);
-  const [paints] = useState<TimelineItem[]>(() => createDummyTimelineItem(10));
   const [imageHeight, setImageHeight] = useState<number>(DEFAULT_IMAGE_HEIGHT);
   const isExpandImage = imageHeight === DEFAULT_IMAGE_HEIGHT;
+
+  const [paintsLength, setPaintsLength] = useState<number>(
+    DEFAULT_PAINTS_LENGTH,
+  );
 
   const handleScroll = useThrottle((e: UIEvent<HTMLElement>) => {
     const padding = 220;
@@ -96,7 +99,7 @@ function ProfilePage() {
               color="white"
               className="absolute top-[18px] whitespace-nowrap"
             >
-              게시물 {paints.length}개
+              게시물 {paintsLength}개
             </Typography>
           </motion.div>
         )}
@@ -106,7 +109,7 @@ function ProfilePage() {
           onScroll={handleScroll}
         >
           <ProfileInformationBox user={user} className="pl-3 pr-2" />
-          <ProfileTabs className="mt-[20px]" />
+          <ProfileTabs className="mt-[20px]" setPaintLength={setPaintsLength} />
         </div>
       </main>
     </>
