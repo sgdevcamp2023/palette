@@ -26,7 +26,7 @@ public interface PaintRepository extends Neo4jRepository<Paint, Long> {
     List<Paint> findAllCreatesQuotesRepliesByUid(@Param("uid") Long uid);
 
     @Query(
-            "MATCH path = (u:User {uid: 100})-[r:MARKS]->(p:Paint) " +
+            "MATCH path = (u:User {uid: ${uid})-[r:MARKS]->(p:Paint) " +
                     "WITH [node in nodes(path) WHERE node:Paint] AS intermediateNodes " +
                     "UNWIND intermediateNodes AS intermediateNode " +
                     "MATCH (startNode:Paint)<-[r]->(nextNode) " +
@@ -47,7 +47,12 @@ public interface PaintRepository extends Neo4jRepository<Paint, Long> {
             "RETURN startNode, r, nextNode")
     List<Paint> findAllBeforePaintByPid(@Param("pid") Long pid);
 
-    @Query("MATCH path = (u:User {uid: $uid})-[r:LIKES]->(p:Paint) RETURN path")
+
+    @Query("MATCH path = (u:User {uid: $uid})-[r:LIKES]->(p:Paint) RETURN path" +
+            "UNWIND intermediateNodes AS intermediateNode " +
+            "MATCH (startNode:Paint)<-[r]->(nextNode) " +
+            "WHERE startNode.pid <> $pid AND startNode = intermediateNode AND type(r) <> 'REPLIES' AND type(r) <> 'REPAINTS' AND type(r) <> 'QUOTES' " +
+            "RETURN startNode, r, nextNode")
     List<Paint> findAllLikingByUid(@Param("uid") Long uid);
 
     @Query("MATCH (a:Paint)<-[:REPLIES]-(b:Paint)" +
