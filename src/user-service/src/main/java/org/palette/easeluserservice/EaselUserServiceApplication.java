@@ -17,7 +17,6 @@ import org.springframework.context.annotation.Import;
         KafkaConsumerConfig.class,
         KafkaProducerConfig.class,
         LoggingAspect.class
-
 })
 @SpringBootApplication
 public class EaselUserServiceApplication {
