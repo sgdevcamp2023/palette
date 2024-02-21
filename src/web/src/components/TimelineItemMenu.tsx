@@ -3,14 +3,16 @@ import { toast } from 'react-toastify';
 import { motion } from 'framer-motion';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import type { User } from '@/@types';
+import type { TimelineItem, User } from '@/@types';
 import { Icon, Typography } from './common';
 import type { IconKeyType } from './common/Icon';
 import { apis } from '@/api';
 import { useProfileId } from '@/hooks';
 
 interface TimelineItemMenuProps {
+  paintId: TimelineItem['id'];
   userId: User['id'];
+  isMark: TimelineItem['marked'];
   username: User['username'];
   isFollowing?: boolean;
   onCloseMenu: VoidFunction;
@@ -45,7 +47,9 @@ function TimelineItemMenuItem({
 }
 
 function TimelineItemMenu({
+  paintId,
   username,
+  isMark,
   userId,
   isFollowing,
   onCloseMenu,
@@ -67,6 +71,24 @@ function TimelineItemMenu({
     mutationFn: () => apis.users.unFollowUser(userId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['paint'] });
+      toast('팔로잉이 취소 되었습니다.');
+    },
+  });
+
+  const markPaintMutation = useMutation({
+    mutationKey: ['mark-paint', userId, paintId],
+    mutationFn: () => apis.users.markPaint({ userId, paintId }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['paint', 'bookmark'] });
+      toast('북마크가 되었습니다.');
+    },
+  });
+
+  const unMarkMutation = useMutation({
+    mutationKey: ['unmark-paint', userId, paintId],
+    mutationFn: () => apis.users.unMarkPaint({ userId, paintId }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['paint', 'bookmark'] });
       toast('팔로잉이 취소 되었습니다.');
     },
   });
@@ -110,6 +132,18 @@ function TimelineItemMenu({
           type="list"
           text="리스트에 추가 삭제"
           onClick={handleClickNotSupport}
+        />
+        <TimelineItemMenuItem
+          type="list"
+          text={`${isMark ? '북마크 취소하기' : '북마크 하기'}`}
+          onClick={() => {
+            if (isMark) {
+              unMarkMutation.mutate();
+            } else {
+              markPaintMutation.mutate();
+            }
+            onCloseMenu();
+          }}
         />
         <TimelineItemMenuItem
           type="mute"

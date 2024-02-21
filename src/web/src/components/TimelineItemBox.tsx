@@ -99,6 +99,8 @@ function TimelineItemBox({
           />
           {isShowMenu && (
             <TimelineItemMenu
+              paintId={post.id}
+              isMark={post.marked}
               userId={post.authorId}
               username={post.authorUsername}
               onCloseMenu={onCloseMenu}
