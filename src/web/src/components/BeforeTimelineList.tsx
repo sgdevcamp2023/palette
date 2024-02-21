@@ -96,6 +96,7 @@ const BeforeTimelineList = forwardRef<HTMLDivElement, BeforeTimelineListProps>(
             onClickViews={() => paintAction.onClickViews(post.id)}
             onClickShare={() => paintAction.onClickShare(post.id)}
             onClickMore={() => paintAction.onClickMore(post.id)}
+            onCloseMenu={paintAction.onCloseMenu}
           />
         ))}
       </div>

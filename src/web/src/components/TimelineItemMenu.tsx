@@ -13,6 +13,7 @@ interface TimelineItemMenuProps {
   userId: User['id'];
   username: User['username'];
   isFollowing?: boolean;
+  onCloseMenu: VoidFunction;
 }
 
 function TimelineItemMenuItem({
@@ -25,16 +26,20 @@ function TimelineItemMenuItem({
   onClick: VoidFunction;
 }) {
   return (
-    <li
-      role="menuitem"
-      tabIndex={0}
-      className="flex justify-between px-[14px] py-[12px] transition-colors hover:bg-grey-200 rounded-t-[12px] cursor-pointer"
-      onClick={onClick}
-    >
-      <Typography size="body-1" color="black">
-        {text}
-      </Typography>
-      <Icon type={type} width={22} height={22} />
+    <li>
+      <button
+        type="button"
+        onClick={(e) => {
+          e.stopPropagation();
+          onClick();
+        }}
+        className="w-full flex justify-between px-[14px] py-[12px] transition-colors hover:bg-grey-200 rounded-t-[12px] cursor-pointer"
+      >
+        <Typography size="body-1" color="black">
+          {text}
+        </Typography>
+        <Icon type={type} width={22} height={22} />
+      </button>
     </li>
   );
 }
@@ -43,6 +48,7 @@ function TimelineItemMenu({
   username,
   userId,
   isFollowing,
+  onCloseMenu,
 }: TimelineItemMenuProps) {
   const profileId = useProfileId();
   const queryClient = useQueryClient();
@@ -65,7 +71,10 @@ function TimelineItemMenu({
     },
   });
 
-  const handleClickNotSupport = () => toast('아직 지원되지 않는 기능입니다.');
+  const handleClickNotSupport = () => {
+    toast('아직 지원되지 않는 기능입니다.');
+    onCloseMenu();
+  };
 
   return (
     <motion.ul
@@ -93,6 +102,7 @@ function TimelineItemMenu({
               } else {
                 followMutation.mutate();
               }
+              onCloseMenu();
             }}
           />
         )}

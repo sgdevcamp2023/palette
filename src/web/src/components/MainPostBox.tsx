@@ -116,6 +116,7 @@ const MainPostBox = forwardRef<HTMLDivElement, MainPostBoxProps>(
                   <TimelineItemMenu
                     userId={post.authorId}
                     username={post.authorUsername}
+                    onCloseMenu={paintAction.onCloseMenu}
                   />
                 )}
             </div>

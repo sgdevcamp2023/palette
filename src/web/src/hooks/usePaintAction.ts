@@ -105,6 +105,10 @@ export const usePaintAction = ({
     }));
   }, []);
 
+  const handleCloseMenu = useCallback(() => {
+    setIsShowMoreMenu({ id: '', show: false });
+  }, []);
+
   const handleClickCloseBottomSheet = useCallback(
     (type: keyof BottomSheetState) => {
       setIsBottomSheetOpen((prev) => ({ ...prev, [type]: false }));
@@ -123,6 +127,7 @@ export const usePaintAction = ({
     onClickShare: handleClickShare,
     onClickViews: handleClickViews,
     onClickMore: handleClickMore,
+    onCloseMenu: handleCloseMenu,
     onCloseBottomSheet: handleClickCloseBottomSheet,
   };
 };

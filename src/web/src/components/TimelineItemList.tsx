@@ -166,6 +166,7 @@ function TimelineItemList({ type, className }: TimelineItemListProps) {
             onClickViews={() => paintAction.onClickViews(paint.id)}
             onClickShare={() => paintAction.onClickShare(paint.id)}
             onClickMore={() => paintAction.onClickMore(paint.id)}
+            onCloseMenu={paintAction.onCloseMenu}
           />
         ))}
       </div>
