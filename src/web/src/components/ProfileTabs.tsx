@@ -1,4 +1,5 @@
 import { toast } from 'react-toastify';
+import type { Dispatch, SetStateAction } from 'react';
 
 import AsyncBoundary from './AsyncBoundary';
 import ContentLayout from './ContentLayout';
@@ -9,9 +10,10 @@ import { TimelineItemListSkeleton } from './skeleton';
 
 interface ProfileTabsProps {
   className?: string;
+  setPaintLength?: Dispatch<SetStateAction<number>>;
 }
 
-function ProfileTabs({ className }: ProfileTabsProps) {
+function ProfileTabs({ className, setPaintLength }: ProfileTabsProps) {
   return (
     <Tabs
       className={className}
@@ -32,7 +34,11 @@ function ProfileTabs({ className }: ProfileTabsProps) {
                   </div>
                 )}
               >
-                <TimelineItemList type="post" className="pb-32" />
+                <TimelineItemList
+                  type="post"
+                  className="pb-32"
+                  setPaintLength={setPaintLength}
+                />
               </AsyncBoundary>
             </ContentLayout>
           ),
@@ -52,7 +58,11 @@ function ProfileTabs({ className }: ProfileTabsProps) {
                   </div>
                 )}
               >
-                <TimelineItemList type="reply" className="pb-32" />
+                <TimelineItemList
+                  type="reply"
+                  className="pb-32"
+                  setPaintLength={setPaintLength}
+                />
               </AsyncBoundary>
             </ContentLayout>
           ),
@@ -101,7 +111,11 @@ function ProfileTabs({ className }: ProfileTabsProps) {
                   </div>
                 )}
               >
-                <TimelineItemList type="media" className="pb-32" />
+                <TimelineItemList
+                  type="media"
+                  className="pb-32"
+                  setPaintLength={setPaintLength}
+                />
               </AsyncBoundary>
             </ContentLayout>
           ),
@@ -121,7 +135,11 @@ function ProfileTabs({ className }: ProfileTabsProps) {
                   </div>
                 )}
               >
-                <TimelineItemList type="heart" className="pb-32" />
+                <TimelineItemList
+                  type="heart"
+                  className="pb-32"
+                  setPaintLength={setPaintLength}
+                />
               </AsyncBoundary>
             </ContentLayout>
           ),
