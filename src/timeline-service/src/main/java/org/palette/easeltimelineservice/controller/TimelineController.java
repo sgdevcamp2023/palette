@@ -7,13 +7,11 @@ import org.palette.easeltimelineservice.service.PaintResponse;
 import org.palette.easeltimelineservice.usecase.TimelineUsecase;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/timeline")
 @RequiredArgsConstructor
 public class TimelineController {
 
