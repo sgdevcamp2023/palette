@@ -21,6 +21,7 @@ import {
   PostDetailPage,
   SearchResultPage,
   MyProfilePage,
+  BookmarkPage,
 } from '@/pages';
 import { AsyncBoundary } from '@/components';
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from '@/constants';
@@ -37,6 +38,12 @@ const homeRoute = new Route({
   getParentRoute: () => rootRoute,
   path: '/home',
   component: () => <HomePage />,
+});
+
+const bookMarkRoute = new Route({
+  getParentRoute: () => rootRoute,
+  path: '/bookmark',
+  component: () => <BookmarkPage />,
 });
 
 const loginRoute = new Route({
@@ -147,6 +154,7 @@ const notFoundRoute = new NotFoundRoute({
 });
 
 const routeTree = rootRoute.addChildren([
+  bookMarkRoute,
   homeRoute,
   loginRoute,
   notificationRoute,
