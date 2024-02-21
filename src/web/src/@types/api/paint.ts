@@ -16,6 +16,7 @@ export interface TimelineItem {
   like: boolean;
   repainted: boolean;
   marked: boolean;
+  isFollowing: boolean;
   views: number;
   quotePaint: TimelineItem | null;
   entities: {

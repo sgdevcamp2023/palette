@@ -20,6 +20,7 @@ interface TimelineItemBoxProps {
   onClickViews: VoidFunction;
   onClickShare: VoidFunction;
   onClickMore: VoidFunction;
+  onCloseMenu: VoidFunction;
 }
 
 function TimelineItemBox({
@@ -33,6 +34,7 @@ function TimelineItemBox({
   onClickViews,
   onClickShare,
   onClickMore,
+  onCloseMenu,
 }: TimelineItemBoxProps) {
   const navigate = useNavigate();
   const hasMedia = post.includes.medias.length > 0;
@@ -94,6 +96,7 @@ function TimelineItemBox({
             <TimelineItemMenu
               userId={post.authorId}
               username={post.authorUsername}
+              onCloseMenu={onCloseMenu}
             />
           )}
         </div>

@@ -1,14 +1,19 @@
 import { memo } from 'react';
 import { toast } from 'react-toastify';
 import { motion } from 'framer-motion';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import type { User } from '@/@types';
 import { Icon, Typography } from './common';
 import type { IconKeyType } from './common/Icon';
+import { apis } from '@/api';
+import { useProfileId } from '@/hooks';
 
 interface TimelineItemMenuProps {
   userId: User['id'];
   username: User['username'];
+  isFollowing?: boolean;
+  onCloseMenu: VoidFunction;
 }
 
 function TimelineItemMenuItem({
@@ -21,25 +26,55 @@ function TimelineItemMenuItem({
   onClick: VoidFunction;
 }) {
   return (
-    <li
-      role="menuitem"
-      tabIndex={0}
-      className="flex justify-between px-[14px] py-[12px] transition-colors hover:bg-grey-200 rounded-t-[12px] cursor-pointer"
-      onClick={onClick}
-    >
-      <Typography size="body-1" color="black">
-        {text}
-      </Typography>
-      <Icon type={type} width={22} height={22} />
+    <li>
+      <button
+        type="button"
+        onClick={(e) => {
+          e.stopPropagation();
+          onClick();
+        }}
+        className="w-full flex justify-between px-[14px] py-[12px] transition-colors hover:bg-grey-200 rounded-t-[12px] cursor-pointer"
+      >
+        <Typography size="body-1" color="black">
+          {text}
+        </Typography>
+        <Icon type={type} width={22} height={22} />
+      </button>
     </li>
   );
 }
 
-function TimelineItemMenu({ username, userId }: TimelineItemMenuProps) {
-  // TODO: follow 여부 파악해야 함
-  const isFollow = userId === '1';
+function TimelineItemMenu({
+  username,
+  userId,
+  isFollowing,
+  onCloseMenu,
+}: TimelineItemMenuProps) {
+  const profileId = useProfileId();
+  const queryClient = useQueryClient();
 
-  const handleClickNotSupport = () => toast('아직 지원되지 않는 기능입니다.');
+  const followMutation = useMutation({
+    mutationKey: ['user-follow', userId],
+    mutationFn: () => apis.users.followUser(userId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['paint'] });
+      toast('팔로잉이 되었습니다.');
+    },
+  });
+
+  const unFollowMutation = useMutation({
+    mutationKey: ['user-unFollow', userId],
+    mutationFn: () => apis.users.unFollowUser(userId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['paint'] });
+      toast('팔로잉이 취소 되었습니다.');
+    },
+  });
+
+  const handleClickNotSupport = () => {
+    toast('아직 지원되지 않는 기능입니다.');
+    onCloseMenu();
+  };
 
   return (
     <motion.ul
@@ -55,11 +90,22 @@ function TimelineItemMenu({ username, userId }: TimelineItemMenuProps) {
       />
       <span role="none" className="w-full h-[7px] bg-grey-200" />
       <div className="divide-y divide-grey-200">
-        <TimelineItemMenuItem
-          type={isFollow ? 'userMinus' : 'userPlus'}
-          text={`${username}님 ${isFollow ? '언팔로우하기' : '팔로우 하기'}`}
-          onClick={handleClickNotSupport}
-        />
+        {profileId !== userId && (
+          <TimelineItemMenuItem
+            type={isFollowing ? 'userMinus' : 'userPlus'}
+            text={`${username}님 ${
+              isFollowing ? '언팔로우하기' : '팔로우 하기'
+            }`}
+            onClick={() => {
+              if (isFollowing) {
+                unFollowMutation.mutate();
+              } else {
+                followMutation.mutate();
+              }
+              onCloseMenu();
+            }}
+          />
+        )}
         <TimelineItemMenuItem
           type="list"
           text="리스트에 추가 삭제"
