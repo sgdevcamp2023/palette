@@ -1,6 +1,10 @@
 server:
   port: 10003
 
+logging:
+  level:
+    root: ERROR
+
 spring:
   application:
     name: social-service
