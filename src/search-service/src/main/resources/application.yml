@@ -1,0 +1,38 @@
+server:
+  port: 10011
+
+spring:
+  application:
+    name: search-service
+
+  kafka:
+    bootstrap-servers: ${KAFKA_SERVERS}
+    consumer:
+      group-id: search-consumer-group
+      auto-offset-reset: latest
+
+elasticsearch:
+  host-and-port: ${ES_HOST_AND_PORT}
+
+grpc:
+  server:
+    port: 11011
+  client:
+    social-service:
+      address: 'discovery:///SOCIAL-SERVICE'
+      enableKeepAlive: true
+      keepAliveWithoutCalls: true
+      negotiationType: plaintext
+
+passport:
+  key: ${PASSPORT_KEY}
+  algorithm: ${PASSPORT_ALGORITHM}
+
+eureka:
+  instance:
+    hostname: ${EUREKA_HOST}
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: ${EUREKA_DEFAULT_ZONE}
