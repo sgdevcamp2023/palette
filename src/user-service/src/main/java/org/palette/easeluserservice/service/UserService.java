@@ -1,11 +1,13 @@
 package org.palette.easeluserservice.service;
 
 import lombok.RequiredArgsConstructor;
-import org.palette.easeluserservice.exception.BaseException;
-import org.palette.easeluserservice.exception.ExceptionType;
 import org.palette.easeluserservice.persistence.User;
 import org.palette.easeluserservice.persistence.UserJpaRepository;
-import org.palette.easeluserservice.persistence.embed.*;
+import org.palette.easeluserservice.persistence.embed.Profile;
+import org.palette.easeluserservice.persistence.embed.StaticContentPath;
+import org.palette.exception.BaseException;
+import org.palette.exception.ExceptionType;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,13 +21,19 @@ public class UserService {
     private static final String DEFAULT_STRING_VALUE = "";
 
     private final UserJpaRepository userJpaRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Transactional
     public User createTemporaryUser(
             String email,
             String nickname
     ) {
-        User user = User.preJoin(email, nickname, DEFAULT_STRING_VALUE);
+        User user = User.preJoin(
+                email,
+                nickname,
+                DEFAULT_STRING_VALUE,
+                passwordEncoder
+        );
 
         userJpaRepository.save(user);
 
@@ -39,18 +47,18 @@ public class UserService {
             String username,
             Optional<String> introduce,
             Optional<String> profileImagePath,
-            Optional<String> backgroundImagePath,
             Optional<String> websitePath
     ) {
         user.join(
                 password,
+                passwordEncoder,
                 username,
                 new Profile(
                         user.getProfile().nickname(),
-                        new Introduce(introduce.orElse(DEFAULT_STRING_VALUE)),
+                        introduce.orElse(DEFAULT_STRING_VALUE),
                         new StaticContentPath(
                                 profileImagePath.orElse(DEFAULT_STRING_VALUE),
-                                backgroundImagePath.orElse(DEFAULT_STRING_VALUE),
+                                DEFAULT_STRING_VALUE,
                                 websitePath.orElse(DEFAULT_STRING_VALUE)
                         )
                 )
@@ -61,19 +69,49 @@ public class UserService {
         return user;
     }
 
-    public Email isEmailAlreadyExists(String requestedEmail) {
-        Email email = new Email(requestedEmail);
-        if (userJpaRepository.existsByEmail(email)) throw new BaseException(ExceptionType.USER_000006);
-        return email;
+    public void updateUserAuthStatus(User user) {
+        user.updateToAuthed();
     }
 
-    public Username isUsernameAlreadyExists(String requestedUsername) {
-        Username username = new Username(requestedUsername);
-        if (userJpaRepository.existsByUsername(username)) throw new BaseException(ExceptionType.USER_000006);
-        return username;
+    public void checkEmailAndPasswordByUser(
+            User user,
+            String email,
+            String password
+    ) {
+        isEmailNotMatched(user, email);
+
+        user.getPassword().match(password, passwordEncoder);
     }
 
-    public Optional<User> loadByEmail(Email email) {
-        return userJpaRepository.findByEmail(email);
+    private void isEmailNotMatched(User user, String email) {
+        if (!user.getEmail().equals(email)) throw new BaseException(ExceptionType.USER_400_000002);
+    }
+
+    public void isEmailAlreadyExists(String requestedEmail) {
+        if (userJpaRepository.existsByEmail(requestedEmail)) {
+            throw new BaseException(ExceptionType.USER_409_000001);
+        }
+    }
+
+    public void isUsernameAlreadyExists(String requestedUsername) {
+        if (userJpaRepository.existsByUsername(requestedUsername)) {
+            throw new BaseException(ExceptionType.USER_409_000001);
+        }
+    }
+
+    public User loadByEmail(String email) {
+        return userJpaRepository.findByEmail(email).orElseThrow(() ->
+                new BaseException(ExceptionType.USER_404_000001)
+        );
+    }
+
+    public User loadById(Long id) {
+        return userJpaRepository.findById(id).orElseThrow(() ->
+                new BaseException(ExceptionType.USER_404_000001)
+        );
+    }
+
+    public void deleteTemporaryUser(final String email) {
+        userJpaRepository.deleteByEmail(email);
     }
 }

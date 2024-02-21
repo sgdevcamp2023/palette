@@ -1,6 +1,9 @@
 package org.palette.easeluserservice.exception;
 
 import lombok.extern.slf4j.Slf4j;
+import org.palette.exception.BaseException;
+import org.palette.exception.ExceptionResponse;
+import org.palette.exception.ExceptionType;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -17,7 +20,7 @@ public class GlobalExceptionHandler {
             MethodArgumentTypeMismatchException.class,
     })
     public ResponseEntity<ExceptionResponse> handleRequestValidationException(Exception e) {
-        ExceptionType exceptionType = ExceptionType.USER_000001;
+        ExceptionType exceptionType = ExceptionType.USER_404_000001;
         ExceptionResponse exceptionResponse = ExceptionResponse.builder()
                 .code(exceptionType.getCode())
                 .message(exceptionType.getMessage())
@@ -57,13 +60,12 @@ public class GlobalExceptionHandler {
                 .description(e.getLocalizedMessage())
                 .build();
 
-        logException(exceptionResponse);
+        logInternalException(e);
 
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(exceptionResponse);
     }
-
 
     private static void logException(ExceptionResponse exceptionResponse) {
         log.error(
@@ -73,4 +75,9 @@ public class GlobalExceptionHandler {
                 exceptionResponse.message()
         );
     }
+
+    private static void logInternalException(Exception e) {
+        log.error(e.getLocalizedMessage());
+    }
+
 }

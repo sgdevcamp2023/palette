@@ -1,7 +1,5 @@
 package org.palette.easeluserservice.persistence;
 
-import org.palette.easeluserservice.persistence.embed.Email;
-import org.palette.easeluserservice.persistence.embed.Username;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -10,9 +8,11 @@ import java.util.Optional;
 @Repository
 public interface UserJpaRepository extends JpaRepository<User, Long> {
 
-    Boolean existsByEmail(Email email);
+    Boolean existsByEmail(String email);
 
-    Boolean existsByUsername(Username username);
+    Boolean existsByUsername(String username);
 
-    Optional<User> findByEmail(Email email);
+    Optional<User> findByEmail(String email);
+
+    void deleteByEmail(String email);
 }
