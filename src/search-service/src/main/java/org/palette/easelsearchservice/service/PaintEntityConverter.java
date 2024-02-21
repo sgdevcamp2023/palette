@@ -1,28 +1,18 @@
 package org.palette.easelsearchservice.service;
 
 import lombok.RequiredArgsConstructor;
-import org.palette.dto.event.PaintCreatedEvent;
-import org.palette.dto.event.detail.*;
 import org.palette.easelsearchservice.dto.response.*;
 import org.palette.grpc.*;
 import org.springframework.stereotype.Component;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
 public class PaintEntityConverter {
-    public PaintResponse getQuotePaint(GPaintResponse paint) {
-//        return Optional.ofNullable(paint.getQuote())
-//                .map(qp -> convertToQuotePaintResponse(qp)
-//                .orElse(null);
-        return null;
-    }
 
     public PaintResponse convertToPaintResponse(GPaintResponse paint) {
-        PaintResponse quotePaint = getQuotePaint(paint);
+        PaintResponse quotePaint = convertToQuotePaintResponse(paint.getQuote());
         Entities entities = convertToEntities(paint);
         Includes includes = convertToIncludes(paint);
 

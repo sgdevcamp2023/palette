@@ -54,7 +54,7 @@ public record PaintResponse(
     }
 
     public static PaintResponse buildByGPaintResponse(GPaintResponse gPaint, Entities entities, Includes includes) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-ddTHH:mm:ss");
 
         return new PaintResponse(
                 gPaint.getPid(),
