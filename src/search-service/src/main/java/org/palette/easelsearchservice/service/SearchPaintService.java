@@ -5,7 +5,6 @@ import org.palette.dto.event.PaintCreatedEvent;
 import org.palette.dto.event.detail.HashtagRecord;
 import org.palette.dto.event.detail.MentionRecord;
 import org.palette.easelsearchservice.dto.request.SearchRequest;
-import org.palette.easelsearchservice.dto.response.PaintResponse;
 import org.palette.easelsearchservice.persistence.SearchPaint;
 import org.palette.easelsearchservice.persistence.SearchPaintRepository;
 import org.springframework.data.domain.Page;
@@ -19,18 +18,14 @@ import java.util.List;
 public class SearchPaintService {
     private final SearchPaintRepository searchPaintRepository;
 
-    public List<PaintResponse> searchAllPaints(final SearchRequest searchRequest) {
+    public List<Long> searchAllPaints(final SearchRequest searchRequest) {
         Page<SearchPaint> searchPaints = searchPaintRepository.findByTextContaining(
                 searchRequest.keyword(),
                 PageRequest.of(searchRequest.page(), searchRequest.size())
         );
 
-        return convertToPaintResponse(searchPaints);
-    }
-
-    private List<PaintResponse> convertToPaintResponse(Page<SearchPaint> searchPaints) {
         return searchPaints.stream()
-                .map(paint -> new PaintResponse(paint.getId(), paint.getText()))
+                .map(SearchPaint::getId)
                 .toList();
     }
 
@@ -45,7 +40,7 @@ public class SearchPaintService {
                         .hashtagRecords(convertHashtagToStrings(paintCreatedEvent.hashtagRecords()))
                         .mentionRecords(convertMentionToStrings(paintCreatedEvent.mentionRecords()))
                         .createdAt(paintCreatedEvent.createdAt())
-                .build());
+                        .build());
     }
 
     private List<String> convertHashtagToStrings(List<HashtagRecord> hashtagRecords) {
