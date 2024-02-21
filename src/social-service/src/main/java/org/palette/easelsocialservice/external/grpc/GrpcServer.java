@@ -52,8 +52,8 @@ public class GrpcServer extends GSocialServiceGrpc.GSocialServiceImplBase {
         final long followerCount = userService.getFollowerCount(request.getPassport().getId());
 
         GLoadUserFollowInformationResponse response = GLoadUserFollowInformationResponse.newBuilder()
-                .setFollowerCount(followingCount)
-                .setFollowingCount(followerCount)
+                .setFollowerCount(followerCount)
+                .setFollowingCount(followingCount)
                 .build();
         responseObserver.onNext(response);
         responseObserver.onCompleted();
