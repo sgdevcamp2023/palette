@@ -59,11 +59,11 @@ message GPaintResponse {
   GPaintResponse quote = 8;
   string createdAt = 9;
   string text = 10;
-  repeated GHashtagResponse hashtags = 12;
-  repeated GMentionResponse mentions = 13;
-  repeated GUserResponse taggedUsers = 14;
-  repeated GMediaResponse medias = 15;
-  repeated GLinkResponse links = 16;
+  repeated GHashtagResponse hashtags = 11;
+  repeated GMentionResponse mentions = 12;
+  repeated GUserResponse taggedUsers = 13;
+  repeated GMediaResponse medias = 14;
+  repeated GLinkResponse links = 15;
 }
 
 message GHashtagResponse {
