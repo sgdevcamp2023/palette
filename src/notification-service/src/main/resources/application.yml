@@ -1,0 +1,68 @@
+server:
+  port: 10009
+
+spring:
+  application:
+    name: notification-service
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${NOTIFICATION_DB_URI}
+    username: ${NOTIFICATION_DB_USERNAME}
+    password: ${NOTIFICATION_DB_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        default_batch_size: 999
+        show_sql: true
+        format_sql: true
+        use-new-id-generator-mappings: false
+
+  kafka:
+    bootstrap-servers: ${KAFKA_SERVERS}
+    consumer:
+      group-id: notification-consumer-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+
+  rabbitmq:
+    host: localhost
+    port: 9999
+    username: palette
+    password: palette**
+
+rabbitmq:
+  queue.name: palette.notification
+  exchange.name: palette.exchange
+  routing.key: palette.key
+
+fcm:
+  deprecated: true
+  key: firebase_key.json
+  project-id: "~~~"
+
+grpc:
+  server:
+    port: 11009
+  client:
+    social-service:
+      address: 'discovery:///SOCIAL-SERVICE'
+      enableKeepAlive: true
+      keepAliveWithoutCalls: true
+      negotiationType: plaintext
+
+passport:
+  key: ${PASSPORT_KEY}
+  algorithm: ${PASSPORT_ALGORITHM}
+
+eureka:
+  instance:
+    hostname: ${EUREKA_HOST}
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: ${EUREKA_DEFAULT_ZONE}

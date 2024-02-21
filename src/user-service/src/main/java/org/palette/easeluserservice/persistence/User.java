@@ -3,13 +3,18 @@ package org.palette.easeluserservice.persistence;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
-import org.palette.easeluserservice.persistence.embed.*;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
+import org.palette.easeluserservice.persistence.embed.Password;
+import org.palette.easeluserservice.persistence.embed.Pin;
+import org.palette.easeluserservice.persistence.embed.Profile;
+import org.palette.easeluserservice.persistence.embed.StaticContentPath;
 import org.palette.easeluserservice.persistence.enums.Role;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
@@ -17,17 +22,19 @@ import java.util.UUID;
 @Getter
 @Entity
 @DynamicUpdate
+@SQLDelete(sql = "UPDATE user SET deleted_at = now() WHERE id = ?")
+@SQLRestriction("deleted_at IS NULL")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Embedded
-    private Email email;
+    @Column(name = "email", nullable = false, unique = true, length = 70)
+    private String email;
 
-    @Embedded
-    private Username username;
+    @Column(name = "username", nullable = false, unique = true, length = 50)
+    private String username;
 
     @Embedded
     private Password password;
@@ -36,16 +43,16 @@ public class User {
     private Profile profile;
 
     @Embedded
-    private PaintPin paintPin;
-
-    @Embedded
-    private DmPin dmPin;
+    private Pin pin;
 
     @Enumerated(value = EnumType.STRING)
     private Role role;
 
     @Column(name = "authed")
-    private Boolean authed = true;
+    private Boolean authed = false;
+
+    @Column(name = "is_activated")
+    private Boolean isActivated = true;
 
     @Column(name = "accessed_at")
     private LocalDateTime accessedAt;
@@ -56,8 +63,12 @@ public class User {
     @LastModifiedDate
     private LocalDateTime updatedAt;
 
-    @LastModifiedDate
-    private LocalDateTime deletedAt;
+    @Column(name = "deleted_at")
+    private LocalDateTime deletedAt = null;
+
+    public void updateToAuthed() {
+        this.authed = true;
+    }
 
     public Boolean isUserNotAuthed() {
         return !this.getAuthed();
@@ -67,20 +78,34 @@ public class User {
         this.accessedAt = LocalDateTime.now();
     }
 
+    public String getStringDeletedAt() {
+        if (deletedAt == null) return "";
+        return deletedAt.toString();
+    }
+
     public static User preJoin(
             String email,
             String nickname,
-            String defaultStringValue
+            String defaultStringValue,
+            PasswordEncoder passwordEncoder
     ) {
-
         return User.builder()
-                .email(new Email(email))
-                .username(new Username(UUID.randomUUID().toString()))
-                .password(new Password(defaultStringValue))
+                .email(email)
+                .username(nickname
+                        + LocalDateTime.now().getYear()
+                        + LocalDateTime.now().getMonth()
+                        + LocalDateTime.now().getDayOfMonth()
+                        + LocalDateTime.now().getHour()
+                        + LocalDateTime.now().getMinute()
+                        + LocalDateTime.now().getSecond()
+                )
+                .password(
+                        new Password(defaultStringValue, passwordEncoder)
+                )
                 .profile(
                         new Profile(
-                                new Nickname(nickname),
-                                new Introduce(defaultStringValue),
+                                nickname,
+                                defaultStringValue,
                                 new StaticContentPath(
                                         defaultStringValue,
                                         defaultStringValue,
@@ -89,21 +114,50 @@ public class User {
                         )
                 )
                 .role(Role.NORMAL)
-                .paintPin(new PaintPin(defaultStringValue))
-                .dmPin(new DmPin(defaultStringValue))
+                .pin(new Pin(defaultStringValue, defaultStringValue))
                 .accessedAt(null)
                 .authed(false)
+                .isActivated(true)
+                .createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now())
+                .accessedAt(LocalDateTime.now())
                 .build();
     }
 
     public void join(
             String password,
+            PasswordEncoder passwordEncoder,
             String username,
             Profile profile
     ) {
-        this.password = new Password(password);
-        this.username = new Username(username);
+        this.password = new Password(password, passwordEncoder);
+        this.username = username;
         this.profile = profile;
         this.role = Role.NORMAL;
+    }
+
+    public boolean isNotDeleted() {
+        return this.deletedAt == null;
+    }
+
+    public User editProfile(
+            String nickname,
+            String introduce,
+            String profileImagePath,
+            String backgroundImagePath,
+            String websitePath
+    ) {
+
+        StaticContentPath staticContentPath = new StaticContentPath(
+                profileImagePath,
+                backgroundImagePath,
+                websitePath
+        );
+
+        this.profile = this.profile.updateNickname(nickname);
+        this.profile = this.profile.updateIntroduce(introduce);
+        this.profile = this.profile.updateStaticContentPath(staticContentPath);
+
+        return this;
     }
 }
