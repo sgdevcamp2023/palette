@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,14 +12,20 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.smilegate.Easel.R
 import com.smilegate.Easel.databinding.FragmentSendCodeBinding
+import com.smilegate.Easel.domain.api.ApiService
 import com.smilegate.Easel.domain.containsSpaceOrNewline
+import com.smilegate.Easel.domain.repository.SendCodeRepository
 import com.smilegate.Easel.presentation.viewmodel.JoinViewModel
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class SendCodeFragment : Fragment() {
     private lateinit var binding: FragmentSendCodeBinding
@@ -29,6 +34,7 @@ class SendCodeFragment : Fragment() {
 
     // Activity 범위에서 공유하는 경우
     private val joinViewModel: JoinViewModel by activityViewModels()
+    private lateinit var sendCodeRepository: SendCodeRepository
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,6 +47,27 @@ class SendCodeFragment : Fragment() {
 
         binding.sendCodeNextBtn.setOnClickListener {
             navController.navigate(R.id.action_sendCodeFragment_to_needPasswordFragment)
+        }
+
+        // Retrofit 인스턴스 생성 및 SendCodeRepository 초기화
+        val retrofit = Retrofit.Builder()
+            .baseUrl("http://3.37.228.11:8000/")
+            .addConverterFactory(GsonConverterFactory.create()) // JSON 변환기 추가
+            .client(OkHttpClient.Builder().addInterceptor(HttpLoggingInterceptor().apply {
+                level = HttpLoggingInterceptor.Level.BODY // 모든 통신 로그를 보이도록 설정
+            }).build())
+            .build()
+
+        sendCodeRepository = SendCodeRepository(retrofit.create(ApiService::class.java))
+
+        binding.sendCodeNextBtn.setOnClickListener {
+            val code = binding.sendCodeInputField.text.toString()
+            val email = joinViewModel.email.value ?: ""
+            if (email.isNotEmpty() && code.isNotEmpty()) {
+                navController.navigate(R.id.action_sendCodeFragment_to_needPasswordFragment)
+            } else {
+                Toast.makeText(requireContext(), "정확한 코드를 입력해주세요.", Toast.LENGTH_SHORT).show()
+            }
         }
 
         binding.sendCodeRecendEmail.setOnClickListener {
@@ -108,5 +135,4 @@ class SendCodeFragment : Fragment() {
             nextButton?.setTextColor(textColor)
         }
     }
-
 }

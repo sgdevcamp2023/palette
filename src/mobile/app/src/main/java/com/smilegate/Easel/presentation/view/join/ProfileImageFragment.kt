@@ -12,10 +12,12 @@ import android.widget.Button
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.smilegate.Easel.R
 import com.smilegate.Easel.databinding.FragmentProfileImageBinding
+import com.smilegate.Easel.presentation.viewmodel.JoinViewModel
 
 class ProfileImageFragment : Fragment() {
     private lateinit var _binding: FragmentProfileImageBinding
@@ -26,12 +28,16 @@ class ProfileImageFragment : Fragment() {
     private var selectedImageUri: Uri? = null
 
     private lateinit var navController: NavController
+    private lateinit var joinViewModel: JoinViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentProfileImageBinding.inflate(inflater, container, false)
+
+        // ViewModel 초기화
+        joinViewModel = ViewModelProvider(requireActivity()).get(JoinViewModel::class.java)
 
         // 갤러리 아이콘 클릭 시 이미지 선택 요청
         binding.profileImageFragmentCameraBtn.setOnClickListener {
@@ -69,6 +75,7 @@ class ProfileImageFragment : Fragment() {
             // 이미지가 성공적으로 선택되었을 때
             var selectedImageUri: Uri? = data?.data
             val nextButton = binding?.root?.findViewById<Button>(R.id.profile_image_fragment_next_btn)
+            joinViewModel.setProfileImageURL(selectedImageUri.toString())
 
             // 선택한 이미지를 ImageView에 설정
             selectedImageUri?.let {

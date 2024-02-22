@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,14 +11,13 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.smilegate.Easel.R
 import com.smilegate.Easel.databinding.FragmentLoginBinding
-import com.smilegate.Easel.databinding.FragmentPasswordBinding
 import com.smilegate.Easel.domain.containsSpaceOrNewline
-import com.smilegate.Easel.presentation.viewmodel.JoinViewModel
 import com.smilegate.Easel.presentation.viewmodel.LoginViewModel
 
 
@@ -41,23 +39,11 @@ class LoginFragment : Fragment() {
 
         navController = findNavController()
 
-        binding?.loginFragmentNextBtn?.setOnClickListener {
-            val inputText = binding?.loginFragmentInputField?.text.toString()
-            Log.d("LoginFragment", "Input text: $inputText")
-
-            // ViewModel에 데이터 저장
-            loginViewModel.setEmailValue(inputText)
-            Log.d("LoginFragment", "email value set: $inputText")
-
-            // 번들을 생성하고 데이터를 담음
-//            val bundle = Bundle()
-//            bundle.putString("email", inputText)
-//            Log.d("LoginFragment", "email value set: $inputText")
-
-            navController.navigate(R.id.action_createAccountFragment_to_sendCodeFragment)
-        }
-
         binding.loginFragmentNextBtn.setOnClickListener {
+            val email = binding.loginFragmentInputField.text.toString()
+            // 이메일을 ViewModel에 저장
+            loginViewModel.setEmailValue(email)
+
             navController.navigate(R.id.action_loginFragment_to_passwordFragment)
         }
 
