@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:clickable="true"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -10,7 +10,7 @@
         android:id="@+id/iv_timeline_profile_img"
         android:layout_width="44dp"
         android:layout_height="44dp"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="12dp"
         android:layout_marginTop="18dp"
         android:src="@drawable/bg_timeline_profile_img"
         app:layout_constraintStart_toStartOf="parent"
@@ -100,15 +100,26 @@
         app:layout_constraintStart_toEndOf="@+id/iv_timeline_profile_img"
         app:layout_constraintTop_toBottomOf="@+id/tv_timeline_content" />
 
-    <ImageView
-        android:id="@+id/iv_timeline_content_img"
-        android:layout_width="300dp"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/iv_timeline_content_card"
+        android:layout_width="285dp"
         android:layout_height="300dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="12dp"
-        android:src="@drawable/bg_timeline_content_img"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="0dp"
         app:layout_constraintStart_toEndOf="@+id/iv_timeline_profile_img"
-        app:layout_constraintTop_toBottomOf="@+id/tv_timeline_hashtag" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_timeline_hashtag">
+
+        <ImageView
+            android:id="@+id/iv_timeline_content_img"
+            android:layout_width="285dp"
+            android:layout_height="300dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintStart_toEndOf="@+id/iv_timeline_profile_img"
+            app:layout_constraintTop_toBottomOf="@+id/tv_timeline_hashtag" />
+
+    </androidx.cardview.widget.CardView>
 
     <ImageView
         android:id="@+id/ic_timeline_mention"
@@ -119,7 +130,7 @@
         android:backgroundTint="@color/BlueGrey_800"
         android:src="@drawable/ic_comment"
         app:layout_constraintStart_toEndOf="@+id/iv_timeline_profile_img"
-        app:layout_constraintTop_toBottomOf="@+id/iv_timeline_content_img" />
+        app:layout_constraintTop_toBottomOf="@+id/iv_timeline_content_card" />
 
     <TextView
         android:id="@+id/tv_timeline_mention"
@@ -131,7 +142,7 @@
         android:text="4"
         android:textColor="@color/BlueGrey_800"
         app:layout_constraintStart_toEndOf="@+id/ic_timeline_mention"
-        app:layout_constraintTop_toBottomOf="@+id/iv_timeline_content_img" />
+        app:layout_constraintTop_toBottomOf="@+id/iv_timeline_content_card" />
 
     <ImageView
         android:id="@+id/ic_timeline_retweet"
@@ -142,7 +153,7 @@
         android:backgroundTint="@color/BlueGrey_800"
         android:src="@drawable/ic_retweet"
         app:layout_constraintStart_toEndOf="@+id/ic_timeline_mention"
-        app:layout_constraintTop_toBottomOf="@+id/iv_timeline_content_img" />
+        app:layout_constraintTop_toBottomOf="@+id/iv_timeline_content_card" />
 
     <TextView
         android:id="@+id/tv_timeline_retweet"
@@ -154,7 +165,7 @@
         android:text="4"
         android:textColor="@color/BlueGrey_800"
         app:layout_constraintStart_toEndOf="@+id/ic_timeline_retweet"
-        app:layout_constraintTop_toBottomOf="@+id/iv_timeline_content_img" />
+        app:layout_constraintTop_toBottomOf="@+id/iv_timeline_content_card" />
 
     <ImageView
         android:id="@+id/ic_timeline_like"
@@ -165,7 +176,7 @@
         android:backgroundTint="@color/BlueGrey_800"
         android:src="@drawable/ic_heart"
         app:layout_constraintStart_toEndOf="@+id/ic_timeline_retweet"
-        app:layout_constraintTop_toBottomOf="@+id/iv_timeline_content_img" />
+        app:layout_constraintTop_toBottomOf="@+id/iv_timeline_content_card" />
 
     <TextView
         android:id="@+id/tv_timeline_like"
@@ -177,7 +188,7 @@
         android:text="2"
         android:textColor="@color/BlueGrey_800"
         app:layout_constraintStart_toEndOf="@+id/ic_timeline_like"
-        app:layout_constraintTop_toBottomOf="@+id/iv_timeline_content_img" />
+        app:layout_constraintTop_toBottomOf="@+id/iv_timeline_content_card" />
 
     <ImageView
         android:id="@+id/ic_timeline_views"
@@ -188,7 +199,7 @@
         android:backgroundTint="@color/BlueGrey_800"
         android:src="@drawable/ic_bar_chart"
         app:layout_constraintStart_toEndOf="@+id/ic_timeline_like"
-        app:layout_constraintTop_toBottomOf="@+id/iv_timeline_content_img" />
+        app:layout_constraintTop_toBottomOf="@+id/iv_timeline_content_card" />
 
     <TextView
         android:id="@+id/tv_timeline_views"
@@ -200,18 +211,18 @@
         android:text="1032"
         android:textColor="@color/BlueGrey_800"
         app:layout_constraintStart_toEndOf="@+id/ic_timeline_views"
-        app:layout_constraintTop_toBottomOf="@+id/iv_timeline_content_img" />
+        app:layout_constraintTop_toBottomOf="@+id/iv_timeline_content_card" />
 
     <ImageView
         android:id="@+id/ic_timeline_share"
         android:layout_width="16dp"
         android:layout_height="16dp"
-        android:layout_marginStart="64dp"
+        android:layout_marginStart="60dp"
         android:layout_marginTop="8dp"
         android:backgroundTint="@color/BlueGrey_800"
         android:src="@drawable/ic_share"
         app:layout_constraintStart_toEndOf="@+id/ic_timeline_views"
-        app:layout_constraintTop_toBottomOf="@+id/iv_timeline_content_img" />
+        app:layout_constraintTop_toBottomOf="@+id/iv_timeline_content_card" />
 
     <View
         android:layout_width="match_parent"

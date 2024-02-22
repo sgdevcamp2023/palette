@@ -12,16 +12,25 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.smilegate.Easel.R
+import com.smilegate.Easel.data.TokenManager
 import com.smilegate.Easel.databinding.FragmentPasswordBinding
+import com.smilegate.Easel.domain.api.ApiService
 import com.smilegate.Easel.domain.containsSpaceOrNewline
+import com.smilegate.Easel.domain.model.login.LoginRequest
 import com.smilegate.Easel.presentation.viewmodel.LoginViewModel
+import kotlinx.coroutines.launch
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class PasswordFragment : Fragment() {
     private var _binding: FragmentPasswordBinding? = null
@@ -33,7 +42,7 @@ class PasswordFragment : Fragment() {
 
     // Activity 범위에서 공유
     private val loginViewModel: LoginViewModel by activityViewModels()
-
+    private lateinit var apiService: ApiService
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,13 +52,35 @@ class PasswordFragment : Fragment() {
 
         navController = findNavController()
 
+        val retrofit = Retrofit.Builder()
+            .baseUrl("http://3.37.228.11:8000/")
+            .addConverterFactory(GsonConverterFactory.create()) // JSON 변환기 추가
+            .client(OkHttpClient.Builder().addInterceptor(HttpLoggingInterceptor().apply {
+                level = HttpLoggingInterceptor.Level.BODY // 모든 통신 로그를 보이도록 설정
+            }).build())
+            .build()
+
+        apiService = retrofit.create(ApiService::class.java)
+
         binding.passwordFragmentLostPw.setOnClickListener {
             navController.navigate(R.id.action_passwordFragment_to_FindAccountFragment)
         }
 
         binding.passwordFragmentLoginBtn.setOnClickListener {
-            navController.navigate(R.id.action_passwordFragment_to_timelineFragment)
-            hideKeyboard()
+
+            val email = loginViewModel.email.value // 이메일 가져오기
+            val password = binding.passwordFragmentPwField.text.toString()
+            // 비밀번호 가져오기
+
+            if (email != null && password != null) { // 이메일과 비밀번호가 모두 null이 아닌지 확인
+                // 로그인 요청
+                login(email, password)
+                hideKeyboard()
+            }
+            else {
+                Toast.makeText(requireContext(), "이메일 또는 비밀번호를 입력해주세요.", Toast.LENGTH_SHORT).show()
+                hideKeyboard()
+            }
         }
 
         return binding.root
@@ -78,13 +109,6 @@ class PasswordFragment : Fragment() {
             // id를 사용하여 UI 업데이트 등을 수행
             binding?.passwordFragmentIdField?.text = email
         }
-//        // 번들에서 데이터를 가져옴
-//        val email = arguments?.getString("email")
-//        Log.d("PasswordFragment", "email value retrieved: $email")
-//
-//        // 가져온 데이터를 사용하여 UI 업데이트 등을 수행
-//        binding?.passwordFragmentIdField?.text = email
-//        Log.d("PasswordFragment", "Text set to: $email")
 
         binding.passwordFragmentPwShowBtn.setOnClickListener {
             passwordVisibility()
@@ -156,6 +180,31 @@ class PasswordFragment : Fragment() {
         val focusedView = requireActivity().currentFocus
         focusedView?.let {
             inputMethodManager.hideSoftInputFromWindow(it.windowToken, 0)
+        }
+    }
+
+    private fun login(email: String, password: String) {
+        val loginRequest = LoginRequest(email, password)
+        lifecycleScope.launch {
+            try {
+                val response = apiService.login(loginRequest)
+                if (response.isSuccessful) {
+                    val loginResponse = response.body()
+                    if (loginResponse != null) {
+                        TokenManager.saveAccessToken(requireContext(), loginResponse.accessToken)
+                        TokenManager.saveRefreshToken(requireContext(), loginResponse.refreshToken)
+
+                        navController.navigate(R.id.action_passwordFragment_to_timelineFragment)
+                    }
+                } else {
+                    // 로그인 실패
+                    Toast.makeText(requireContext(), "로그인에 실패했습니다.", Toast.LENGTH_SHORT).show()
+                }
+            } catch (e: Exception) {
+                // 네트워크 오류 등 예외 발생 시 처리
+                Log.e("LoginFragment", "Error: ${e.message}", e)
+                Toast.makeText(requireContext(), "네트워크 오류가 발생했습니다.", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 }

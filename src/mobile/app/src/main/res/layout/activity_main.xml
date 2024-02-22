@@ -77,10 +77,12 @@
             app:itemBackground="@color/white"
             android:background="#FFFFFF"
             app:elevation="0dp"
-            app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"
+            app:layout_behavior="com.smilegate.Easel.presentation.BottomNavigationViewBehavior"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:itemIconSize="20dp"
+            android:visibility="gone"
+            app:layout_scrollFlags="scroll|enterAlways"
             app:itemActiveIndicatorStyle="@color/white"
             app:layout_constraintRight_toRightOf="parent"
             app:menu="@menu/bottom_nav_menu" />
@@ -91,13 +93,13 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:defaultNavHost="true"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            app:layout_scrollFlags="scroll|enterAlways"
             app:layout_constraintBottom_toTopOf="@+id/nav_view"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar_container"
-            app:layout_scrollFlags="scroll|enterAlways"
-            app:navGraph="@navigation/nav_graph" />
+            app:navGraph="@navigation/nav_graph"
+            app:layout_behavior="com.smilegate.Easel.presentation.BottomNavigationViewBehavior"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
