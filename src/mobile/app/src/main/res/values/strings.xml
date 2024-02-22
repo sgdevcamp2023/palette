@@ -60,4 +60,36 @@
     <string name="ask_name_fragment_hint">사용자 아이디</string>
     <string name="ask_name_fragment_accept">가입</string>
 
+    <!-- RetweetBottomSheetDialog -->
+    <string name="retweet_fragment_bottom_sheet">재게시</string>
+    <string name="repost_fragment_bottom_sheet">인용</string>
+    <string name="cancel_fragment_bottom_sheet">취소</string>
+
+    <!-- ShareBottomSheetDialog -->
+    <string name="link_Share_fragment_bottom_sheet">링크 복사</string>
+    <string name="Share_fragment_bottom_sheet">공유하기</string>
+
+    <!--ViewBottomSheetDialog-->
+    <string name="view_bottom_sheet">조회수</string>
+    <string name="announce_bottom_sheet">이 게시물이 조회된 횟수입니다. 자세히 알아보려면 <u><b>고객\n센터</b></u>를 방문하세요.</string>
+    <string name="hide_bottom_sheet">숨기기</string>
+
+    <!--HighLightFragment-->
+    <string name="highlight_fragment_headline">프로필에 하이라이트 추가</string>
+    <string name="highlight_fragment_announce">프로필에 게시물을 하이라이트하려면 Premium을 구독해\n야 합니다.</string>
+    <string name="highlight_fragment_subscribe">Premium 구독하기</string>
+
+    <!--EmptyBookMarkLayout-->
+    <string name="empty_bookmark_layout_headline">나중을 위해 게시물 저장</string>
+    <string name="empty_bookmark_layout_announce">좋은 게시물은 근야 흘려 보내지 마세요. 나중에 다시 쉽게\n찾을 수 있도록 북마크에 추가하세요.</string>
+
+
+    <!--PostFragment-->
+    <string name="post_fragment_temp_storage">임시 보관함</string>
+    <string name="post_fragment_post">게시하기</string>
+    <string name="post_fragment_sample_text">무슨 일이 일어나고 있나요?</string>
+    <string name="post_fragment_reply_approve">모든 사람이 답글을 달 수 있습니다</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

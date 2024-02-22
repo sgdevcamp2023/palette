@@ -1,19 +1,15 @@
 package com.smilegate.Easel
 
-import androidx.appcompat.app.AppCompatActivity
+import android.os.Build
 import android.os.Bundle
 import android.view.MenuItem
-import android.view.MotionEvent
-import android.widget.Toolbar
-import androidx.activity.OnBackPressedCallback
+import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.AppBarConfiguration
-import com.google.android.material.bottomnavigation.LabelVisibilityMode
-import com.google.android.material.navigation.NavigationBarView
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.smilegate.Easel.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -25,15 +21,19 @@ class MainActivity : AppCompatActivity() {
 
     private var lastSelectedIconId: Int? = null
 
+    @RequiresApi(Build.VERSION_CODES.S)
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
+
         setContentView(binding.root)
 
         /* Status Bar & Navigation Bar */
         val barColor = ContextCompat.getColor(this, R.color.white)
+        val statusColor = ContextCompat.getColor(this, android.R.color.transparent)
+
         with(window) {
-            statusBarColor = barColor
+            statusBarColor = statusColor
             navigationBarColor = barColor
         }
         with(WindowInsetsControllerCompat(window, window.decorView)) {
@@ -60,6 +60,30 @@ class MainActivity : AppCompatActivity() {
         binding.navView.setOnNavigationItemSelectedListener { item ->
             onNavigationItemSelected(item)
         }
+
+        var down = false
+        var height:Float? = null
+        val bottomNavView: BottomNavigationView = findViewById(R.id.nav_view)
+
+        binding.navView.setOnScrollChangeListener { _, _, scY, _, odscY ->
+            if (height == null) {
+                height = bottomNavView.height.toFloat()
+            }
+            if (scY > odscY) {
+                if (down) {
+                    down = false
+                    bottomNavView.clearAnimation()
+                    bottomNavView.animate().translationY(height!!).duration = 200
+                }
+            } else {
+                if (!down) {
+                    down = true
+                    bottomNavView.clearAnimation()
+                    bottomNavView.animate().translationY(0f).duration = 200
+                }
+            }
+        }
+
     }
 
     private fun updateIcon(itemId: Int, iconResId: Int) {
@@ -126,3 +150,4 @@ class MainActivity : AppCompatActivity() {
         }
     }
 }
+

@@ -1,14 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".presentation.view.search.SearchFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="search_fragment" />
+        android:gravity="bottom|end">
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_write"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_margin="12dp"
+            fab_icon="@drawable/ic_image"
+            fab_colorNormal="@color/black"
+            app:fab_colorNormal="@color/white"
+            app:fab_colorPressed="@color/white"
+            app:fab_colorRipple="@color/white"
+            app:fab_elevationCompat="0dp"
+            app:layout_constraintBottom_toBottomOf="@+id/fab_main"
+            app:layout_constraintEnd_toEndOf="@+id/fab_main"
+            app:layout_constraintStart_toStartOf="@+id/fab_main"
+            app:layout_constraintTop_toTopOf="@+id/fab_main"
+            app:rippleColor="@color/white" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_image"
+            fab_colorNormal="@color/black"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_margin="12dp"
+            fab_icon="@drawable/ic_image"
+            app:fab_colorNormal="@color/white"
+            app:fab_colorPressed="@color/white"
+            app:fab_colorRipple="@color/white"
+            app:fab_elevationCompat="0dp"
+            app:layout_constraintBottom_toBottomOf="@+id/fab_main"
+            app:layout_constraintEnd_toEndOf="@+id/fab_main"
+            app:layout_constraintStart_toStartOf="@+id/fab_main"
+            app:layout_constraintTop_toTopOf="@+id/fab_main"
+            app:rippleColor="@color/white" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_gif"
+            fab_colorNormal="@color/black"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_margin="12dp"
+            fab_icon="@drawable/ic_gif"
+            app:fab_colorNormal="@color/white"
+            app:fab_colorPressed="@color/white"
+            app:fab_colorRipple="@color/white"
+            app:fab_elevationCompat="0dp"
+            app:layout_constraintBottom_toBottomOf="@+id/fab_main"
+            app:layout_constraintEnd_toEndOf="@+id/fab_main"
+            app:layout_constraintStart_toStartOf="@+id/fab_main"
+            app:layout_constraintTop_toTopOf="@+id/fab_main"
+            app:rippleColor="@color/white" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_main"
+            fab_iconTintColor="@color/white"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_margin="12dp"
+            android:src="@drawable/ic_add_text"
+            app:circularflow_defaultRadius="30dp"
+            app:fab_colorNormal="@color/black"
+            app:fab_colorPressed="@color/black"
+            app:fab_colorRipple="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:rippleColor="@color/black" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

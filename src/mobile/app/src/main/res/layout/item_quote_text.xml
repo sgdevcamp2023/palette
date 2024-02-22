@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:clickable="true"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/iv_timeline_profile_img"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="18dp"
+        android:src="@drawable/bg_timeline_profile_img"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_timeline_nickname"
+        style="@style/Headline8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="18dp"
+        android:text="SBS 뉴스"
+        android:textColor="@color/Grey_600"
+        app:layout_constraintStart_toEndOf="@+id/iv_timeline_profile_img"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_timeline_username"
+        style="@style/Body1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="16dp"
+        android:text="\@SBS8news"
+        android:textColor="@color/BlueGrey_800"
+        app:layout_constraintStart_toEndOf="@+id/tv_timeline_nickname"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView5"
+        style="@style/Body1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="16dp"
+        android:text="·"
+        android:textColor="@color/BlueGrey_800"
+        app:layout_constraintStart_toEndOf="@+id/tv_timeline_username"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_timeline_time"
+        style="@style/Body1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="16dp"
+        android:text="18분"
+        android:textColor="@color/BlueGrey_800"
+        app:layout_constraintStart_toEndOf="@+id/textView5"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/ic_else_actions"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginTop="18dp"
+        android:backgroundTint="@color/BlueGrey_500"
+        android:src="@drawable/ic_three_dot"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_timeline_content"
+        style="@style/Body2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="2dp"
+        android:layout_weight="0"
+        android:text="god “전성기때도 제작 된 적 없는 공연 실황 영화, 신기\n해”"
+        android:textColor="@color/Grey_600"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/iv_timeline_profile_img"
+        app:layout_constraintTop_toBottomOf="@+id/tv_timeline_nickname" />
+
+    <TextView
+        android:id="@+id/tv_timeline_hashtag"
+        style="@style/Body2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="2dp"
+        android:text="#SBS뉴스"
+        android:textColor="@color/Blue_500"
+        app:layout_constraintStart_toEndOf="@+id/iv_timeline_profile_img"
+        app:layout_constraintTop_toBottomOf="@+id/tv_timeline_content" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/iv_timeline_content_card"
+        android:layout_width="285dp"
+        android:layout_height="300dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="12dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="0dp"
+        app:layout_constraintStart_toEndOf="@+id/iv_timeline_profile_img"
+        app:layout_constraintTop_toBottomOf="@+id/tv_timeline_hashtag">
+
+        <ImageView
+            android:id="@+id/iv_timeline_content_img"
+            android:layout_width="285dp"
+            android:layout_height="300dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintStart_toEndOf="@+id/iv_timeline_profile_img"
+            app:layout_constraintTop_toBottomOf="@+id/tv_timeline_hashtag" />
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/quote_post_img_ver"
+        android:layout_width="285dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:clickable="true"
+        app:layout_constraintStart_toStartOf="@+id/tv_timeline_nickname"
+        app:layout_constraintTop_toBottomOf="@+id/iv_timeline_content_card">
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/quote_card_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="0dp"
+            app:strokeColor="@color/Grey_200"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/iv_quote_profile_img"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="12dp"
+                    android:src="@drawable/bg_timeline_profile_img"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_quote_nickname"
+                    style="@style/Headline8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="12dp"
+                    android:text="SBS 뉴스"
+                    android:textColor="@color/Grey_600"
+                    app:layout_constraintStart_toEndOf="@+id/iv_quote_profile_img"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_quote_username"
+                    style="@style/Body1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="10dp"
+                    android:text="\@SBS8news"
+                    android:textColor="@color/BlueGrey_800"
+                    app:layout_constraintStart_toEndOf="@+id/tv_quote_nickname"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textView7"
+                    style="@style/Body1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="10dp"
+                    android:text="·"
+                    android:textColor="@color/BlueGrey_800"
+                    app:layout_constraintStart_toEndOf="@+id/tv_quote_username"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_quote_time"
+                    style="@style/Body1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="34dp"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="10dp"
+                    android:text="18분"
+                    android:textColor="@color/BlueGrey_800"
+                    app:layout_constraintStart_toEndOf="@+id/textView7"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_quote_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="12dp"
+                    android:text="god “전성기때도 제작 된 적 없는 공연 실황 영화, 신기해”"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_quote_nickname" />
+
+                <ImageView
+                    android:id="@+id/iv_quote_content_img"
+                    android:layout_width="285dp"
+                    android:layout_height="300dp"
+                    android:layout_marginTop="8dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/sample_profile_img1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_quote_text" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/ic_timeline_mention"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="@color/BlueGrey_800"
+        android:src="@drawable/ic_comment"
+        app:layout_constraintStart_toEndOf="@+id/iv_timeline_profile_img"
+        app:layout_constraintTop_toBottomOf="@+id/quote_post_img_ver" />
+
+    <TextView
+        android:id="@+id/tv_timeline_mention"
+        style="@style/Body3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="8dp"
+        android:text="4"
+        android:textColor="@color/BlueGrey_800"
+        app:layout_constraintStart_toEndOf="@+id/ic_timeline_mention"
+        app:layout_constraintTop_toBottomOf="@+id/quote_post_img_ver" />
+
+    <ImageView
+        android:id="@+id/ic_timeline_retweet"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="@color/BlueGrey_800"
+        android:src="@drawable/ic_retweet"
+        app:layout_constraintStart_toEndOf="@+id/ic_timeline_mention"
+        app:layout_constraintTop_toBottomOf="@+id/quote_post_img_ver" />
+
+    <TextView
+        android:id="@+id/tv_timeline_retweet"
+        style="@style/Body3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="8dp"
+        android:text="4"
+        android:textColor="@color/BlueGrey_800"
+        app:layout_constraintStart_toEndOf="@+id/ic_timeline_retweet"
+        app:layout_constraintTop_toBottomOf="@+id/quote_post_img_ver" />
+
+    <ImageView
+        android:id="@+id/ic_timeline_like"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="@color/BlueGrey_800"
+        android:src="@drawable/ic_heart"
+        app:layout_constraintStart_toEndOf="@+id/ic_timeline_retweet"
+        app:layout_constraintTop_toBottomOf="@+id/quote_post_img_ver" />
+
+    <TextView
+        android:id="@+id/tv_timeline_like"
+        style="@style/Body3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="8dp"
+        android:text="2"
+        android:textColor="@color/BlueGrey_800"
+        app:layout_constraintStart_toEndOf="@+id/ic_timeline_like"
+        app:layout_constraintTop_toBottomOf="@+id/quote_post_img_ver" />
+
+    <ImageView
+        android:id="@+id/ic_timeline_views"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="@color/BlueGrey_800"
+        android:src="@drawable/ic_bar_chart"
+        app:layout_constraintStart_toEndOf="@+id/ic_timeline_like"
+        app:layout_constraintTop_toBottomOf="@+id/quote_post_img_ver" />
+
+    <TextView
+        android:id="@+id/tv_timeline_views"
+        style="@style/Body3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="8dp"
+        android:text="1032"
+        android:textColor="@color/BlueGrey_800"
+        app:layout_constraintStart_toEndOf="@+id/ic_timeline_views"
+        app:layout_constraintTop_toBottomOf="@+id/quote_post_img_ver" />
+
+    <ImageView
+        android:id="@+id/ic_timeline_share"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="@color/BlueGrey_800"
+        android:src="@drawable/ic_share"
+        app:layout_constraintStart_toEndOf="@+id/ic_timeline_views"
+        app:layout_constraintTop_toBottomOf="@+id/quote_post_img_ver" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="12dp"
+        android:background="@color/BlueGrey_400"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ic_timeline_mention" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

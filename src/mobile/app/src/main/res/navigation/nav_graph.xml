@@ -123,13 +123,29 @@
             android:id="@+id/action_askNameFragment_to_timelineFragment"
             app:destination="@id/timelineFragment"/>
 
+        <action
+            android:id="@+id/action_askNameFragment_to_startFragment"
+            app:destination="@id/startFragment"/>
+
     </fragment>
 
     <fragment
         android:id="@+id/timelineFragment"
-        android:name="com.smilegate.Easel.presentation.view.Timeline.TimelineFragment"
+        android:name="com.smilegate.Easel.presentation.view.timeline.TimelineFragment"
         android:label="fragment_timeline"
         tools:layout="@layout/fragment_timeline">
+
+        <action
+            android:id="@+id/action_timelineFragment_to_myPageFragment"
+            app:destination="@id/myPageFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left"/>
+
+        <action
+            android:id="@+id/action_timelineFragment_to_postFragment"
+            app:destination="@id/postFragment"/>
 
     </fragment>
 
@@ -139,6 +155,14 @@
         android:label="fragment_search"
         tools:layout="@layout/fragment_search">
 
+        <action
+            android:id="@+id/action_searchFragment_to_postFragment"
+            app:destination="@id/postFragment"/>
+
+        <action
+            android:id="@+id/action_searchFragment_to_MypageFragment"
+            app:destination="@id/myPageFragment"/>
+
     </fragment>
 
     <fragment
@@ -146,6 +170,14 @@
         android:name="com.smilegate.Easel.presentation.view.notice.NoticeFragment"
         android:label="fragment_notice"
         tools:layout="@layout/fragment_notice">
+
+        <action
+            android:id="@+id/action_noticeFragment_to_postFragment"
+            app:destination="@id/postFragment"/>
+
+        <action
+            android:id="@+id/action_noticeFragment_to_MypageFragment"
+            app:destination="@id/myPageFragment"/>
 
     </fragment>
 
@@ -155,6 +187,10 @@
         android:label="fragment_message"
         tools:layout="@layout/fragment_message">
 
+        <action
+            android:id="@+id/action_messageFragment_to_MypageFragment"
+            app:destination="@id/myPageFragment"/>
+
     </fragment>
 
     <fragment
@@ -162,6 +198,94 @@
         android:name="com.smilegate.Easel.presentation.view.profile.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile">
+
+        <action
+            android:id="@+id/action_profileFragment_to_timeLineFragment"
+            app:destination="@id/timelineFragment"/>
+
+        <action
+            android:id="@+id/action_profileFragment_to_postFragment"
+            app:destination="@id/postFragment"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/myPostFragment"
+        android:name="com.smilegate.Easel.presentation.view.profile.MyPostFragment"
+        android:label="fragment_my_post"
+        tools:layout="@layout/fragment_my_post">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/replyFragment"
+        android:name="com.smilegate.Easel.presentation.view.profile.ReplyFragment"
+        android:label="fragment_reply"
+        tools:layout="@layout/fragment_reply">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/highlightFragment"
+        android:name="com.smilegate.Easel.presentation.view.profile.HighlightFragment"
+        android:label="fragment_highlight"
+        tools:layout="@layout/fragment_highlight">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/mediaFragment"
+        android:name="com.smilegate.Easel.presentation.view.profile.MediaFragment"
+        android:label="fragment_media"
+        tools:layout="@layout/fragment_media">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/likedFragment"
+        android:name="com.smilegate.Easel.presentation.view.profile.LikedFragment"
+        android:label="fragment_liked"
+        tools:layout="@layout/fragment_liked">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/postFragment"
+        android:name="com.smilegate.Easel.presentation.view.post.PostFragment"
+        android:label="fragment_post"
+        tools:layout="@layout/fragment_post">
+
+        <action
+            android:id="@+id/action_postFragment_to_timelineFragment"
+            app:destination="@id/timelineFragment"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/myPageFragment"
+        android:name="com.smilegate.Easel.presentation.view.myPage.MyPageFragment"
+        android:label="fragment_my_page"
+        tools:layout="@layout/fragment_my_page">
+
+        <action
+            android:id="@+id/action_myPageFragment_to_TimelineFragment"
+            app:destination="@id/timelineFragment"/>
+
+        <action
+            android:id="@+id/action_myPageFragment_to_profileFragment"
+            app:destination="@id/profileFragment"/>
+
+        <action
+            android:id="@+id/action_myPageFragment_to_bookMarkFragment"
+            app:destination="@id/bookMarkFragment"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/bookMarkFragment"
+        android:name="com.smilegate.Easel.presentation.view.myPage.BookMarkFragment"
+        android:label="fragment_book_mark"
+        tools:layout="@layout/fragment_book_mark">
 
     </fragment>
 

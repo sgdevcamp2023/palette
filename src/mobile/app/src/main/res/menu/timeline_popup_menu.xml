@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <item
+        android:enabled="true"
+        android:id="@+id/popup_no_interest"
+        android:icon="@drawable/ic_home"
+        android:title="TODO" />
+
+    <item
+        android:enabled="true"
+        android:id="@+id/popup_is_follow"
+        android:icon="@drawable/ic_user_plus"
+        android:title="TODO"/>
+
+    <item
+        android:enabled="true"
+        android:id="@+id/popup_add_list"
+        android:icon="@drawable/ic_list"
+        android:title="TODO"/>
+
+    <item
+        android:enabled="true"
+        android:id="@+id/popup_mute"
+        android:icon="@drawable/ic_mute"
+        android:title="TODO"/>
+
+    <item
+        android:enabled="true"
+        android:id="@+id/popup_block"
+        android:icon="@drawable/ic_stop"
+        android:title="TODO"/>
+
+    <item
+        android:enabled="true"
+        android:id="@+id/popup_report"
+        android:icon="@drawable/ic_flag"
+        android:title="TODO"/>
+
+</menu>
