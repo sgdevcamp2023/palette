@@ -8,6 +8,7 @@ import android.text.TextPaint
 import android.text.TextWatcher
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
@@ -17,12 +18,22 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.smilegate.Easel.R
 import com.smilegate.Easel.databinding.FragmentCreateAccountBinding
+import com.smilegate.Easel.domain.api.ApiService
 import com.smilegate.Easel.domain.containsSpaceOrNewline
+import com.smilegate.Easel.domain.model.TemporaryJoinRequest
+import com.smilegate.Easel.domain.repository.SendCodeRepository
+import com.smilegate.Easel.domain.repository.UserRepository
 import com.smilegate.Easel.presentation.viewmodel.JoinViewModel
+import kotlinx.coroutines.launch
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 
 class CreateAccountFragment : Fragment() {
@@ -37,6 +48,9 @@ class CreateAccountFragment : Fragment() {
 
     // Activity 범위에서 공유
     private val joinViewModel: JoinViewModel by activityViewModels()
+    private lateinit var sendCodeRepository: SendCodeRepository
+    private lateinit var userRepository: UserRepository
+    private lateinit var apiService: ApiService
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,13 +60,41 @@ class CreateAccountFragment : Fragment() {
 
         navController = findNavController()
 
+        val retrofit = Retrofit.Builder()
+            .baseUrl("http://3.37.228.11:8000/")
+            .addConverterFactory(GsonConverterFactory.create()) // JSON 변환기 추가
+            .client(OkHttpClient.Builder().addInterceptor(HttpLoggingInterceptor().apply {
+                level = HttpLoggingInterceptor.Level.BODY // 모든 통신 로그를 보이도록 설정
+            }).build())
+            .build()
+
+        apiService = retrofit.create(ApiService::class.java)
+        userRepository = UserRepository(retrofit.create(ApiService::class.java))
+        sendCodeRepository = SendCodeRepository(retrofit.create(ApiService::class.java))
+
         binding?.createAccountBtn?.setOnClickListener {
-            val inputText = binding?.createAccountInfoField?.text.toString()
+            val email = binding?.createAccountInfoField?.text.toString().trim()
 
-            // ViewModel에 데이터 저장
-            joinViewModel.setEmailValue(inputText)
-
-            navController.navigate(R.id.action_createAccountFragment_to_sendCodeFragment)
+            if (isEmailValid(email)) {
+                lifecycleScope.launch {
+                    try {
+                        if (userRepository.verifyEmail(email)) {
+                            // 이메일 인증 성공
+                            joinViewModel.setEmailValue(email)
+                            sendCodeToEmail(email)
+                        } else {
+                            // 중복된 이메일 처리
+                            Toast.makeText(requireContext(), "중복된 이메일입니다.", Toast.LENGTH_SHORT).show()
+                        }
+                    } catch (e: Exception) {
+                        // 네트워크 오류 등의 예외 처리
+                        Toast.makeText(requireContext(), "오류가 발생했습니다.", Toast.LENGTH_SHORT).show()
+                        Log.e("CreateAccountFragment", "Error: ${e.message}", e)
+                    }
+                }
+            } else {
+                Toast.makeText(requireContext(), "유효한 이메일을 입력하세요.", Toast.LENGTH_SHORT).show()
+            }
         }
 
         return binding.root
@@ -207,5 +249,42 @@ class CreateAccountFragment : Fragment() {
 
         // 둘 다 완료되었을 때 버튼 활성화
         binding.createAccountBtn.isEnabled = isNameFinished && isInfoFinished
+    }
+
+    private fun sendCodeToEmail(email: String) {
+        lifecycleScope.launch {
+            try {
+                // 이메일로 코드를 요청
+                sendCodeRepository.sendCode(email, "your_payload_here")
+
+                // 이메일을 임시 회원가입 API에 요청
+                val nickname = "your_nickname_here" // 사용자가 입력한 닉네임을 여기에 할당
+                sendTemporaryJoinRequest(email, nickname)
+
+                // 코드를 성공적으로 전송한 후, 다음 프래그먼트로 이동
+                navController.navigate(R.id.action_createAccountFragment_to_sendCodeFragment)
+            } catch (e: Exception) {
+                // 오류 처리
+                Toast.makeText(requireContext(), "코드를 보내는 중 오류가 발생했습니다.", Toast.LENGTH_SHORT).show()
+                Log.e("CreateAccountFragment", "Error sending code: ${e.message}")
+            }
+        }
+    }
+
+    private suspend fun sendTemporaryJoinRequest(email: String, nickname: String) {
+        try {
+            val request = TemporaryJoinRequest(email, nickname)
+            val response = apiService.temporaryJoin(request)
+            if (response.isSuccessful) {
+                // 임시 회원가입 요청 성공
+                Log.d("CreateAccountFragment", "Temporary join request successful.")
+            } else {
+                // 요청 실패
+                Log.e("CreateAccountFragment", "Failed to send temporary join request. Response code: ${response.code()}")
+            }
+        } catch (e: Exception) {
+            // 네트워크 오류 등 예외 처리
+            Log.e("CreateAccountFragment", "Error sending temporary join request: ${e.message}", e)
+        }
     }
 }
