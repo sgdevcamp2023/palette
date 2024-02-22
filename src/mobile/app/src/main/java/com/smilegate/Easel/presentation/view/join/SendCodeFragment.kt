@@ -64,9 +64,9 @@ class SendCodeFragment : Fragment() {
             val code = binding.sendCodeInputField.text.toString()
             val email = joinViewModel.email.value ?: ""
             if (email.isNotEmpty() && code.isNotEmpty()) {
-                //sendCodeRepository.sendCode(email, code)
+                navController.navigate(R.id.action_sendCodeFragment_to_needPasswordFragment)
             } else {
-                Toast.makeText(requireContext(), "이메일 또는 코드를 입력해주세요.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "정확한 코드를 입력해주세요.", Toast.LENGTH_SHORT).show()
             }
         }
 

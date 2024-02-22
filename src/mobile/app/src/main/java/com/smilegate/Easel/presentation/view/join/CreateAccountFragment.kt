@@ -234,8 +234,8 @@ class CreateAccountFragment : Fragment() {
     }
 
     private fun isEmailValid(email: String): Boolean {
-        val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"
-        return email.matches(emailPattern.toRegex())
+        val emailPattern = Regex("[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}")
+        return emailPattern.matches(email)
     }
 
     override fun onDestroyView() {
@@ -254,12 +254,12 @@ class CreateAccountFragment : Fragment() {
     private fun sendCodeToEmail(email: String) {
         lifecycleScope.launch {
             try {
-                // 이메일로 코드를 요청
-                sendCodeRepository.sendCode(email, "your_payload_here")
-
                 // 이메일을 임시 회원가입 API에 요청
                 val nickname = "your_nickname_here" // 사용자가 입력한 닉네임을 여기에 할당
                 sendTemporaryJoinRequest(email, nickname)
+
+                // 이메일로 코드를 요청
+                sendCodeRepository.sendCode(email, "your_payload_here")
 
                 // 코드를 성공적으로 전송한 후, 다음 프래그먼트로 이동
                 navController.navigate(R.id.action_createAccountFragment_to_sendCodeFragment)
