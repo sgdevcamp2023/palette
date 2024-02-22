@@ -9,9 +9,12 @@ import com.smilegate.Easel.domain.model.join.VerifyUsernameRequest
 import com.smilegate.Easel.domain.model.join.VerifyUsernameResponse
 import com.smilegate.Easel.domain.model.login.LoginRequest
 import com.smilegate.Easel.domain.model.login.LoginResponse
+import com.smilegate.Easel.domain.model.user.UserProfileResponse
 import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.POST
 
 interface ApiService {
@@ -32,4 +35,8 @@ interface ApiService {
 
     @POST("api/auth/mobile")
     suspend fun login(@Body loginRequest: LoginRequest): Response<LoginResponse>
+
+    @GET("api/users/me")
+    suspend fun getUserProfile(@Header("Authorization") token: String): Response<UserProfileResponse>
+
 }

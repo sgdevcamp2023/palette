@@ -74,6 +74,7 @@ class CreateAccountFragment : Fragment() {
 
         binding?.createAccountBtn?.setOnClickListener {
             val email = binding?.createAccountInfoField?.text.toString().trim()
+            val nickname = binding?.createAccountNameField?.text.toString().trim()
 
             if (isEmailValid(email)) {
                 lifecycleScope.launch {
@@ -81,6 +82,7 @@ class CreateAccountFragment : Fragment() {
                         if (userRepository.verifyEmail(email)) {
                             // 이메일 인증 성공
                             joinViewModel.setEmailValue(email)
+                            joinViewModel.setNicknameValue(nickname)
                             sendCodeToEmail(email)
                         } else {
                             // 중복된 이메일 처리

@@ -123,6 +123,10 @@
             android:id="@+id/action_askNameFragment_to_timelineFragment"
             app:destination="@id/timelineFragment"/>
 
+        <action
+            android:id="@+id/action_askNameFragment_to_startFragment"
+            app:destination="@id/startFragment"/>
+
     </fragment>
 
     <fragment

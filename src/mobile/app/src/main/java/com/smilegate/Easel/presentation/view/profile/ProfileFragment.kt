@@ -1,6 +1,7 @@
 package com.smilegate.Easel.presentation.view.profile
 
 import android.animation.ObjectAnimator
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.graphics.PorterDuff
 import android.os.Bundle
@@ -15,17 +16,30 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.github.clans.fab.FloatingActionButton
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.tabs.TabLayout
 import com.smilegate.Easel.R
 import com.smilegate.Easel.data.ProfileTapRvDataHelper
+import com.smilegate.Easel.data.TokenManager
 import com.smilegate.Easel.data.refreshTimelineData
 import com.smilegate.Easel.databinding.FragmentProfileBinding
+import com.smilegate.Easel.domain.api.ApiService
+import com.smilegate.Easel.domain.model.user.UserProfileResponse
 import com.smilegate.Easel.presentation.adapter.TimelineRecyclerViewAdapter
+import kotlinx.coroutines.launch
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 import kotlin.math.abs
 
 class ProfileFragment : Fragment() {
@@ -34,6 +48,9 @@ class ProfileFragment : Fragment() {
     private lateinit var recyclerViewAdapter: TimelineRecyclerViewAdapter
 
     private lateinit var navController: NavController
+
+    private lateinit var apiService: ApiService
+    private lateinit var tokenManager: TokenManager
 
     private var isFabOpen = false
     private lateinit var gestureDetector: GestureDetector
@@ -57,6 +74,21 @@ class ProfileFragment : Fragment() {
 
         binding = FragmentProfileBinding.inflate(inflater, container, false)
 
+        // Retrofit 인스턴스 초기화
+        val retrofit = Retrofit.Builder()
+            .baseUrl("http://3.37.228.11:8000/")
+            .addConverterFactory(GsonConverterFactory.create()) // JSON 변환기 추가
+            .client(OkHttpClient.Builder().addInterceptor(HttpLoggingInterceptor().apply {
+                level = HttpLoggingInterceptor.Level.BODY // 모든 통신 로그를 보이도록 설정
+            }).build())
+            .build()
+
+        apiService = retrofit.create(ApiService::class.java)
+        tokenManager = TokenManager
+
+        // API 호출을 실행하여 회원 정보 가져오기
+        getUserProfile()
+
         val toolbar = requireActivity().findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar_container)
         toolbar.visibility = View.GONE
 
@@ -75,6 +107,10 @@ class ProfileFragment : Fragment() {
             binding.icBack,
             binding.ivBackBtn,
         )
+
+        binding.btnEditProfile.setOnClickListener {
+            Toast.makeText(requireContext(), "아직 지원하지 않는 기능입니다.", Toast.LENGTH_SHORT).show()
+        }
 
         for (view in backBtnList) {
             view.setOnClickListener {
@@ -327,6 +363,75 @@ class ProfileFragment : Fragment() {
             return true
         }
         return false
+    }
+
+    private fun getUserProfile() {
+        // CoroutineScope에서 API 호출 실행
+        lifecycleScope.launch {
+            try {
+                // 토큰 관리 클래스에서 액세스 토큰 가져오기
+                val accessToken = TokenManager.getAccessToken(requireContext())
+
+                // API 호출 실행 및 헤더에 토큰 추가
+                val response = apiService.getUserProfile("Bearer $accessToken")
+                println("accessToken = ${accessToken}")
+
+                if (response.isSuccessful)  {
+                    // API 호출 성공 시 회원 정보 가져오기
+                    println("성공직전")
+                    val userProfile = response.body()
+                    println("성공")
+                    // UI 업데이트
+                    updateUI(userProfile)
+                    println("된건가")
+                } else {
+                    // API 호출 실패 시 에러 처리
+                    Log.e(TAG, "Failed to fetch user profile: ${response.errorBody()?.string()}")
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "Error fetching user profile: ${e.message}", e)
+            }
+        }
+    }
+
+    private fun updateUI(userProfile: UserProfileResponse?) {
+        userProfile?.let { profile ->
+            if (userProfile.profileImagePath != null) {
+                Glide.with(requireContext())
+                    .load(userProfile.profileImagePath)
+                    .placeholder(R.drawable.sample_profile_img1) // 기본 이미지 설정
+                    .error(R.drawable.sample_profile_img1) // 에러 발생 시 기본 이미지 설정
+                    .into(binding.circleImageView)
+            }
+            // 닉네임 설정
+            binding.tvUserName.text = "@${profile.username}"
+
+            // 사용자 이름 설정
+            binding.tvNickName.text = profile.nickname
+
+            // 사용자 소개 설정
+            if (userProfile.introduce != "") {
+                binding.tvUserBio.text = profile.introduce
+            }
+            else {
+                binding.tvUserBio.text = "안녕하세요:)"
+            }
+
+            // 가입일 설정 (예시 코드)
+            val joinedAtString = profile.joinedAt // 서버에서는 문자열로 전달됨
+            val joinedAt = parseISO8601(joinedAtString)
+            val dateFormat = DateTimeFormatter.ofPattern("yyyy년 MM월에 가입함", Locale.getDefault())
+            binding.tvUserJoinDate.text = dateFormat.format(joinedAt)
+
+            // 팔로잉 및 팔로워 수 설정
+            binding.tvFollowingNum.text = profile.followingCount.toString()
+            binding.tvFollowerNum.text = profile.followerCount.toString()
+        }
+    }
+
+    // ISO 8601 형식의 날짜를 LocalDateTime 객체로 파싱하는 함수
+    fun parseISO8601(dateString: String): LocalDateTime {
+        return LocalDateTime.parse(dateString, DateTimeFormatter.ISO_DATE_TIME)
     }
 
 }

@@ -191,16 +191,8 @@ class PasswordFragment : Fragment() {
                 if (response.isSuccessful) {
                     val loginResponse = response.body()
                     if (loginResponse != null) {
-                        // 로그인 성공
-                        val accessToken = context?.let { TokenManager.getAccessToken(it) }
-                        val refreshToken = context?.let { TokenManager.getRefreshToken(it) }
-
-                        if (accessToken != null) {
-                            context?.let { TokenManager.saveAccessToken(it, accessToken) }
-                        }
-                        if (refreshToken != null) {
-                            context?.let { TokenManager.saveRefreshToken(it, refreshToken) }
-                        }
+                        TokenManager.saveAccessToken(requireContext(), loginResponse.accessToken)
+                        TokenManager.saveRefreshToken(requireContext(), loginResponse.refreshToken)
 
                         navController.navigate(R.id.action_passwordFragment_to_timelineFragment)
                     }

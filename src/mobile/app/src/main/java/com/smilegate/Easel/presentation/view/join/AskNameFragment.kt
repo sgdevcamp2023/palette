@@ -66,6 +66,7 @@ class AskNameFragment : Fragment() {
 
         binding.askNameFragmentJoinBtn.setOnClickListener {
             val username = binding.askNameFragmentIdField.text.toString().trim()
+            val nickname = joinViewModel.nickname.value.toString()
             val password = joinViewModel.password.value.toString()
             val email = joinViewModel.email.value.toString()
             val profileImageURL = joinViewModel.profileImageURL.value
@@ -74,14 +75,14 @@ class AskNameFragment : Fragment() {
                 verifyUsername(username)
                 // ViewModel에 유저네임 설정
                 joinViewModel.setUsernameValue(username)
-                navController.navigate(R.id.action_askNameFragment_to_timelineFragment)
+                navController.navigate(R.id.action_askNameFragment_to_startFragment)
                 hideKeyboard()
             } else {
                 Toast.makeText(requireContext(), "유저 이메일을 입력하세요", Toast.LENGTH_SHORT).show()
             }
 
             // 필요한 데이터를 가져와서 JoinRequest 객체를 생성
-            val joinRequest = JoinRequest(email, password, username, profileImageURL)
+            val joinRequest = JoinRequest(email, password, username, nickname, profileImageURL)
             joinUser(joinRequest)
 
             // 서버로 데이터 전송
@@ -188,6 +189,7 @@ class AskNameFragment : Fragment() {
                     joinRequest.email,
                     joinRequest.password,
                     joinRequest.username,
+                    joinRequest.nickname,
                     joinRequest.profileImagePath)
                 val response = apiService.joinUser(request)
                 if (response.isSuccessful) {

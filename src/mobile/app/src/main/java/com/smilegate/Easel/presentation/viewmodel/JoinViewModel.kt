@@ -19,6 +19,9 @@ class JoinViewModel : ViewModel() {
     private val _username = MutableLiveData<String>()
     val username: LiveData<String> get() = _username
 
+    private val _nickname = MutableLiveData<String>()
+    val nickname: LiveData<String> get() = _nickname
+
     // 값을 설정하는 메서드
     fun setEmailValue(data: String) {
         _email.value = data
@@ -34,5 +37,9 @@ class JoinViewModel : ViewModel() {
 
     fun setUsernameValue(username: String) {
         _username.value = username
+    }
+
+    fun setNicknameValue(nickname: String) {
+        _nickname.value = nickname
     }
 }
