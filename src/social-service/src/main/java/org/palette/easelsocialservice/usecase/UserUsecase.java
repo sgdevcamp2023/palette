@@ -26,8 +26,8 @@ public class UserUsecase {
 
     public void likePaint(Long userId, LikePaintRequest likePaintRequest) {
         Paint paint = paintService.getPaintById(likePaintRequest.paintId());
-        kafkaProducer.execute(new LikedPaintEvent(userId, paint.getPid()));
         userService.likePaint(userId, paint);
+        kafkaProducer.execute(new LikedPaintEvent(userId, paint.getPid()));
     }
 
     public void follow(Long userId, FollowUserRequest followUserRequest) {
@@ -64,8 +64,8 @@ public class UserUsecase {
     }
 
     public void unlikePaint(final Long userId, final Long paintId) {
-        kafkaProducer.execute(new UnlikedPaintEvent(userId, paintId));
         userService.unlike(userId, paintId);
+        kafkaProducer.execute(new UnlikedPaintEvent(userId, paintId));
     }
 
     @Async
