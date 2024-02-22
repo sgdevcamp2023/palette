@@ -108,3 +108,7 @@ Palette는 개인의 색깔을 섞어서 필요한 팀 색깔을 만들기 위�
 - Kafka, gRPC
 - Neo4j, MySQL, Redis, ElasticSearch
 - LightSail, Docker
+
+## 깃 전략
+
+![GitStrategy](https://github.com/sgdevcamp2023/palette/assets/60564431/ff86d5b9-6656-4221-801d-77765017ed46)
