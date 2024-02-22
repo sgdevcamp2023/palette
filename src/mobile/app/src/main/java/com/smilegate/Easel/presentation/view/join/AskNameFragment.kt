@@ -168,7 +168,7 @@ class AskNameFragment : Fragment() {
                         if (verifyUsernameResponse.isDuplicated) {
                             Toast.makeText(requireContext(), "중복된 유저네임입니다.", Toast.LENGTH_SHORT).show()
                         } else {
-                            Toast.makeText(requireContext(), "사용 가능한 유저네임입니다.", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(requireContext(), "회원 가입이 완료되었습니다.", Toast.LENGTH_SHORT).show()
                         }
                     }
                 } else {
