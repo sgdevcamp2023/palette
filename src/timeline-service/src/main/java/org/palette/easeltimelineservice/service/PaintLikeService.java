@@ -14,20 +14,20 @@ import static org.palette.easeltimelineservice.service.RedisKeyConstants.LIKED_P
 @RequiredArgsConstructor
 public class PaintLikeService {
 
-    private final RedisTemplate<String, String> redisTemplate;
+    private final RedisTemplate<String, String> redistemplate;
 
     public boolean isLiked(Long userId, Long paintId) {
         String key = RedisKeyUtil.constructKey(LIKED_PAINT_PREFIX.getKey(), paintId);
-        return Optional.ofNullable(redisTemplate.opsForSet().isMember(key, userId.toString())).orElse(false);
+        return Optional.ofNullable(redistemplate.opsForSet().isMember(key, userId.toString())).orElse(false);
     }
 
     public void like(Long userId, Long paintId) {
         String key = RedisKeyUtil.constructKey(LIKED_PAINT_PREFIX.getKey(), paintId);
-        redisTemplate.opsForSet().add(key, userId.toString());
+        redistemplate.opsForSet().add(key, userId.toString());
     }
 
     public void unlike(Long userId, Long paintId) {
         String key = RedisKeyUtil.constructKey(LIKED_PAINT_PREFIX.getKey(), paintId);
-        redisTemplate.opsForSet().remove(key, userId.toString());
+        redistemplate.opsForSet().remove(key, userId.toString());
     }
 }
