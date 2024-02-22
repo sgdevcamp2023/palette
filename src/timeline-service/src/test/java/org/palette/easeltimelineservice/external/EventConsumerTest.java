@@ -31,7 +31,7 @@ class EventConsumerTest {
     @Autowired
     private EventConsumer eventConsumer;
     @Autowired
-    private RedisTemplate<String, Object> redistemplate;
+    private RedisTemplate<String, String> redistemplate;
 
     @BeforeEach
     void setUp() {
@@ -60,7 +60,7 @@ class EventConsumerTest {
     private static PaintCreatedEvent generatePaintCreatedEvent() {
         return new PaintCreatedEvent(
                 1L,
-                false,
+                null,
                 1L,
                 "test",
                 "test",
