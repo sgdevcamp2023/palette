@@ -60,6 +60,7 @@ public class PaintService {
 
     public List<ThreadResponse> getPaintAfterById(final Long userId, final Long paintId) {
         List<Paint> paints = distinctPaintsByPid(paintRepository.findAllAfterPaintByPid(paintId));
+        System.out.println(paints);
 
         List<ThreadResponse> threads = new LinkedList<>();
         int threadId = 0;
@@ -125,6 +126,7 @@ public class PaintService {
     private ThreadResponse getThreadGroup(final Integer threadId, final Long userId, final Paint paint) {
         checkAndSetQuotePaint(paint);
         List<Paint> subPaints = distinctPaintsByPid(paintRepository.findAllAfterPaintsByPid(paint.getPid()));
+        subPaints.add(0, paint);
         return new ThreadResponse(threadId, paintEntityConverter.convertToPaintResponse(userId, subPaints));
     }
 
