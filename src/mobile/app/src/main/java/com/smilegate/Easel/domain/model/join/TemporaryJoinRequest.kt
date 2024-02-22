@@ -1,4 +1,4 @@
-package com.smilegate.Easel.domain.model
+package com.smilegate.Easel.domain.model.join
 
 data class TemporaryJoinRequest(
     val email: String,

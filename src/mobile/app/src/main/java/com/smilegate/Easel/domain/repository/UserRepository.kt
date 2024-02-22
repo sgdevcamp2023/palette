@@ -1,7 +1,7 @@
 package com.smilegate.Easel.domain.repository
 
 import com.smilegate.Easel.domain.api.ApiService
-import com.smilegate.Easel.domain.model.EmailRequest
+import com.smilegate.Easel.domain.model.auth.EmailRequest
 
 class UserRepository(private val apiService: ApiService) {
     suspend fun verifyEmail(email: String): Boolean {

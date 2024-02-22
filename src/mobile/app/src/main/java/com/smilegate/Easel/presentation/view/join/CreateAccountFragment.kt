@@ -25,7 +25,7 @@ import com.smilegate.Easel.R
 import com.smilegate.Easel.databinding.FragmentCreateAccountBinding
 import com.smilegate.Easel.domain.api.ApiService
 import com.smilegate.Easel.domain.containsSpaceOrNewline
-import com.smilegate.Easel.domain.model.TemporaryJoinRequest
+import com.smilegate.Easel.domain.model.join.TemporaryJoinRequest
 import com.smilegate.Easel.domain.repository.SendCodeRepository
 import com.smilegate.Easel.domain.repository.UserRepository
 import com.smilegate.Easel.presentation.viewmodel.JoinViewModel

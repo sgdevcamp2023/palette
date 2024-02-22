@@ -10,17 +10,20 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.smilegate.Easel.R
 import com.smilegate.Easel.databinding.FragmentNeedPasswordBinding
 import com.smilegate.Easel.domain.containsSpaceOrNewline
 import com.smilegate.Easel.domain.isDoneAction
+import com.smilegate.Easel.presentation.viewmodel.JoinViewModel
 
 class NeedPasswordFragment : Fragment() {
     private lateinit var binding: FragmentNeedPasswordBinding
 
     private lateinit var navController: NavController
+    private lateinit var joinViewModel: JoinViewModel
 
     private var passwordVisible = false
     private val maxPasswordLength = 8
@@ -32,9 +35,12 @@ class NeedPasswordFragment : Fragment() {
         binding = FragmentNeedPasswordBinding.inflate(inflater, container, false)
 
         navController = findNavController()
+        // ViewModel 초기화
+        joinViewModel = ViewModelProvider(requireActivity()).get(JoinViewModel::class.java)
 
         binding.needPasswordFragmentNextBtn.setOnClickListener {
             if (isPasswordValid()) {
+                joinViewModel.setPasswordValue(binding.needPasswordFragmentPwField.text.toString())
                 navController.navigate(R.id.action_needPasswordFragment_to_profileImageFragment)
             } else {
                 Toast.makeText(requireContext(), "비밀번호를 확인하세요.", Toast.LENGTH_SHORT).show()

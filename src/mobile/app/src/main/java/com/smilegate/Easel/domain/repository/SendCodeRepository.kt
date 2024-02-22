@@ -3,7 +3,7 @@ package com.smilegate.Easel.domain.repository
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.smilegate.Easel.domain.api.ApiService
-import com.smilegate.Easel.domain.model.EmailAuth
+import com.smilegate.Easel.domain.model.auth.EmailAuth
 import java.io.IOException
 
 class SendCodeRepository(private val apiService: ApiService) {
