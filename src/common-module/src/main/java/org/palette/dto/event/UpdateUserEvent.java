@@ -12,6 +12,6 @@ public record UpdateUserEvent (
 ) implements EaselEvent {
     @Override
     public String getTopic() {
-        return TopicConstant.UPDATE_USER.value();
+        return TopicConstant.UPDATE_USER.value;
     }
 }
