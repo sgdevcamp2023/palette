@@ -41,7 +41,7 @@ public interface PaintRepository extends Neo4jRepository<Paint, Long> {
             "WITH [node in nodes(path) WHERE node:Paint] AS intermediateNodes " +
             "UNWIND intermediateNodes AS intermediateNode " +
             "MATCH (startNode:Paint)<-[r]->(nextNode) " +
-            "WHERE startNode = intermediateNode AND type(r) <> 'REPLIES' AND type(r) <> 'REPAINTS' " +
+            "WHERE startNode = intermediateNode AND type(r) <> 'REPLIES' AND type(r) <> 'REPAINTS' AND type(r) <> 'QUOTES' " +
             "RETURN startNode, r, nextNode")
     List<Paint> findAllBeforePaintByPid(@Param("pid") Long pid);
 
