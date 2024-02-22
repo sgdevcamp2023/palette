@@ -49,15 +49,18 @@ public interface PaintRepository extends Neo4jRepository<Paint, Long> {
             "WHERE a.pid = $pid " +
             "WITH b " +
             "MATCH (b)<-[r]->(neighbors) " +
-            "WHERE NOT type(r) = 'REPLIES' " +
+            "WHERE type(r) <> 'REPLIES' AND type(r) <> 'QUOTES' " +
             "RETURN b, r, neighbors")
     List<Paint> findAllAfterPaintByPid(@Param("pid") Long pid);
 
-    @Query("MATCH (a:Paint)<-[:REPLIES*]-(b:Paint)" +
+    @Query("MATCH path=(a:Paint)<-[:REPLIES*]-(b:Paint) " +
             "WHERE a.pid = $pid " +
-            "WITH b " +
+            "WITH path " +
+            "ORDER BY b.pid DESC " +
+            "LIMIT 1 " +
+            "UNWIND nodes(path) as b " +
             "MATCH (b)<-[r]->(neighbors) " +
-            "WHERE NOT type(r) = 'REPLIES' " +
+            "WHERE type(r) <> 'REPLIES' AND type(r) <> 'REPAINTS' AND type(r) <> 'QUOTES' " +
             "RETURN b, r, neighbors")
     List<Paint> findAllAfterPaintsByPid(@Param("pid") Long pid);
 
