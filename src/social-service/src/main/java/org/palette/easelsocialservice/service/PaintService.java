@@ -60,7 +60,6 @@ public class PaintService {
 
     public List<ThreadResponse> getPaintAfterById(final Long userId, final Long paintId) {
         List<Paint> paints = distinctPaintsByPid(paintRepository.findAllAfterPaintByPid(paintId));
-        System.out.println(paints);
 
         List<ThreadResponse> threads = new LinkedList<>();
         int threadId = 0;
