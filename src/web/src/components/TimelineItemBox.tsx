@@ -158,17 +158,25 @@ function TimelineItemBox({
 
         {/* 페인트에 대한 아이콘 영역(footer) */}
         <div className="w-full flex justify-between">
-          <AccessibleIconButton
-            width={16}
-            height={16}
-            iconType="comment"
-            label="답글 달기"
-            className="transition-colors hover:bg-grey-200 rounded-full p-1"
-            onClick={(e) => {
-              e.stopPropagation();
-              onClickReply();
-            }}
-          />
+          <div className="flex gap-[4px] items-center">
+            <AccessibleIconButton
+              width={16}
+              height={16}
+              iconType="comment"
+              label="답글 달기"
+              className="transition-colors hover:bg-grey-200 rounded-full p-1"
+              onClick={(e) => {
+                e.stopPropagation();
+                onClickReply();
+              }}
+            />
+            <Typography
+              size="body-3"
+              color="blueGrey-800"
+            >
+              {post.replyCount ? post.replyCount : 0}
+            </Typography>
+          </div>
           <div className="flex gap-[4px] items-center">
             <AccessibleIconButton
               width={16}
