@@ -22,6 +22,7 @@ public class TimelineUsecase {
     private final FollowerPaintMapService followerPaintMapService;
     private final PaintCacheService paintCacheService;
     private final PaintMetricsService paintMetricsService;
+    private final PaintLikeService paintLikeService;
 
     public void handlePaintCreatedEvent(PaintCreatedEvent paintCreatedEvent) {
         final GFollowerIdsResponse followerIds = gRPCSocialClient.getFollowerIds(paintCreatedEvent.authorId());
@@ -37,16 +38,20 @@ public class TimelineUsecase {
         final List<Paint> paints = paintCacheService.getPaints(paintIds);
         return paints.stream().map(paint -> {
                     PaintMetrics metrics = paintMetricsService.getPaintMetrics(paint.getId());
-                    return PaintResponse.of(paint, metrics);
+                    final boolean liked = paintLikeService.isLiked(userId, paint.getId());
+                    return PaintResponse.of(paint, metrics, liked);
                 }
         ).toList();
     }
 
+
     public void handleLikedPaintEvent(final LikedPaintEvent likedPaintEvent) {
+        paintLikeService.like(likedPaintEvent.likingUserId(), likedPaintEvent.paintId());
         paintMetricsService.incrementLikeCount(likedPaintEvent.paintId());
     }
 
     public void handleUnlikedPaintEvent(final UnlikedPaintEvent unlikedPaintEvent) {
+        paintLikeService.unlike(unlikedPaintEvent.unlikingUserId(), unlikedPaintEvent.paintId());
         paintMetricsService.decrementLikeCount(unlikedPaintEvent.paintId());
     }
 
@@ -61,7 +66,8 @@ public class TimelineUsecase {
 
         return filteredPaints.stream().map(paint -> {
                     PaintMetrics metrics = paintMetricsService.getPaintMetrics(paint.getId());
-                    return PaintResponse.of(paint, metrics);
+                    final boolean liked = paintLikeService.isLiked(userId, paint.getId());
+                    return PaintResponse.of(paint, metrics, liked);
                 }
         ).toList();
     }

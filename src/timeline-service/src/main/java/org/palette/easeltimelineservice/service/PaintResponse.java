@@ -65,7 +65,7 @@ public record PaintResponse(
                 metrics.replyCount(),
                 metrics.repaintCount(),
                 metrics.likeCount(),
-                false,
+                isLiked,
                 false,
                 false,
                 metrics.viewCount(),

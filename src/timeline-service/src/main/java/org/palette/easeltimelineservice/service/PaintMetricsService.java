@@ -49,12 +49,8 @@ public class PaintMetricsService {
     }
 
     private void changeMetricCount(final Long pid, final String metric, final int delta) {
-        redistemplate.opsForHash()
-                .increment(
-                        RedisKeyUtil.constructKey(RedisKeyConstants.METRICS_PREFIX.getKey(), pid),
-                        metric,
-                        delta
-                );
+        String key = RedisKeyUtil.constructKey(RedisKeyConstants.METRICS_PREFIX.getKey(), metric, pid);
+        redistemplate.opsForValue().increment(key, delta);
     }
 
     public PaintMetrics getPaintMetrics(final Long pid) {
