@@ -1,3 +1,6 @@
+# [Repository Moved Permanently](https://github.com/smilgate-devcamp-palette)
+
+
 ## Smilegate Server Devcamp 5th - Palette (2조)
 
 <p ><img src="resources/banner.png" width="50%" /></p>
