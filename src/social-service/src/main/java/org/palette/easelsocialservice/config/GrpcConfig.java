@@ -11,11 +11,11 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration(proxyBeanMethods = false)
 @EnableConfigurationProperties
-public class GRPCConfig {
+public class GrpcConfig {
     private final EurekaRegistration eurekaRegistration;
     private final GrpcServerProperties grpcProperties;
 
-    public GRPCConfig(@Qualifier("eurekaRegistration") EurekaRegistration eurekaRegistration, GrpcServerProperties grpcProperties) {
+    public GrpcConfig(@Qualifier("eurekaRegistration") EurekaRegistration eurekaRegistration, GrpcServerProperties grpcProperties) {
         this.eurekaRegistration = eurekaRegistration;
         this.grpcProperties = grpcProperties;
     }
